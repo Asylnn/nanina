@@ -1,13 +1,34 @@
-h1 {
+#logo {
     color:blueviolet;
-    font-size: 30px;
-    font-family: fantasy;
-    text-align: left;
+    font: italic bold 35px cursive;
+    text-align: center;
 }
 
-#imgWaifu {
-    height: 300px;
-    width: auto;
+#imgBlock {
+    width: 30%;
+    float: left;
+    /* border: 2px solid red; */
+}
+
+#nameWaifu {
+    color:salmon;
+    font: 30px cursive;
+    text-decoration: underline;
+    text-align: center;
+}
+
+#statsBlock {
+    width: 60%;
+    float: left;
+    /* border: 2px solid red; */
+}  
+
+img {
+    height: auto;
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body {

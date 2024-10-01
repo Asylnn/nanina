@@ -2,7 +2,7 @@
 <html>
     
 <header>
-<h1>Nanina</h1>
+<p id="logo">Nanina</p>
 </header>
 
 <head>
@@ -12,21 +12,28 @@
 
 <body>
     <div id="app" v-cloak>
-        <br>
-        <br>
-        <img id="imgWaifu" :src="imgURL">
-        <p>Je m'appelle {{ name }}, je suis une {{ objectType }}
-            <span v-for="n in stars">&#11088;</span> de rareté {{ rarity }}!</p>
-        <p>Ma valeur est de {{ value }} car je suis unique ! &#128525;</p>
-        <p>J'ai été recueillie par mon amour, {{ owner }} ! &#128536;</p>
-        <p>J'ai actuellement {{ xp }} xp et au level {{ lvl }} &#128546;</p>
-        <p>Voici mes stats actuelles :</p>
-        <p>{{ b_int }} {{ b_luck }} {{ b_exp }} &#127800;</p>
-        <p>J'ai démarré avec ces stats là :</p>
-        <p>{{ o_int }} {{ o_luck }} {{ o_exp }} &#127800;</p>
-        <p>Si tu joues avec moi je peux gagner ces stats là ! &#128150;</p>
-        <p>{{ u_int }} {{ u_exp }} &#127800;</p>
-        <p>Mais je ne suis pas une fille facile ! J'ai du mal à lvl up avec ma difficulté de {{ diffLvlup }} ! &#128533;</p>
+        <div id="imgBlock">
+            <div>
+                <p id="nameWaifu" style="margin-top: 0">{{ name }}</p>
+                <img id="imgWaifu" :src="imgURL">
+            </div>
+        </div>
+        <div id="statsBlock">
+            <div>
+                <p style="margin-top: 50px">Je suis une {{ objectType }}
+                    <span v-for="n in stars">&#11088;</span> de rareté {{ rarity }}!</p>
+                <p>Ma valeur est de {{ value }} car je suis unique ! &#128525;</p>
+                <p>J'ai été recueillie par mon amour, {{ owner }} ! &#128536;</p>
+                <p>J'ai actuellement {{ xp }} xp et au level {{ lvl }} &#128546;</p>
+                <p>Voici mes stats actuelles :</p>
+                <p>{{ b_int }} {{ b_luck }} {{ b_exp }} &#127800;</p>
+                <p>J'ai démarré avec ces stats là :</p>
+                <p>{{ o_int }} {{ o_luck }} {{ o_exp }} &#127800;</p>
+                <p>Si tu joues avec moi je peux gagner ces stats là ! &#128150;</p>
+                <p>{{ u_int }} {{ u_exp }} &#127800;</p>
+                <p>Mais je ne suis pas une fille facile ! J'ai du mal à lvl up avec ma difficulté de {{ diffLvlup }} ! &#128533;</p>
+            </div>
+        </div>
 
         <!-- <label>First Name</label>
         <input type="text" v-model.lazy.trim="firstName" />
