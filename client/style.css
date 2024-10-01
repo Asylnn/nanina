@@ -43,3 +43,30 @@ input {
 [v-cloak] {
     display: none;
 }
+
+.white_theme {
+    background: white;
+    color:black;
+}
+
+.dark_theme {
+    background: #0F0D0F;
+    color:white;
+}
+
+.cute_theme {
+    background: pink;
+    color:white;
+}
+#main
+{
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0px;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+}

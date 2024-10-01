@@ -24,6 +24,9 @@ const vm = Vue.createApp({
             rarity: 4,
             value: -1,
             isTradable: false,
+
+
+            theme: "dark_theme"
         }
     },
     methods: {
