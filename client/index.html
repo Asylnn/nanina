@@ -1,70 +1,38 @@
 <!DOCTYPE html>
-<html>
-    
 
+<html lang="fr">
+    <head>
+        <!-- <link rel="icon" href="/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="src/assets/style.css">
+        <title>Nanina</title>
+    </head>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Nanina</title>
-</head>
+    <body>
+        <div id="app" v-cloak>
+           
+            
 
-<body>
-    <div id="app" v-cloak>
-        <div id="main" :class="[theme]">
-            <header>
-                <p id="logo">Nanina</p>
-            </header>
-            <div id="imgBlock">
-                <div>
-                    <p id="nameWaifu" style="margin-top: 0">{{ name }}</p>
-                    <img id="imgWaifu" :src="imgURL">
-                </div>
-            </div>
-            <div id="statsBlock">
-                <div>
-                    <p style="margin-top: 50px">Je suis une {{ objectType }}
-                        <span v-for="n in stars">&#11088;</span> de rareté {{ rarity }}!</p>
-                    <p>Ma valeur est de {{ value }} car je suis unique ! &#128525;</p>
-                    <p>J'ai été recueillie par mon amour, {{ owner }} ! &#128536;</p>
-                    <p>J'ai actuellement {{ xp }} xp et au level {{ lvl }} &#128546;</p>
-                    <p>Voici mes stats actuelles :</p>
-                    <p>{{ b_int }} {{ b_luck }} {{ b_exp }} &#127800;</p>
-                    <p>J'ai démarré avec ces stats là :</p>
-                    <p>{{ o_int }} {{ o_luck }} {{ o_exp }} &#127800;</p>
-                    <p>Si tu joues avec moi je peux gagner ces stats là ! &#128150;</p>
-                    <p>{{ u_int }} {{ u_exp }} &#127800;</p>
-                    <p>Mais je ne suis pas une fille facile ! J'ai du mal à lvl up avec ma difficulté de {{ diffLvlup }} ! &#128533;</p>
-                </div>
-            </div>
-            <select v-model="theme">
-                <option value = "dark_theme">Dark Theme</option>
-                <option value = "white_theme">White Theme</option>
-                <option value = "cute_theme">Cute Theme</option>
-            </select>
+            <!-- <label>First Name</label>
+            <input type="text" v-model.lazy.trim="firstName" />
+
+            <label>Middle Name</label>
+            <input type="text" @keyup.enter="updateMiddleName" />
+
+            <label>Last Name</label>
+            <input type="text" :value="lastName" @input.prevent="updateLastName('Last name event triggered', $event)"/>
+
+            <label>Age</label>
+            <input type="number" v-model="age" />
+
+            <label>Kaw</label>
+            <input type="number" v-model="kaw" />
+
+            <button type="button" @click="age++">Increment</button>
+            <button type="button" @click="age--">Decrement</button> -->
         </div>
-        
 
-        <!-- <label>First Name</label>
-        <input type="text" v-model.lazy.trim="firstName" />
-
-        <label>Middle Name</label>
-        <input type="text" @keyup.enter="updateMiddleName" />
-
-        <label>Last Name</label>
-        <input type="text" :value="lastName" @input.prevent="updateLastName('Last name event triggered', $event)"/>
-
-        <label>Age</label>
-        <input type="number" v-model="age" />
-
-        <label>Kaw</label>
-        <input type="number" v-model="kaw" />
-
-        <button type="button" @click="age++">Increment</button>
-        <button type="button" @click="age--">Decrement</button> -->
-    </div>
-
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="app.js"></script>
-</body>
-
+        <script type="module" src="src/main.ts"></script>
+    </body>
 </html>
