@@ -32,3 +32,13 @@ client/.vscode/*
 *.sw?
 
 *.tsbuildinfo
+
+#C# Stuff
+
+/server/obj
+/server/bin
+.vscode
+
+#Database
+
+/save
