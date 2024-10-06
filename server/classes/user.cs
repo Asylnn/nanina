@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 enum Theme {
     DarkTheme,
     PinkTheme,
-    WhiteThem
+    WhiteTheme
 }
 
 

@@ -1,12 +1,3 @@
-<template>
-    <div id="imgBlock">
-        <div>
-            <p id="nameWaifu" style="margin-top: 0">{{ name }}</p>
-            <img id="imgWaifu" :src="imgURL">
-        </div>
-    </div>
-</template>
-
 <script lang="ts">
 
 export default {
@@ -24,3 +15,12 @@ export default {
 }
 
 </script>
+
+<template>
+    <div id="imgBlock">
+        <div>
+            <p id="nameWaifu" style="margin-top: 0">{{ name }}</p>
+            <img id="imgWaifu" :src="imgURL">
+        </div>
+    </div>
+</template>
