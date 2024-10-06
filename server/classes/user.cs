@@ -1,16 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Reflection.Emit;
+using System.Runtime;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-
-enum Theme {
-    DarkTheme,
-    PinkTheme,
-    WhiteTheme
-}
-
 
 static class UserId {
     static public string CreateId()
@@ -20,26 +10,33 @@ static class UserId {
     }
 }
 
-class PocoUser
+public class PocoUser
 {
     public string username { get; set; } 
     public PocoWaifu waifu { get; set; }
     public string userId { get; set; }
+    public string theme { get; set; }
+    public Ids ids { get; set; }
     //private Theme theme;
 
 }
 
-class User {
+public class Ids {
+    public string discordId;
+}
+
+public class User {
     public string username;
     public Waifu waifu;
     public string userId;
-    private Theme theme;
-    public User(string _username)
+    public Ids ids;
+    private string theme; //Used only in client
+    public User(string username)
     {
         userId = UserId.CreateId();
-        username = _username;
-        waifu = new Waifu("Rem", userId);
-        theme = Theme.DarkTheme;
+        this.username = username;
+        this.waifu = new Waifu("Rem");
+        theme = "dark_theme";
     }
     public PocoUser ToPoco()
     {
@@ -48,8 +45,17 @@ class User {
             username = username,
             waifu = waifu.ToPoco(),
             userId = userId,
-            //Theme = theme
+            theme = theme,
+            ids = ids
         };
     }
-
+    public static User FromPoco(PocoUser poco, bool forClient = false)
+    {
+        User user  = new User(poco.username);
+        user.userId = poco.userId;
+        user.waifu = Waifu.FromPoco(poco.waifu);
+        user.theme = poco.theme;
+        user.ids = poco.ids;
+        return user;
+    }
 }

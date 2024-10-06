@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 //import router from './router'
-
+import User from './classes/user'
 const app = createApp(App)
 
 //app.use(router)
@@ -16,6 +16,8 @@ WebsocketBuilder,
 WebsocketEvent,
 } from "websocket-ts";
 
+let user : User = new User("darkmode", "1234", "a username")
+
 // Initialize WebSocket with buffering and 1s reconnection delay
 const ws = new WebsocketBuilder("ws://localhost:4889")
     .withBuffer(new ArrayQueue())           // buffer messages when disconnected
@@ -25,11 +27,13 @@ const ws = new WebsocketBuilder("ws://localhost:4889")
 // Function to output & echo received messages
 const echoOnMessage = (i: Websocket, ev: MessageEvent) => {
     console.log(`received message: ${ev.data}`);
-    i.send(`${ev.data}`);
+    var obj : User = JSON.parse(ev.data)
+    console.log(obj)
+    //i.send(`${ev.data}`);
 };
 
 // Add event listeners
 ws.addEventListener(WebsocketEvent.open, () => console.log("ws opened!"));
 ws.addEventListener(WebsocketEvent.close, () => console.log("ws closed!"));
 ws.addEventListener(WebsocketEvent.message, echoOnMessage);
-ws.send("hey")
+ws.send(`{"type":"request user", "data":"727"}`)

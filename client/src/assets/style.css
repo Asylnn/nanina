@@ -1,43 +1,5 @@
-#logo {
-    color:blueviolet;
-    font: italic bold 35px cursive;
-    text-align: center;
-}
-
-#imgBlock {
-    width: 30%;
-    float: left;
-    /* border: 2px solid red; */
-}
-
-#nameWaifu {
-    color:salmon;
-    font: 30px cursive;
-    text-decoration: underline;
-    text-align: center;
-}
-
-#statsBlock {
-    width: 60%;
-    float: left;
-    /* border: 2px solid red; */
-}  
-
-img {
-    height: auto;
-    width: 50%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 body {
     font-size: 18px;
-}
-
-input {
-    margin: 10px 0;
-    display: block;
 }
 
 [v-cloak] {
@@ -58,6 +20,7 @@ input {
     background: pink;
     color:white;
 }
+
 #main
 {
     position:fixed;

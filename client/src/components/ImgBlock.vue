@@ -1,5 +1,5 @@
 <script lang="ts">
-
+import Page from '../classes/page';
 export default {
     name : "ImgBlock",
     props: {
@@ -24,3 +24,27 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="css" scoped>
+#imgBlock {
+    width: 30%;
+    float: left;
+    border: 2px solid red;
+}
+
+#nameWaifu {
+    margin: 0%;
+    color:salmon;
+    font: 30px cursive;
+    text-decoration: underline;
+    text-align: center;
+}
+
+img {
+    height: auto;
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
