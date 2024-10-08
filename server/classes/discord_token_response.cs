@@ -7,3 +7,7 @@ public class DiscordTokenResponse {
     public string refresh_token; 
     public string scope; 
 }
+
+public class DiscordUserInformationResponse {
+    
+}

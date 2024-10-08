@@ -1,14 +1,14 @@
 STEP 1 : Make a Working Prototype to host on Asyln.moe (prototype with only xp, lvl and osu standard claiming (will be private)) 
 
-TODO : Finish discord authentification
+TODO : Finish discord authentification                              #Done
 TODO : Implement user creation
 TODO : Implement waifu database
 TODO : Implement osu API
 TODO : Do claim page/component
-TODO : Do waifu page/component #Done
+TODO : Do waifu page/component                                      #Done
 TODO : Implement claim system
 TODO : Implement File Serving
-TODO : Add a Discord Login Button #Done
+TODO : Add a Discord Login Button                                   #Done
 
 STEP 2 : Release Version 0.1
 
@@ -37,6 +37,8 @@ TODO : Implement Quest System
 TODO : Implement Achievements
 
 
+Small Non Urgent Tasks
 
+Make the code in repsonse.cs follow camelCase convetion
 
 

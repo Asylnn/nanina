@@ -23,7 +23,7 @@ namespace Nanina
             if (dotEnvLoadStatus == false) {
                 System.Environment.Exit(1);
             }
-            using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
+            using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
                 Console.WriteLine("DB Loaded!"); 
                 //var user_col = db.GetCollection<PocoUser>("userdb");
                 //var user = new User("Asyln");

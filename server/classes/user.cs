@@ -19,6 +19,8 @@ public class PocoUser
     public string theme { get; set; }
     public Ids ids { get; set; }
     public Tokens tokens { get; set; }
+    public string locale { get; set; }
+    public string avatarPATH { get; set; }
 }
 
 public class Ids {
@@ -31,11 +33,13 @@ public class Tokens {
 }
 
 public class User {
+    public string locale;
     public string username;
     public Waifu waifu;
     public string userId;
     public Ids ids;
     public Tokens tokens;
+    public string avatarPATH;
     private string theme; //Used only in client
     public User(string username, Ids ids)
     {
