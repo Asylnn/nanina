@@ -2,9 +2,8 @@
 import { useRoute, RouterLink, RouterView } from 'vue-router'
 
 import NNNHeader from './components/NNNHeader.vue'
-import ImgBlock from './components/ImgBlock.vue'
+import WaifuDisplay from './components/WaifuDisplay.vue'
 import StatsBlock from './components/StatsBlock.vue'
-import Theme from './components/Theme.vue'
 import Homepage from './components/Homepage.vue'
 import axios from 'axios'
 
@@ -17,19 +16,18 @@ import {
 } from "websocket-ts"
 
 import User from './classes/user'
-
-import Page from './classes/page';
+import Waifu from './classes/waifu'
+import Page from './classes/page'
 
 export default {
 	name: "La SDA de la mort qui tue",
 	data() {
 		return {
-			page: Page.Inventory,
-			logged : false,
-			Page,
+			page: Page.WaifuDisplay,
+			waifu : new Waifu,
+			logged : true,
 
 			id: 1,
-			imgURL: "src/assets/waifu-image/GYrXGACboAACxp7.jpg", 
 			objectType: "Waifu",
 			xp: 0,
 			lvl: 1,
@@ -56,17 +54,15 @@ export default {
 	},
 	components:{
 		NNNHeader,
-		ImgBlock,
+		WaifuDisplay,
 		StatsBlock,
-    Theme,
-    Homepage
+    	Homepage
 	},
 	methods : {
 		updateTheme(theme : string) {
 			this.theme = theme
 		},
 		updateLogged(logged : boolean) {
-			console.log(logged)
 			this.logged = logged
 		},
     	updatePage(page : Page) {
@@ -76,7 +72,7 @@ export default {
   computed : {
     loadingPage() {
       this.page;
-	  this.logged
+	  this.logged;
       switch (this.page) {
         case Page.Homepage :
           return 10
@@ -93,15 +89,18 @@ export default {
         case Page.NotFound :
           return 40
           break;
+		case Page.WaifuDisplay :
+			return 50
+			break;
 		case Page.YouSomehowEndedUpThere:
         default:
-          return 50
+          return 60
           break;
       }
     }
   },
 	mounted() {
-		let user : User = new User("darkmode", "1234", "a username");
+		//let user : User = new User("darkmode", "1234", "a username");
 
 		// Initialize WebSocket with buffering and 1s reconnection delay
 		const ws = new WebsocketBuilder("ws://localhost:4889")
@@ -130,7 +129,7 @@ export default {
 		if(queryParams.has("code")){
 			var code = queryParams.get("code") + ""
 			console.log(code)
-			var formData = new URLSearchParams({
+			/*var formData = new URLSearchParams({
 				grant_type: 'authorization_code',
 				code: code,
 				redirect_uri: 'http://localhost:5173',
@@ -146,9 +145,9 @@ export default {
 			}).catch((w) =>  {
 				console.log("catched!!!")
 				console.log(w)
-			});
+			});*/
 			
-			//ws.send(`{"type":"send code", data =${queryParams.get("code")}}`)*/
+			ws.send(`{"type":"connect with discord", "data":"${queryParams.get("code")}"}`)
 		}
 		else {
 		}
@@ -158,24 +157,27 @@ export default {
 </script>
 
 <template>
-		<div id="main" :class="[theme]">
-    <NNNHeader :logged=logged @connect-change="updateLogged" :theme="theme" @real-theme-change="updateTheme" :page="page" @page-change="updatePage"></NNNHeader>
-    <div v-if="loadingPage === 10">
-    <Homepage image="src/assets/homepage.png"></Homepage>
-    </div>
-    <div v-else-if="loadingPage === 20">
-		<ImgBlock :imgURL="imgURL" :name="name"></ImgBlock>
-		<StatsBlock :objectType="objectType" :stars="stars" :rarity="rarity" :value="value" :owner="owner" :xp="xp" :lvl="lvl" :b_int="b_int" :b_luck="b_luck" :b_exp="b_exp" :o_int="o_int" :o_luck="o_luck"
-		:o_exp="o_exp" :u_int="u_int" :u_exp="u_exp" :diffLvlup="diffLvlup"></StatsBlock>
-    </div>
-    <div v-else-if="loadingPage === 30">
-      Déconnexion
-    </div>
-    <div v-else-if="loadingPage === 40">
-      ERREUR 404 AHAHAHAHAH
-    </div>
-    <div v-else-if="loadingPage === 50">
-    How tf did you even up here?
-    </div>
+	<div id="main" :class="[theme]">
+		<NNNHeader :logged=logged @connect-change="updateLogged" :theme="theme" @theme-change="updateTheme" @page-change="updatePage"></NNNHeader>
+		<div v-if="loadingPage === 10">
+		<Homepage image="src/assets/homepage.png"></Homepage>
+		</div>
+		<div v-else-if="loadingPage === 20">
+			Inventory
+			<!--<StatsBlock :objectType="objectType" :stars="stars" :rarity="rarity" :value="value" :owner="owner" :xp="xp" :lvl="lvl" :b_int="b_int" :b_luck="b_luck" :b_exp="b_exp" :o_int="o_int" :o_luck="o_luck"
+			:o_exp="o_exp" :u_int="u_int" :u_exp="u_exp" :diffLvlup="diffLvlup"></StatsBlock>-->
+		</div>
+		<div v-else-if="loadingPage === 30">
+		Déconnexion
+		</div>
+		<div v-else-if="loadingPage === 40">
+		ERREUR 404 AHAHAHAHAH
+		</div>
+		<div v-else-if="loadingPage === 50">
+			<WaifuDisplay :waifu="waifu"></WaifuDisplay>
+		</div>
+		<div v-else-if="loadingPage === 60">
+		How tf did you even up here?
+		</div>
 	</div>
 </template>

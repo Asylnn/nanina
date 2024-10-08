@@ -18,7 +18,11 @@ namespace Nanina
         static void Main(string[] args)
         {
             Console.WriteLine("Server Launched!");
-            MyServer.ver();
+            //MyServer.ver();
+            var dotEnvLoadStatus = DotEnv.Load("../.env");
+            if (dotEnvLoadStatus == false) {
+                System.Environment.Exit(1);
+            }
             using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
                 Console.WriteLine("DB Loaded!"); 
                 //var user_col = db.GetCollection<PocoUser>("userdb");

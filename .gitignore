@@ -42,3 +42,4 @@ client/.vscode/*
 #Database
 
 /save
+.env

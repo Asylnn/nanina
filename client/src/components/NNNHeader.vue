@@ -2,7 +2,6 @@
 <script lang="ts">
 
 import type { PropType } from 'vue';
-import Theme from './Theme.vue';
 import Page from '../classes/page';
 
 export default {
@@ -10,7 +9,6 @@ export default {
     data() {
         return {
             _theme: this.theme,
-            _page: this.page
         }
     },
     props: {
@@ -22,19 +20,14 @@ export default {
             type : String,
             required : true
         },
-        page : {
-            type : Number as PropType<Page>,
-            required : true
-        }
     },
-    emits: ["connect-change","real-theme-change","page-change"],
+    emits: ["connect-change","theme-change","page-change"],
     methods : {
         onClickConnect() {
             this.$emit("connect-change", !this.logged)
         },
-        softUpdateTheme(newTheme : string) {
-            this._theme = newTheme
-            this.$emit("real-theme-change", this._theme)
+        onChangeTheme() {
+            this.$emit("theme-change", this._theme)
         },
         onClickHomepage() {
             this.$emit("page-change", Page.Homepage)
@@ -44,11 +37,11 @@ export default {
         },
         onClickDisconnected() {
             this.$emit("page-change", Page.Disconnected)
+        },
+        onClickWaifu() {
+            this.$emit("page-change", Page.WaifuDisplay)
         }
     },
-    components : {
-        Theme
-    }
 }
 
 </script>
@@ -61,14 +54,21 @@ export default {
         </div>
         <div id="buttons">
             <ul id="buttList">
-                <li><Theme :theme="theme" @theme-change="softUpdateTheme"></Theme></li>
+                <li><select v-model="_theme" @change="onChangeTheme()">
+                        <option value = "dark_theme">Dark Theme</option>
+                        <option value = "white_theme">White Theme</option>
+                        <option value = "cute_theme">Cute Theme</option>
+                    </select>
+                </li>
                 <li><button id="swapLogged" @click="onClickConnect()">Logged : {{ logged }}</button></li>
+                <li><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
             </ul>
         </div>
         <ul id="pages" v-if="logged">
             <li><button @click="onClickHomepage()">Homepage</button></li>
             <li><button @click="onClickInventory()">Inventory</button></li>
             <li><button @click="onClickDisconnected()">Disconnected</button></li>
+            <li><button @click="onClickWaifu()">Waifu</button></li>
         </ul>
     </header>
 </template>
@@ -140,6 +140,12 @@ li {
 
 #pages li button {
     width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+select {
+    padding: 0%;
     height: 100%;
     border: 0;
 }

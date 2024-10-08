@@ -1,0 +1,42 @@
+STEP 1 : Make a Working Prototype to host on Asyln.moe (prototype with only xp, lvl and osu standard claiming (will be private)) 
+
+TODO : Finish discord authentification
+TODO : Implement user creation
+TODO : Implement waifu database
+TODO : Implement osu API
+TODO : Do claim page/component
+TODO : Do waifu page/component #Done
+TODO : Implement claim system
+TODO : Implement File Serving
+TODO : Add a Discord Login Button #Done
+
+STEP 2 : Release Version 0.1
+
+TODO : Implement Setting page/component
+TODO : Implement Gacha system page/component
+
+STEP 3 : Release Version 0.2
+
+TODO : Implement Inventory System (page/component/database)
+TODO : Implement Money System (page/component/database)
+TODO : Implement Shop System (page/component/database)
+TODO : Implement First Version of the leaderboard system
+
+STEP 4 : Release Version 0.3
+
+TODO : Implement Waifu Stats
+TODO : Implement Activities
+
+STEP 5 : Release Version 0.4
+
+TODO : Implement Donjon Systme
+
+STEP 6 : Release Version 0.5
+
+TODO : Implement Quest System
+TODO : Implement Achievements
+
+
+
+
+

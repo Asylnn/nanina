@@ -3,7 +3,8 @@ enum Page {
 	Inventory,
 	Disconnected,
 	NotFound,
-	YouSomehowEndedUpThere
+	YouSomehowEndedUpThere,
+	WaifuDisplay
 }
 
 export default Page
