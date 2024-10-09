@@ -19,10 +19,8 @@ namespace Nanina
         {
             Console.WriteLine("Server Launched!");
             //MyServer.ver();
-            var dotEnvLoadStatus = DotEnv.Load("../.env");
-            if (dotEnvLoadStatus == false) {
-                System.Environment.Exit(1);
-            }
+            LoadServer.Load();
+            
             using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
                 Console.WriteLine("DB Loaded!"); 
                 //var user_col = db.GetCollection<PocoUser>("userdb");

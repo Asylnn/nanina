@@ -11,6 +11,10 @@ static class UserId {
     }
 }
 
+public class StatCount {
+    public int std_claim_count { get; set; } 
+}
+
 public class PocoUser
 {
     public string username { get; set; } 
@@ -21,10 +25,13 @@ public class PocoUser
     public Tokens tokens { get; set; }
     public string locale { get; set; }
     public string avatarPATH { get; set; }
+    public StatCount statCount { get; set; }
 }
 
 public class Ids {
     public string discordId { get; set; } //Does this work?
+
+    public string osuId { get; set; }
 }
 
 public class Tokens {
@@ -40,6 +47,7 @@ public class User {
     public Ids ids;
     public Tokens tokens;
     public string avatarPATH;
+    public StatCount statCount = new StatCount();
     private string theme = "dark_theme";
     public User(string username, Ids ids)
     {
@@ -57,8 +65,8 @@ public class User {
             theme = theme,
             ids = ids,
             avatarPATH = avatarPATH,
-            locale = locale
-            
+            locale = locale,
+            statCount = statCount,
         };
     }
     public PocoUser ToPocoServer(){
@@ -76,6 +84,7 @@ public class User {
         user.ids = poco.ids;
         user.avatarPATH = poco.avatarPATH;
         user.locale = poco.locale;
+        user.statCount = poco.statCount;
         return user;
     }
 
