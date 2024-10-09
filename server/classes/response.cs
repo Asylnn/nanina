@@ -26,63 +26,58 @@ class Server : WebSocketBehavior
                     break;
                 
                 case "connect with discord":
+                    
+                    Console.WriteLine("code : " + rawData.data);
+                    Console.WriteLine("url : " + Environment.GetEnvironmentVariable("DISCORD_API_URL") + "token");
+                    var base64code = $"{Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID")}:{Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET")}";
+
+                    var client = new RestClient(Environment.GetEnvironmentVariable("DISCORD_API_URL"));
+                    var request_access_token = new RestRequest("oauth2/token", Method.Post);
+                    request_access_token.AddHeader("Authorization", $"Basic {System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(base64code))}");
+                    //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+                    request_access_token.AddParameter("grant_type", "authorization_code");
+                    request_access_token.AddParameter("code", rawData.data);
+                    request_access_token.AddParameter("redirect_uri", Environment.GetEnvironmentVariable("DISCORD_REDIRECT_URI"));
+
+                    var response_access_token = await client.ExecutePostAsync(request_access_token);
+                    var discordTokenResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<DiscordTokenResponse>(response_access_token.Content);
+
+                    Console.WriteLine("response access token data : " + response_access_token.Content);
+
+                    var request_user_information = new RestRequest("users/@me", Method.Get);
+                    request_user_information.AddHeader("Authorization", $"Bearer {discordTokenResponse.access_token}");
+                    var response_user_information = await client.ExecuteGetAsync(request_user_information);
+                    Console.WriteLine("response user information data : " + response_user_information.Content);
+                    var discordUserInformationResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<DiscordUserInformationResponse>(response_access_token.Content);
+
                     using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
-                        Console.WriteLine("code : " + rawData.data);
-                        Console.WriteLine("url : " + Environment.GetEnvironmentVariable("DISCORD_API_URL") + "token");
-                        var base64code = $"{Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID")}:{Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET")}";
-                        Console.WriteLine("unencoded code : " + base64code);
-                        Console.WriteLine("encoded code : " + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(base64code)));
-
-                        var client = new RestClient(Environment.GetEnvironmentVariable("DISCORD_API_URL"));
-                        var request_access_token = new RestRequest("oauth2/token", Method.Post);
-                        request_access_token.AddHeader("Authorization", $"Basic {System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(base64code))}");
-                        //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-                        request_access_token.AddParameter("grant_type", "authorization_code");
-                        request_access_token.AddParameter("code", rawData.data);
-                        request_access_token.AddParameter("redirect_uri", Environment.GetEnvironmentVariable("DISCORD_REDIRECT_URI"));
-                        //If it doesn't work try "AddQueryParameter"
-
-                        var response_access_token = await client.ExecutePostAsync(request_access_token);
-                        var discordTokenResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<DiscordTokenResponse>(response_access_token.Content);
-                        //var response = await client.ExecutePostAsync<DiscordTokenResponse>(request);
-
-                        Console.WriteLine("response access token data : " + response_access_token.Content);
-                        Console.WriteLine("access token : " + discordTokenResponse.access_token);
-
-                        var request_user_information = new RestRequest("users/@me", Method.Get);
-                        request_user_information.AddHeader("Authorization", $"Bearer {discordTokenResponse.access_token}");
-                        var response_user_information = await client.ExecuteGetAsync(request_user_information);
-                        Console.WriteLine("response user information data : " + response_user_information.Content);
-                        
-                        //var discordUserInformationResponse = 
-
-                        /*
-                        
-                        var request_username = new HttpRequestMessage
-                        {
-                            Method = HttpMethod.Post,
-                            RequestUri = new Uri(Environment.GetEnvironmentVariable("DISCORD_API_URL") + "@me"),
-                        };
-                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokens.access_token);
-                        var response_username = await Global.client.SendAsync(request);
-                        var response_username_string = await response_username.Content.ReadAsStringAsync();
-                        Console.WriteLine("DATA : ");
-                        Console.WriteLine(response_username_string);
                         var user_col = db.GetCollection<PocoUser>("userdb");
                         User user;
 
-                        var list = user_col.Find(x => x.ids.discordId == rawData.data);
-                        if (list.Any()){
+                        var list = user_col.Find(x => x.ids.discordId == discordUserInformationResponse.id);
+                        if (list.Count() == 0){
+                            var ids = new Ids() {discordId = discordUserInformationResponse.id};
+                            var tokens = new Tokens(){
+                                discord_access_token = discordTokenResponse.access_token,
+                                discord_refresh_token = discordTokenResponse.refresh_token
+                            };
+                            ids.discordId = discordUserInformationResponse.id;
+                            user = new (discordUserInformationResponse.global_name, ids);
+                            user.tokens = tokens;
+                            user.locale = discordUserInformationResponse.locale;
+                            // TODO user.avatarPATH =
+                            user_col.Insert(user.ToPoco());
+                            user_col.EnsureIndex(x => x.ids.discordId);
+                        }
+                        else if(list.Count() == 1){
                             user = User.FromPoco(list.First());
                         }
                         else {
-                            user = new User("", new Ids());
-                            //user.ids.discordId = e.Data;
-                            //user_col.Insert(user.ToPoco());
-                            //user_col.EnsureIndex(x => x.ids.discordId);
+                            user = User.FromPoco(list.First());
+                            Console.Error.WriteLine("There is more than two people in the user database with the same discord user id! The id is : " + discordUserInformationResponse.id);
                         }
                         
-                        Send(Newtonsoft.Json.JsonConvert.SerializeObject(user.ToPoco()));*/
+                        Send(Newtonsoft.Json.JsonConvert.SerializeObject(user.ToPoco()));
                     }
                     break;
 

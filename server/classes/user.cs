@@ -33,21 +33,19 @@ public class Tokens {
 }
 
 public class User {
-    public string locale;
+    public string locale = "us-en";
     public string username;
-    public Waifu waifu;
-    public string userId;
+    public Waifu waifu = new Waifu("Rem", "src/assets/waifu-image/GYrXGACboAACxp7.jpg");
+    public string userId = UserId.CreateId();
     public Ids ids;
     public Tokens tokens;
     public string avatarPATH;
-    private string theme; //Used only in client
+    private string theme = "dark_theme";
     public User(string username, Ids ids)
     {
         userId = UserId.CreateId();
         this.username = username;
-        this.waifu = new Waifu("Rem", "src/assets/waifu-image/GYrXGACboAACxp7.jpg");
         this.ids = ids;
-        theme = "dark_theme";
     }
     public PocoUser ToPoco()
     {
@@ -57,7 +55,10 @@ public class User {
             waifu = waifu.ToPoco(),
             userId = userId,
             theme = theme,
-            ids = ids
+            ids = ids,
+            avatarPATH = avatarPATH,
+            locale = locale
+            
         };
     }
     public PocoUser ToPocoServer(){
@@ -73,6 +74,8 @@ public class User {
         user.waifu = Waifu.FromPoco(poco.waifu);
         user.theme = poco.theme;
         user.ids = poco.ids;
+        user.avatarPATH = poco.avatarPATH;
+        user.locale = poco.locale;
         return user;
     }
 
