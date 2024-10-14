@@ -31,20 +31,10 @@ namespace Nanina
                 //user_col.Insert(user.ToPoco());
                 //var old_users = user_col.Find(x => x.userId == user.userId);
             }
-            var ws = new WebSocketServer("ws://localhost:4889");
-            ws.AddWebSocketService<Server> ("/");
-            ws.AddWebSocketService<Server> ("/test");
-            ws.Start();
-            if (ws.IsListening) {
-                Console.WriteLine ("Listening on port {0}, and providing WebSocket services:", ws.Port);
-
-            foreach (var path in ws.WebSocketServices.Paths)
-                Console.WriteLine ("- {0}", path);
-            }
-            Console.WriteLine ("\nPress Enter key to stop the server...");
-            Console.ReadLine ();
-
-            ws.Stop ();
+            Thread.Sleep(3000);
+            OsuApi.GetUserRecentScores("10669137", "osu");
+            Console.WriteLine ("Press any key to shut down the server...");
+            Console.ReadKey();
         }
     }
 }
