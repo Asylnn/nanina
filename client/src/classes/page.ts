@@ -4,7 +4,12 @@ enum Page {
 	Disconnected,
 	NotFound,
 	YouSomehowEndedUpThere,
-	WaifuDisplay
+	WaifuDisplay,
+	User,
+	UserOption,
+	PAD0,
+	PAD1,
+	PAD2,
 }
 
 export default Page

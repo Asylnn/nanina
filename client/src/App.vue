@@ -5,6 +5,8 @@ import NNNHeader from './components/NNNHeader.vue'
 import WaifuDisplay from './components/WaifuDisplay.vue'
 import StatsBlock from './components/StatsBlock.vue'
 import Homepage from './components/Homepage.vue'
+import UserPage from './components/UserPage.vue'
+import UserOptionPage from './components/UserOptionPage.vue'
 import axios from 'axios'
 
 import {
@@ -56,7 +58,9 @@ export default {
 		NNNHeader,
 		WaifuDisplay,
 		StatsBlock,
-    	Homepage
+    	Homepage,
+		UserPage,
+		UserOptionPage
 	},
 	methods : {
 		updateTheme(theme : string) {
@@ -66,6 +70,7 @@ export default {
 			this.logged = logged
 		},
     	updatePage(page : Page) {
+			console.log(page)
       		this.page = page
     	}
 	},
@@ -76,78 +81,43 @@ export default {
       switch (this.page) {
         case Page.Homepage :
           return 10
-          break;
         case Page.Inventory :
-			if (this.logged === true) {
-				return 20;
-			}
-			else return 50;
-		break;
+			if (this.logged === true) return 20
+			else return 50
         case Page.Disconnected :
           return 30
-          break;
         case Page.NotFound :
           return 40
-          break;
 		case Page.WaifuDisplay :
 			return 50
-			break;
 		case Page.YouSomehowEndedUpThere:
+			return 60
+		case Page.User:
+			return 70
+		case Page.UserOption:
+			return 80
         default:
-          return 60
-          break;
+        	return 40
       }
     }
   },
 	mounted() {
-		//let user : User = new User("darkmode", "1234", "a username");
-
-		// Initialize WebSocket with buffering and 1s reconnection delay
-		const ws = new WebsocketBuilder("ws://localhost:4889")
-			.withBuffer(new ArrayQueue())           // buffer messages when disconnected
-			.withBackoff(new ConstantBackoff(1000)) // retry every 1s
-			.build();
-
-		// Function to output & echo received messages
-		const echoOnMessage = (i: Websocket, ev: MessageEvent) => {
+		const ListenForNewUser = (i: Websocket, ev: MessageEvent) => {
 			console.log(`received message: ${ev.data}`);
 			var obj : User = JSON.parse(ev.data)
 			console.log(obj)
 			//i.send(`${ev.data}`);
 		};
-
-		// Add event listeners
-		ws.addEventListener(WebsocketEvent.open, () => console.log("ws opened!"));
-		ws.addEventListener(WebsocketEvent.close, () => console.log("ws closed!"));
-		ws.addEventListener(WebsocketEvent.message, echoOnMessage);
-		ws.send(`{"type":"request user", "data":"727"}`)
-		
+		//@ts-ignore
+		this.ws.addEventListener(WebsocketEvent.message, ListenForNewUser);
+		//@ts-ignore
+		this.ws.send(`{"type":"request user", "data":"727"}`)
 		const url = new URL(window.location.href);
 		const queryParams = new URLSearchParams(url.search);
-		
-
 		if(queryParams.has("code")){
 			var code = queryParams.get("code") + ""
-			console.log(code)
-			/*var formData = new URLSearchParams({
-				grant_type: 'authorization_code',
-				code: code,
-				redirect_uri: 'http://localhost:5173',
-			})
-			axios.post("https://discord.com/api/oauth2/token", formData.toString(),
-			{
-				headers: {
-					"Authorization": `Basic ${btoa(`${"1292571843848568932"}:${"rhZnqlH817wvJ9V13uRNhFQS8h9VLRov"}`)}`,
-					'Content-Type': 'application/x-www-form-urlencoded'
-				}
-			}).then((data) =>  {
-				console.log(data)
-			}).catch((w) =>  {
-				console.log("catched!!!")
-				console.log(w)
-			});*/
-			
-			ws.send(`{"type":"connect with discord", "data":"${queryParams.get("code")}"}`)
+			//@ts-ignore
+			this.ws.send(`{"type":"connect with discord", "data":"${queryParams.get("code")}"}`)
 		}
 		else {
 		}
@@ -158,7 +128,7 @@ export default {
 
 <template>
 	<div id="main" :class="[theme]">
-		<NNNHeader :logged=logged @connect-change="updateLogged" :theme="theme" @theme-change="updateTheme" @page-change="updatePage"></NNNHeader>
+		<NNNHeader :logged=logged @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
 		<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
@@ -168,16 +138,23 @@ export default {
 			:o_exp="o_exp" :u_int="u_int" :u_exp="u_exp" :diffLvlup="diffLvlup"></StatsBlock>-->
 		</div>
 		<div v-else-if="loadingPage === 30">
-		Déconnexion
+			Déconnexion
 		</div>
 		<div v-else-if="loadingPage === 40">
-		ERREUR 404 AHAHAHAHAH
+			ERREUR 404 AHAHAHAHAH
 		</div>
 		<div v-else-if="loadingPage === 50">
 			<WaifuDisplay :waifu="waifu"></WaifuDisplay>
 		</div>
 		<div v-else-if="loadingPage === 60">
-		How tf did you even up here?
+			How tf did you even up here?
+		</div>
+		<div v-else-if="loadingPage === 70">
+			<p>Hello User!</p>
+			<UserPage></UserPage>
+		</div>
+		<div v-else-if="loadingPage === 80">
+			<UserOptionPage :theme=theme @theme-change="updateTheme"></UserOptionPage>
 		</div>
 	</div>
 </template>

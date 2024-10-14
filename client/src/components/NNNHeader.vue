@@ -6,41 +6,21 @@ import Page from '../classes/page';
 
 export default {
     name : "NNNHeader",
-    data() {
-        return {
-            _theme: this.theme,
-        }
-    },
     props: {
         logged : {
             type : Boolean,
             required : true
         },
-        theme : {
-            type : String,
-            required : true
-        },
     },
     emits: ["connect-change","theme-change","page-change"],
     methods : {
+        onClickChangePage(page: Page){
+            this.$emit("page-change", page)
+
+        },
         onClickConnect() {
             this.$emit("connect-change", !this.logged)
         },
-        onChangeTheme() {
-            this.$emit("theme-change", this._theme)
-        },
-        onClickHomepage() {
-            this.$emit("page-change", Page.Homepage)
-        },
-        onClickInventory() {
-            this.$emit("page-change", Page.Inventory)
-        },
-        onClickDisconnected() {
-            this.$emit("page-change", Page.Disconnected)
-        },
-        onClickWaifu() {
-            this.$emit("page-change", Page.WaifuDisplay)
-        }
     },
 }
 
@@ -54,21 +34,16 @@ export default {
         </div>
         <div id="buttons">
             <ul id="buttList">
-                <li><select v-model="_theme" @change="onChangeTheme()">
-                        <option value = "dark_theme">Dark Theme</option>
-                        <option value = "white_theme">White Theme</option>
-                        <option value = "cute_theme">Cute Theme</option>
-                    </select>
-                </li>
                 <li><button id="swapLogged" @click="onClickConnect()">Logged : {{ logged }}</button></li>
-                <li><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
+                <li v-if="!logged"><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
+                <li v-else><button @click="onClickChangePage(7)"><img height=32px width=32px src="../assets/option_gear_from_google_probably_not_free_of_use.png"></button></li>
             </ul>
         </div>
         <ul id="pages" v-if="logged">
-            <li><button @click="onClickHomepage()">Homepage</button></li>
-            <li><button @click="onClickInventory()">Inventory</button></li>
-            <li><button @click="onClickDisconnected()">Disconnected</button></li>
-            <li><button @click="onClickWaifu()">Waifu</button></li>
+            <li><button @click="onClickChangePage(0)">Homepage</button></li>
+            <li><button @click="onClickChangePage(1)">Inventory</button></li>
+            <li><button @click="onClickChangePage(2)">Disconnected</button></li>
+            <li><button @click="onClickChangePage(5)">Waifu</button></li>
         </ul>
     </header>
 </template>
