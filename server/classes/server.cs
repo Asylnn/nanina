@@ -1,9 +1,5 @@
-using System;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-
 public class MyServer {
 
     static public void ver(){
@@ -68,8 +64,8 @@ public class MyServer {
             server.Stop();
         }
 
-        Console.WriteLine("\nHit enter to continue...");
-        Console.Read();
+        //Console.WriteLine("\nHit enter to continue...");
+        //Console.Read();
     }
     
 }

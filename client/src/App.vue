@@ -7,7 +7,9 @@ import StatsBlock from './components/StatsBlock.vue'
 import Homepage from './components/Homepage.vue'
 import UserPage from './components/UserPage.vue'
 import UserOptionPage from './components/UserOptionPage.vue'
-import axios from 'axios'
+import type WebSocketReponse from './classes/web_socket_response'
+import {inject} from 'vue'
+import type {VueCookies} from 'vue-cookies'
 
 import {
 	ArrayQueue,
@@ -27,7 +29,7 @@ export default {
 		return {
 			page: Page.WaifuDisplay,
 			waifu : new Waifu,
-			logged : true,
+			logged : false,
 
 			id: 1,
 			objectType: "Waifu",
@@ -101,17 +103,41 @@ export default {
       }
     }
   },
+  	created(){
+		
+
+	},
 	mounted() {
-		const ListenForNewUser = (i: Websocket, ev: MessageEvent) => {
+		console.log("mounted app!")
+		const $cookies = inject<VueCookies>('$cookies')!; 
+		$cookies.config("5min")
+		var has_session_id = $cookies.isKey("session_id")
+		if (!has_session_id) {
+			//@ts-ignore
+			this.ws.send(`{"type":"get session id", "data":""}`)
+		}
+		else {
+			
+			console.log("Sent request for user using session Id, waiting for response...")
+			//@ts-ignore
+			this.ws.send(JSON.stringify({type:"request user with session id", data:$cookies.get("session_id")}))
+		}
+		const ListenForData = (i: Websocket, ev: MessageEvent) => {
 			console.log(`received message: ${ev.data}`);
-			var obj : User = JSON.parse(ev.data)
-			console.log(obj)
+			var res : WebSocketReponse = JSON.parse(ev.data)
+			if(res.type == "session_id"){
+				$cookies.set("session_id", res.data)
+			}
+			else if (res.type == "user"){
+				this.logged = true
+			}
+
 			//i.send(`${ev.data}`);
 		};
 		//@ts-ignore
-		this.ws.addEventListener(WebsocketEvent.message, ListenForNewUser);
+		this.ws.addEventListener(WebsocketEvent.message, ListenForData);
 		//@ts-ignore
-		this.ws.send(`{"type":"request user", "data":"727"}`)
+		
 		const url = new URL(window.location.href);
 		const queryParams = new URLSearchParams(url.search);
 		if(queryParams.has("code")){

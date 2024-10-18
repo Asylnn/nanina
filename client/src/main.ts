@@ -1,16 +1,19 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import User from './classes/user'
 //import router from './router'
 import {
 	ArrayQueue,
 	ConstantBackoff,
-	Websocket,
 	WebsocketBuilder,
 	WebsocketEvent,
 } from "websocket-ts"
 
-const app = createApp(App)
+import VueCookies from "vue-cookies"
+
+// default options config: { expires: '1d', path: '/', domain: '', secure: '', sameSite: 'Lax' , partitioned: false}
+
+export const app = createApp(App)
+app.use(VueCookies)
 
 app.config.globalProperties.ws = new WebsocketBuilder("ws://localhost:4889")
     .withBuffer(new ArrayQueue())           // buffer messages when disconnected

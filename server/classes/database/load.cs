@@ -27,8 +27,8 @@ public static class LoadServer {
     }
     public static void LoadWebSocketServer(){
         var ws = new WebSocketServer("ws://localhost:4889");
-            ws.AddWebSocketService<Server> ("/");
-            ws.AddWebSocketService<Server> ("/test");
+            ws.AddWebSocketService<WS> ("/");
+            ws.AddWebSocketService<WS> ("/test");
             ws.Start();
             if (ws.IsListening) {
                 Console.WriteLine ("Listening on port {0}, and providing WebSocket services:", ws.Port);

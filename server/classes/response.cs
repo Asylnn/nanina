@@ -2,31 +2,45 @@ using WebSocketSharp.Server;
 using WebSocketSharp;
 using Newtonsoft.Json;
 using LiteDB;
-using System.Runtime.CompilerServices;
-using System.Net.Http.Headers;
 using RestSharp;
-class Server : WebSocketBehavior
+class WS : WebSocketBehavior
     {
         protected override async void OnMessage(MessageEventArgs e)
         {
             Console.WriteLine("DATA : " + (string) e.Data); 
             ClientWebSocketResponse rawData = Newtonsoft.Json.JsonConvert.DeserializeObject<ClientWebSocketResponse>(e.Data);
             switch (rawData.type) {
-                case "request user":
-                    using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-                        var user_col = db.GetCollection<PocoUser>("userdb");
-                        User user = User.FromPoco(user_col.Find(x => x.userId == rawData.data).First());
-                        Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu.ToPoco()));
-                        user_col.EnsureIndex(x => x.userId);
-                        Send(Newtonsoft.Json.JsonConvert.SerializeObject(user.ToPoco()));
+
+
+                //Recieve a request from the client to get a user from a sessionId stored in cookies.
+                //It check the database for that sessionId and return, if found, the user associated with that session ID.
+                case "request user with session id":
+                    using(var sessionDB = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+                        var sessionCol = sessionDB.GetCollection<SessionDBEntry>("sessiondb");
+                        Console.WriteLine("sessionId : " + rawData.data);
+                        var session = sessionCol.Find(x => x.sessionId == rawData.data).First();
+                        //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu.ToPoco()));
+                        if (!session.hasUserAssociatedWithSession) return;
+                        using(var userDB = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+                            var userCol = sessionDB.GetCollection<PocoUser>("sessiondb");
+                            var user = userCol.Find(x => x.userId == session.userId).First();
+                            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                            {
+                                type = "user",
+                                data = JsonConvert.SerializeObject(user) 
+                            }));
+
+                        }
+                        
                     }
                     break;
-                case "send code":
 
+
+                case "get session id":
+                    Send(JsonConvert.SerializeObject(Communication.UpdateSessionId()));
                     break;
-                
+
                 case "connect with discord":
-                    
                     Console.WriteLine("code : " + rawData.data);
                     Console.WriteLine("url : " + Environment.GetEnvironmentVariable("DISCORD_API_URL") + "token");
                     var base64code = $"{Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID")}:{Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET")}";
@@ -40,18 +54,22 @@ class Server : WebSocketBehavior
                     request_access_token.AddParameter("redirect_uri", Environment.GetEnvironmentVariable("DISCORD_REDIRECT_URI"));
 
                     var response_access_token = await client.ExecutePostAsync(request_access_token);
-                    var discordTokenResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<DiscordTokenResponse>(response_access_token.Content);
+                    if(response_access_token.StatusCode != System.Net.HttpStatusCode.OK) {return;}
+                    var discordTokenResponse = JsonConvert.DeserializeObject<DiscordTokenResponse>(response_access_token.Content);
 
                     Console.WriteLine("response access token data : " + response_access_token.Content);
 
                     var request_user_information = new RestRequest("users/@me", Method.Get);
                     request_user_information.AddHeader("Authorization", $"Bearer {discordTokenResponse.access_token}");
                     var response_user_information = await client.ExecuteGetAsync(request_user_information);
+                    if(response_user_information.StatusCode != System.Net.HttpStatusCode.OK) {return;}
+
                     Console.WriteLine("response user information data : " + response_user_information.Content);
-                    var discordUserInformationResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<DiscordUserInformationResponse>(response_access_token.Content);
+                    var discordUserInformationResponse = JsonConvert.DeserializeObject<DiscordUserInformationResponse>(response_access_token.Content);
 
                     using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
                         var user_col = db.GetCollection<PocoUser>("userdb");
+                        //We have to unpoco the user for using the constructor
                         User user;
 
                         var list = user_col.Find(x => x.ids.discordId == discordUserInformationResponse.id);
@@ -76,8 +94,11 @@ class Server : WebSocketBehavior
                             user = User.FromPoco(list.First());
                             Console.Error.WriteLine("There is more than two people in the user database with the same discord user id! The id is : " + discordUserInformationResponse.id);
                         }
-                        
-                        Send(Newtonsoft.Json.JsonConvert.SerializeObject(user.ToPoco()));
+                        Send(JsonConvert.SerializeObject(Communication.UpdateSessionId(user.userId, true)));
+                        Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                            type = "user",
+                            data = JsonConvert.SerializeObject(user)
+                        }));
                     }
                     break;
 

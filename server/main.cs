@@ -32,7 +32,7 @@ namespace Nanina
                 //var old_users = user_col.Find(x => x.userId == user.userId);
             }
             Thread.Sleep(3000);
-            OsuApi.GetUserRecentScores("10669137", "osu");
+            //OsuApi.GetUserRecentScores("10669137", "osu");
             Console.WriteLine ("Press any key to shut down the server...");
             Console.ReadKey();
         }

@@ -41,13 +41,19 @@ public static class OsuApi {
         var response = await client.ExecuteGetAsync(request);
         Console.WriteLine("response content "+ response.Content);
         Console.WriteLine("response status code "+ response.StatusCode);
-        var scores =  Newtonsoft.Json.JsonConvert.DeserializeObject<OsuScore[]>(response.Content,  new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore
-        });
-        foreach (var score in scores) {
-            var XP = score.accuracy*score.beatmap.hit_length*score.beatmap.difficulty_rating;
-            Console.WriteLine($"You earned {XP} XP!");
+
+        try { //Temporary fix, seems like empty arrays are crashing Newtonsoft
+            var scores =  Newtonsoft.Json.JsonConvert.DeserializeObject<OsuScore[]>(response.Content,  new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            foreach (var score in scores) {
+                var XP = score.accuracy*score.beatmap.hit_length*score.beatmap.difficulty_rating;
+                Console.WriteLine($"You earned {XP} XP!");
+            }
+        }
+        catch {
+
         }
     }
 }
