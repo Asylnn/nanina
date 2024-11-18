@@ -1,6 +1,11 @@
 # nanina
-Web version of Waifu Fight (the comeback)
-It will definitely change the course of history !
+The Webapp version of Waifu Fight (the comeback)
+
+Nanina is a website where you can get and train anime characters (waifus) through playing rhythm games!
+It will provide another way of progression parallel to the tradionnal skill based progression of most rhythm game where the real only way to progress is to become better at the game.
+
+It is right now in a barebone state with nearly none of the features of the original Waifu Fight Discord bot, but we hope this will change soon. 
+
 
 ## Recommended IDE Setup
 
@@ -13,7 +18,7 @@ It will definitely change the course of history !
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## Client Project Setup
 
 ```sh
 npm install
@@ -35,4 +40,12 @@ npm run build
 
 ```sh
 npm run lint
-```- 
+```
+
+## Server Project Setup
+
+You will have to install the .NET SDK package.
+
+```
+dotnet install
+```
