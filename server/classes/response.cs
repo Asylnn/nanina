@@ -49,6 +49,24 @@ class WS : WebSocketBehavior
                 case "get session id":
                     Send(JsonConvert.SerializeObject(Communication.UpdateSessionId()));
                     break;
+                case "add beatmap with id": { // bracket are here to have a different scope for the variable named "user".
+                    var user = DBUtils.GetUser(rawData.id);
+                    if (user.admin == true){
+                        var Beatmap = await OsuApi.GetBeatmapById(rawData.data);
+                        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+                            var mapsCol = db.GetCollection<OsuBeatmap>("osumaps");
+                            Console.WriteLine("Adding map : " + rawData.data);
+                            Console.WriteLine(Beatmap.difficulty_rating);
+                            Console.WriteLine(Beatmap.id);
+                            mapsCol.Insert(Beatmap);
+                            mapsCol.EnsureIndex(x => x.id, true);
+                            mapsCol.EnsureIndex(x => x.difficulty_rating);
+                        }
+                    }
+                    else {
+                        // Send Error message
+                    }
+                    } break;
 
                 case "connect with discord":
                     Console.WriteLine("code : " + rawData.data);

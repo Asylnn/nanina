@@ -9,7 +9,7 @@ public static class DBUtils {
                 return list.First();
             }
             else {
-                Console.Error.WriteLine("Somehow got a userID wrong with no associated account? Returning blank user");
+                Console.Error.WriteLine($"Somehow got a userID ({id}) wrong with no associated account? Returning blank user");
                 return new PocoUser();
             }
         }

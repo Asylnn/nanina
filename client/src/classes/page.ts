@@ -7,6 +7,7 @@ enum Page {
 	WaifuDisplay,
 	User,
 	UserOption,
+	AddMap,
 	PAD0,
 	PAD1,
 	PAD2,

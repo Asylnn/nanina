@@ -7,6 +7,7 @@ import StatsBlock from './components/StatsBlock.vue'
 import Homepage from './components/Homepage.vue'
 import UserPage from './components/UserPage.vue'
 import UserOptionPage from './components/UserOptionPage.vue'
+import AddMap from './components/AddMap.vue'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -38,7 +39,8 @@ export default {
 		StatsBlock,
     	Homepage,
 		UserPage,
-		UserOptionPage
+		UserOptionPage,
+		AddMap
 	},
 	methods : {
 		updateTheme(theme : string) {
@@ -78,6 +80,10 @@ export default {
 			return 70
 		case Page.UserOption:
 			return 80
+		case Page.AddMap :
+			if (this.user.admin == true)	return 90
+			else 					return 50
+
         default:
         	return 40
       }
@@ -131,7 +137,7 @@ export default {
 
 <template>
 	<div id="main" :class="[user.theme]">
-		<NNNHeader :logged=logged @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
+		<NNNHeader :logged=logged :admin=user.admin @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
 		<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
@@ -158,6 +164,9 @@ export default {
 		</div>
 		<div v-else-if="loadingPage === 80">
 			<UserOptionPage :id=user.Id :theme=user.theme @theme-change="updateTheme"></UserOptionPage>
+		</div>
+		<div v-else-if="loadingPage === 90">
+			<AddMap :id="user.Id"></AddMap>
 		</div>
 	</div>
 </template>

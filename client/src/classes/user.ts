@@ -2,6 +2,7 @@ import { StatCount } from './stats'
 import Waifu from './waifu'
 
 export default class User {
+    public admin : boolean = false
     public username : string = "Pro Osu Player"
     public theme : string = "dark_theme"
     public ids : any = {}

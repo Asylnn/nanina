@@ -1,5 +1,6 @@
 using RestSharp;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 public enum Mod {
 
 }
@@ -15,6 +16,11 @@ public static class OsuApi {
     public static RestClient client = new RestClient(Environment.GetEnvironmentVariable("OSU_API_URL"));
     public static OsuOAuthTokens tokens = new OsuOAuthTokens();
 
+    public static void AddDefaultHeader(RestRequest request){
+        request.AddHeader("Content-Type", "application/json");
+        request.AddHeader("Accept", "application/json");
+        request.AddHeader("Authorization", $"Bearer {tokens.access_token}");
+    }
     public static async void RefreshTokens(){
         var request = new RestRequest(Environment.GetEnvironmentVariable("OSU_OAUTH_URL"), Method.Post);
         //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -32,9 +38,7 @@ public static class OsuApi {
 
     public static async void GetUserRecentScores(string id, string mode){
         var request = new RestRequest($"users/{id}/scores/recent", Method.Get);
-        request.AddHeader("Content-Type", "application/json");
-        request.AddHeader("Accept", "application/json");
-        request.AddHeader("Authorization", $"Bearer {tokens.access_token}");
+        AddDefaultHeader(request);
         request.AddQueryParameter("limit","11");
         request.AddQueryParameter("mode",mode);
         var response = await client.ExecuteGetAsync(request);
@@ -54,5 +58,19 @@ public static class OsuApi {
         catch {
 
         }
+    }
+    
+    public static async Task<OsuBeatmap> GetBeatmapById(string beatmapId){
+        var request = new RestRequest($"beatmaps/lookup", Method.Get);
+        AddDefaultHeader(request);
+        request.AddQueryParameter("id",beatmapId);
+        var response = await client.ExecuteGetAsync(request);
+        Console.WriteLine("response content "+ response.Content);
+        Console.WriteLine("response status code "+ response.StatusCode);
+
+        return Newtonsoft.Json.JsonConvert.DeserializeObject<OsuBeatmap>(response.Content,  new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
     }
 }
