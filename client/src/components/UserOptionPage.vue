@@ -12,6 +12,10 @@ export default {
         theme : {
             type : String, 
             required : true,
+        },
+        id : {
+            type : String,
+            required : true,
         }
     },
     methods : {
@@ -19,7 +23,8 @@ export default {
             this.$emit("theme-change", this.selected_theme)
         },
         updateSettings(){
-            console.log(this.entered_id)
+            //@ts-ignore
+			this.ws.send(JSON.stringify({type:"update osu id", data:this.entered_id, id: this.id}))
         }
     }
 }

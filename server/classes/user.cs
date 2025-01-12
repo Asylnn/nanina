@@ -13,13 +13,15 @@ static class UserId {
 
 public class StatCount {
     public int std_claim_count { get; set; } 
+
 }
 
 public class PocoUser
 {
+    public bool admin {get; set;}
     public string username { get; set; } 
     public PocoWaifu waifu { get; set; }
-    public string userId { get; set; }
+    public string Id { get; set; }
     public string theme { get; set; }
     public Ids ids { get; set; }
     public Tokens tokens { get; set; }
@@ -42,8 +44,9 @@ public class Tokens {
 public class User {
     public string locale = "us-en";
     public string username;
+    public bool admin = false;
     public Waifu waifu = new Waifu("Rem", "src/assets/waifu-image/GYrXGACboAACxp7.jpg");
-    public string userId = UserId.CreateId();
+    public string Id = UserId.CreateId();
     public Ids ids;
     public Tokens tokens;
     public string avatarPATH;
@@ -51,7 +54,7 @@ public class User {
     private string theme = "dark_theme";
     public User(string username, Ids ids)
     {
-        userId = UserId.CreateId();
+        //Id = UserId.CreateId();
         this.username = username;
         this.ids = ids;
     }
@@ -59,9 +62,10 @@ public class User {
     {
         return new PocoUser
         {
+            admin = admin,
             username = username,
             waifu = waifu.ToPoco(),
-            userId = userId,
+            Id = Id,
             theme = theme,
             ids = ids,
             avatarPATH = avatarPATH,
@@ -78,13 +82,14 @@ public class User {
     public static User FromPoco(PocoUser poco, bool forClient = false)
     {
         User user  = new User(poco.username, poco.ids);
-        user.userId = poco.userId;
+        user.Id = poco.Id;
         user.waifu = Waifu.FromPoco(poco.waifu);
         user.theme = poco.theme;
         user.ids = poco.ids;
         user.avatarPATH = poco.avatarPATH;
         user.locale = poco.locale;
         user.statCount = poco.statCount;
+        user.admin = poco.admin;
         return user;
     }
 

@@ -26,7 +26,6 @@ public static class OsuApi {
         var response = await new RestClient().ExecutePostAsync(request);
         //Console.WriteLine("yoken 0 " + response.Content);
         tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(response.Content);
-        Console.WriteLine("yoken -1 " + tokens.access_token);
 
         File.WriteAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH"), response.Content);
     }

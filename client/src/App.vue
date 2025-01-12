@@ -28,32 +28,8 @@ export default {
 	data() {
 		return {
 			page: Page.WaifuDisplay,
-			waifu : new Waifu,
 			logged : false,
-
-			id: 1,
-			objectType: "Waifu",
-			xp: 0,
-			lvl: 1,
-			b_int: 69,
-			b_luck: 17,
-			b_exp: 52,
-			stars: 4,
-			modificators: [],
-			equipedItems: [],
-			action : {},
-			owner : "Le seul l'unique",
-			name: "Thighs-sama",
-			diffLvlup: 10,
-			o_exp: 2.1,
-			o_int: 2.2,
-			o_luck: 2.3,
-			u_exp: 3.1,
-			u_int: 3.2,
-			rarity: 4,
-			value: -1,
-			isTradable: false,
-			theme: "dark_theme"
+			user : new User(),
 		}
 	},
 	components:{
@@ -66,7 +42,11 @@ export default {
 	},
 	methods : {
 		updateTheme(theme : string) {
-			this.theme = theme
+			this.user.theme = theme
+			if (this.logged) {
+				//@ts-ignore
+				this.ws.send(JSON.stringify({type:"update theme", data:theme, id: this.user.Id}))
+			}
 		},
 		updateLogged(logged : boolean) {
 			this.logged = logged
@@ -103,14 +83,10 @@ export default {
       }
     }
   },
-  	created(){
-		
-
-	},
 	mounted() {
 		console.log("mounted app!")
 		const $cookies = inject<VueCookies>('$cookies')!; 
-		$cookies.config("5min")
+		$cookies.config("1m")
 		var has_session_id = $cookies.isKey("session_id")
 		if (!has_session_id) {
 			//@ts-ignore
@@ -120,7 +96,7 @@ export default {
 			
 			console.log("Sent request for user using session Id, waiting for response...")
 			//@ts-ignore
-			this.ws.send(JSON.stringify({type:"request user with session id", data:$cookies.get("session_id")}))
+			this.ws.send(JSON.stringify({type:"request user with session id", data:$cookies.get("session_id"), id:""}))
 		}
 		const ListenForData = (i: Websocket, ev: MessageEvent) => {
 			console.log(`received message: ${ev.data}`);
@@ -130,20 +106,21 @@ export default {
 			}
 			else if (res.type == "user"){
 				this.logged = true
+				console.log(JSON.parse(res.data))
+				this.user = JSON.parse(res.data)
 			}
 
 			//i.send(`${ev.data}`);
 		};
 		//@ts-ignore
 		this.ws.addEventListener(WebsocketEvent.message, ListenForData);
-		//@ts-ignore
 		
 		const url = new URL(window.location.href);
 		const queryParams = new URLSearchParams(url.search);
 		if(queryParams.has("code")){
 			var code = queryParams.get("code") + ""
 			//@ts-ignore
-			this.ws.send(`{"type":"connect with discord", "data":"${queryParams.get("code")}"}`)
+			this.ws.send(JSON.stringify({type:"connect with discord", data:queryParams.get("code"), id:""}))
 		}
 		else {
 		}
@@ -153,7 +130,7 @@ export default {
 </script>
 
 <template>
-	<div id="main" :class="[theme]">
+	<div id="main" :class="[user.theme]">
 		<NNNHeader :logged=logged @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
 		<Homepage image="src/assets/homepage.png"></Homepage>
@@ -170,7 +147,7 @@ export default {
 			ERREUR 404 AHAHAHAHAH
 		</div>
 		<div v-else-if="loadingPage === 50">
-			<WaifuDisplay :waifu="waifu"></WaifuDisplay>
+			<WaifuDisplay :waifu="user.waifu"></WaifuDisplay>
 		</div>
 		<div v-else-if="loadingPage === 60">
 			How tf did you even up here?
@@ -180,7 +157,7 @@ export default {
 			<UserPage></UserPage>
 		</div>
 		<div v-else-if="loadingPage === 80">
-			<UserOptionPage :theme=theme @theme-change="updateTheme"></UserOptionPage>
+			<UserOptionPage :id=user.Id :theme=user.theme @theme-change="updateTheme"></UserOptionPage>
 		</div>
 	</div>
 </template>

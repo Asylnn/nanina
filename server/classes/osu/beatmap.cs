@@ -1,7 +1,7 @@
 public class OsuBeatmap {
     public int beatmapset_id;
     public float difficulty_rating;
-    public double id;
+    public long id;
     public string mode;
     public string status;
     public int total_length;

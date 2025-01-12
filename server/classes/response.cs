@@ -14,27 +14,37 @@ class WS : WebSocketBehavior
 
                 //Recieve a request from the client to get a user from a sessionId stored in cookies.
                 //It check the database for that sessionId and return, if found, the user associated with that session ID.
-                case "request user with session id":
-                    using(var sessionDB = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-                        var sessionCol = sessionDB.GetCollection<SessionDBEntry>("sessiondb");
+                case "request user with session id": 
+                    using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+                        var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
                         Console.WriteLine("sessionId : " + rawData.data);
-                        var session = sessionCol.Find(x => x.sessionId == rawData.data).First();
+                        var sessionList = sessionCol.Find(x => x.sessionId == rawData.data);
+                        if (sessionList.Count() != 1) return;
+                        var session = sessionList.First();
                         //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu.ToPoco()));
                         if (!session.hasUserAssociatedWithSession) return;
-                        using(var userDB = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-                            var userCol = sessionDB.GetCollection<PocoUser>("sessiondb");
-                            var user = userCol.Find(x => x.userId == session.userId).First();
-                            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-                            {
-                                type = "user",
-                                data = JsonConvert.SerializeObject(user) 
-                            }));
-
-                        }
-                        
+                        var userCol = db.GetCollection<PocoUser>("userdb");
+                        var requestedUser = userCol.Find(x => x.Id == session.userId).First();
+                        Console.WriteLine("username : " + requestedUser.username);
+                        Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                        {
+                            type = "user",
+                            data = JsonConvert.SerializeObject(requestedUser) 
+                        }));
                     }
                     break;
 
+                case "update theme": { // bracket are here to have a different scope for the variable named "user".
+                    var user = DBUtils.GetUser(rawData.id);
+                    user.theme = rawData.data;
+                    DBUtils.UpdateUser(user);
+                    } break;
+                
+                case "update osu id": { // bracket are here to have a different scope for the variable named "user".
+                    var user = DBUtils.GetUser(rawData.id);
+                    user.ids.osuId = rawData.data;
+                    DBUtils.UpdateUser(user);
+                    } break;
 
                 case "get session id":
                     Send(JsonConvert.SerializeObject(Communication.UpdateSessionId()));
@@ -65,7 +75,7 @@ class WS : WebSocketBehavior
                     if(response_user_information.StatusCode != System.Net.HttpStatusCode.OK) {return;}
 
                     Console.WriteLine("response user information data : " + response_user_information.Content);
-                    var discordUserInformationResponse = JsonConvert.DeserializeObject<DiscordUserInformationResponse>(response_access_token.Content);
+                    var discordUserInformationResponse = JsonConvert.DeserializeObject<DiscordUserInformationResponse>(response_user_information.Content);
 
                     using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
                         var user_col = db.GetCollection<PocoUser>("userdb");
@@ -84,8 +94,10 @@ class WS : WebSocketBehavior
                             user.tokens = tokens;
                             user.locale = discordUserInformationResponse.locale;
                             // TODO user.avatarPATH =
+                            Console.WriteLine("Inserted new user! Id : " + user.Id);
                             user_col.Insert(user.ToPoco());
-                            user_col.EnsureIndex(x => x.ids.discordId);
+                            user_col.EnsureIndex(x => x.ids.discordId, true);
+                            user_col.EnsureIndex(x => x.Id, true);
                         }
                         else if(list.Count() == 1){
                             user = User.FromPoco(list.First());
@@ -94,10 +106,10 @@ class WS : WebSocketBehavior
                             user = User.FromPoco(list.First());
                             Console.Error.WriteLine("There is more than two people in the user database with the same discord user id! The id is : " + discordUserInformationResponse.id);
                         }
-                        Send(JsonConvert.SerializeObject(Communication.UpdateSessionId(user.userId, true)));
+                        Send(JsonConvert.SerializeObject(Communication.UpdateSessionId(user.Id, true)));
                         Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
                             type = "user",
-                            data = JsonConvert.SerializeObject(user)
+                            data = JsonConvert.SerializeObject(user.ToPoco())
                         }));
                     }
                     break;
