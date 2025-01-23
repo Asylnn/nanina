@@ -7,6 +7,10 @@ export default class Waifu {
     public get xpToLvlUp() : number {
         return Math.floor(this.diffLvlUp*(10*this.lvl + 20))
     }
+
+    constructor(obj: any){
+        Object.assign(this, obj)
+    }
     /*constructor(name :string ,xp : number,lvl:number,diffLvlUp : number,imgPATH : string) {
         this.name = name
         this.xp = xp

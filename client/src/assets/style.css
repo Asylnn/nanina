@@ -1,5 +1,10 @@
+*{
+    margin:0;
+    padding:0;
+}
 body {
     font-size: 18px;
+    overflow: scroll;
 }
 
 [v-cloak] {
@@ -23,7 +28,6 @@ body {
 
 #main
 {
-    position:fixed;
     padding:0;
     margin:0;
 

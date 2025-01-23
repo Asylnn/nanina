@@ -48,6 +48,7 @@ export default {
             <li><button @click="onClickChangePage(1)">Inventory</button></li>
             <li><button @click="onClickChangePage(2)">Disconnected</button></li>
             <li><button @click="onClickChangePage(5)">Waifu</button></li>
+            <li><button @click="onClickChangePage(9)">Fighting!!</button></li>
             <li v-if="admin"><button @click="onClickChangePage(8)">Add Map</button></li>
         </ul>
     </header>

@@ -3,6 +3,13 @@ using WebSocketSharp;
 using Newtonsoft.Json;
 using LiteDB;
 using RestSharp;
+using System;
+using System.Runtime;
+using System.Runtime.CompilerServices;
+using System.Security.Principal;
+using Microsoft.VisualBasic;
+using System.Collections.Immutable;
+
 class WS : WebSocketBehavior
     {
         protected override async void OnMessage(MessageEventArgs e)
@@ -46,6 +53,72 @@ class WS : WebSocketBehavior
                     DBUtils.UpdateUser(user);
                     } break;
 
+                 case "get map to fight": { // bracket are here to have a different scope for the variable named "user".
+                    using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+                            var mapsCol = db.GetCollection<OsuBeatmap>("osumapsdb");
+
+                            var maps = mapsCol.Find(x => x.difficulty_rating <= 10);
+                            Random rng = new Random();
+                            var random_elem = rng.Next(maps.Count());
+                            var map = maps.ElementAt(random_elem);
+                            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                            {
+                                type = "map link",
+                                data = OsuApi.Linkify(map)
+                            }));
+                            var user = DBUtils.GetUser(rawData.id);
+                            Console.WriteLine(JsonConvert.SerializeObject(user.fights));
+                            user.fights.Add(new Fight {
+                                game = map.mode,
+                                timestamp = long.Parse(Utils.GetTimestamp()),
+                                id = map.id.ToString()
+                            });
+                            Console.WriteLine(JsonConvert.SerializeObject(user));
+
+                            DBUtils.UpdateUser(user);
+                        }
+                    } break;
+
+                 case "claim fight": { // bracket are here to have a different scope for the variable named "user".
+                    var user = User.FromPoco(DBUtils.GetUser(rawData.id));
+                    Console.WriteLine("gamemode  : " + user.fights.First().game);
+                    var scores = await OsuApi.GetUserRecentScores(user.ids.osuId, user.fights.First().game);
+
+                    if(scores.Count() == 0) {return ;}
+
+                    
+                    Console.WriteLine(user.fights.First().id);
+                    Console.WriteLine(scores.First().beatmap.id.ToString());
+
+                    
+                    var validscore = Array.Find(scores, score => user.fights.Any(fight => fight.id == score.beatmap.id.ToString()));
+                    Console.WriteLine(JsonConvert.SerializeObject(validscore));
+
+                    if (validscore == null){return ;}
+
+                    var xp = OsuApi.GetXP(validscore);
+                    user.waifu.giveXP(xp);
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = "fighting results",
+                        data = JsonConvert.SerializeObject(xp) 
+                    }));
+
+                    Console.WriteLine(JsonConvert.SerializeObject(user.ToPocoServer()));
+
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = "user",
+                        data = JsonConvert.SerializeObject(user.ToPocoServer()) 
+                    }));
+                    
+
+                    DBUtils.UpdateUser(user.ToPoco());
+                    
+                   
+                    
+                    } break;
+
                 case "get session id":
                     Send(JsonConvert.SerializeObject(Communication.UpdateSessionId()));
                     break;
@@ -53,11 +126,11 @@ class WS : WebSocketBehavior
                     var user = DBUtils.GetUser(rawData.id);
                     if (user.admin == true){
                         var Beatmap = await OsuApi.GetBeatmapById(rawData.data);
+                        if(Beatmap == null) {return;}
                         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-                            var mapsCol = db.GetCollection<OsuBeatmap>("osumaps");
-                            Console.WriteLine("Adding map : " + rawData.data);
-                            Console.WriteLine(Beatmap.difficulty_rating);
-                            Console.WriteLine(Beatmap.id);
+                            var mapsCol = db.GetCollection<OsuBeatmap>("osumapsdb");
+                            if(mapsCol.Exists(x => x.id == Beatmap.id)){Console.WriteLine($"Beatmap {Beatmap.id} is already in the database");return ;}; //If the map is already on the data base, don't add it again.
+                            Console.WriteLine("Adding map : " + Beatmap.id);
                             mapsCol.Insert(Beatmap);
                             mapsCol.EnsureIndex(x => x.id, true);
                             mapsCol.EnsureIndex(x => x.difficulty_rating);
@@ -102,23 +175,33 @@ class WS : WebSocketBehavior
 
                         var list = user_col.Find(x => x.ids.discordId == discordUserInformationResponse.id);
                         if (list.Count() == 0){
+
                             var ids = new Ids() {discordId = discordUserInformationResponse.id};
+                            ids.discordId = discordUserInformationResponse.id;
+                            user = new (discordUserInformationResponse.global_name, ids);
+                            user.locale = discordUserInformationResponse.locale;
+                            
+                            Console.WriteLine("Inserted new user! Id : " + user.Id);
                             var tokens = new Tokens(){
                                 discord_access_token = discordTokenResponse.access_token,
                                 discord_refresh_token = discordTokenResponse.refresh_token
                             };
-                            ids.discordId = discordUserInformationResponse.id;
-                            user = new (discordUserInformationResponse.global_name, ids);
                             user.tokens = tokens;
-                            user.locale = discordUserInformationResponse.locale;
-                            // TODO user.avatarPATH =
-                            Console.WriteLine("Inserted new user! Id : " + user.Id);
                             user_col.Insert(user.ToPoco());
                             user_col.EnsureIndex(x => x.ids.discordId, true);
                             user_col.EnsureIndex(x => x.Id, true);
                         }
+
                         else if(list.Count() == 1){
                             user = User.FromPoco(list.First());
+                            var tokens = new Tokens(){
+                                discord_access_token = discordTokenResponse.access_token,
+                                discord_refresh_token = discordTokenResponse.refresh_token
+                            };
+                            user.tokens = tokens;
+                            
+                            user_col.Update(user.ToPoco());
+
                         }
                         else {
                             user = User.FromPoco(list.First());

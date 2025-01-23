@@ -1,3 +1,5 @@
+using System.Net.NetworkInformation;
+
 public class ScoreStatistics {
     public int count_300;
     public int count_100;
@@ -39,4 +41,28 @@ public class OsuScore {
     public OsuUser user;
     public OsuBeatmap beatmap;
     public OsuBeatmapset beatmapset;
+}
+
+public class OsuScoreExtended {
+    public float accuracy;
+    public int best_id;
+    public string created_at;
+    public long id;
+    public int max_combo;
+    public string mode;
+    public int mode_int;
+    public Mod[] mods;
+    public bool passed;
+    public bool perfect;
+    public float pp;
+    public string rank;
+    public bool replay;
+    public int score;
+    public ScoreStatistics statistics;
+    public string type;
+    public int user_id;
+    public Object current_user_attributes; // "current_user_attributes":{"pin":null}
+    public OsuBeatmap beatmap;
+    public OsuBeatmapset beatmapset;
+    public OsuUser user;
 }

@@ -1,7 +1,4 @@
-using System;
-using System.Runtime;
-using System.Runtime.CompilerServices;
-using System.Security.Principal;
+using Newtonsoft.Json;
 
 static class UserId {
     static public string CreateId()
@@ -28,7 +25,8 @@ public class PocoUser
     public string locale { get; set; }
     public string avatarPATH { get; set; }
     public StatCount statCount { get; set; }
-}
+    public List<Fight> fights { get; set; }
+} 
 
 public class Ids {
     public string discordId { get; set; } //Does this work?
@@ -41,6 +39,12 @@ public class Tokens {
     public string discord_refresh_token { get; set; }
 }
 
+public class Fight {
+    public string game { get; set; }
+    public string id { get; set; }
+    public long timestamp { get; set; }
+}
+
 public class User {
     public string locale = "us-en";
     public string username;
@@ -48,6 +52,7 @@ public class User {
     public Waifu waifu = new Waifu("Rem", "src/assets/waifu-image/GYrXGACboAACxp7.jpg");
     public string Id = UserId.CreateId();
     public Ids ids;
+    public List<Fight> fights;
     public Tokens tokens;
     public string avatarPATH;
     public StatCount statCount = new StatCount();
@@ -64,17 +69,25 @@ public class User {
         {
             admin = admin,
             username = username,
-            waifu = waifu.ToPoco(),
+            tokens = tokens,
+            waifu = waifu.ToPoco(), 
             Id = Id,
             theme = theme,
             ids = ids,
             avatarPATH = avatarPATH,
             locale = locale,
             statCount = statCount,
+            fights = fights,
         };
     }
     public PocoUser ToPocoServer(){
+        Console.WriteLine("UUUSER RR ***************************");
+
+
         var poco = this.ToPoco();
+
+        Console.WriteLine(JsonConvert.SerializeObject(poco));
+
         poco.tokens.discord_access_token = "";
         poco.tokens.discord_refresh_token = "";
         return poco;
@@ -90,6 +103,8 @@ public class User {
         user.locale = poco.locale;
         user.statCount = poco.statCount;
         user.admin = poco.admin;
+        user.fights = poco.fights;
+        user.tokens = poco.tokens;
         return user;
     }
 

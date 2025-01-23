@@ -21,7 +21,9 @@ export default {
 <template>
     <div>
         <p id="nameWaifu">{{ waifu.name }}</p>
+        <span>LVL : {{ waifu.lvl }}</span>
         <div id="backgroundProgressBar">
+            
             <div id="progressBar" :style="style"></div>
         </div>
         <img id="imgWaifu" :src="waifu.imgPATH">
@@ -35,6 +37,10 @@ export default {
 </template>
 
 <style lang="css" scoped>
+* {
+    text-align: center;
+}
+
 #imgBlock {
     width: 30%;
     float: left;
@@ -46,7 +52,7 @@ export default {
     color: salmon;
     font: 33px cursive;
     text-decoration: underline;
-    text-align: center;
+    
 }
 
 img {
@@ -62,7 +68,6 @@ img {
     margin-left:auto;
     margin-right:auto;
     width: 25%;
-
     background-color: orchid;
 }
 

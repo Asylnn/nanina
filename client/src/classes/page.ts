@@ -8,9 +8,11 @@ enum Page {
 	User,
 	UserOption,
 	AddMap,
+	ClaimAndFightPage,
 	PAD0,
 	PAD1,
 	PAD2,
+	NotificationMenu,
 }
 
 export default Page

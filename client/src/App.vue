@@ -8,6 +8,8 @@ import Homepage from './components/Homepage.vue'
 import UserPage from './components/UserPage.vue'
 import UserOptionPage from './components/UserOptionPage.vue'
 import AddMap from './components/AddMap.vue'
+import ClaimAndFightPage from './components/ClaimAndFightPage.vue'
+import NotificationMenu from './components/NotificationMenu.vue'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -30,7 +32,10 @@ export default {
 		return {
 			page: Page.WaifuDisplay,
 			logged : false,
-			user : new User(),
+			user : new User({}),
+			fighting : false,
+			link : "",
+			xp : 0
 		}
 	},
 	components:{
@@ -40,7 +45,9 @@ export default {
     	Homepage,
 		UserPage,
 		UserOptionPage,
-		AddMap
+		AddMap,
+		ClaimAndFightPage,
+		NotificationMenu,
 	},
 	methods : {
 		updateTheme(theme : string) {
@@ -64,14 +71,14 @@ export default {
 	  this.logged;
       switch (this.page) {
         case Page.Homepage :
-          return 10
+          	return 10
         case Page.Inventory :
 			if (this.logged === true) return 20
 			else return 50
         case Page.Disconnected :
-          return 30
+          	return 30
         case Page.NotFound :
-          return 40
+          	return 40
 		case Page.WaifuDisplay :
 			return 50
 		case Page.YouSomehowEndedUpThere:
@@ -80,6 +87,8 @@ export default {
 			return 70
 		case Page.UserOption:
 			return 80
+		case Page.ClaimAndFightPage:
+			return 100
 		case Page.AddMap :
 			if (this.user.admin == true)	return 90
 			else 					return 50
@@ -92,7 +101,7 @@ export default {
 	mounted() {
 		console.log("mounted app!")
 		const $cookies = inject<VueCookies>('$cookies')!; 
-		$cookies.config("1m")
+		$cookies.config("30m") //ATENTION !!!!!
 		var has_session_id = $cookies.isKey("session_id")
 		if (!has_session_id) {
 			//@ts-ignore
@@ -112,9 +121,17 @@ export default {
 			}
 			else if (res.type == "user"){
 				this.logged = true
-				console.log(JSON.parse(res.data))
-				this.user = JSON.parse(res.data)
+				console.log(new User(JSON.parse(res.data)))
+				this.user = new User(JSON.parse(res.data))
 			}
+			else if(res.type == "map link"){
+                this.fighting = true 
+				this.link = res.data
+		    }
+            else if(res.type == "fighting results"){
+                this.fighting = false 
+				this.xp = res.data
+		    }
 
 			//i.send(`${ev.data}`);
 		};
@@ -138,6 +155,7 @@ export default {
 <template>
 	<div id="main" :class="[user.theme]">
 		<NNNHeader :logged=logged :admin=user.admin @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
+		<NotificationMenu></NotificationMenu>
 		<div v-if="loadingPage === 10">
 		<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
@@ -168,5 +186,9 @@ export default {
 		<div v-else-if="loadingPage === 90">
 			<AddMap :id="user.Id"></AddMap>
 		</div>
+		<div v-else-if="loadingPage === 100">
+			<ClaimAndFightPage :link="link" :xp="xp" :fighting="fighting" :id="user.Id"></ClaimAndFightPage>
+		</div>
 	</div>
 </template>
+

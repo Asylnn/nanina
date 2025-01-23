@@ -1,12 +1,12 @@
 using WebSocketSharp.Server;
-using WebSocketSharp;
-using Newtonsoft.Json;
+using LiteDB;
 public static class LoadServer {
 
     public static void Load(){
         LoadEnv();
         LoadOsuApi();
         LoadWebSocketServer();
+        //UpdateUserDB(); //Update Database when updating game
     }
     public static void LoadEnv(){
         var dotEnvLoadStatus = DotEnv.Load("../.env");
@@ -15,7 +15,7 @@ public static class LoadServer {
         }
     }
     public static void LoadOsuApi(){
-        if(Environment.GetEnvironmentVariable("DEV") == "false" || true){ //put to true for refreshing osu tokens
+        if(Environment.GetEnvironmentVariable("DEV") == "false" || false){ //put to true for refreshing osu tokens
             
             OsuApi.RefreshTokens();
             //_ = Global.RunInBackground(TimeSpan.FromSeconds(OsuApi.tokens.expires_in - 3600), OsuApi.RefreshTokens);
@@ -38,5 +38,19 @@ public static class LoadServer {
             }
             
             
+    }
+
+    public static void UpdateUserDB()
+    {
+         using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
+            var user_col = db.GetCollection<PocoUser>("userdb");
+            var users = user_col.FindAll();
+            
+            //Update
+            foreach (PocoUser user in users) {
+                user.fights = [];
+                user_col.Update(user);
+            }
+        }
     }
 }

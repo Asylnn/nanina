@@ -1,20 +1,58 @@
 <script lang="ts">
 
+import type WebSocketReponse from '../classes/web_socket_response'
+import {
+	Websocket,
+} from "websocket-ts"
+
 export default {
     name : "ClaimAndFightPage",
+    data() {},
     props: {
-        image : {
+        id : {
+            type : String,
+            required : true,
+        },
+        fighting : {
+            type : Boolean,
+            required : true,
+        },
+        link : {
             type : String,
             required : true
         },
-    }
+        xp : {
+            type : Number,
+            required : true
+        }
+    },
+    methods :{
+        fight(){
+            //@ts-ignore
+			this.ws.send(JSON.stringify({type:"get map to fight", data:0, id: this.id}))
+        },
+        getXP(){
+            //@ts-ignore
+			this.ws.send(JSON.stringify({type:"claim fight", data:0, id: this.id}))
+        }
+    },
 }
 
 
 </script>
+
+
 <template>
     <div>
-        <button ></button>
+        <button @click="fight">Fight A Map!</button>
+        <div v-if="fighting">
+            <a :href="link" target="_blank">Fight this map!</a>
+            <button @click="getXP">Claim XP!</button>
+        </div>
+        <div v-else-if="xp != 0">
+            <p> You earned {{ xp }}XP! </p>
+        </div>
+        
     </div>
 </template>
 
