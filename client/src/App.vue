@@ -35,7 +35,8 @@ export default {
 			user : new User({}),
 			fighting : false,
 			link : "",
-			xp : 0
+			xp : 0,
+			dev : true, //Is this dev or prod? IMPORTANT!!
 		}
 	},
 	components:{
@@ -49,6 +50,7 @@ export default {
 		ClaimAndFightPage,
 		NotificationMenu,
 	},
+	
 	methods : {
 		updateTheme(theme : string) {
 			this.user.theme = theme
@@ -65,37 +67,40 @@ export default {
       		this.page = page
     	}
 	},
-  computed : {
-    loadingPage() {
-      this.page;
-	  this.logged;
-      switch (this.page) {
-        case Page.Homepage :
-          	return 10
-        case Page.Inventory :
-			if (this.logged === true) return 20
-			else return 50
-        case Page.Disconnected :
-          	return 30
-        case Page.NotFound :
-          	return 40
-		case Page.WaifuDisplay :
-			return 50
-		case Page.YouSomehowEndedUpThere:
-			return 60
-		case Page.User:
-			return 70
-		case Page.UserOption:
-			return 80
-		case Page.ClaimAndFightPage:
-			return 100
-		case Page.AddMap :
-			if (this.user.admin == true)	return 90
-			else 					return 50
+  	computed : {
+		loadingPage() {
+		this.page;
+		this.logged;
+		switch (this.page) {
+			case Page.Homepage :
+				return 10
+			case Page.Inventory :
+				if (this.logged === true) return 20
+				else return 50
+			case Page.Disconnected :
+				return 30
+			case Page.NotFound :
+				return 40
+			case Page.WaifuDisplay :
+				return 50
+			case Page.YouSomehowEndedUpThere:
+				return 60
+			case Page.User:
+				return 70
+			case Page.UserOption:
+				return 80
+			case Page.ClaimAndFightPage:
+				return 100
+			case Page.AddMap :
+				if (this.user.admin == true)	return 90
+				else 					return 50
+			case Page.WaifuManagerPage :
+				if (this.user.admin == true && this.dev == true)	return 110
+				else 					return 50
 
-        default:
-        	return 40
-      }
+			default:
+				return 40
+		}
     }
   },
 	mounted() {
@@ -154,7 +159,7 @@ export default {
 
 <template>
 	<div id="main" :class="[user.theme]">
-		<NNNHeader :logged=logged :admin=user.admin @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
+		<NNNHeader :dev=dev :logged=logged :admin=user.admin @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
 		<NotificationMenu></NotificationMenu>
 		<div v-if="loadingPage === 10">
 		<Homepage image="src/assets/homepage.png"></Homepage>
