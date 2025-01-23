@@ -3,8 +3,7 @@
     padding:0;
 }
 body {
-    font-size: 18px;
-    overflow: scroll;
+    font: bold 18px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 [v-cloak] {
@@ -33,7 +32,4 @@ body {
 
     top:0px;
     left:0;
-
-    width: 100%;
-    height: 100%;
 }

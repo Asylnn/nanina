@@ -6,7 +6,7 @@ public static class LoadServer {
         LoadEnv();
         LoadOsuApi();
         LoadWebSocketServer();
-        //UpdateUserDB(); //Update Database when updating game
+        UpdateUserDB(); //Update Database when updating game
     }
     public static void LoadEnv(){
         var dotEnvLoadStatus = DotEnv.Load("../.env");

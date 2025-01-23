@@ -2,7 +2,15 @@ using RestSharp;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 public enum Mod {
-    NC
+    NC,
+    HD,
+    HR,
+    DT,
+    EZ,
+    FL,
+    RX,
+    AP,
+    HT,
 }
 public class OsuOAuthTokens {
     public int expires_in;

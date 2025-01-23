@@ -76,6 +76,7 @@ class WS : WebSocketBehavior
                             Console.WriteLine(JsonConvert.SerializeObject(user));
 
                             DBUtils.UpdateUser(user);
+                            Console.WriteLine("Map choisie " + map.id + map.version);
                         }
                     } break;
 
