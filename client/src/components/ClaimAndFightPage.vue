@@ -26,6 +26,7 @@ export default {
             required : true
         }
     },
+    emits: ["create-notif"],
     methods :{
         fight(){
             //@ts-ignore

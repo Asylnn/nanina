@@ -6,7 +6,7 @@ public static class LoadServer {
         LoadEnv();
         LoadOsuApi();
         LoadWebSocketServer();
-        //UpdateUserDB(); //Update Database when updating game
+        UpdateUserDB(); //Update Database when updating game
     }
     public static void LoadEnv(){
         var dotEnvLoadStatus = DotEnv.Load("../.env");
@@ -42,7 +42,7 @@ public static class LoadServer {
 
     public static void UpdateUserDB()
     {
-         using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
+         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var user_col = db.GetCollection<PocoUser>("userdb");
             var users = user_col.FindAll();
             

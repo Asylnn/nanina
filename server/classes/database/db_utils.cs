@@ -1,9 +1,9 @@
 using LiteDB;
 public static class DBUtils {
     public static PocoUser GetUser(string id){
-        using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
-            var userCol = db.GetCollection<PocoUser>("userdb");
-            var list = userCol.Find(x => x.Id == id);
+        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+            var user_col = db.GetCollection<PocoUser>("userdb");
+            var list = user_col.Find(x => x.Id == id);
             if (list.Count() >= 1){
                 return list.First();
             }
@@ -15,7 +15,7 @@ public static class DBUtils {
     }
 
     public static void UpdateUser(PocoUser user){
-        using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
+        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var user_col = db.GetCollection<PocoUser>("userdb");
             user_col.Update(user);
         }

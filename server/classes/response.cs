@@ -118,6 +118,7 @@ class WS : WebSocketBehavior
                             Console.WriteLine(JsonConvert.SerializeObject(user));
 
                             DBUtils.UpdateUser(user);
+                            Console.WriteLine("Map choisie " + map.id + map.version);
                         }
                     } break;
 
@@ -205,7 +206,7 @@ class WS : WebSocketBehavior
                     request_access_token.AddParameter("redirect_uri", Environment.GetEnvironmentVariable("DISCORD_REDIRECT_URI"));
 
                     var response_access_token = await client.ExecutePostAsync(request_access_token);
-                    if(response_access_token.StatusCode != System.Net.HttpStatusCode.OK) {return;}
+                    if(response_access_token.StatusCode != System.Net.HttpStatusCode.OK) {Console.WriteLine("Status code: " + response_access_token.StatusCode + " et " + response_access_token.Content);return;}
                     var discordTokenResponse = JsonConvert.DeserializeObject<DiscordTokenResponse>(response_access_token.Content);
 
                     Console.WriteLine("response access token data : " + response_access_token.Content);
@@ -218,7 +219,7 @@ class WS : WebSocketBehavior
                     Console.WriteLine("response user information data : " + response_user_information.Content);
                     var discordUserInformationResponse = JsonConvert.DeserializeObject<DiscordUserInformationResponse>(response_user_information.Content);
 
-                    using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
+                    using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
                         var user_col = db.GetCollection<PocoUser>("userdb");
                         //We have to unpoco the user for using the constructor
                         User user;

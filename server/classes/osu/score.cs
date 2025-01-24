@@ -45,7 +45,7 @@ public class OsuScore {
 
 public class OsuScoreExtended {
     public float accuracy;
-    public int best_id;
+    public double best_id;
     public string created_at;
     public long id;
     public int max_combo;

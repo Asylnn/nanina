@@ -61,6 +61,9 @@ export default {
 
 <style lang="css" scoped>
 header {
+    position:sticky;
+    top:0;
+    height:13vh;
     border: 2px solid yellow;
     display: grid;
     grid-template-columns: 0.8fr 0.2fr;

@@ -11,6 +11,7 @@ import AddMap from './components/AddMap.vue'
 import ClaimAndFightPage from './components/ClaimAndFightPage.vue'
 import WaifuManagerPage from './components/WaifuManagerPage.vue'
 import NotificationMenu from './components/NotificationMenu.vue'
+import Notif from './classes/notif'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -37,6 +38,7 @@ export default {
 			fighting : false,
 			link : "",
 			xp : 0,
+			notifs : Array(),
 			dev : true, //Is this dev or prod? IMPORTANT!!
 			all_waifus : []
 		}
@@ -141,6 +143,7 @@ export default {
 			else if(res.type == "map link"){
                 this.fighting = true 
 				this.link = res.data
+				this.notifs.push(new Notif("Fight", "Tu as lancé un combat contre la beatmap " + this.link))
 		    }
             else if(res.type == "fighting results"){
                 this.fighting = false 
@@ -174,7 +177,7 @@ export default {
 <template>
 	<div id="main" :class="[user.theme]">
 		<NNNHeader :dev=dev :logged=logged :admin=user.admin @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
-		<NotificationMenu></NotificationMenu>
+		<NotificationMenu :notifs=notifs></NotificationMenu>
 		<div v-if="loadingPage === 10">
 		<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
@@ -206,11 +209,10 @@ export default {
 			<AddMap :id="user.Id"></AddMap>
 		</div>
 		<div v-else-if="loadingPage === 100">
-			<ClaimAndFightPage :link="link" :xp="xp" :fighting="fighting" :id="user.Id"></ClaimAndFightPage>
+			<ClaimAndFightPage :xp="xp" :fighting="fighting" :id="user.Id" :link="link"></ClaimAndFightPage>
 		</div>
 		<div v-else-if="loadingPage === 110">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
 		</div>
 	</div>
 </template>
-
