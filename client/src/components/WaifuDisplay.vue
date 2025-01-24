@@ -26,7 +26,7 @@ export default {
             
             <div id="progressBar" :style="style"></div>
         </div>
-        <img id="imgWaifu" :src="waifu.imgPATH">
+        <img id="imgWaifu" :src="'src/assets/waifu-image/' + waifu.imgPATH">
         <div id="centreLesSpans">
             <span>{{ waifu.xp }}/</span>
             <span>{{ waifu.xpToLvlUp }}</span>

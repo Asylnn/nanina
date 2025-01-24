@@ -20,7 +20,6 @@ app.config.globalProperties.ws = new WebsocketBuilder("ws://localhost:4889")
     .withBackoff(new ConstantBackoff(1000)) // retry every 1s
     .build();
 //app.use(router)
-
 app.mount('#app')
 
 

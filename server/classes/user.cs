@@ -49,7 +49,7 @@ public class User {
     public string locale = "us-en";
     public string username;
     public bool admin = false;
-    public Waifu waifu = new Waifu("Rem", "src/assets/waifu-image/GYrXGACboAACxp7.jpg");
+    public Waifu waifu = Waifu.FromPoco(DBUtils.GetWaifu("1"));
     public string Id = UserId.CreateId();
     public Ids ids;
     public List<Fight> fights;
@@ -92,7 +92,7 @@ public class User {
         poco.tokens.discord_refresh_token = "";
         return poco;
     }
-    public static User FromPoco(PocoUser poco, bool forClient = false)
+    public static User FromPoco(PocoUser poco)
     {
         User user  = new User(poco.username, poco.ids);
         user.Id = poco.Id;

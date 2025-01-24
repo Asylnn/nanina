@@ -4,9 +4,11 @@ import WaifuManagerComponent from './WaifuManagerComponent.vue'
 import Waifu from '../classes/waifu';
 export default {
     name : "WaifuManagerPage",
-    data() {
-    },
     props: {
+        id : {
+            type : String,
+            required : true
+        },
         all_waifus : {
             type : Array<Waifu>,
             required : true
@@ -14,6 +16,20 @@ export default {
     },
     components: {
         WaifuManagerComponent
+    },
+    methods:{
+        AddNewWaifu(){
+            let waifu = new Waifu({})
+            waifu.id = this.all_waifus.length == 0 ? waifu.id = "1" : (+this.all_waifus[this.all_waifus.length - 1].id +1).toString() //Don't worry too much about it
+            this.all_waifus.push(waifu)
+        },
+        UpdateWaifus(){
+            //@ts-ignore
+            this.ws.send(JSON.stringify({type:"update waifu db", data:JSON.stringify(this.all_waifus), id: this.id}))
+        },
+        DeleteWaifu(id : string){
+            this.all_waifus.splice(this.all_waifus.findIndex(waifu => waifu.id == id), 1)
+        }
     }
     
 }
@@ -22,55 +38,10 @@ export default {
 
 <template>
     <div>
-        <WaifuManagerComponent></WaifuManagerComponent>
-        
-
+        <li v-for="waifu in all_waifus">
+            <WaifuManagerComponent :waifu="waifu" @delete="DeleteWaifu"></WaifuManagerComponent>
+        </li>
+        <button @click="AddNewWaifu">Add new waifu</button><br>
+        <button @click="UpdateWaifus">Update</button>
     </div>
 </template>
-
-<style lang="css" scoped>
-* {
-    text-align: center;
-}
-
-#imgBlock {
-    width: 30%;
-    float: left;
-    border: 2px solid red;
-}
-
-#nameWaifu {
-    margin: 0;
-    color: salmon;
-    font: 33px cursive;
-    text-decoration: underline;
-    
-}
-
-img {
-    height: auto;
-    width: 25%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#backgroundProgressBar {
-    height : 15px;
-    margin-left:auto;
-    margin-right:auto;
-    width: 25%;
-    background-color: orchid;
-}
-
-#progressBar {
-    height:100%;
-    background-color: turquoise;
-}
-
-#centreLesSpans {
-    text-align: center;
-    margin-left:auto;
-    margin-right:auto;
-}
-</style>

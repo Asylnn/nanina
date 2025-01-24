@@ -7,7 +7,7 @@ public class PocoWaifu
     public int xp { get; set; }
     public int lvl { get; set; }
     public float diffLvlUp { get; set; }
-
+    public string id { get; set; }
     public string imgPATH { get; set; }
 }
 
@@ -15,22 +15,22 @@ public class Waifu
 {
     public string name;
     public string imgPATH; 
+    public string id;
     private int xp;
     private int lvl;
-    //private string owner;
     private float diffLvlUp;
     private int xpToLvlUp 
     {
         get { return (int) diffLvlUp*(10*lvl + 20); }
         set {}
     }
-    public Waifu(string name, string imgPATH)
+    public Waifu()
     {
-        this.name = name;
+        this.name = "no_name";
+        this.id = "-1";
         this.lvl = 1;
         this.xp = 0;
-        this.imgPATH = imgPATH;
-        //owner = _owner;
+        this.imgPATH = "no_waifu_img";
         diffLvlUp = 1;
     }
 
@@ -42,8 +42,8 @@ public class Waifu
             int temp_xp = xp;
             lvl++;
             xp = 0;
-            giveXP(temp_xp);
             Console.WriteLine(name + " Just leveled up! She is now level " + (float) lvl);
+            giveXP(temp_xp);
         }
     }
     public PocoWaifu ToPoco()
@@ -51,6 +51,7 @@ public class Waifu
         return new PocoWaifu
         {
             name = name,
+            id = id,
             xp = xp,
             lvl = lvl,
             diffLvlUp = diffLvlUp,
@@ -60,7 +61,10 @@ public class Waifu
 
     public static Waifu FromPoco(PocoWaifu poco)
     {
-        Waifu waifu = new Waifu(poco.name, poco.imgPATH);
+        Waifu waifu = new Waifu();
+        waifu.name = poco.name;
+        waifu.imgPATH = poco.imgPATH;
+        waifu.id = poco.id;
         waifu.diffLvlUp = poco.diffLvlUp;
         waifu.lvl = poco.lvl;
         waifu.xp = poco.xp;

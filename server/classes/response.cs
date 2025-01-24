@@ -53,13 +53,55 @@ class WS : WebSocketBehavior
                     DBUtils.UpdateUser(user);
                     } break;
 
-                 case "get map to fight": { // bracket are here to have a different scope for the variable named "user".
+                case "request waifu db" :
+                    if(!DBUtils.GetUser(rawData.id).admin){return;}
+                    using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+                        var waifusDB = db.GetCollection<PocoWaifu>("waifudb").FindAll();
+                        Console.WriteLine(waifusDB);
+
+                        var data = JsonConvert.SerializeObject(waifusDB);
+                        Console.WriteLine(data);
+
+                        var response = new ServerWebSocketResponse
+                        {
+                            type = "waifu db",
+                            data = data
+                        };
+                        Send(JsonConvert.SerializeObject(response));
+                    }
+                    break;
+
+                case "update waifu db": 
+                    if(DBUtils.GetUser(rawData.id).admin == false){return;}
+                    var waifus = JsonConvert.DeserializeObject<PocoWaifu[]>(rawData.data);
+                    using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+                        var waifuCol = db.GetCollection<PocoWaifu>("waifudb");
+                        waifuCol.DeleteAll();
+                        /*var new_waifus = waifus.Where(x => !waifuCol.Exists(y => y.id == x.id));
+                        var old_waifus = waifus.Where(x => waifuCol.Exists(y => y.id == x.id));
+                        Console.WriteLine(JsonConvert.SerializeObject(new_waifus));
+                        Console.WriteLine(JsonConvert.SerializeObject(old_waifus));*/
+                        foreach (var waifu in waifus) {
+                            waifuCol.Insert(waifu);
+                            waifuCol.EnsureIndex(x => x.id, true);
+                        }
+                        /*foreach (var waifu in old_waifus) {
+                            waifuCol.Update(waifu);
+                            //Update Many??
+                        }*/
+                        
+
+                    }
+                    break;
+
+                case "get map to fight": { // bracket are here to have a different scope for the variable named "user".
                     using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
                             var mapsCol = db.GetCollection<OsuBeatmap>("osumapsdb");
 
-                            var maps = mapsCol.Find(x => x.difficulty_rating <= 10);
+                            var maps = mapsCol.Find(x => x.difficulty_rating <= 7.27*2.7);
                             Random rng = new Random();
                             var random_elem = rng.Next(maps.Count());
+                            if(maps.Count() == 0){Console.WriteLine("There isn't any map in the database!!!"); return;}
                             var map = maps.ElementAt(random_elem);
                             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
                             {
@@ -85,13 +127,21 @@ class WS : WebSocketBehavior
                     var scores = await OsuApi.GetUserRecentScores(user.ids.osuId, user.fights.First().game);
 
                     if(scores.Count() == 0) {return ;}
-
+                    if(user.fights.Count() == 0) {return ;} //Should never happen... right?
                     
                     Console.WriteLine(user.fights.First().id);
+                    
+
                     Console.WriteLine(scores.First().beatmap.id.ToString());
 
                     
                     var validscore = Array.Find(scores, score => user.fights.Any(fight => fight.id == score.beatmap.id.ToString()));
+                    if(validscore == null){
+                        Console.WriteLine($"There wasn't any valid score found for {user.fights.First().id} (Did you do the beatmap?)");
+                        //Add sending error notification
+                        return;
+                    }
+                    
                     Console.WriteLine(JsonConvert.SerializeObject(validscore));
 
                     if (validscore == null){return ;}

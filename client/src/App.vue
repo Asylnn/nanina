@@ -9,6 +9,7 @@ import UserPage from './components/UserPage.vue'
 import UserOptionPage from './components/UserOptionPage.vue'
 import AddMap from './components/AddMap.vue'
 import ClaimAndFightPage from './components/ClaimAndFightPage.vue'
+import WaifuManagerPage from './components/WaifuManagerPage.vue'
 import NotificationMenu from './components/NotificationMenu.vue'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
@@ -37,6 +38,7 @@ export default {
 			link : "",
 			xp : 0,
 			dev : true, //Is this dev or prod? IMPORTANT!!
+			all_waifus : []
 		}
 	},
 	components:{
@@ -49,6 +51,7 @@ export default {
 		AddMap,
 		ClaimAndFightPage,
 		NotificationMenu,
+		WaifuManagerPage,
 	},
 	
 	methods : {
@@ -57,6 +60,8 @@ export default {
 			if (this.logged) {
 				//@ts-ignore
 				this.ws.send(JSON.stringify({type:"update theme", data:theme, id: this.user.Id}))
+
+				
 			}
 		},
 		updateLogged(logged : boolean) {
@@ -65,7 +70,7 @@ export default {
     	updatePage(page : Page) {
 			console.log(page)
       		this.page = page
-    	}
+    	},
 	},
   	computed : {
 		loadingPage() {
@@ -128,6 +133,10 @@ export default {
 				this.logged = true
 				console.log(new User(JSON.parse(res.data)))
 				this.user = new User(JSON.parse(res.data))
+				if(this.user.admin){
+					//@ts-ignore
+					this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))
+				}
 			}
 			else if(res.type == "map link"){
                 this.fighting = true 
@@ -137,6 +146,11 @@ export default {
                 this.fighting = false 
 				this.xp = res.data
 		    }
+			else if(res.type == "waifu db"){
+                this.all_waifus = JSON.parse(res.data)
+		    }
+
+			
 
 			//i.send(`${ev.data}`);
 		};
@@ -193,6 +207,9 @@ export default {
 		</div>
 		<div v-else-if="loadingPage === 100">
 			<ClaimAndFightPage :link="link" :xp="xp" :fighting="fighting" :id="user.Id"></ClaimAndFightPage>
+		</div>
+		<div v-else-if="loadingPage === 110">
+			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
 		</div>
 	</div>
 </template>
