@@ -66,13 +66,23 @@ public static class LoadServer {
     public static void UpdateUserDB()
     {
          using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-            var user_col = db.GetCollection<PocoUser>("userdb");
-            var users = user_col.FindAll();
+            var userCol = db.GetCollection<PocoUser>("userdb");
+            var users = userCol.FindAll();
+                Console.WriteLine("hey1");
             
             //Update
             foreach (PocoUser user in users) {
                 user.fights = [];
-                user_col.Update(user);
+                Console.WriteLine("hey2");
+                Console.WriteLine(user.waifu.id);
+                if(user.waifu.id == null){
+                Console.WriteLine("hey3");
+
+                    user.waifu.id = "0";
+                }
+                Waifu.UpdateWaifu(user.waifu);
+                userCol.Update(user);
+
             }
         }
     }

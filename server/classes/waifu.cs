@@ -1,5 +1,6 @@
 using System.Buffers;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class PocoWaifu
 {
@@ -69,5 +70,12 @@ public class Waifu
         waifu.lvl = poco.lvl;
         waifu.xp = poco.xp;
         return waifu;
+    }
+
+    public static void UpdateWaifu(PocoWaifu poco){
+        var waifu = DBUtils.GetWaifu(poco.id);
+        poco.diffLvlUp = waifu.diffLvlUp;
+        poco.imgPATH = waifu.imgPATH;
+        poco.name = waifu.name;
     }
 }
