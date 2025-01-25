@@ -81,6 +81,7 @@ img {
     align-self: center;
 }
 #arrow {
+    padding: 1vh 0;
     width: 30px;
 }
 #cross {

@@ -67,9 +67,6 @@ export default {
 				
 			}
 		},
-		updateLogged(logged : boolean) {
-			this.logged = logged
-		},
     	updatePage(page : Page) {
 			console.log(page)
       		this.page = page
@@ -178,7 +175,7 @@ export default {
 
 <template>
 	<div id="main" :class="[user.theme]">
-		<NNNHeader :dev=dev :logged=logged :admin=user.admin @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
+		<NNNHeader :dev=dev :logged=logged :admin=user.admin @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
 		<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>

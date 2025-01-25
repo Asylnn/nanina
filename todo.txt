@@ -8,7 +8,7 @@ TODO : Do claim page/component                                      #Done
 TODO : Do waifu page/component                                      #Done
 TODO : Implement claim system                                       #Done
 TODO : Add a Discord Login Button                                   #Done
-TODO : Add a Notification Box object in client                      #Done                    
+TODO : Add a Notification Box object in client                      #Done
 TODO : Create Waifu manager                                         #Done
 TODO : Update all waifus of users when waifu stats are modified     #Done
 TODO : Implement various notifications for errors                   #Done

@@ -20,14 +20,11 @@ export default {
             required : true
         },
     },
-    emits: ["connect-change","theme-change","page-change"],
+    emits: ["theme-change","page-change"],
     methods : {
         onClickChangePage(page: Page){
             this.$emit("page-change", page)
 
-        },
-        onClickConnect() {
-            this.$emit("connect-change", !this.logged)
         },
     },
 }
@@ -48,9 +45,8 @@ export default {
             <li @click="onClickChangePage(7)" v-if="admin && dev"><span>Add Beatmap</span></li>
         </ul>
         <ul id="buttList">
-            <li><span id="swapLogged" @click="onClickConnect()">{{ logged }}</span></li>
             <li v-if="!logged"><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
-            <li v-else><span @click="onClickChangePage(7)"><img height=25px width=25px src="../assets/option_gear_from_google_probably_not_free_of_use.png"></span></li>
+            <li v-else><span @click="onClickChangePage(6)"><img height=25px width=25px src="../assets/option_gear_from_google_probably_not_free_of_use.png"></span></li>
         </ul>
     </header>
 </template>
