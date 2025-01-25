@@ -12,6 +12,7 @@ import ClaimAndFightPage from './components/ClaimAndFightPage.vue'
 import WaifuManagerPage from './components/WaifuManagerPage.vue'
 import NotificationMenu from './components/NotificationMenu.vue'
 import Notification from './classes/notif'
+import PullPage from './components/PullPage.vue'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -41,7 +42,9 @@ export default {
 			xp : 0,
 			notifs : Array(),
 			dev : true, //Is this dev or prod? IMPORTANT!!
-			all_waifus : []
+			all_waifus : [],
+			pulled_waifus : [],
+			banners : [],
 		}
 	},
 	components:{
@@ -55,6 +58,7 @@ export default {
 		ClaimAndFightPage,
 		NotificationMenu,
 		WaifuManagerPage,
+		PullPage,
 	},
 	
 	methods : {
@@ -105,7 +109,8 @@ export default {
 			case Page.WaifuManagerPage :
 				if (this.user.admin == true && this.dev == true)	return 110
 				else 					return 50
-
+			case Page.PullPage:
+				return 120
 			default:
 				return 40
 		}
@@ -154,10 +159,18 @@ export default {
 				case "waifu db" :
 					this.all_waifus = JSON.parse(res.data)
 					break
+				case "get banners":
+					this.banners = JSON.parse(res.data)
+					break
 				case "notification":
 					let notification = Object.assign(new Notification("","",0), JSON.parse(res.data))
 					this.notifs.push(notification)
 					break
+				case "pull results":
+					console.log(res.data)
+					this.pulled_waifus = JSON.parse(res.data)
+					break
+				
 			} 
 			//i.send(`${ev.data}`);
 		};
@@ -197,7 +210,7 @@ export default {
 			ERREUR 404 AHAHAHAHAH
 		</div>
 		<div v-else-if="loadingPage === 50">
-			<WaifuDisplay :waifu="user.waifu"></WaifuDisplay>
+			<WaifuDisplay :waifu="user.waifus[0]"></WaifuDisplay>
 		</div>
 		<div v-else-if="loadingPage === 60">
 			How tf did you even up here?
@@ -217,6 +230,9 @@ export default {
 		</div>
 		<div v-else-if="loadingPage === 110">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
+		</div>
+		<div v-else-if="loadingPage === 120">
+			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :id="user.Id"></PullPage>
 		</div>
 	</div>
 </template>

@@ -22,6 +22,12 @@ partial class WS : WebSocketBehavior
                 type = "user",
                 data = JsonConvert.SerializeObject(requestedUser) 
             }));
+
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "get banners",
+                data = JsonConvert.SerializeObject(Gacha.banners) 
+            }));
         }
     }
 

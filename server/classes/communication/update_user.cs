@@ -6,7 +6,7 @@ using RestSharp;
 
 partial class WS : WebSocketBehavior
 {
-    public void UpdateOsuId(ClientWebSocketResponse rawData){ //somehow protected doesn't work?
+    protected void UpdateOsuId(ClientWebSocketResponse rawData){
         var user = DBUtils.GetUser(rawData.id);
         user.ids.osuId = rawData.data;
         DBUtils.UpdateUser(user);

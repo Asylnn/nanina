@@ -54,6 +54,9 @@ partial class WS : WebSocketBehavior
                 case "connect with discord":
                     DiscordLogin(rawData);
                     break;
+                case "pull request":
+                    Pull(rawData);
+                    break;
 
             }
         }

@@ -53,7 +53,7 @@ partial class WS : WebSocketBehavior
         if (validscore == null){return ;}
 
         var xp = OsuApi.GetXP(validscore);
-        user.waifu.giveXP(xp);
+        user.waifus.First().giveXP(xp);
         Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
         {
             type = "fighting results",

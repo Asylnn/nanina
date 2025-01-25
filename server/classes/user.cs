@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-
+using System.Linq;
 
 static class UserId {
     static public string CreateId()
@@ -18,7 +18,8 @@ public class PocoUser
 {
     public bool admin {get; set;}
     public string username { get; set; } 
-    public PocoWaifu waifu { get; set; }
+    public PocoWaifu waifu { get; set; } //OLD!! To delete soon when all users migrated
+    public List<PocoWaifu> waifus { get; set; }
     public string Id { get; set; }
     public string theme { get; set; }
     public Ids ids { get; set; }
@@ -27,6 +28,7 @@ public class PocoUser
     public string avatarPATH { get; set; }
     public StatCount statCount { get; set; }
     public List<Fight> fights { get; set; }
+    public int gacha_currency { get; set; }
 } 
 
 public class Ids {
@@ -50,7 +52,7 @@ public class User {
     public string locale = "us-en";
     public string username;
     public bool admin = false;
-    public Waifu waifu = Waifu.FromPoco(DBUtils.GetWaifu("0"));
+    public List<Waifu> waifus = [Waifu.FromPoco(DBUtils.GetWaifu("0"))];
     public string Id = UserId.CreateId();
     public Ids ids;
     public List<Fight> fights;
@@ -58,7 +60,9 @@ public class User {
     public string avatarPATH;
     public StatCount statCount = new StatCount();
     private string theme = "dark_theme";
+    public int gacha_currency;
     public User(string username, Ids ids)
+    
     {
         //Id = UserId.CreateId();
         this.username = username;
@@ -71,7 +75,7 @@ public class User {
             admin = admin,
             username = username,
             tokens = tokens,
-            waifu = waifu.ToPoco(), 
+            waifus = (List<PocoWaifu>) waifus.Select(waifu => waifu.ToPoco()),
             Id = Id,
             theme = theme,
             ids = ids,
@@ -79,6 +83,7 @@ public class User {
             locale = locale,
             statCount = statCount,
             fights = fights,
+            gacha_currency = gacha_currency,
         };
     }
     public PocoUser ToPocoServer(){
@@ -97,7 +102,7 @@ public class User {
     {
         User user  = new User(poco.username, poco.ids);
         user.Id = poco.Id;
-        user.waifu = Waifu.FromPoco(poco.waifu);
+        user.waifus = (List<Waifu>) poco.waifus.Select(waifu => Waifu.FromPoco(waifu));
         user.theme = poco.theme;
         user.ids = poco.ids;
         user.avatarPATH = poco.avatarPATH;
@@ -106,6 +111,7 @@ public class User {
         user.admin = poco.admin;
         user.fights = poco.fights;
         user.tokens = poco.tokens;
+        user.gacha_currency = poco.gacha_currency;
         return user;
     }
 

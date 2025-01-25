@@ -8,14 +8,15 @@ export default class User {
     public theme : string = "dark_theme"
     public ids : any = {}
     public statCount : StatCount = new StatCount()
-    public waifu : Waifu = new Waifu({})
+    public waifus : Waifu[] = [new Waifu({})]
     public Id : string = "772277"
     public locale : string = "en"
     public avatarPATH = ""
+    public gacha_currency = 0
 
     constructor(obj : any){
         Object.assign(this, obj)
-        this.waifu = new Waifu(obj.waifu)
+        this.waifus.forEach(waifu => Object.assign(new Waifu({}), waifu))
     }
 }
 

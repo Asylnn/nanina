@@ -10,6 +10,7 @@ enum Page {
 	AddMap,
 	ClaimAndFightPage,
 	WaifuManagerPage,
+	PullPage,
 	PAD0,
 	PAD1,
 	PAD2,

@@ -8,6 +8,7 @@ public static class LoadServer {
         LoadEnv();
         LoadOsuApi();
         LoadWebSocketServer();
+        Gacha.LoadBanners();
         if(!File.Exists(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH"))) 
             FirstLoad();
         UpdateUserDB(); //Update Database when updating game
@@ -19,7 +20,7 @@ public static class LoadServer {
         }
     }
     public static void LoadOsuApi(){
-        if(Environment.GetEnvironmentVariable("DEV") == "false" || true){ //put to true for refreshing osu tokens
+        if(Environment.GetEnvironmentVariable("DEV") == "false" || false){ //put to true for refreshing osu tokens
             
             OsuApi.RefreshTokens();
             //_ = Global.RunInBackground(TimeSpan.FromSeconds(OsuApi.tokens.expires_in - 3600), OsuApi.RefreshTokens);
@@ -68,19 +69,25 @@ public static class LoadServer {
          using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var userCol = db.GetCollection<PocoUser>("userdb");
             var users = userCol.FindAll();
-                Console.WriteLine("hey1");
-            
             //Update
             foreach (PocoUser user in users) {
                 user.fights = [];
-                Console.WriteLine("hey2");
-                Console.WriteLine(user.waifu.id);
-                if(user.waifu.id == null){
-                Console.WriteLine("hey3");
-
-                    user.waifu.id = "0";
+                user.waifus ??= [];
+                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu));
+                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifus));
+                if(user.waifu != null)
+                {
+                    user.waifus.Add(user.waifu);
+                    user.waifu = null;
                 }
-                Waifu.UpdateWaifu(user.waifu);
+                
+                /*if(user.waifus.id == null){
+                    user.waifus.id = "0";
+                }*/
+                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu));
+                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifus));
+                user.waifus.ForEach(waifu => Waifu.UpdateWaifu(waifu));
+                    //Is it still working?
                 userCol.Update(user);
 
             }

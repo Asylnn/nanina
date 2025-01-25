@@ -52,7 +52,9 @@ export default {
             <li><button @click="onClickChangePage(1)">Inventory</button></li>
             <li><button @click="onClickChangePage(2)">Disconnected</button></li>
             <li><button @click="onClickChangePage(5)">Waifu</button></li>
-            <li><button @click="onClickChangePage(9)">Fighting!!</button></li>
+            <li><button @click="onClickChangePage(9)">Fight!!</button></li>
+            <li><button @click="onClickChangePage(11)">Pull!!</button></li>
+
             <li v-if="admin"><button @click="onClickChangePage(10)">Manage Waifu Database</button></li>
             <li v-if="admin && dev"><button @click="onClickChangePage(8)">Add Map</button></li>
         </ul>
