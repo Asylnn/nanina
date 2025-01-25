@@ -32,7 +32,6 @@ body {
 
     top:0px;
     left:0;
-<<<<<<< HEAD
 
     width: 100%;
     height: 100%;
@@ -49,6 +48,4 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
-=======
->>>>>>> 030c3f7fe4a69c81cb097747a45f544c6b4f7f2d
 }

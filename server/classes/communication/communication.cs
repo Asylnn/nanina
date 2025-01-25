@@ -1,4 +1,5 @@
 using LiteDB;
+using WebSocketSharp.Server;
 public static class Communication {
 
     public static ServerWebSocketResponse UpdateSessionId(string userId = "", bool hasUserAssociatedWithSession = false) {

@@ -11,7 +11,7 @@ import AddMap from './components/AddMap.vue'
 import ClaimAndFightPage from './components/ClaimAndFightPage.vue'
 import WaifuManagerPage from './components/WaifuManagerPage.vue'
 import NotificationMenu from './components/NotificationMenu.vue'
-import Notif from './classes/notif'
+import Notification from './classes/notif'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -27,6 +27,7 @@ import {
 import User from './classes/user'
 import Waifu from './classes/waifu'
 import Page from './classes/page'
+import NotificationSeverity from './classes/notification_severity'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -128,38 +129,41 @@ export default {
 		const ListenForData = (i: Websocket, ev: MessageEvent) => {
 			console.log(`received message: ${ev.data}`);
 			var res : WebSocketReponse = JSON.parse(ev.data)
-			if(res.type == "session_id"){
-				$cookies.set("session_id", res.data)
-			}
-			else if (res.type == "user"){
-				this.logged = true
-				console.log(new User(JSON.parse(res.data)))
-				this.user = new User(JSON.parse(res.data))
-				if(this.user.admin){
-					//@ts-ignore
-					this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))
-				}
-			}
-			else if(res.type == "map link"){
-                this.fighting = true 
-				this.link = res.data
-				this.notifs.push(new Notif("Fight", "Tu as lancé un combat contre la beatmap " + this.link))
-		    }
-            else if(res.type == "fighting results"){
-                this.fighting = false 
-				this.xp = res.data
-		    }
-			else if(res.type == "waifu db"){
-                this.all_waifus = JSON.parse(res.data)
-		    }
-
-			
-
+			switch (res.type) {
+				case "session_id" :
+					$cookies.set("session_id", res.data)
+					break
+				case "user" :
+					this.logged = true
+					console.log(new User(JSON.parse(res.data)))
+					this.user = new User(JSON.parse(res.data))
+					if(this.user.admin){
+						//@ts-ignore
+						this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))
+					}
+					break
+				case "map link" :
+					this.fighting = true 
+					this.link = res.data
+					this.notifs.push(new Notification("Fight", "You started with the following beatmap! " + this.link, NotificationSeverity.Notification))
+					break
+				case "fighting results" :
+					this.fighting = false 
+					this.xp = res.data
+					break
+				case "waifu db" :
+					this.all_waifus = JSON.parse(res.data)
+					break
+				case "notification":
+					let notification = Object.assign(new Notification("","",0), JSON.parse(res.data))
+					this.notifs.push(notification)
+					break
+			} 
 			//i.send(`${ev.data}`);
 		};
 		//@ts-ignore
 		this.ws.addEventListener(WebsocketEvent.message, ListenForData);
-		
+		 
 		const url = new URL(window.location.href);
 		const queryParams = new URLSearchParams(url.search);
 		if(queryParams.has("code")){

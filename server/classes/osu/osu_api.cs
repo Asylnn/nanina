@@ -53,21 +53,13 @@ public static class OsuApi {
         request.AddQueryParameter("limit","11");
         request.AddQueryParameter("mode",mode);
         var response = await client.ExecuteGetAsync(request);
-        Console.WriteLine("id : " + id + " mode : "  + mode);
 
-        Console.WriteLine("response content "+ response.Content);
+        Console.WriteLine("get recent scores from id : " + id + " mode : "  + mode);
         Console.WriteLine("response status code "+ response.StatusCode);
         
         if(response.IsSuccessStatusCode)
         {
             //try { //Temporary fix, seems like empty arrays are crashing Newtonsoft
-            Console.WriteLine("ehe");
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(Newtonsoft.Json.JsonConvert.DeserializeObject<OsuScoreExtended[]>(response.Content,  new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            })));
-            Console.WriteLine("ehe2");
-
             return Newtonsoft.Json.JsonConvert.DeserializeObject<OsuScoreExtended[]>(response.Content,  new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -81,7 +73,7 @@ public static class OsuApi {
         }
         else 
         {
-            Console.WriteLine("Is not a Success");
+            Console.WriteLine("Couldn't get scores!");
             return [];
         }
     }

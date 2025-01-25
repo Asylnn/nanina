@@ -15,7 +15,7 @@ public static class LoadServer {
         }
     }
     public static void LoadOsuApi(){
-        if(Environment.GetEnvironmentVariable("DEV") == "false" || false){ //put to true for refreshing osu tokens
+        if(Environment.GetEnvironmentVariable("DEV") == "false" || true){ //put to true for refreshing osu tokens
             
             OsuApi.RefreshTokens();
             //_ = Global.RunInBackground(TimeSpan.FromSeconds(OsuApi.tokens.expires_in - 3600), OsuApi.RefreshTokens);
@@ -27,15 +27,15 @@ public static class LoadServer {
     }
     public static void LoadWebSocketServer(){
         var ws = new WebSocketServer("ws://localhost:4889");
-            ws.AddWebSocketService<WS> ("/");
-            ws.AddWebSocketService<WS> ("/test");
-            ws.Start();
-            if (ws.IsListening) {
-                Console.WriteLine ("Listening on port {0}, and providing WebSocket services:", ws.Port);
+        ws.AddWebSocketService<WS> ("/");
+        ws.AddWebSocketService<WS> ("/test");
+        ws.Start();
+        if (ws.IsListening) {
+            Console.WriteLine ("Listening on port {0}, and providing WebSocket services:", ws.Port);
 
-            foreach (var path in ws.WebSocketServices.Paths)
-                Console.WriteLine ("- {0}", path);
-            }
+        foreach (var path in ws.WebSocketServices.Paths)
+            Console.WriteLine ("- {0}", path);
+        }
             
             
     }

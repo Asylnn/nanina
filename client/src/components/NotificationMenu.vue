@@ -63,8 +63,8 @@ export default {
 }*/
 img {
     position:sticky;
-    width: 2.5vw;
-    height:auto;
+    width: 30px;
+    height:30px;
     margin-left: 85vw;
 }
 </style>

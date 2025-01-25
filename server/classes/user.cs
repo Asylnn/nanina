@@ -1,5 +1,11 @@
 using Newtonsoft.Json;
 
+public class ServerTestToCreate 
+{
+    public string type { get; set; }
+    public string message { get; set; }
+    public short severity { get; set; }
+}
 static class UserId {
     static public string CreateId()
     {   
