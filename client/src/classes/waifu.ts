@@ -4,7 +4,7 @@ export default class Waifu {
     public xp : number = 90
     public lvl : number = 10
     public diffLvlUp : number = 3
-    public imgPATH : string = "src/assets/waifu-image/GYrXGACboAACxp7.jpg"
+    public imgPATH : string = "GYrXGACboAACxp7.jpg"
     public get xpToLvlUp() : number {
         return Math.floor(this.diffLvlUp*(10*this.lvl + 20))
     }
