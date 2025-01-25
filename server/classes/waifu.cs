@@ -73,6 +73,7 @@ public class Waifu
     }
 
     public static void UpdateWaifu(PocoWaifu poco){
+
         Console.WriteLine(poco.id);
 
         var waifu = DBUtils.GetWaifu(poco.id);

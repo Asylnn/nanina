@@ -45,7 +45,6 @@ export default {
 
 <template>
     <div>
-        <br><br><br>
         <select v-for="banner in banners" v-model="selected_banner">
             <option :value="banner" >{{banner.bannerName}}</option>
         </select>

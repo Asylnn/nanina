@@ -22,15 +22,15 @@ export default {
     <div>
         <p id="nameWaifu">{{ waifu.name }}</p>
         <span>LVL : {{ waifu.lvl }}</span>
+        <div id="centreLesSpans">
+            <span>{{ waifu.xp }}/</span>
+            <span>{{ waifu.xpToLvlUp }}</span>
+        </div>
         <div id="backgroundProgressBar">
             
             <div id="progressBar" :style="style"></div>
         </div>
         <img id="imgWaifu" :src="'src/assets/waifu-image/' + waifu.imgPATH">
-        <div id="centreLesSpans">
-            <span>{{ waifu.xp }}/</span>
-            <span>{{ waifu.xpToLvlUp }}</span>
-        </div>
 
 
     </div>

@@ -18,6 +18,9 @@ export default {
     methods: {
         updateShowAll() {
             this.showAll = !this.showAll;
+        },
+        deleteMenu() {
+            this.notifs.length = 0
         }
     },
 }
@@ -27,12 +30,19 @@ export default {
 
 <template>
     <div id="notifMenu">
-        <img src="../assets/fleche-vers-le-bas.png" alt="" @click="updateShowAll()">
-        <div v-if="showAll">
-            <div v-for="notif in notifs">
-                <div class="notifElement">
-                    <div id="notifType">{{ notif.type }}</div>
-                    <div id="notifMessage">{{ notif.message }}</div>
+        <div v-if="notifs[0] != null">
+            <div id="firstLine">
+                <div @click="updateShowAll()"></div>
+                <img id="arrow" src="../assets/fleche-vers-le-bas.png" alt="" @click="updateShowAll()">
+                <img id="cross" src="../assets/x.png" alt="" @click="deleteMenu()">
+            </div>
+                
+            <div v-if="showAll">
+                <div v-for="notif in notifs">
+                    <div class="notifElement">
+                        <div id="notifType">{{ notif.type }}</div>
+                        <div id="notifMessage">{{ notif.message }}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,10 +54,15 @@ export default {
 #notifMenu {
     border-radius: 35px;
     background-color: crimson;
-    position: sticky;
-    margin-left:5vw;
+    position: absolute;
+    left: 5vw;
+    top: 7.5vh;
     width: 90vw;
-    top: 15vh;
+    z-index: 9999;
+}
+#firstLine {
+    display: grid;
+    grid-template-columns: 25fr 1fr 1fr;
 }
 .notifElement {
     padding: 1vh 1vw;
@@ -63,8 +78,13 @@ export default {
 }*/
 img {
     position:sticky;
+    align-self: center;
+}
+#arrow {
+    padding: 1vh 0;
     width: 30px;
-    height:30px;
-    margin-left: 85vw;
+}
+#cross {
+    width: 23px;
 }
 </style>

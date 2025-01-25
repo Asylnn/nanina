@@ -20,14 +20,11 @@ export default {
             required : true
         },
     },
-    emits: ["connect-change","theme-change","page-change"],
+    emits: ["theme-change","page-change"],
     methods : {
         onClickChangePage(page: Page){
             this.$emit("page-change", page)
 
-        },
-        onClickConnect() {
-            this.$emit("connect-change", !this.logged)
         },
     },
 }
@@ -38,106 +35,62 @@ export default {
 <template>
     <header>
         <div id="logo">
-            <p>Nanina</p>
-        </div>
-        <div id="buttons">
-            <ul id="buttList">
-                <li><button id="swapLogged" @click="onClickConnect()">Logged : {{ logged }}</button></li>
-                <li v-if="!logged"><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
-                <li v-else><button @click="onClickChangePage(7)"><img height=32px width=32px src="../assets/option_gear_from_google_probably_not_free_of_use.png"></button></li>
-            </ul>
+            <p @click="onClickChangePage(0)">Nanina</p>
         </div>
         <ul id="pages" v-if="logged">
-            <li><button @click="onClickChangePage(0)">Homepage</button></li>
-            <li><button @click="onClickChangePage(1)">Inventory</button></li>
-            <li><button @click="onClickChangePage(2)">Disconnected</button></li>
-            <li><button @click="onClickChangePage(5)">Waifu</button></li>
-            <li><button @click="onClickChangePage(9)">Fight!!</button></li>
-            <li><button @click="onClickChangePage(11)">Pull!!</button></li>
-
-            <li v-if="admin"><button @click="onClickChangePage(10)">Manage Waifu Database</button></li>
-            <li v-if="admin && dev"><button @click="onClickChangePage(8)">Add Map</button></li>
+            <li @click="onClickChangePage(1)"><span>Inventory </span></li>
+            <li @click="onClickChangePage(4)"><span>Waifu</span></li>
+            <li @click="onClickChangePage(8)"><span>Fighting</span></li>
+            <li @click="onClickChangePage(9)" v-if="admin"><span>Waifu DB</span></li>
+            <li @click="onClickChangePage(7)" v-if="admin && dev"><span>Add Beatmap</span></li>
+            <li @click="onClickChangePage(10)"><span>Pull!!</span></li>
+        </ul>
+        <ul id="buttList">
+            <li v-if="!logged"><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
+            <li v-else><span @click="onClickChangePage(6)"><img height=25px width=25px src="../assets/option_gear_from_google_probably_not_free_of_use.png"></span></li>
         </ul>
     </header>
 </template>
 
 <style lang="css" scoped>
+
+header, #pages, #buttList {
+    display: grid;
+}
+
 header {
     position:sticky;
     top:0;
-    height:13vh;
-    border: 2px solid yellow;
-    display: grid;
-    grid-template-columns: 0.8fr 0.2fr;
+    height:6vh;
+    text-align: center;
+    background-color: rgb(39, 11, 65);
+    grid-template-columns: 1fr 4fr 0.5fr;
+    padding: 0 15vw;
+}
+#logo, #pages, #buttList {
+    cursor: pointer;
 }
 
 #logo {
     color:blueviolet;
-    font: italic bold 35px cursive;
-    text-align: center;
-    border: 2px solid blueviolet;
-}
-
-#buttons {
-    border: 2px solid sienna;
-    
-}
-
-#swapLogged {
-    padding: 0%;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-li {
-    margin: 0%;
-    padding: 0%;
-    font: bold 15px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    list-style: none;
-    text-align: center;
-}
-
-#buttList {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-#buttList, #buttList li, #buttList li button, #buttList li select{
-    border: 2px solid rgb(25, 49, 185);
-    background-color: rgb(199, 54, 199);
-    color: rgb(56, 1, 95);
-    padding: 0%;
-    margin: 0%;
-}
-
-#pages, #pages li, #pages li button {
-    background-color: rgb(104, 64, 177);
+    font: italic bold 4.5vh cursive;
 }
 
 #pages {
-    margin: 0;
-    padding: 0;
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    border: 2px solid aqua;
-    color: violet;
+    color: rgb(203, 165, 221);
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-#pages li, #pages li button{
-    border: 2px solid green;
-    color: coral;
+#buttList {
+    grid-template-columns: 1fr 1fr;
+    color: greenyellow;
 }
 
-#pages li button {
-    width: 100%;
-    height: 100%;
-    border: 0;
+li, #logo{
+    align-content: center;
 }
 
-select {
-    padding: 0%;
-    height: 100%;
-    border: 0;
+li {
+    list-style: none;
 }
 </style>
