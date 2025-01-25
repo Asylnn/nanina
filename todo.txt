@@ -1,19 +1,20 @@
 STEP 1 : Make a Working Prototype to host on Asyln.moe (prototype with only xp, lvl and osu standard claiming (will be private)) 
 
 TODO : Finish discord authentification                              #Done
-TODO : Implement user creation
+TODO : Implement user creation                                      #Done
 TODO : Implement waifu database                                     #Done
 TODO : Implement osu API                                            #Done
 TODO : Do claim page/component                                      #Done
 TODO : Do waifu page/component                                      #Done
 TODO : Implement claim system                                       #Done
-TODO : Implement File Serving
 TODO : Add a Discord Login Button                                   #Done
 TODO : Add a Notification Box object in client                      #Done                    
 TODO : Create Waifu manager                                         #Done
-TODO : Finish waifu stat page                                       
-TODO : Update all waifus of users when waifu stats is modified
+TODO : Update all waifus of users when waifu stats are modified     #Done
 TODO : Implement various notifications for errors                   #Done
+TODO : Finish waifu stat page                                       #Done
+
+TODO : Implement File Serving
 
 TODO : Is not deleting old unused sessions ids not secure? To think about.
 
@@ -51,9 +52,6 @@ Small Non Urgent Tasks
 
 Make the code in repsonse.cs follow camelCase convetion
 Comment the code
-Make a writeline to the console when a status code is different from 200/OK
+Make a writeline to the console when a status code is different from 200/OK #Done
 Create an extention which add beatmaps to Nanina
-Send Error message when unothorized
-
-[{"accuracy":0.9398148148148148,"best_id":null,"created_at":"2025-01-18T16:08:22Z","id":4197702397,"max_combo":68,"mode":"osu","mode_int":0,"mods":[],"passed":true,"perfect":false,"pp":2.34526,"rank":"A","replay":true,"score":0,"statistics":{"count_100":2,"count_300":33,"count_50":1,"count_geki":null,"count_katu":null,"count_miss":0},"type":"solo_score","user_id":10669137,"current_user_attributes":{"pin":null},"beatmap":{"beatmapset_id":600702,"difficulty_rating":1.32,"id":1331685,"mode":"osu","status":"ranked","total_length":29,"user_id":4960893,"version":"Easy","accuracy":3,"ar":3,"bpm":142,"convert":false,"count_circles":10,"count_sliders":25,"count_spinners":1,"cs":3,"deleted_at":null,"drain":2,"hit_length":29,"is_scoreable":true,"last_updated":"2017-10-30T15:01:28Z","mode_int":0,"passcount":663156,"playcount":1332657,"ranked":1,"url":"https:\/\/osu.ppy.sh\/beatmaps\/1331685","checksum":"8414108d7fcb99e8fef8ab63f2a11bea"},"beatmapset":{"artist":"Hanasaka Yui(CV: M.A.O)","artist_unicode":"\u82b1\u5742\u7d50\u8863(CV\uff1a\uff2d\u30fb\uff21\u30fb\uff2f)","covers":{"cover":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/cover.jpg?1650649403","cover@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/cover@2x.jpg?1650649403","card":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/card.jpg?1650649403","card@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/card@2x.jpg?1650649403","list":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/list.jpg?1650649403","list@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/list@2x.jpg?1650649403","slimcover":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/slimcover.jpg?1650649403","slimcover@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/slimcover@2x.jpg?1650649403"},"creator":"Djulus","favourite_count":4026,"hype":null,"id":600702,"nsfw":false,"offset":0,"play_count":19917216,"preview_url":"\/\/b.ppy.sh\/preview\/600702.mp3","source":"OneRoom","spotlight":false,"status":"ranked","title":"Harumachi Clover","title_unicode":"\u6625\u5f85\u3061\u30af\u30ed\u30fc\u30d0\u30fc","track_id":null,"user_id":4960893,"video":false},"user":{"avatar_url":"https:\/\/a.ppy.sh\/10669137?1681504977.jpeg","country_code":"FR","default_group":"default","id":10669137,"is_active":true,"is_bot":false,"is_deleted":false,"is_online":false,"is_supporter":true,"last_visit":null,"pm_friends_only":false,"profile_colour":null,"username":"Asyln"}},{"accuracy":0.7546296296296297,"best_id":null,"created_at":"2025-01-18T15:55:04Z","id":4197627438,"max_combo":44,"mode":"osu","mode_int":0,"mods":["NC"],"passed":true,"perfect":false,"pp":null,"rank":"C","replay":true,"score":0,"statistics":{"count_100":9,"count_300":24,"count_50":1,"count_geki":null,"count_katu":null,"count_miss":2},"type":"solo_score","user_id":10669137,"current_user_attributes":{"pin":null},"beatmap":{"beatmapset_id":600702,"difficulty_rating":1.32,"id":1331685,"mode":"osu","status":"ranked","total_length":29,"user_id":4960893,"version":"Easy","accuracy":3,"ar":3,"bpm":142,"convert":false,"count_circles":10,"count_sliders":25,"count_spinners":1,"cs":3,"deleted_at":null,"drain":2,"hit_length":29,"is_scoreable":true,"last_updated":"2017-10-30T15:01:28Z","mode_int":0,"passcount":663156,"playcount":1332657,"ranked":1,"url":"https:\/\/osu.ppy.sh\/beatmaps\/1331685","checksum":"8414108d7fcb99e8fef8ab63f2a11bea"},"beatmapset":{"artist":"Hanasaka Yui(CV: M.A.O)","artist_unicode":"\u82b1\u5742\u7d50\u8863(CV\uff1a\uff2d\u30fb\uff21\u30fb\uff2f)","covers":{"cover":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/cover.jpg?1650649403","cover@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/cover@2x.jpg?1650649403","card":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/card.jpg?1650649403","card@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/card@2x.jpg?1650649403","list":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/list.jpg?1650649403","list@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/list@2x.jpg?1650649403","slimcover":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/slimcover.jpg?1650649403","slimcover@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/slimcover@2x.jpg?1650649403"},"creator":"Djulus","favourite_count":4026,"hype":null,"id":600702,"nsfw":false,"offset":0,"play_count":19917216,"preview_url":"\/\/b.ppy.sh\/preview\/600702.mp3","source":"OneRoom","spotlight":false,"status":"ranked","title":"Harumachi Clover","title_unicode":"\u6625\u5f85\u3061\u30af\u30ed\u30fc\u30d0\u30fc","track_id":null,"user_id":4960893,"video":false},"user":{"avatar_url":"https:\/\/a.ppy.sh\/10669137?1681504977.jpeg","country_code":"FR","default_group":"default","id":10669137,"is_active":true,"is_bot":false,"is_deleted":false,"is_online":false,"is_supporter":true,"last_visit":null,"pm_friends_only":false,"profile_colour":null,"username":"Asyln"}}]
-{"type":"update waifu db","data":[{"name":"Rem","id":"1","xp":90,"lvl":10,"diffLvlUp":3,"imgPATH":"src/assets/waifu-image/GYrXGACboAACxp7.jpg"}],"id":"17292926554078802516"}
+Send Error message when unauthorized

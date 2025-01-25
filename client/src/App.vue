@@ -85,8 +85,6 @@ export default {
 			case Page.Inventory :
 				if (this.logged === true) return 20
 				else return 50
-			case Page.Disconnected :
-				return 30
 			case Page.NotFound :
 				return 40
 			case Page.WaifuDisplay :
@@ -181,7 +179,6 @@ export default {
 <template>
 	<div id="main" :class="[user.theme]">
 		<NNNHeader :dev=dev :logged=logged :admin=user.admin @connect-change="updateLogged" @page-change="updatePage"></NNNHeader>
-		<NotificationMenu :notifs=notifs></NotificationMenu>
 		<div v-if="loadingPage === 10">
 		<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
@@ -189,9 +186,6 @@ export default {
 			Inventory
 			<!--<StatsBlock :objectType="objectType" :stars="stars" :rarity="rarity" :value="value" :owner="owner" :xp="xp" :lvl="lvl" :b_int="b_int" :b_luck="b_luck" :b_exp="b_exp" :o_int="o_int" :o_luck="o_luck"
 			:o_exp="o_exp" :u_int="u_int" :u_exp="u_exp" :diffLvlup="diffLvlup"></StatsBlock>-->
-		</div>
-		<div v-else-if="loadingPage === 30">
-			Déconnexion
 		</div>
 		<div v-else-if="loadingPage === 40">
 			ERREUR 404 AHAHAHAHAH
@@ -218,5 +212,12 @@ export default {
 		<div v-else-if="loadingPage === 110">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
 		</div>
+		<NotificationMenu :notifs=notifs></NotificationMenu>
 	</div>
 </template>
+
+<style lang="css" scoped>
+#main {
+	min-height: 100vh;
+}
+</style>
