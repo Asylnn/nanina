@@ -13,7 +13,7 @@ TODO : Add a Notification Box object in client                      #Done
 TODO : Create Waifu manager                                         #Done
 TODO : Finish waifu stat page                                       
 TODO : Update all waifus of users when waifu stats is modified
-TODO : Implement various notifications for errors
+TODO : Implement various notifications for errors                   #Done
 
 TODO : Is not deleting old unused sessions ids not secure? To think about.
 

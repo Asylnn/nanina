@@ -1,11 +1,15 @@
 using WebSocketSharp.Server;
 using LiteDB;
+using System.Runtime.ExceptionServices;
+using System.Runtime.Serialization;
 public static class LoadServer {
 
     public static void Load(){
         LoadEnv();
         LoadOsuApi();
         LoadWebSocketServer();
+        if(!File.Exists(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH"))) 
+            FirstLoad();
         UpdateUserDB(); //Update Database when updating game
     }
     public static void LoadEnv(){
@@ -36,8 +40,27 @@ public static class LoadServer {
         foreach (var path in ws.WebSocketServices.Paths)
             Console.WriteLine ("- {0}", path);
         }
-            
-            
+    }
+
+    public static void FirstLoad(){
+        var waifu = new PocoWaifu()
+        {
+            name = "Rem",
+            xp = 0,
+            lvl = 1,
+            imgPATH = "GYrXGACboAACxp7.jpg",
+            diffLvlUp = 3,
+            id = "0"
+        };
+        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+            var waifuCol = db.GetCollection<PocoWaifu>("waifudb");
+            waifuCol.Insert(waifu);
+            waifuCol.EnsureIndex(x => x.id, true);
+        }
+        var info = new Info{
+            first_time_running = false
+        };
+        File.WriteAllText(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH"), Newtonsoft.Json.JsonConvert.SerializeObject(info));
     }
 
     public static void UpdateUserDB()

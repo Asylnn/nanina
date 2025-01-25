@@ -1,11 +1,6 @@
 using Newtonsoft.Json;
 
-public class ServerTestToCreate 
-{
-    public string type { get; set; }
-    public string message { get; set; }
-    public short severity { get; set; }
-}
+
 static class UserId {
     static public string CreateId()
     {   
@@ -55,7 +50,7 @@ public class User {
     public string locale = "us-en";
     public string username;
     public bool admin = false;
-    public Waifu waifu = Waifu.FromPoco(DBUtils.GetWaifu("1"));
+    public Waifu waifu = Waifu.FromPoco(DBUtils.GetWaifu("0"));
     public string Id = UserId.CreateId();
     public Ids ids;
     public List<Fight> fights;

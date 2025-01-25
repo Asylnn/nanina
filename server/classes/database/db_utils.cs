@@ -21,7 +21,7 @@ public static class DBUtils {
         }
     }
     public static PocoWaifu GetWaifu(string id){
-        using(var db = new LiteDatabase(@"/mnt/storage/storage/Projects/Nanina/save/database.db")){
+        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var waifuCol = db.GetCollection<PocoWaifu>("waifudb");
             var list = waifuCol.Find(x => x.id == id);
             if (list.Count() >= 1){
