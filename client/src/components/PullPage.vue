@@ -54,6 +54,18 @@ export default {
         <button @click="pull(10)">Pull 10!</button>
         <li v-for="waifu in pulled_waifus">
             <WaifuManagerComponent :waifu="waifu" @delete="pull"></WaifuManagerComponent>
+            <img id="imgWaifu" :src="'src/assets/waifu-image/' + waifu.imgPATH">
         </li>
     </div>
 </template>
+
+<style lang="css" scoped>
+li {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+img {
+    height: 15vh;
+}
+
+</style>
