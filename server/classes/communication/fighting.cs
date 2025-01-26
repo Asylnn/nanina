@@ -9,16 +9,15 @@ partial class WS : WebSocketBehavior
     public void GetMapToFight(ClientWebSocketResponse rawData){ //somehow protected doesn't work?
         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var mapsCol = db.GetCollection<OsuBeatmap>("osumapsdb");
-
             var maps = mapsCol.Find(x => x.difficulty_rating <= 7.27*2.7);
             Random rng = new Random();
             var random_elem = rng.Next(maps.Count());
-            if(maps.Count() == 0){Console.WriteLine("There isn't any map in the database!!!"); return;}
+            if(maps.Count() == 0){Console.WriteLine("There isn't any map in the database!!!"); return;} //Peut etre faire un if else ici?
             var map = maps.ElementAt(random_elem);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "map link",
-                data = OsuApi.Linkify(map)
+                data = OsuApi.JEVEUXMABEATMAP(map)
             }));
             var user = DBUtils.GetUser(rawData.id);
             Console.WriteLine(JsonConvert.SerializeObject(user.fights));

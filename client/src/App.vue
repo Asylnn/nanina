@@ -29,6 +29,7 @@ import User from './classes/user'
 import Waifu from './classes/waifu'
 import Page from './classes/page'
 import NotificationSeverity from './classes/notification_severity'
+import OsuBeatmap from './classes/beatmap'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -39,6 +40,7 @@ export default {
 			user : new User({}),
 			fighting : false,
 			link : "",
+			beatmap : new OsuBeatmap(),
 			xp : 0,
 			notifs : Array(),
 			dev : true, //Is this dev or prod? IMPORTANT!!
@@ -143,8 +145,9 @@ export default {
 					}
 					break
 				case "map link" :
-					this.fighting = true 
-					this.link = res.data
+					this.fighting = true
+					this.beatmap = JSON.parse(res.data)
+					this.link = 'https://osu.ppy.sh/beatmapsets/'+this.beatmap.beatmapset_id+'#'+this.beatmap.mode+'/'+this.beatmap.id
 					this.notifs.push(new Notification("Fight", "You started with the following beatmap! " + this.link, NotificationSeverity.Notification))
 					break
 				case "fighting results" :
@@ -217,7 +220,7 @@ export default {
 			<AddMap :id="user.Id"></AddMap>
 		</div>
 		<div v-else-if="loadingPage === 100">
-			<ClaimAndFightPage :xp="xp" :fighting="fighting" :id="user.Id" :link="link"></ClaimAndFightPage>
+			<ClaimAndFightPage :xp="xp" :fighting="fighting" :id="user.Id" :beatmap="beatmap"></ClaimAndFightPage>
 		</div>
 		<div v-else-if="loadingPage === 110">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>

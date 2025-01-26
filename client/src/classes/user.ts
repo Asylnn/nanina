@@ -12,8 +12,8 @@ export default class User {
     public waifus : Waifu[] = [new Waifu({})]
     public Id : string = "772277"
     public locale : string = "en"
-    public avatarPATH = ""
-    public gacha_currency = 0
+    public avatarPATH : string = ""
+    public gacha_currency : number = 0
     public pullBannerHistory: Dictionary<PullBannerHistory> = {}//?
     
 
