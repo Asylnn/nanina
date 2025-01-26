@@ -211,7 +211,7 @@ export default {
 			<UserPage></UserPage>
 		</div>
 		<div v-else-if="loadingPage === 80">
-			<UserOptionPage :id=user.Id :theme=user.theme @theme-change="updateTheme"></UserOptionPage>
+			<UserOptionPage :user=user :theme=user.theme @theme-change="updateTheme"></UserOptionPage>
 		</div>
 		<div v-else-if="loadingPage === 90">
 			<AddMap :id="user.Id"></AddMap>

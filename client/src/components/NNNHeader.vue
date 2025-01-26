@@ -41,9 +41,9 @@ export default {
             <li @click="onClickChangePage(1)"><span>Inventory </span></li>
             <li @click="onClickChangePage(14)"><span>Waifus</span></li>
             <li @click="onClickChangePage(7)"><span>Fighting</span></li>
+            <li @click="onClickChangePage(9)"><span>Pull!!</span></li>
             <li @click="onClickChangePage(8)" v-if="admin"><span>Waifu DB</span></li>
             <li @click="onClickChangePage(6)" v-if="admin && dev"><span>Add Beatmap</span></li>
-            <li @click="onClickChangePage(9)"><span>Pull!!</span></li>
         </ul>
         <ul id="buttList">
             <li v-if="!logged"><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
