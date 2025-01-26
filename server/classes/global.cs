@@ -1,14 +1,9 @@
 using System.Net.Http;
 using RestSharp;
 public static class Global {
-    public static RestClient client = new RestClient("");
+    public static Config config;
+}
 
-    public static async Task RunInBackground(TimeSpan timeSpan, Action action)
-    {
-        var periodicTimer = new PeriodicTimer(timeSpan);
-        while (await periodicTimer.WaitForNextTickAsync())
-        {
-            action();
-        }
-    }
+public class Config {
+    public long time_limit_for_osu_code_verification_in_milliseconds;
 }

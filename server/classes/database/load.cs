@@ -2,9 +2,11 @@ using WebSocketSharp.Server;
 using LiteDB;
 using System.Runtime.ExceptionServices;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 public static class LoadServer {
 
     public static void Load(){
+        LoadConfig();
         LoadEnv();
         LoadOsuApi();
         LoadWebSocketServer();
@@ -14,6 +16,11 @@ public static class LoadServer {
         UpdateUserDB(); //Update Database when updating game
 
         
+    }
+
+    public static void LoadConfig(){
+        Console.WriteLine("loading config : ..." + File.ReadAllText("../config.json"));
+        Global.config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../config.json"));
     }
     public static void LoadEnv(){
         var dotEnvLoadStatus = DotEnv.Load("../.env");
@@ -35,13 +42,13 @@ public static class LoadServer {
         else {
             //Console.WriteLine("uwu ", File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
             if(File.Exists(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")))
-                OsuApi.tokens = Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
+                OsuApi.tokens = JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
             else {
                 OsuApi.tokens = new OsuOAuthTokens();
                 Console.Error.WriteLine("There is no Osu api tokens found, all features related to osu won't work");
             }
             if(File.Exists(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH")))
-                OsuApi.chat_tokens = Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH")));
+                OsuApi.chat_tokens = JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH")));
             else {
                 Console.Error.WriteLine("There is no Osu chat api tokens found, user verification won't work, to make it work, please provide a valid code in the OsuApi.AuthorizeSelf using the link inside the same function");
                 OsuApi.tokens = new OsuOAuthTokens();
@@ -91,7 +98,7 @@ public static class LoadServer {
         var info = new Info{
             first_time_running = false
         };
-        File.WriteAllText(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH"), Newtonsoft.Json.JsonConvert.SerializeObject(info));
+        File.WriteAllText(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH"), JsonConvert.SerializeObject(info));
     }
 
     public static void UpdateUserDB()
@@ -103,9 +110,10 @@ public static class LoadServer {
             foreach (PocoUser user in users) {
                 user.fights = [];
                 user.waifus ??= [];
+                user.verificationCodes ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
-                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu));
-                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifus));
+                Console.WriteLine(JsonConvert.SerializeObject(user.waifu));
+                Console.WriteLine(JsonConvert.SerializeObject(user.waifus));
                 if(user.waifu != null)
                 {
                     user.waifus.Add(user.waifu);
@@ -115,8 +123,8 @@ public static class LoadServer {
                 /*if(user.waifus.id == null){
                     user.waifus.id = "0";
                 }*/
-                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu));
-                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifus));
+                Console.WriteLine(JsonConvert.SerializeObject(user.waifu));
+                Console.WriteLine(JsonConvert.SerializeObject(user.waifus));
                 user.waifus.ForEach(waifu => Waifu.UpdateWaifu(waifu));
                     //Is it still working?
                 userCol.Update(user);

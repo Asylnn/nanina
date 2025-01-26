@@ -108,33 +108,23 @@ public static class OsuApi {
             return null;
         }
     }
-    public static async void SendMessageToUser(string osuUserId, string message){
+    public static async Task<bool> SendMessageToUser(string osuUserId, string message){
         var request = new RestRequest($"chat/new", Method.Post);
 
         request.AddHeader("Content-Type", "application/json");
         request.AddHeader("Accept", "application/json");
         request.AddHeader("Authorization", $"Bearer {chat_tokens.access_token}");
         request.AddJsonBody(JsonConvert.SerializeObject(new {
-            target_id=11753335,
+            target_id=Convert.ToInt64(osuUserId),
             is_action=false,
-            message="CA MARCHE !!! YES PUTAIN! 727 727 727 727 727 727"
+            message,
         }));
         
-        Console.WriteLine("osu id " + Convert.ToInt64(osuUserId));
-        Console.WriteLine("osu id " + osuUserId);
-
-        /*request.AddParameter("target_id", 2070907); //must be integer? YES
-        request.AddParameter("message", "727");
-        //request.AddParameter("type", "PM", , true);
-        request.AddParameter("is_action", false );*/
-        //Console.WriteLine(JsonConvert.SerializeObject(request));
         
         var response = await client.ExecutePostAsync(request);
-        //var response2 = client.Execute(request);
-        Console.WriteLine("zonse content "+ response.Content);
         Console.WriteLine("osu api response status code " + response.StatusCode);
 
-
+        return response.IsSuccessStatusCode;
     }
 
     public static async void AuthorizeSelf(string code){

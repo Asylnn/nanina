@@ -33,6 +33,7 @@ export default {
             selected_theme :this.theme,
             entered_id :this.user.ids.osuId,
             request : false,
+            code: 0,
         }
     },
     props:{
@@ -51,9 +52,13 @@ export default {
             this.$emit("theme-change", this.selected_theme)
         },
         updateSettings(){
-            //@ts-ignore
             this.request = true
+            //@ts-ignore
 			this.ws.send(JSON.stringify({type:"update osu id", data:this.entered_id, id: this.user.Id}))
+        },
+        verifyOsuId(){
+            //@ts-ignore
+			this.ws.send(JSON.stringify({type:"verify osu id", data:this.code, id: this.id}))
         },
     }
 }
@@ -80,7 +85,8 @@ export default {
         </div>
         <div id="optionVerifOsuId" v-if=request>
             <p>You just recieved a unique code in your osu! dms, enter it here to update your id =></p>
-            <input type="number">
+            <input type="number" v-model.number.lazy="code">
+            <button @click="verifyOsuId()">verify</button>
         </div>
     </div>
 </template>
