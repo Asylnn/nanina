@@ -34,13 +34,13 @@ public static class LoadServer {
         }
         else {
             //Console.WriteLine("uwu ", File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
-            if(File.Exists(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH")))
+            if(File.Exists(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")))
                 OsuApi.tokens = Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
             else {
                 OsuApi.tokens = new OsuOAuthTokens();
                 Console.Error.WriteLine("There is no Osu api tokens found, all features related to osu won't work");
             }
-            if(File.Exists(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH")))
+            if(File.Exists(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH")))
                 OsuApi.chat_tokens = Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH")));
             else {
                 Console.Error.WriteLine("There is no Osu chat api tokens found, user verification won't work, to make it work, please provide a valid code in the OsuApi.AuthorizeSelf using the link inside the same function");
