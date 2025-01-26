@@ -19,15 +19,24 @@ export default {
         },
     },
     methods: {
-        sortByName(){
-            this.waifus.sort(function (a, b) {
-                return ('' + a.name).localeCompare(b.name);
-            })
-        },
-        sortByLevel(){
-            this.waifus.sort(function (a, b) {
-                return b.lvl-a.lvl;
-            })
+        updateSorting(filter : number) {
+            switch (filter) {
+                case 0 :
+                    this.waifus.sort((a, b) => a.lvl-b.lvl)
+                    break
+                case 1 :
+                    this.waifus.sort((a, b) => b.lvl-a.lvl)
+                    break
+                case 2 :
+                    this.waifus.sort((a, b) => ('' + a.name).localeCompare(b.name))
+                    break
+                case 3 :
+                    this.waifus.sort((a, b) => ('' + b.name).localeCompare(a.name))
+                    break
+                default :
+                    this.waifus.sort((a, b) => a.lvl-b.lvl)
+                    break
+            }
         },
         openWaifuDisplay(waifu : Waifu) {
             this.focusedView = !this.focusedView
@@ -55,19 +64,20 @@ export default {
     <div id="filters">
         <div id="rowFilter">
             <label>Number per row : </label>
-            <select>
-                <option @click="generateGridTemplateColumns(5)">5</option>
-                <option @click="generateGridTemplateColumns(4)">4</option>
-                <option @click="generateGridTemplateColumns(3)">3</option>
-                <option @click="generateGridTemplateColumns(2)">2</option>
+            <select value="4">
+                <option @click="generateGridTemplateColumns(5)" value="5">5</option>
+                <option @click="generateGridTemplateColumns(4)" value="4">4</option>
+                <option @click="generateGridTemplateColumns(3)" value="3">3</option>
+                <option @click="generateGridTemplateColumns(2)" value="2">2</option>
             </select>
         </div>
         <div id="idFilter">
             <label>Filter : </label>
-            <select>
-                <option>Default</option>
-                <option @click="sortByName()">Name</option>
-                <option @click="sortByLevel()">Level</option>
+            <select value="LD">
+                <option @click="updateSorting(0)" value="LA">Level (Ascendant)</option>
+                <option @click="updateSorting(1)" value="LD">Level (Descendant)</option>
+                <option @click="updateSorting(2)" value="NA">Name (Ascendant)</option>
+                <option @click="updateSorting(3)" value="BD">Name (Descendant)</option>
             </select>
         </div>
     </div>
@@ -102,6 +112,7 @@ export default {
 }
 #filters {
     grid-template-columns: 1fr 1fr;
+    padding-top: 1vh;
 }
 #filters, #waifuIcons {
     display: grid;
