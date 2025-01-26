@@ -30,6 +30,7 @@ public class PocoUser
     public List<Fight> fights { get; set; }
     public int gacha_currency { get; set; }
     public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; }
+    public VerificationCodes verificationCodes { get; set; }
 
 } 
 
@@ -42,6 +43,11 @@ public class Ids {
 public class Tokens {
     public string discord_access_token { get; set; }
     public string discord_refresh_token { get; set; }
+}
+
+public class VerificationCodes {
+    public long osuVerificationCodetimestamp { get; set; }
+    public string osuVerificationCode { get; set; }
 }
 
 public class Fight {
@@ -61,14 +67,15 @@ public class User {
     public bool admin = false;
     public List<Waifu> waifus = [Waifu.FromPoco(DBUtils.GetWaifu("0"))];
     public string Id = UserId.CreateId();
-    public Ids ids;
+    public Ids ids = new()  {discordId="1", osuId="1"};
     public List<Fight> fights;
     public Tokens tokens;
     public string avatarPATH;
-    public StatCount statCount = new StatCount();
+    public StatCount statCount = new();
     private string theme = "dark_theme";
     public int gacha_currency;
     public Dictionary<string, PullBannerHistory> pullBannerHistory;
+    public VerificationCodes verificationCodes = new() { osuVerificationCode=null, osuVerificationCodetimestamp = 0 };
     public User(string username, Ids ids)
     
     

@@ -20,7 +20,7 @@ TODO : Is not deleting old unused sessions ids not secure? To think about.
 
 STEP 2 : Release Version 0.1
 
-TODO : Implement automatic backing system
+TODO : Implement automatic backing system                           #Done
 TODO : Implement Setting page/component (Notifications)             
 TODO : Implement Gacha system page/component                        #Done
 TODO : Implement Avatar for user

@@ -6,6 +6,7 @@ export default {
         return {
             selected_theme :this.theme,
             entered_id :727,
+            code: 0,
         }
     },
     props:{
@@ -25,7 +26,13 @@ export default {
         updateSettings(){
             //@ts-ignore
 			this.ws.send(JSON.stringify({type:"update osu id", data:this.entered_id, id: this.id}))
+        },
+        verifyOsuId(){
+            //@ts-ignore
+			this.ws.send(JSON.stringify({type:"verify osu id", data:this.code, id: this.id}))
         }
+
+        
     }
 }
 
@@ -43,5 +50,7 @@ export default {
         <p>We need your ids in different game for accessing your scores</p>
         <span>osu id : </span><input type="number" placeholder="727" v-model.number.lazy="entered_id">
         <button @click="updateSettings()">update</button>
+        <span>code : </span><input type="number" placeholder="" v-model.number.lazy="code">
+        <button @click="verifyOsuId()">verify</button>
     </div>
 </template>

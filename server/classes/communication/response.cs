@@ -57,6 +57,9 @@ partial class WS : WebSocketBehavior
                 case "pull request":
                     Pull(rawData);
                     break;
+                case "verify osu id":
+                    VerifyOsuId(rawData);
+                    break;
 
             }
         }
