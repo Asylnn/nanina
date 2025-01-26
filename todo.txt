@@ -17,7 +17,7 @@ TODO : Finish waifu stat page                                       #Done
 STEP 2 : Release Version 0.1
 
 TODO : Implement automatic backing system                           #Done
-TODO : Implement Setting page/component (Notifications)
+TODO : Implement Setting page/component (Notifications)             
 TODO : Make sure the user cannot spam requests to osu api             
 TODO : Implement Gacha system page/component                        #Done
 TODO : Implement check for osu id when user enter his (check identity)

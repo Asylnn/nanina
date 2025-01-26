@@ -148,7 +148,7 @@ export default {
 					this.fighting = true
 					this.beatmap = JSON.parse(res.data)
 					this.link = 'https://osu.ppy.sh/beatmapsets/'+this.beatmap.beatmapset_id+'#'+this.beatmap.mode+'/'+this.beatmap.id
-					this.notifs.push(new Notification("Fight", "You started with the following beatmap! " + this.link, NotificationSeverity.Notification))
+					this.notifs.push(new Notification("Fight", "You started a fight with the following beatmap! " + this.link, NotificationSeverity.Notification))
 					break
 				case "fighting results" :
 					this.fighting = false 
