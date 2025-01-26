@@ -9,7 +9,6 @@ export default {
             focusedView : false,
             waifuToDisplay : new Waifu({}),
             gridTemplateColumns : "grid-template-columns: 1fr 1fr 1fr 1fr",
-            selected : "4",
             lol : "",
         }
     },
@@ -20,6 +19,16 @@ export default {
         },
     },
     methods: {
+        sortByName(){
+            this.waifus.sort(function (a, b) {
+                return ('' + a.name).localeCompare(b.name);
+            })
+        },
+        sortByLevel(){
+            this.waifus.sort(function (a, b) {
+                return b.lvl-a.lvl;
+            })
+        },
         openWaifuDisplay(waifu : Waifu) {
             this.focusedView = !this.focusedView
             this.waifuToDisplay = waifu
@@ -28,11 +37,10 @@ export default {
             this.focusedView = !this.focusedView
             this.waifuToDisplay = new Waifu({})
         },
-        generateGridTemplateColumns() {
-            this.selected;
+        generateGridTemplateColumns(select : number) {
             this.gridTemplateColumns;
             this.gridTemplateColumns = "grid-template-columns: ";
-            for (let i = 0; i < Number(this.selected); i++) {
+            for (let i = 0; i < Number(select); i++) {
                 this.gridTemplateColumns += "1fr ";
             }
             this.gridTemplateColumns += '; ';
@@ -47,19 +55,19 @@ export default {
     <div id="filters">
         <div id="rowFilter">
             <label>Number per row : </label>
-            <select v-model="selected">
-                <option @click="generateGridTemplateColumns()">4</option>
-                <option @click="generateGridTemplateColumns()">3</option>
-                <option @click="generateGridTemplateColumns()">2</option>
-                <option @click="generateGridTemplateColumns()">5</option>
+            <select>
+                <option @click="generateGridTemplateColumns(5)">5</option>
+                <option @click="generateGridTemplateColumns(4)">4</option>
+                <option @click="generateGridTemplateColumns(3)">3</option>
+                <option @click="generateGridTemplateColumns(2)">2</option>
             </select>
         </div>
         <div id="idFilter">
-            <label>Filter by name (doesn't work) : </label>
-            <select v-model="lol">
-                <option>R</option>
-                <option>A</option>
-                <option>M</option>
+            <label>Filter : </label>
+            <select>
+                <option>Default</option>
+                <option @click="sortByName()">Name</option>
+                <option @click="sortByLevel()">Level</option>
             </select>
         </div>
     </div>
