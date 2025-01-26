@@ -2,7 +2,6 @@
 import { useRoute, RouterLink, RouterView } from 'vue-router'
 
 import NNNHeader from './components/NNNHeader.vue'
-import WaifuDisplay from './components/WaifuDisplay.vue'
 import StatsBlock from './components/StatsBlock.vue'
 import Homepage from './components/Homepage.vue'
 import UserPage from './components/UserPage.vue'
@@ -13,6 +12,7 @@ import WaifuManagerPage from './components/WaifuManagerPage.vue'
 import NotificationMenu from './components/NotificationMenu.vue'
 import Notification from './classes/notif'
 import PullPage from './components/PullPage.vue'
+import WaifuListPage from './components/WaifuListPage.vue'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -34,7 +34,7 @@ export default {
 	name: "La SDA de la mort qui tue",
 	data() {
 		return {
-			page: Page.WaifuDisplay,
+			page: Page.Homepage,
 			logged : false,
 			user : new User({}),
 			fighting : false,
@@ -49,7 +49,6 @@ export default {
 	},
 	components:{
 		NNNHeader,
-		WaifuDisplay,
 		StatsBlock,
     	Homepage,
 		UserPage,
@@ -59,6 +58,7 @@ export default {
 		NotificationMenu,
 		WaifuManagerPage,
 		PullPage,
+		WaifuListPage,
 	},
 	
 	methods : {
@@ -85,10 +85,10 @@ export default {
 				return 10
 			case Page.Inventory :
 				if (this.logged === true) return 20
-				else return 50
+				else return 40
 			case Page.NotFound :
 				return 40
-			case Page.WaifuDisplay :
+			case Page.WaifuListPage :
 				return 50
 			case Page.YouSomehowEndedUpThere:
 				return 60
@@ -201,7 +201,7 @@ export default {
 			ERREUR 404 AHAHAHAHAH
 		</div>
 		<div v-else-if="loadingPage === 50">
-			<WaifuDisplay :waifu="user.waifus[0]"></WaifuDisplay>
+			<WaifuListPage :waifus="user.waifus"></WaifuListPage>
 		</div>
 		<div v-else-if="loadingPage === 60">
 			How tf did you even up here?
@@ -232,5 +232,6 @@ export default {
 <style lang="css" scoped>
 #main {
 	min-height: 100vh;
+	position: relative;
 }
 </style>

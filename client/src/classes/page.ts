@@ -3,7 +3,6 @@ enum Page {
 	Inventory,
 	NotFound,
 	YouSomehowEndedUpThere,
-	WaifuDisplay,
 	User,
 	UserOption,
 	AddMap,
@@ -14,6 +13,7 @@ enum Page {
 	PAD1,
 	PAD2,
 	NotificationMenu,
+	WaifuListPage,
 }
 
 export default Page

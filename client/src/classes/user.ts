@@ -1,4 +1,3 @@
-import WaifuDisplay from '@/components/WaifuDisplay.vue'
 import { StatCount } from './stats'
 import Waifu from './waifu'
 
