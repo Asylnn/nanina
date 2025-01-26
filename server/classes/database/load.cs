@@ -30,7 +30,7 @@ public static class LoadServer {
             OsuApi.tokens = Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
         }
     }
-    public static void LoadWebSocketServer(){
+    public static async void LoadWebSocketServer(){
         var ws = new WebSocketServer("ws://localhost:4889");
         ws.AddWebSocketService<WS> ("/");
         ws.AddWebSocketService<WS> ("/test");
@@ -40,6 +40,16 @@ public static class LoadServer {
 
         foreach (var path in ws.WebSocketServices.Paths)
             Console.WriteLine ("- {0}", path);
+        }
+
+        var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(Convert.ToDouble(Environment.GetEnvironmentVariable("AUTOMATIC_BACKUP_TIME"))));
+        while (await periodicTimer.WaitForNextTickAsync())
+        {
+            var backUpPath = Environment.GetEnvironmentVariable("AUTOMATIC_BACKUP_STORAGE_PATH");
+            var databasePath = Environment.GetEnvironmentVariable("DATABASE_PATH");
+            
+            File.Copy(databasePath, backUpPath, true);
+            Console.WriteLine ("Backup...");
         }
     }
 
