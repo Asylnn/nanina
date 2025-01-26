@@ -29,6 +29,9 @@ public class Gacha() {
     public static void LoadBanners(){
         banners = Newtonsoft.Json.JsonConvert.DeserializeObject<Banner[]>(File.ReadAllText(Environment.GetEnvironmentVariable("BANNER_STORAGE_PATH")));
     }
+    public static bool BannerExists(string bannerId){
+        return banners.Any(x => x.bannerId == bannerId);
+    }
     public static List<PocoWaifu> Pull(string bannerId, short pullAmount){
         
         var banner = banners.ToList().Find(banner => bannerId == banner.bannerId);

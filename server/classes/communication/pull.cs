@@ -1,7 +1,5 @@
 using WebSocketSharp.Server;
 using Newtonsoft.Json;
-using LiteDB;
-using RestSharp;
 
 partial class WS : WebSocketBehavior
 {
@@ -9,6 +7,10 @@ partial class WS : WebSocketBehavior
         var user = DBUtils.GetUser(rawData.id);
 
         var pullData = JsonConvert.DeserializeObject<GachaPullClientRequest>(rawData.data);
+        if(!Gacha.BannerExists(pullData.bannerId)){
+            Send(ClientNotification.NotificationData("Pulling", "The banner you tried to pull on doesn't exists!", 1));
+            return;
+        }
         if(user.gacha_currency < Gacha.GetBannerCost(pullData.bannerId, pullData.pullAmount)){
             Send(ClientNotification.NotificationData("Pulling", "You don't have enough gacha currency!", 3));
             return;
