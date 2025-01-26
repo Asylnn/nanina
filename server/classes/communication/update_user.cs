@@ -10,6 +10,9 @@ partial class WS : WebSocketBehavior
         var user = DBUtils.GetUser(rawData.id);
         user.ids.osuId = rawData.data;
         DBUtils.UpdateUser(user);
+        //OsuApi.SendMessageToUser(user.ids.osuId, "salut moi");
+        //OsuApi.GetUserRecentScores("11753335", "osu");
+        OsuApi.SendMessageToUser("11753335", "727 when you see it");
     }
     protected void UpdateTheme(ClientWebSocketResponse rawData){
         var user = DBUtils.GetUser(rawData.id);

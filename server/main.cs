@@ -19,8 +19,9 @@ namespace Nanina
         {
             Console.WriteLine("Server Launched!");
             LoadServer.Load();
-            Thread.Sleep(100);
             
+            Thread.Sleep(100);
+            //OsuApi.AuthorizeSelf();
             Console.WriteLine ("Press any key to shut down the server...");
             Console.ReadKey();
         }

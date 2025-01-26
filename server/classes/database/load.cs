@@ -28,6 +28,7 @@ public static class LoadServer {
         else {
             //Console.WriteLine("uwu ", File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
             OsuApi.tokens = Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
+            OsuApi.chat_tokens = Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH")));
         }
     }
     public static async void LoadWebSocketServer(){
@@ -35,6 +36,7 @@ public static class LoadServer {
         ws.AddWebSocketService<WS> ("/");
         ws.AddWebSocketService<WS> ("/test");
         ws.Start();
+
         if (ws.IsListening) {
             Console.WriteLine ("Listening on port {0}, and providing WebSocket services:", ws.Port);
 
