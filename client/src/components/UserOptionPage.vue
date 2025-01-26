@@ -58,7 +58,7 @@ export default {
         },
         verifyOsuId(){
             //@ts-ignore
-			this.ws.send(JSON.stringify({type:"verify osu id", data:this.code, id: this.id}))
+			this.ws.send(JSON.stringify({type:"verify osu id", data:this.code, id: this.user.Id}))
         },
     }
 }
@@ -86,7 +86,7 @@ export default {
         <div id="optionVerifOsuId" v-if=request>
             <p>You just recieved a unique code in your osu! dms, enter it here to update your id =></p>
             <input type="number" v-model.number.lazy="code">
-            <button @click="verifyOsuId()">verify</button>
+            <button @click="verifyOsuId()">Verify code</button>
         </div>
     </div>
 </template>
@@ -109,7 +109,7 @@ export default {
     grid-template-columns: 2fr 0.3fr 0.2fr 1.4fr;   
 }
 #optionVerifOsuId {
-    grid-template-columns: 1.3fr 0.7fr;
+    grid-template-columns: 1.3fr 0.25fr 0.45fr;
 }
 #optionTheme select, #optionOsuId button, #optionOsuId input {
     border-radius: 5px;
@@ -137,5 +137,7 @@ export default {
 #optionVerifOsuId input{
     width: 5.8vw;
 }
-
+#optionVerifOsuId button {
+    width: 5.8vw;
+}
 </style>
