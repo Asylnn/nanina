@@ -1,8 +1,8 @@
 export default class Waifu {
     public name : string = "Rem"
     public id : string = "42"
-    public xp : number = 90
-    public lvl : number = 10
+    public xp : number = 0
+    public lvl : number = 1
     public diffLvlUp : number = 3
     public imgPATH : string = "GYrXGACboAACxp7.jpg"
     public get xpToLvlUp() : number {

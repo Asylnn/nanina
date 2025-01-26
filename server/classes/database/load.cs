@@ -73,6 +73,7 @@ public static class LoadServer {
             foreach (PocoUser user in users) {
                 user.fights = [];
                 user.waifus ??= [];
+                user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
                 Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu));
                 Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifus));
                 if(user.waifu != null)

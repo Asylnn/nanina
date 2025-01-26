@@ -3,17 +3,21 @@
 import Waifu from '@/classes/waifu';
 import Banner from '@/classes/banner';
 import WaifuManagerComponent from './WaifuManagerComponent.vue';
+import PullBannerHistory from '@/classes/pull_history';
+import type Dictionary from '@/classes/dictionary';
+import User from '@/classes/user';
 
 export default {
     name : "PullPage",
     data() {
         return {
-            selected_banner: new Banner()
+            selected_banner: new Banner(),
+            showing_history : false
         }
     },
     props: {
-        id : {
-            type : String,
+        user : {
+            type : User,
             required : true,
         },
         gacha_currency : {
@@ -27,15 +31,21 @@ export default {
         banners: {
             type : Array<Banner>,
             required : true
-        }
+        },
     },
     components: {
         WaifuManagerComponent
     },
+    mounted(){
+        this.selected_banner = this.banners[0]
+    },
     methods :{
+        showHistory(){
+            this.showing_history = !this.showing_history
+        },
         pull(pullAmount: number){
             //@ts-ignore
-			this.ws.send(JSON.stringify({type:"pull request", data:JSON.stringify({bannerId:this.selected_banner.bannerId, pullAmount:pullAmount}), id: this.id}))
+			this.ws.send(JSON.stringify({type:"pull request", data:JSON.stringify({bannerId:this.selected_banner.bannerId, pullAmount:pullAmount}), id: this.user.Id}))
         },
     },
 }
@@ -56,6 +66,12 @@ export default {
             <WaifuManagerComponent :waifu="waifu" @delete="pull"></WaifuManagerComponent>
             <img id="imgWaifu" :src="'src/assets/waifu-image/' + waifu.imgPATH">
         </li>
+        <button @click="showHistory">Pull History</button>
+        <li v-if="showing_history" v-for="waifuId in user.pullBannerHistory[selected_banner.bannerId].pullHistory">
+            <span>waifu Id : {{ waifuId }}</span>
+        </li>
+        <span v-if="showing_history" >pity: {{ user.pullBannerHistory[selected_banner.bannerId].pullBeforePity }}</span>
+
     </div>
 </template>
 

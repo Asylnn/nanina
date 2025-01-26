@@ -15,7 +15,8 @@ partial class WS : WebSocketBehavior
             Send(ClientNotification.NotificationData("Pulling", "You don't have enough gacha currency!", 3));
             return;
         }
-        var waifus = Gacha.Pull(pullData.bannerId, pullData.pullAmount);
+        user.gacha_currency -= Gacha.GetBannerCost(pullData.bannerId, pullData.pullAmount);
+        var waifus = Gacha.Pull(user, pullData.bannerId, pullData.pullAmount);
         user.waifus.AddRange(waifus);
         DBUtils.UpdateUser(user);
         Send(JsonConvert.SerializeObject(new ServerWebSocketResponse

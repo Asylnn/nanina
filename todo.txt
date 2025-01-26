@@ -21,11 +21,10 @@ TODO : Is not deleting old unused sessions ids not secure? To think about.
 STEP 2 : Release Version 0.1
 
 TODO : Implement automatic backing system
-TODO : Implement Setting page/component (Notifications)
+TODO : Implement Setting page/component (Notifications)             
 TODO : Implement Gacha system page/component                        #Done
 TODO : Implement Avatar for user
 TODO : Implement check for osu id when user enter his (check identity)
-TODO : Implement "World Level" mechanic
 TODO : Update WaifuDisplay for multiple waifus
 
 STEP 3 : Release Version 0.2
@@ -34,6 +33,7 @@ TODO : Implement Inventory System (page/component/database)
 TODO : Implement Money System (page/component/database)
 TODO : Implement Shop System (page/component/database)
 TODO : Implement First Version of the leaderboard system
+TODO : Implement "World Level" mechanic
 
 STEP 4 : Release Version 0.3
 

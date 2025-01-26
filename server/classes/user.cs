@@ -29,6 +29,8 @@ public class PocoUser
     public StatCount statCount { get; set; }
     public List<Fight> fights { get; set; }
     public int gacha_currency { get; set; }
+    public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; }
+
 } 
 
 public class Ids {
@@ -48,6 +50,11 @@ public class Fight {
     public long timestamp { get; set; }
 }
 
+public class PullBannerHistory {
+    public List<string> pullHistory { get; set; }
+    public short pullBeforePity { get; set; }
+}
+
 public class User {
     public string locale = "us-en";
     public string username;
@@ -61,7 +68,9 @@ public class User {
     public StatCount statCount = new StatCount();
     private string theme = "dark_theme";
     public int gacha_currency;
+    public Dictionary<string, PullBannerHistory> pullBannerHistory;
     public User(string username, Ids ids)
+    
     
     {
         //Id = UserId.CreateId();
@@ -84,6 +93,7 @@ public class User {
             statCount = statCount,
             fights = fights,
             gacha_currency = gacha_currency,
+            pullBannerHistory = pullBannerHistory,
         };
     }
     public PocoUser ToPocoServer(){
@@ -112,6 +122,7 @@ public class User {
         user.fights = poco.fights;
         user.tokens = poco.tokens;
         user.gacha_currency = poco.gacha_currency;
+        user.pullBannerHistory = poco.pullBannerHistory;
         return user;
     }
 

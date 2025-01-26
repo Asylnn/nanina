@@ -1,6 +1,8 @@
 import WaifuDisplay from '@/components/WaifuDisplay.vue'
 import { StatCount } from './stats'
 import Waifu from './waifu'
+import type Dictionary from './dictionary'
+import PullBannerHistory from './pull_history'
 
 export default class User {
     public admin : boolean = false
@@ -13,6 +15,8 @@ export default class User {
     public locale : string = "en"
     public avatarPATH = ""
     public gacha_currency = 0
+    public pullBannerHistory: Dictionary<PullBannerHistory> = {}//?
+    
 
     constructor(obj : any){
         Object.assign(this, obj)

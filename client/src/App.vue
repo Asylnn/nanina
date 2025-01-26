@@ -223,7 +223,7 @@ export default {
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
 		</div>
 		<div v-else-if="loadingPage === 120">
-			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :id="user.Id"></PullPage>
+			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"></PullPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 	</div>
