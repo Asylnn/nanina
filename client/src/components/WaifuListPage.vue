@@ -28,17 +28,16 @@ export default {
             this.focusedView = !this.focusedView
             this.waifuToDisplay = new Waifu({})
         },
-    },
-    computed: {
         generateGridTemplateColumns() {
+            this.selected;
+            this.gridTemplateColumns;
             this.gridTemplateColumns = "grid-template-columns: ";
             for (let i = 0; i < Number(this.selected); i++) {
                 this.gridTemplateColumns += "1fr ";
             }
             this.gridTemplateColumns += '; ';
-            return this.gridTemplateColumns;
         }
-    }
+    },
 }
 
 
@@ -49,10 +48,10 @@ export default {
         <div id="rowFilter">
             <label>Number per row : </label>
             <select v-model="selected">
-                <option>4</option>
-                <option>3</option>
-                <option>2</option>
-                <option>5</option>
+                <option @click="generateGridTemplateColumns()">4</option>
+                <option @click="generateGridTemplateColumns()">3</option>
+                <option @click="generateGridTemplateColumns()">2</option>
+                <option @click="generateGridTemplateColumns()">5</option>
             </select>
         </div>
         <div id="idFilter">
