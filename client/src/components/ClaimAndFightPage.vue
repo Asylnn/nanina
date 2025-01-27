@@ -115,10 +115,10 @@ export default {
             Do you think you have what it takes to succeed ?<br>
             It's time to find out !
         </p>
-        <span id="fightButton" @click="fight">Fight !</span>
-        <span v-if="fight_timing_out">
-            Wait {{ user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - date_milli  }}
+        <span id="timerFight" v-if="fight_timing_out">
+            Wait {{ Math.round((user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - date_milli)/60000*60)  }} seconds
         </span>
+        <span id="fightButton" v-else @click="fight">Fight !</span>
         <div id="inFight" v-if="fighting">
             
             Mouhahahahhaha !<br>
@@ -132,10 +132,10 @@ export default {
             and<br>
             <p>Playing me by submitting a score</p><br>
             If you manage to submit a score, I will gift you XP !
-            <span id="claim" @click="getXP">Prove that you are worth<br>getting XP!</span>
-            <span v-if="claim_timing_out">
-                Wait {{ user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli  }}
+            <span id="timerClaim" v-if="claim_timing_out">
+                Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
             </span>
+            <span v-else id="claim" @click="getXP">Prove that you are worth<br>getting XP!</span>
         </div>
         <div v-else-if="xp != 0">
             <p> You earned {{ xp }}XP! </p>
@@ -162,11 +162,14 @@ span, a {
 a {
     text-decoration: none;
 }
-#fightButton {
+#fightButton, #timerFight, #timerClaim{
     margin: 1vh 15vw;
 }
 #download, #claim {
     margin: 1vh 10vw;
+}
+#timerFight, #timerClaim {
+    cursor:default;
 }
 #welcomeText {
     line-height: 1.5;
