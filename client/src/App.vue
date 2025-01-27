@@ -139,6 +139,7 @@ export default {
 					this.logged = true
 					console.log(new User(JSON.parse(res.data)))
 					this.user = new User(JSON.parse(res.data))
+					this.user.waifus = this.user.waifus.map(waifu => new Waifu(waifu))
 					if(this.user.admin){
 						//@ts-ignore
 						this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))

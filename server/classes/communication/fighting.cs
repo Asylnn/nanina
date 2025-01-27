@@ -18,13 +18,11 @@ partial class WS : WebSocketBehavior
                 data = OsuApi.JEVEUXMABEATMAP(map)
             }));
             var user = DBUtils.GetUser(rawData.id);
-            Console.WriteLine(JsonConvert.SerializeObject(user.fights));
             user.fights.Add(new Fight {
                 game = map.mode,
                 timestamp = long.Parse(Utils.GetTimestamp()),
                 id = map.id.ToString()
             });
-            Console.WriteLine(JsonConvert.SerializeObject(user));
 
             DBUtils.UpdateUser(user);
         }

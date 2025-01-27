@@ -112,8 +112,6 @@ public static class LoadServer {
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
-                Console.WriteLine(JsonConvert.SerializeObject(user.waifu));
-                Console.WriteLine(JsonConvert.SerializeObject(user.waifus));
                 if(user.waifu != null)
                 {
                     user.waifus.Add(user.waifu);
@@ -123,8 +121,6 @@ public static class LoadServer {
                 /*if(user.waifus.id == null){
                     user.waifus.id = "0";
                 }*/
-                Console.WriteLine(JsonConvert.SerializeObject(user.waifu));
-                Console.WriteLine(JsonConvert.SerializeObject(user.waifus));
                 user.waifus.ForEach(waifu => Waifu.UpdateWaifu(waifu));
                     //Is it still working?
                 userCol.Update(user);

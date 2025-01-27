@@ -10,10 +10,8 @@ partial class WS : WebSocketBehavior
         if(!DBUtils.GetUser(rawData.id).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var waifusDB = db.GetCollection<PocoWaifu>("waifudb").FindAll();
-            Console.WriteLine(waifusDB);
 
             var data = JsonConvert.SerializeObject(waifusDB);
-            Console.WriteLine(data);
 
             var response = new ServerWebSocketResponse
             {
