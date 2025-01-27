@@ -91,7 +91,7 @@ public class User {
             admin = admin,
             username = username,
             tokens = tokens,
-            waifus = (List<PocoWaifu>) waifus.Select(waifu => waifu.ToPoco()),
+            waifus = waifus.Select(waifu => waifu.ToPoco()).ToList(),
             Id = Id,
             theme = theme,
             ids = ids,
@@ -119,7 +119,7 @@ public class User {
     {
         User user  = new User(poco.username, poco.ids);
         user.Id = poco.Id;
-        user.waifus = (List<Waifu>) poco.waifus.Select(waifu => Waifu.FromPoco(waifu));
+        user.waifus = poco.waifus.Select(waifu => Waifu.FromPoco(waifu)).ToList();
         user.theme = poco.theme;
         user.ids = poco.ids;
         user.avatarPATH = poco.avatarPATH;
