@@ -23,7 +23,7 @@ public class OsuBeatmapset : ScoreOsuBeatmapset {
 public class ScoreOsuBeatmapset {
         public string artist{get; set;}
         public string artist_unicode{get; set;}
-        public Object covers{get; set;} //{"cover":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/cover.jpg?1650649403","cover@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/cover@2x.jpg?1650649403","card":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/card.jpg?1650649403","card@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/card@2x.jpg?1650649403","list":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/list.jpg?1650649403","list@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/list@2x.jpg?1650649403","slimcover":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/slimcover.jpg?1650649403","slimcover@2x":"https:\/\/assets.ppy.sh\/beatmaps\/600702\/covers\/slimcover@2x.jpg?1650649403"}
+        public Covers covers {get; set;} 
         public string creator{get; set;}
         public int favourite_count{get; set;}
         public string hype{get; set;}
@@ -40,4 +40,15 @@ public class ScoreOsuBeatmapset {
         public int track_id{get; set;}
         public int user_id{get; set;}
         public bool video{get; set;}
+}
+
+public class Covers {
+        public string cover {get; set;}
+        public string cover2x {get; set;}
+        public string card {get; set;}
+        public string card2x {get; set;}
+        public string list {get; set;}
+        public string list2x {get; set;}
+        public string slimcover {get; set;}
+        public string slimcover2x {get; set;}
 }

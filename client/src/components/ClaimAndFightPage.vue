@@ -40,10 +40,6 @@ export default {
             type : Number, //0 until you click claim xp
             required : true
         },
-        beatmapset : {
-            type : OsuBeatmapset,
-            required : false
-        },
         beatmap : {
             type : OsuBeatmap,
             required : true
@@ -120,7 +116,7 @@ export default {
         </span>
         <span id="fightButton" v-else @click="fight">Fight !</span>
         <div id="inFight" v-if="fighting">
-            
+            <img :href="beatmap.beatmapset.covers.cover2x" :src="beatmap.beatmapset.covers.cover2x">
             Mouhahahahhaha !<br>
             I am the spirit of the map, prove me your worth by :<br>
             <p>Downloading me</p> <br>
