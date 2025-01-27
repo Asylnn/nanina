@@ -1,5 +1,8 @@
+import OsuBeatmapset from "./beatmapset";
+
 export default class OsuBeatmap {
     public beatmapset_id : number = 0
+    public beatmapset : OsuBeatmapset = new OsuBeatmapset
     public difficulty_rating : number = 0
     public id : number = 0
     public mode : string = "";
@@ -26,4 +29,5 @@ export default class OsuBeatmap {
     public ranked : number = 0
     public url : string = "";
     public checksum : string = "";
+    public failtimes : number[] = []
 }

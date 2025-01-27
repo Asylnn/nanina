@@ -1,8 +1,6 @@
 using WebSocketSharp.Server;
-using WebSocketSharp;
 using Newtonsoft.Json;
 using LiteDB;
-using RestSharp;
 
 partial class WS : WebSocketBehavior
 {
@@ -10,9 +8,9 @@ partial class WS : WebSocketBehavior
         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var mapsCol = db.GetCollection<OsuBeatmap>("osumapsdb");
             var maps = mapsCol.Find(x => x.difficulty_rating <= 7.27*2.7);
+            if(maps.Count() == 0){Console.WriteLine("There isn't any map in the database!!!"); return;} //Peut etre faire un if else ici?
             Random rng = new Random();
             var random_elem = rng.Next(maps.Count());
-            if(maps.Count() == 0){Console.WriteLine("There isn't any map in the database!!!"); return;} //Peut etre faire un if else ici?
             var map = maps.ElementAt(random_elem);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
@@ -48,9 +46,6 @@ partial class WS : WebSocketBehavior
             Send(ClientNotification.NotificationData("fighting", "Did you do the beatmap?", 0)); return;
         }
         
-
-        if (validscore == null){return ;}
-
         var xp = OsuApi.GetXP(validscore);
         user.waifus.First().giveXP(xp);
         Send(JsonConvert.SerializeObject(new ServerWebSocketResponse

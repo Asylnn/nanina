@@ -18,4 +18,23 @@ export default class OsuBeatmapset {
     public track_id : number = 0;
     public user_id : number = 0;
     public video : boolean = false;
+    public bpm: number = 200;
+    public can_be_hyped : boolean = true;
+    public deleted_at : string = "";
+    public last_updated : string = "";
+    public discussion_enabled : boolean = true;
+    public discussion_locked : boolean = true;
+    public is_scoreable : boolean = true;
+    public legacy_thread_url : string = "";
+    public nominations_summary : Object = {}; 
+    public ranked: number = 200;
+    public ranked_date : string = "";
+    public submitted_date : string = "";
+    public tags : string = "";
+    public storyboard : boolean = true;
+    public availability : Object = {}; 
+    public ratings: number[] =  [];
+
+
+    
 }

@@ -73,7 +73,7 @@ export default {
             I am the spirit of the map, prove me your worth by :<br>
             <p>Downloading me</p> <br>
             <span id="download">
-                <a :href="'https://osu.ppy.sh/beatmapsets/'+beatmap.beatmapset_id+'#'+beatmap.mode+'/'+beatmap.id" target="_blank">
+                <a :href="beatmap.url+'#'+beatmap.mode+'/'+beatmap.id" target="_blank">
                     Download on the osu! website !<br>(not a virus)
                 </a>
             </span><br>

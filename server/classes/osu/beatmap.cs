@@ -1,4 +1,8 @@
-public class OsuBeatmap {
+public class OsuBeatmap : LookUpOsuBeatmap {
+    public OsuBeatmapset beatmapset{get; set;}
+    public object failtimes{get; set;}
+}
+public class LookUpOsuBeatmap {
     public int beatmapset_id {get; set;}
     public float difficulty_rating {get; set;}
     public long id {get; set;}
@@ -14,7 +18,7 @@ public class OsuBeatmap {
     public float drain {get; set;}
     public bool convert {get; set;}
     public int count_circles {get; set;}
-    public int count_sliders;
+    public int count_sliders {get; set;}
     public int count_spinners {get; set;}
     public string deleted_at {get; set;}
     public int hit_length {get; set;}
@@ -26,4 +30,5 @@ public class OsuBeatmap {
     public int ranked {get; set;}
     public string url {get; set;}
     public string checksum {get; set;}
+    public int max_combo {get; set;}
 }

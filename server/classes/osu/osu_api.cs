@@ -65,8 +65,8 @@ public static class OsuApi {
         request.AddQueryParameter("mode",mode);
         var response = await client.ExecuteGetAsync(request);
 
-        Console.WriteLine("get recent scores from id : " + id + " mode : "  + mode);
-        Console.WriteLine("response status code "+ response.StatusCode);
+        Console.WriteLine("GetUserRecentScores : id : " + id + " mode : "  + mode);
+        Console.WriteLine("GetUserRecentScores : response status code "+ response.StatusCode);
         
         if(response.IsSuccessStatusCode)
         {
@@ -92,20 +92,70 @@ public static class OsuApi {
     public static int GetXP(OsuScoreExtended score){
         return (int) Math.Ceiling(score.accuracy*score.beatmap.hit_length*score.beatmap.difficulty_rating);
     }
-    
+
     public static async Task<OsuBeatmap> GetBeatmapById(string beatmapId){
-        var request = new RestRequest($"beatmaps/lookup", Method.Get);
+        var request = new RestRequest($"/beatmaps/{beatmapId}", Method.Get);
         AddDefaultHeader(request);
-        request.AddQueryParameter("id",beatmapId);
+        //request.AddQueryParameter("id",beatmapId);
 
         
         var response = await client.ExecuteGetAsync(request);
-        Console.WriteLine("zonse content "+ response.Content);
-        Console.WriteLine("osu api response status code "+ response.StatusCode);
+        Console.WriteLine("GetBeatmapById : response content "+ response.Content);
+        Console.WriteLine("GetBeatmapById : osu api response status code "+ response.StatusCode);
 
         if(response.IsSuccessStatusCode)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<OsuBeatmap>(response.Content,  new JsonSerializerSettings
+            var beatmap =  JsonConvert.DeserializeObject<OsuBeatmap>(response.Content,  new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            return beatmap;
+        }
+        else 
+        {
+            return null;
+        }
+    }
+
+    public static async Task<LookUpOsuBeatmap> LookUpBeatmapById(string id){
+
+        var request = new RestRequest($"beatmaps/lookup", Method.Get);
+        AddDefaultHeader(request);
+        request.AddQueryParameter("id",id);
+
+
+        var response = await client.ExecuteGetAsync(request);
+        Console.WriteLine("GetBeatmapSetById : response content "+ response.Content);
+        Console.WriteLine("GetBeatmapSetById : osu api response status code "+ response.StatusCode);
+
+        if(response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<LookUpOsuBeatmap>(response.Content,  new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+        }
+        else 
+        {
+            return null;
+        }
+    }
+
+    public static async Task<OsuBeatmap> GetBeatmapSetById(string beatmapsetId){
+        Console.WriteLine("GetBeatmapSetById : id "+ beatmapsetId);
+
+        var request = new RestRequest($"/beatmapsets/{beatmapsetId}", Method.Get);
+        AddDefaultHeader(request);
+        //request.AddQueryParameter("id",Convert.ToInt64(beatmapsetId));
+
+
+        var response = await client.ExecuteGetAsync(request);
+        Console.WriteLine("GetBeatmapSetById : response content "+ response.Content);
+        Console.WriteLine("GetBeatmapSetById : osu api response status code "+ response.StatusCode);
+
+        if(response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<OsuBeatmap>(response.Content,  new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });

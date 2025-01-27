@@ -32,3 +32,9 @@ export default {
         <button @click="updateSettings()">add</button>
     </div>
 </template>
+
+<style>
+input {
+    width: 120px;
+}
+</style>

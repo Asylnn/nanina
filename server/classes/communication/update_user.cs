@@ -11,7 +11,7 @@ partial class WS : WebSocketBehavior
         var rng = new Random();
         var code = rng.Next(999999).ToString();
         var success = await OsuApi.SendMessageToUser(rawData.data, code);
-        Console.WriteLine("code", code);
+        Console.WriteLine("code"+ code);
         user.verificationCodes.osuVerificationCode = code;
         user.verificationCodes.osuVerificationCodetimestamp = long.Parse(Utils.GetTimestamp());
         DBUtils.UpdateUser(user);

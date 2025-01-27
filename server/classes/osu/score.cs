@@ -39,30 +39,16 @@ public class OsuScore {
     public string type;
     public double user_id;
     public OsuUser user;
-    public OsuBeatmap beatmap;
-    public OsuBeatmapset beatmapset;
+    public LookUpOsuBeatmap beatmap;
+    public ScoreOsuBeatmapset beatmapset;
 }
 
-public class OsuScoreExtended {
-    public float accuracy;
-    public double best_id;
+public class OsuScoreExtended : OsuScore{
     public string created_at;
-    public long id;
-    public int max_combo;
     public string mode;
     public int mode_int;
-    public Mod[] mods;
-    public bool passed;
     public bool perfect;
-    public float pp;
-    public string rank;
     public bool replay;
     public int score;
-    public ScoreStatistics statistics;
-    public string type;
-    public int user_id;
-    public Object current_user_attributes; // "current_user_attributes":{"pin":null}
-    public OsuBeatmap beatmap;
-    public OsuBeatmapset beatmapset;
-    public OsuUser user;
+    public Object current_user_attributes; // "current_user_attributes":{"pin":null
 }
