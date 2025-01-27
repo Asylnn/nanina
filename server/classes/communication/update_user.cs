@@ -36,6 +36,11 @@ partial class WS : WebSocketBehavior
         user.verificationCodes.osuVerificationCodetimestamp = 0;
         DBUtils.UpdateUser(user);
         Send(ClientNotification.NotificationData("Update osu ID", "You successfully modified your osu id!", 1));
+        Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+        {
+            type = "user",
+            data = JsonConvert.SerializeObject(user) 
+        }));
     }
     protected void UpdateTheme(ClientWebSocketResponse rawData){
         var user = DBUtils.GetUser(rawData.id);
