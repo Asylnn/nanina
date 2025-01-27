@@ -15,6 +15,10 @@ partial class WS : WebSocketBehavior
             Send(ClientNotification.NotificationData("Pulling", "You don't have enough gacha currency!", 3));
             return;
         }
+        if(pullData.pullAmount == 1 && pullData.pullAmount == 10){
+            Send(ClientNotification.NotificationData("Pulling", "You can't pull a different amount of 1 or 10 times", 1));
+            return;
+        }
         user.gacha_currency -= Gacha.GetBannerCost(pullData.bannerId, pullData.pullAmount);
         var waifus = Gacha.Pull(user, pullData.bannerId, pullData.pullAmount);
         user.waifus.AddRange(waifus);

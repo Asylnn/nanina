@@ -97,12 +97,23 @@ public static class OsuApi {
         Console.WriteLine("GetBeatmapById : response content "+ response.Content);
         Console.WriteLine("GetBeatmapById : osu api response status code "+ response.StatusCode);
 
+
         if(response.IsSuccessStatusCode)
         {
-            var beatmap =  JsonConvert.DeserializeObject<OsuBeatmap>(response.Content,  new JsonSerializerSettings
+            var content = response.Content;
+            content = content.Replace("cover@2x", "cover2x");
+            content = content.Replace("card@2x", "cover2x");
+            content = content.Replace("list@2x", "cover2x");
+            content = content.Replace("slimcover@2x", "cover2x");
+            var beatmap =  JsonConvert.DeserializeObject<OsuBeatmap>(content,  new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
+            
+            if(beatmap.beatmapset.covers.cover2x != null) beatmap.beatmapset.covers.cover2x = beatmap.beatmapset.covers.cover2x.Replace("cover2x", "cover@2x");
+            if(beatmap.beatmapset.covers.card2x != null) beatmap.beatmapset.covers.card2x = beatmap.beatmapset.covers.card2x.Replace("card2x", "card@2x");
+            if(beatmap.beatmapset.covers.list2x != null) beatmap.beatmapset.covers.list2x = beatmap.beatmapset.covers.list2x.Replace("list2x", "list@2x");
+            if(beatmap.beatmapset.covers.slimcover2x != null) beatmap.beatmapset.covers.slimcover2x = beatmap.beatmapset.covers.slimcover2x.Replace("slimcover", "slimcover@2x");
             return beatmap;
         }
         else 
