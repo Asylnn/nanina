@@ -20,7 +20,7 @@ partial class WS : WebSocketBehavior
         else {
             user.ids.osuId = rawData.data;
             user.verification.osuVerificationCode = code;
-            user.verification.osuVerificationCodetimestamp = long.Parse(Utils.GetTimestamp());
+            user.verification.osuVerificationCodetimestamp = Utils.GetTimestamp();
             user.verification.isOsuIdVerified = false;
             DBUtils.UpdateUser(user);
         }
@@ -31,7 +31,7 @@ partial class WS : WebSocketBehavior
         Console.WriteLine(user.verification);
         Console.WriteLine(JsonConvert.SerializeObject(Global.config));
         Console.WriteLine(Global.config);
-        if(long.Parse(Utils.GetTimestamp()) - user.verification.osuVerificationCodetimestamp > Global.config.time_limit_for_osu_code_verification_in_milliseconds)
+        if(Utils.GetTimestamp() - user.verification.osuVerificationCodetimestamp > Global.config.time_limit_for_osu_code_verification_in_milliseconds)
             {Send(ClientNotification.NotificationData("Update osu ID", "The code expired", 1)); return;}
         
         if(user.verification.osuVerificationCode != rawData.data)

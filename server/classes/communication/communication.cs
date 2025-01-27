@@ -11,7 +11,7 @@ public static class Communication {
                 userId = userId,
                 hasUserAssociatedWithSession = hasUserAssociatedWithSession,
                 sessionId = sessionId,
-                date = long.Parse(Utils.GetTimestamp())
+                date = Utils.GetTimestamp()
             });
             session_col.EnsureIndex(x => x.sessionId);
         }

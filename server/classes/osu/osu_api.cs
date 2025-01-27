@@ -31,13 +31,6 @@ public static class OsuApi {
     public static string Linkify(OsuBeatmap map){
         return $"{Environment.GetEnvironmentVariable("OSU_BEATMAP_URL")}{map.beatmapset_id}#{map.mode}/{map.id}";
     }
-
-    public static string JEVEUXMABEATMAP(OsuBeatmap map) {
-        var mapJSON = Newtonsoft.Json.JsonConvert.SerializeObject(map);
-        return mapJSON;
-    }
-
-
     public static void AddDefaultHeader(RestRequest request){
         request.AddHeader("Content-Type", "application/json");
         request.AddHeader("Accept", "application/json");

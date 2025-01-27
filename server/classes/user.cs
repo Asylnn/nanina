@@ -5,7 +5,7 @@ static class UserId {
     static public string CreateId()
     {   
         Random rng = new Random();
-        return Utils.GetTimestamp() + (string) rng.Next(10000000).ToString();
+        return Utils.GetTimestamp().ToString() + rng.Next(10000000).ToString();
     }
 }
 
@@ -31,6 +31,7 @@ public class PocoUser
     public int gacha_currency { get; set; }
     public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; }
     public Verification verification { get; set; }
+    public long claimTimestamp { get; set; }
 
 } 
 
@@ -55,6 +56,7 @@ public class Fight {
     public string game { get; set; }
     public string id { get; set; }
     public long timestamp { get; set; }
+    public bool completed { get; set; }
 }
 
 public class PullBannerHistory {
@@ -77,6 +79,7 @@ public class User {
     public int gacha_currency;
     public Dictionary<string, PullBannerHistory> pullBannerHistory;
     public Verification verification = new() { osuVerificationCode=null, osuVerificationCodetimestamp = 0, isOsuIdVerified=false };
+    public long claimTimestamp;
     public User(string username, Ids ids)
     
     
@@ -103,30 +106,34 @@ public class User {
             gacha_currency = gacha_currency,
             pullBannerHistory = pullBannerHistory,
             verification = verification,
+            claimTimestamp = claimTimestamp,
         };
     }
     public PocoUser ToPocoServer(){
-        var poco = this.ToPoco();
+        var poco = ToPoco();
         poco.tokens.discord_access_token = "";
         poco.tokens.discord_refresh_token = "";
         return poco;
     }
     public static User FromPoco(PocoUser poco)
     {
-        User user  = new User(poco.username, poco.ids);
-        user.Id = poco.Id;
-        user.waifus = poco.waifus.Select(waifu => Waifu.FromPoco(waifu)).ToList();
-        user.theme = poco.theme;
-        user.ids = poco.ids;
-        user.avatarPATH = poco.avatarPATH;
-        user.locale = poco.locale;
-        user.statCount = poco.statCount;
-        user.admin = poco.admin;
-        user.fights = poco.fights;
-        user.tokens = poco.tokens;
-        user.gacha_currency = poco.gacha_currency;
-        user.pullBannerHistory = poco.pullBannerHistory;
-        user.verification = poco.verification;
+        User user = new (poco.username, poco.ids)
+        {
+            Id = poco.Id,
+            waifus = poco.waifus.Select(Waifu.FromPoco).ToList(),
+            theme = poco.theme,
+            ids = poco.ids,
+            avatarPATH = poco.avatarPATH,
+            locale = poco.locale,
+            statCount = poco.statCount,
+            admin = poco.admin,
+            fights = poco.fights,
+            tokens = poco.tokens,
+            gacha_currency = poco.gacha_currency,
+            pullBannerHistory = poco.pullBannerHistory,
+            verification = poco.verification,
+            claimTimestamp = poco.claimTimestamp
+        };
         return user;
     }
 

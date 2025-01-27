@@ -1,11 +1,10 @@
 <script lang="ts">
 
 import OsuBeatmapset from '@/classes/beatmapset';
-import type WebSocketReponse from '../classes/web_socket_response'
-import {
-	Websocket,
-} from "websocket-ts"
+import config from '../../../config.json'
+
 import OsuBeatmap from '@/classes/beatmap';
+import User from '@/classes/user';
 
 
 
@@ -20,14 +19,21 @@ per mode (std, taiko, mania, ctb)
 */
 export default {
     name : "ClaimAndFightPage",
-    data() {},
+    data() {
+        return {
+            date_milli: Date.now(),
+            fight_timing_out: false,
+            claim_timing_out: false,
+            config: config, //You have to do this to access config inside html code
+        }
+    },
     props: {
-        id : { //user.Id
-            type : String,
+        fighting: {
+            type : Boolean,
             required : true,
         },
-        fighting : { //Is in fight?
-            type : Boolean,
+        user : { //user.Id
+            type : User,
             required : true,
         },
         xp : {
@@ -43,14 +49,56 @@ export default {
             required : true
         }
     },
+    mounted(){
+        
+        if(this.user.fights.length != 0){
+            if(!this.user.fights[this.user.fights.length - 1].completed){
+                //this.fighting = true
+                //@ts-ignore
+			    this.ws.send(JSON.stringify({type:"get map back", data:this.user.fights[this.user.fights.length - 1].id, id: this.user.Id}))
+            }
+            if(this.user.fights[this.user.fights.length - 1].timestamp + config.time_for_allowing_another_fight_in_milliseconds >= this.date_milli ){
+                this.fight_timing_out = true
+                this.user.localFightTimestamp = this.user.fights[this.user.fights.length - 1].timestamp 
+            }
+        }
+        if(this.user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds >= this.date_milli){
+            this.fight_timing_out = true
+        }
+
+        if( this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds >= this.date_milli ){
+            this.claim_timing_out = true
+        }
+        setInterval(this.updateTimer, 1000)
+    },
+    
     methods: {
+        updateTimer() {
+
+            this.date_milli = Date.now()
+            console.log("local timestamp " + this.user.localFightTimestamp)
+            console.log("local config " + config.time_for_allowing_another_fight_in_milliseconds)
+            console.log("local date " + this.date_milli)
+            if(this.user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds < this.date_milli){
+                this.fight_timing_out = false
+            }
+            if(this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds < this.date_milli){
+                this.claim_timing_out = false
+            }
+        },
         fight(){
+            this.user.localFightTimestamp = Date.now() 
+            this.fight_timing_out = true
+            this.updateTimer()
             //@ts-ignore
-			this.ws.send(JSON.stringify({type:"get map to fight", data:0, id: this.id}))
+			this.ws.send(JSON.stringify({type:"get map to fight", data:0, id: this.user.Id}))
         },
         getXP(){
+            this.user.claimTimestamp = Date.now()
+            this.claim_timing_out = true
+            this.updateTimer()
             //@ts-ignore
-			this.ws.send(JSON.stringify({type:"claim fight", data:0, id: this.id}))
+			this.ws.send(JSON.stringify({type:"claim fight", data:0, id: this.user.Id}))
         }
     },
 }
@@ -68,7 +116,11 @@ export default {
             It's time to find out !
         </p>
         <span id="fightButton" @click="fight">Fight !</span>
+        <span v-if="fight_timing_out">
+            Wait {{ user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - date_milli  }}
+        </span>
         <div id="inFight" v-if="fighting">
+            
             Mouhahahahhaha !<br>
             I am the spirit of the map, prove me your worth by :<br>
             <p>Downloading me</p> <br>
@@ -81,6 +133,9 @@ export default {
             <p>Playing me by submitting a score</p><br>
             If you manage to submit a score, I will gift you XP !
             <span id="claim" @click="getXP">Prove that you are worth<br>getting XP!</span>
+            <span v-if="claim_timing_out">
+                Wait {{ user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli  }}
+            </span>
         </div>
         <div v-else-if="xp != 0">
             <p> You earned {{ xp }}XP! </p>

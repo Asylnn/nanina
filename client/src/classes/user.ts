@@ -2,6 +2,9 @@ import { StatCount } from './stats'
 import Waifu from './waifu'
 import type Dictionary from './dictionary'
 import PullBannerHistory from './pull_history'
+import type Fight from './fight'
+
+
 
 export default class User {
     public admin : boolean = false
@@ -15,6 +18,9 @@ export default class User {
     public avatarPATH : string = ""
     public gacha_currency : number = 0
     public pullBannerHistory: Dictionary<PullBannerHistory> = {}//?
+    public localFightTimestamp : number = 0
+    public claimTimestamp : number = 0
+    public fights : Fight[] = []
     
     public verification : any = {} //One day any objects should be properly be typed
     constructor(obj : any){

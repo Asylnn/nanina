@@ -138,8 +138,10 @@ export default {
 				case "user" :
 					this.logged = true
 					console.log(new User(JSON.parse(res.data)))
+					let localFightTimestamp = this.user.localFightTimestamp
 					this.user = new User(JSON.parse(res.data))
 					this.user.waifus = this.user.waifus.map(waifu => new Waifu(waifu))
+					this.user.localFightTimestamp = localFightTimestamp
 					if(this.user.admin){
 						//@ts-ignore
 						this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))
@@ -149,7 +151,7 @@ export default {
 					this.fighting = true
 					this.beatmap = JSON.parse(res.data)
 					this.link = 'https://osu.ppy.sh/beatmapsets/'+this.beatmap.beatmapset_id+'#'+this.beatmap.mode+'/'+this.beatmap.id
-					this.notifs.push(new Notification("Fight", "You started a fight with the following beatmap! " + this.link, NotificationSeverity.Notification))
+					//this.notifs.push(new Notification("Fight", "You started a fight with the following beatmap! " + this.link, NotificationSeverity.Notification))
 					break
 				case "fighting results" :
 					this.fighting = false 
@@ -221,7 +223,7 @@ export default {
 			<AddMap :id="user.Id"></AddMap>
 		</div>
 		<div v-else-if="loadingPage === 100">
-			<ClaimAndFightPage :xp="xp" :fighting="fighting" :id="user.Id" :beatmap="beatmap"></ClaimAndFightPage>
+			<ClaimAndFightPage :xp="xp" :fighting="fighting" :user="user" :beatmap="beatmap"></ClaimAndFightPage>
 		</div>
 		<div v-else-if="loadingPage === 110">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>

@@ -60,6 +60,9 @@ partial class WS : WebSocketBehavior
                 case "verify osu id":
                     VerifyOsuId(rawData);
                     break;
+                case "get map back":
+                    SendMapToClient(rawData);
+                    break;
 
             }
         }
