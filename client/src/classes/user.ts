@@ -16,7 +16,7 @@ export default class User {
     public gacha_currency : number = 0
     public pullBannerHistory: Dictionary<PullBannerHistory> = {}//?
     
-
+    public verification : any = {} //One day any objects should be properly be typed
     constructor(obj : any){
         Object.assign(this, obj)
         this.waifus.forEach(waifu => Object.assign(new Waifu({}), waifu))

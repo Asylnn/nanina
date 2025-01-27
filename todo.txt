@@ -58,5 +58,6 @@ Future Tasks
 
 TODO : Implement Avatar for user
 TODO : Implement File Serving
-
+TODO : Make in sort to thrust NOTHING coming from client and test EVERYTHING
 TODO : Is not deleting old unused sessions ids not secure? To think about.
+TODO : any objects in ts should be properly be typed

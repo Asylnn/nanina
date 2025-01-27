@@ -31,10 +31,14 @@ partial class WS : WebSocketBehavior
     }
     protected async void ClaimFight(ClientWebSocketResponse rawData){
         var user = User.FromPoco(DBUtils.GetUser(rawData.id));
+        
+        if(!user.verification.isOsuIdVerified) { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return; }
+
         var scores = await OsuApi.GetUserRecentScores(user.ids.osuId, user.fights.First().game);
 
-        if(scores.Count() == 0) { Send(ClientNotification.NotificationData("fighting", "You don't have any recent scores OR you didn't entered your osu id in the options! (OR osu api keys are expired)", 3)); return; }                    
-        if(user.fights.Count() == 0) { Send(ClientNotification.NotificationData("fighting", "Somehow you don't have any fight object??", 0)); return; }
+        //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a frodulent Websocket with mrekk id set as their id
+        if(scores.Count() == 0) { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores OR you didn't entered your osu id in the options! (OR osu api keys are expired)", 3)); return; }                    
+        if(user.fights.Count() == 0) { Send(ClientNotification.NotificationData("Fighting", "Somehow you don't have any fight object??", 0)); return; }
         //This shouldn't happen... right??
 
         
@@ -43,7 +47,7 @@ partial class WS : WebSocketBehavior
 
         if(validscore == null){
             Console.WriteLine($"There wasn't any valid score found for {user.fights.First().id} (Did you do the beatmap?)");
-            Send(ClientNotification.NotificationData("fighting", "Did you do the beatmap?", 0)); return;
+            Send(ClientNotification.NotificationData("Fighting", "Did you do the beatmap?", 0)); return;
         }
         
         var xp = OsuApi.GetXP(validscore);

@@ -30,7 +30,7 @@ public class PocoUser
     public List<Fight> fights { get; set; }
     public int gacha_currency { get; set; }
     public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; }
-    public VerificationCodes verificationCodes { get; set; }
+    public Verification verification { get; set; }
 
 } 
 
@@ -45,8 +45,9 @@ public class Tokens {
     public string discord_refresh_token { get; set; }
 }
 
-public class VerificationCodes {
+public class Verification {
     public long osuVerificationCodetimestamp { get; set; }
+    public bool isOsuIdVerified { get; set; }
     public string osuVerificationCode { get; set; }
 }
 
@@ -75,7 +76,7 @@ public class User {
     private string theme = "dark_theme";
     public int gacha_currency;
     public Dictionary<string, PullBannerHistory> pullBannerHistory;
-    public VerificationCodes verificationCodes = new() { osuVerificationCode=null, osuVerificationCodetimestamp = 0 };
+    public Verification verification = new() { osuVerificationCode=null, osuVerificationCodetimestamp = 0, isOsuIdVerified=false };
     public User(string username, Ids ids)
     
     
@@ -101,16 +102,11 @@ public class User {
             fights = fights,
             gacha_currency = gacha_currency,
             pullBannerHistory = pullBannerHistory,
+            verification = verification,
         };
     }
     public PocoUser ToPocoServer(){
-        Console.WriteLine("UUUSER RR ***************************");
-
-
         var poco = this.ToPoco();
-
-        Console.WriteLine(JsonConvert.SerializeObject(poco));
-
         poco.tokens.discord_access_token = "";
         poco.tokens.discord_refresh_token = "";
         return poco;
@@ -130,6 +126,7 @@ public class User {
         user.tokens = poco.tokens;
         user.gacha_currency = poco.gacha_currency;
         user.pullBannerHistory = poco.pullBannerHistory;
+        user.verification = poco.verification;
         return user;
     }
 

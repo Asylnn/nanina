@@ -79,8 +79,10 @@ export default {
         </div>
         <div id="optionOsuId">
             <p>Link us your osu id so we can steal your pp !</p>
-            <input type="number" v-model.number.lazy="entered_id">
-            <span id="userOsuId" v-if="user.ids.osuId != '0'"><img src="../assets/green_checkmark.png"></span>
+            <span>
+                <input type="number" v-model.number.lazy="entered_id">
+                <span id="userOsuId" v-if="user.verification.isOsuIdVerified"><img src="../assets/green_checkmark.png"></span>
+            </span>
             <button @click="updateSettings()">Update</button>
         </div>
         <div id="optionVerifOsuId" v-if=request>
@@ -106,7 +108,7 @@ export default {
     grid-template-columns: 1fr 1fr; 
 }
 #optionOsuId {
-    grid-template-columns: 2fr 0.3fr 0.2fr 1.4fr;   
+    grid-template-columns: 2fr 0.6fr 1.4fr;   
 }
 #optionVerifOsuId {
     grid-template-columns: 1.3fr 0.25fr 0.45fr;

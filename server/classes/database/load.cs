@@ -110,7 +110,7 @@ public static class LoadServer {
             foreach (PocoUser user in users) {
                 user.fights = [];
                 user.waifus ??= [];
-                user.verificationCodes ??= new();
+                user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
                 Console.WriteLine(JsonConvert.SerializeObject(user.waifu));
                 Console.WriteLine(JsonConvert.SerializeObject(user.waifus));

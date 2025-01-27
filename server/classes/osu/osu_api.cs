@@ -84,6 +84,7 @@ public static class OsuApi {
         }
         else 
         {
+            Console.WriteLine("osu api response error content" + response.Content);
             Console.WriteLine("Couldn't get scores!");
             return [];
         }
@@ -113,6 +114,7 @@ public static class OsuApi {
         }
         else 
         {
+            Console.WriteLine("osu api response error content" + response.Content);
             return null;
         }
     }
@@ -137,6 +139,7 @@ public static class OsuApi {
         }
         else 
         {
+            Console.WriteLine("osu api response error content" + response.Content);
             return null;
         }
     }
@@ -162,6 +165,7 @@ public static class OsuApi {
         }
         else 
         {
+            Console.WriteLine("osu api response error content" + response.Content);
             return null;
         }
     }
@@ -171,6 +175,7 @@ public static class OsuApi {
         request.AddHeader("Content-Type", "application/json");
         request.AddHeader("Accept", "application/json");
         request.AddHeader("Authorization", $"Bearer {chat_tokens.access_token}");
+
         request.AddJsonBody(JsonConvert.SerializeObject(new {
             target_id=Convert.ToInt64(osuUserId),
             is_action=false,
@@ -180,7 +185,11 @@ public static class OsuApi {
         
         var response = await client.ExecutePostAsync(request);
         Console.WriteLine("osu api response status code " + response.StatusCode);
-
+        if(response.IsSuccessStatusCode)
+            return true;
+        else 
+            Console.WriteLine("osu api response error content" + response.Content);
+        
         return response.IsSuccessStatusCode;
     }
 
@@ -207,6 +216,8 @@ public static class OsuApi {
 
         Console.WriteLine("updated osu chat tokens");
         Console.WriteLine("osu api response status code " + response.StatusCode);
+
+        chat_tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(response.Content);
         File.WriteAllText(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH"), response.Content);
 
 
