@@ -2,7 +2,7 @@
 
 import Waifu from '@/classes/waifu';
 import Banner from '@/classes/banner';
-import WaifuManagerComponent from './WaifuManagerComponent.vue';
+import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
 import PullBannerHistory from '@/classes/pull_history';
 import type Dictionary from '@/classes/dictionary';
 import User from '@/classes/user';
@@ -13,8 +13,7 @@ export default {
         return {
             selected_banner: new Banner(),
             showing_history : false,
-            end_screen : false,
-            count : 0,
+            count : 2,
             focusedView : false,
         }
     },
@@ -37,7 +36,7 @@ export default {
         },
     },
     components: {
-        WaifuManagerComponent
+        WaifuDisplayComponent,
     },
     mounted(){
         this.selected_banner = this.banners[0]
@@ -49,8 +48,10 @@ export default {
         pull(pullAmount: number){
             //@ts-ignore
 			this.ws.send(JSON.stringify({type:"pull request", data:JSON.stringify({bannerId:this.selected_banner.bannerId, pullAmount:pullAmount}), id: this.user.Id}))
-            this.focusedView = true
+            console.log("J'ai pull")
             this.count = 0
+            this.focusedView = true
+            console.log(this.pulled_waifus[this.count])
         },
         incrementCount(){
             if (this.pulled_waifus.length > 1) {
@@ -64,6 +65,12 @@ export default {
             else {
                 this.focusedView = false
             }
+        },
+        waifuToSend(){
+            return this.pulled_waifus[this.count]
+        },
+        countToSend(){
+            return this.count
         },
     },
 }
@@ -81,17 +88,9 @@ export default {
             <button @click="pull(10)">Pull 10</button>
             <span>Gacha Currency : {{ gacha_currency }}</span>
         </div>
-        <div id="gachaPull" v-if="focusedView">
+        <div id="gachaPull" v-if="focusedView && pulled_waifus[0] != undefined">
             <div @click="incrementCount" id="veil"></div>
-            <div id="focusedWaifu">
-                <div id="waifuPic"><img :src="'src/assets/waifu-image/' + pulled_waifus[count].imgPATH"></div>
-                <div id="waifuInfos">
-                    Pull number {{ count+1 }}<br>
-                    {{pulled_waifus[count].name}} Level {{ pulled_waifus[count].lvl }} ({{ pulled_waifus[count].xp }} / {{ pulled_waifus[count].xpToLvlUp }})<br>
-                    id : {{ pulled_waifus[count].id }}<br>
-                    Difficulty to level up : {{ pulled_waifus[count].diffLvlUp }}
-                </div>
-            </div>
+            <WaifuDisplayComponent :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
         </div>
         <div id="gridPull" v-else>
             <div id="waifuIcons">
@@ -131,6 +130,7 @@ export default {
     cursor: pointer;
     font-size:medium;
 }
+
 #veil {
     position: absolute;
     top: 0;
@@ -140,30 +140,6 @@ export default {
     background-color: rgba(0,0,0,0.8);
     z-index: 726;
     cursor: pointer;
-}
-#focusedWaifu {
-    position: fixed;
-    width: 40vw;
-    height: 50vh;
-    border-radius: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 2vh 2vh;
-    z-index: 727;
-    top: 25vh; 
-    left: 30vw;
-    background-color: rgb(6, 16, 26);
-}
-#waifuPic {
-    border-radius: 15px;
-    overflow: hidden;
-}
-#waifuInfos {
-    padding: 0 1vw;
-}
-#focusedWaifu img {
-    max-width: 25vw;
-    max-height: 60vh;
 }
 #gridPull {
     display: grid;

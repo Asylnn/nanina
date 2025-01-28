@@ -1,13 +1,14 @@
 <script lang="ts">
 
 import Waifu from '@/classes/waifu';
+import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
 
 export default {
     name : "WaifuListPage",
     data() {
         return {
             focusedView : false,
-            waifuToDisplay : new Waifu({}),
+            waifuDisplayed : new Waifu({}),
             gridTemplateColumns : "grid-template-columns: 1fr 1fr 1fr 1fr",
             lol : "",
         }
@@ -39,12 +40,12 @@ export default {
             }
         },
         openWaifuDisplay(waifu : Waifu) {
+            this.waifuDisplayed = waifu
             this.focusedView = !this.focusedView
-            this.waifuToDisplay = waifu
         },
         closeWaifuDisplay() {
             this.focusedView = !this.focusedView
-            this.waifuToDisplay = new Waifu({})
+            this.waifuDisplayed = new Waifu({})
         },
         generateGridTemplateColumns(select : number) {
             this.gridTemplateColumns;
@@ -53,8 +54,14 @@ export default {
                 this.gridTemplateColumns += "1fr ";
             }
             this.gridTemplateColumns += '; ';
+        },
+        waifuToDisplay(){
+            return this.waifuDisplayed
         }
     },
+    components: {
+        WaifuDisplayComponent,
+    }
 }
 
 
@@ -93,14 +100,7 @@ export default {
     </div>
     <div v-if="focusedView">
         <div @click="closeWaifuDisplay()" id="veil"></div>
-        <div id="focusedWaifu">
-            <div id="waifuPic"><img :src="'src/assets/waifu-image/' + waifuToDisplay.imgPATH"></div>
-            <div id="waifuInfos">
-                {{waifuToDisplay.name}} Level {{ waifuToDisplay.lvl }} ({{ waifuToDisplay.xp }} / {{ waifuToDisplay.xpToLvlUp }})<br>
-                id : {{ waifuToDisplay.id }}<br>
-                Difficulty to level up : {{ waifuToDisplay.diffLvlUp }}
-            </div>
-        </div>
+        <WaifuDisplayComponent :waifu="waifuToDisplay()" :count=-1></WaifuDisplayComponent>
     </div>
 </template>
 
@@ -143,29 +143,5 @@ export default {
     width: 100%;
     background-color: rgba(0,0,0,0.8);
     z-index: 726;
-}
-#focusedWaifu {
-    position: fixed;
-    width: 40vw;
-    height: 50vh;
-    border-radius: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 2vh 2vh;
-    z-index: 727;
-    top: 25vh; 
-    left: 30vw;
-    background-color: rgb(6, 16, 26);
-}
-#waifuPic {
-    border-radius: 15px;
-    overflow: hidden;
-}
-#waifuInfos {
-    padding: 0 1vw;
-}
-#focusedWaifu img {
-    max-width: 25vw;
-    max-height: 60vh;
 }
 </style>

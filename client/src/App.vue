@@ -30,6 +30,7 @@ import Waifu from './classes/waifu'
 import Page from './classes/page'
 import NotificationSeverity from './classes/notification_severity'
 import OsuBeatmap from './classes/beatmap'
+import WaifuDisplayComponent from './components/WaifuDisplayComponent.vue'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -61,6 +62,7 @@ export default {
 		WaifuManagerPage,
 		PullPage,
 		WaifuListPage,
+		WaifuDisplayComponent,
 	},
 	
 	methods : {

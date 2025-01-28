@@ -40,7 +40,7 @@ export default {
             type : Number, //0 until you click claim xp
             required : true
         },
-        beatmap : {
+        beatmap : { //Beatmap with beatmapset inside
             type : OsuBeatmap,
             required : true
         }
