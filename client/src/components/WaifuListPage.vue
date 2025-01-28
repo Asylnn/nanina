@@ -84,11 +84,11 @@ export default {
                 <option @click="updateSorting(0)" value="LA">Level (Ascendant)</option>
                 <option @click="updateSorting(1)" value="LD">Level (Descendant)</option>
                 <option @click="updateSorting(2)" value="NA">Name (Ascendant)</option>
-                <option @click="updateSorting(3)" value="BD">Name (Descendant)</option>
+                <option @click="updateSorting(3)" value="ND">Name (Descendant)</option>
             </select>
         </div>
     </div>
-    <WaifuGridDisplayComponent :waifus=waifus :columns=columnsToSend()></WaifuGridDisplayComponent>
+    <WaifuGridDisplayComponent @show-waifu="openWaifuDisplay" :waifus=waifus :columns=columnsToSend()></WaifuGridDisplayComponent>
     <div v-if="focusedView">
         <div @click="closeWaifuDisplay()" id="veil"></div>
         <WaifuDisplayComponent :waifu="waifuToDisplay()" :count=-1></WaifuDisplayComponent>
@@ -97,7 +97,7 @@ export default {
 
 <style lang="css" scoped>
 
-#filters, #waifuIcons {
+#filters {
     padding: 0 17.27vw;
     position:relative;
 }
@@ -105,7 +105,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     padding-top: 1vh;
 }
-#filters, #waifuIcons {
+#filters {
     display: grid;
 }
 #veil {
