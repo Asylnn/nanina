@@ -81,7 +81,7 @@ public static class LoadServer {
     }
 
     public static void FirstLoad(){
-        var waifu = new PocoWaifu()
+        var waifu = new Waifu()
         {
             name = "Rem",
             xp = 0,
@@ -91,7 +91,7 @@ public static class LoadServer {
             id = "0"
         };
         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-            var waifuCol = db.GetCollection<PocoWaifu>("waifudb");
+            var waifuCol = db.GetCollection<Waifu>("waifudb");
             waifuCol.Insert(waifu);
             waifuCol.EnsureIndex(x => x.id, true);
         }
@@ -104,10 +104,10 @@ public static class LoadServer {
     public static void UpdateUserDB()
     {
          using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-            var userCol = db.GetCollection<PocoUser>("userdb");
+            var userCol = db.GetCollection<User>("userdb");
             var users = userCol.FindAll();
             //Update
-            foreach (PocoUser user in users) {
+            foreach (User user in users) {
                 user.fights = [];
                 user.waifus ??= [];
                 user.verification ??= new();

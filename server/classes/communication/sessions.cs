@@ -14,7 +14,7 @@ partial class WS : WebSocketBehavior
             var session = sessionList.First();
             //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu.ToPoco()));
             if (!session.hasUserAssociatedWithSession) return;
-            var userCol = db.GetCollection<PocoUser>("userdb");
+            var userCol = db.GetCollection<User>("userdb");
             var requestedUser = userCol.Find(x => x.Id == session.userId).First();
             Console.WriteLine("username : " + requestedUser.username);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse

@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 partial class WS : WebSocketBehavior
     {
-        protected override async void OnMessage(MessageEventArgs e)
+        protected override void OnMessage(MessageEventArgs e)
         {
             Console.WriteLine("DATA : " + (string) e.Data); 
             ClientWebSocketResponse rawData = Newtonsoft.Json.JsonConvert.DeserializeObject<ClientWebSocketResponse>(e.Data);

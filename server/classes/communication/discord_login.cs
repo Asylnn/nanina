@@ -33,7 +33,7 @@ partial class WS : WebSocketBehavior
         var discordUserInformationResponse = JsonConvert.DeserializeObject<DiscordUserInformationResponse>(response_user_information.Content);
 
         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-            var user_col = db.GetCollection<PocoUser>("userdb");
+            var user_col = db.GetCollection<User>("userdb");
             //We have to unpoco the user for using the constructor
             User user;
 
@@ -51,30 +51,30 @@ partial class WS : WebSocketBehavior
                     discord_refresh_token = discordTokenResponse.refresh_token
                 };
                 user.tokens = tokens;
-                user_col.Insert(user.ToPoco());
+                user_col.Insert(user);
                 user_col.EnsureIndex(x => x.ids.discordId, true);
                 user_col.EnsureIndex(x => x.Id, true);
             }
 
             else if(list.Count() == 1){
-                user = User.FromPoco(list.First());
+                user = list.First();
                 var tokens = new Tokens(){
                     discord_access_token = discordTokenResponse.access_token,
                     discord_refresh_token = discordTokenResponse.refresh_token
                 };
                 user.tokens = tokens;
                 
-                user_col.Update(user.ToPoco());
+                user_col.Update(user);
 
             }
             else {
-                user = User.FromPoco(list.First());
+                user = list.First();
                 Console.Error.WriteLine("There is more than two people in the user database with the same discord user id! The id is : " + discordUserInformationResponse.id);
             }
             Send(JsonConvert.SerializeObject(Communication.UpdateSessionId(user.Id, true)));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
                 type = "user",
-                data = JsonConvert.SerializeObject(user.ToPoco())
+                data = JsonConvert.SerializeObject(user)
             }));
         }
     }

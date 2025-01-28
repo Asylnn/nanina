@@ -32,7 +32,7 @@ public class Gacha() {
     public static bool BannerExists(string bannerId){
         return banners.Any(x => x.bannerId == bannerId);
     }
-    public static List<PocoWaifu>Pull(PocoUser user, string bannerId, short pullAmount){
+    public static List<Waifu>Pull(User user, string bannerId, short pullAmount){
         
         
         if(! user.pullBannerHistory.ContainsKey(bannerId)) { //<----- how to make the suggestion (on vscode) dissapear?
@@ -45,7 +45,7 @@ public class Gacha() {
         var weight = banner.twoStarsWeight + banner.rateUpThreeStarsWeight + banner.rateUpTwoStarsWeight + banner.threeStarsWeight;
         var pityWeight = banner.rateUpThreeStarsWeight + banner.threeStarsWeight;
         
-        List<PocoWaifu> waifus = [];
+        List<Waifu> waifus = [];
         for(var i = 0; i < pullAmount; i++){
             string[] waifuPoll = [];
             Random rng = new Random();

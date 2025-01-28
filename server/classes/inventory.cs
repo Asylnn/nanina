@@ -5,6 +5,7 @@ public class Inventory {
 public abstract class Item {
     public int count;
     public int id;
+    public string imgPATH;
     public string name;
     public string description;
 }
@@ -30,16 +31,15 @@ public class Equipement : Item{
 
 public class UserConsumable : Item{
     public UserModifier[] modifiers;
-    public UserModifier[] set_modifiers;
 }
 
 public class WaifuConsumable : Item{
     public WaifuConsumable[] modifiers;
-    public WaifuConsumable[] set_modifiers;
 }
 
 public abstract class Modifier {
     public int id;
+    public long timeout;
     public string amount;
 }
 

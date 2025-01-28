@@ -42,7 +42,7 @@ partial class WS : WebSocketBehavior
         }
     }
     protected async void ClaimFight(ClientWebSocketResponse rawData){
-        var user = User.FromPoco(DBUtils.GetUser(rawData.id));
+        var user = DBUtils.GetUser(rawData.id);
         
         if(user.fights.Last().completed) { Send(ClientNotification.NotificationData("Fighting", "You completed the last fight! You need to start a new one!", 0)); return; }
         if(user.claimTimestamp + Global.config.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
@@ -51,7 +51,7 @@ partial class WS : WebSocketBehavior
         var scores = await OsuApi.GetUserRecentScores(user.ids.osuId, user.fights.Last().game);
 
         user.claimTimestamp = Utils.GetTimestamp();
-        DBUtils.UpdateUser(user.ToPoco());
+        DBUtils.UpdateUser(user);
 
         //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a frodulent Websocket with mrekk id set as their id
         if(scores.Count() == 0) { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores OR you didn't entered your osu id in the options! (OR osu api keys are expired)", 3)); return; }                    
@@ -68,7 +68,7 @@ partial class WS : WebSocketBehavior
         }
         
         var xp = OsuApi.GetXP(validscore);
-        user.waifus.First().giveXP(xp);
+        user.waifus.First().GiveXP(xp);
         user.fights.Last().completed = true;
         Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
         {
@@ -80,10 +80,10 @@ partial class WS : WebSocketBehavior
         Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
         {
             type = "user",
-            data = JsonConvert.SerializeObject(user.ToPocoServer()) 
+            data = JsonConvert.SerializeObject(user) 
         }));
         
 
-        DBUtils.UpdateUser(user.ToPoco());
+        DBUtils.UpdateUser(user);
     }
 }
