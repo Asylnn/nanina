@@ -2,6 +2,7 @@
 
 import Waifu from '@/classes/waifu';
 import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
+import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
 
 export default {
     name : "WaifuListPage",
@@ -9,7 +10,7 @@ export default {
         return {
             focusedView : false,
             waifuDisplayed : new Waifu({}),
-            gridTemplateColumns : "grid-template-columns: 1fr 1fr 1fr 1fr",
+            columns : 4,
             lol : "",
         }
     },
@@ -47,20 +48,19 @@ export default {
             this.focusedView = !this.focusedView
             this.waifuDisplayed = new Waifu({})
         },
-        generateGridTemplateColumns(select : number) {
-            this.gridTemplateColumns;
-            this.gridTemplateColumns = "grid-template-columns: ";
-            for (let i = 0; i < Number(select); i++) {
-                this.gridTemplateColumns += "1fr ";
-            }
-            this.gridTemplateColumns += '; ';
+        updateColumns(num : number){
+            this.columns = num
         },
         waifuToDisplay(){
             return this.waifuDisplayed
+        },
+        columnsToSend(){
+            return this.columns
         }
     },
     components: {
         WaifuDisplayComponent,
+        WaifuGridDisplayComponent,
     }
 }
 
@@ -72,10 +72,10 @@ export default {
         <div id="rowFilter">
             <label>Number per row : </label>
             <select value="4">
-                <option @click="generateGridTemplateColumns(5)" value="5">5</option>
-                <option @click="generateGridTemplateColumns(4)" value="4">4</option>
-                <option @click="generateGridTemplateColumns(3)" value="3">3</option>
-                <option @click="generateGridTemplateColumns(2)" value="2">2</option>
+                <option @click="updateColumns(5)" value="5">5</option>
+                <option @click="updateColumns(4)" value="4">4</option>
+                <option @click="updateColumns(3)" value="3">3</option>
+                <option @click="updateColumns(2)" value="2">2</option>
             </select>
         </div>
         <div id="idFilter">
@@ -88,16 +88,7 @@ export default {
             </select>
         </div>
     </div>
-    <div id="waifuIcons" :style=gridTemplateColumns>
-        <div v-for="waifu in waifus">
-            <div class="waifuDisplay">
-                <div class="waifuIcon">
-                    <img @click="openWaifuDisplay(waifu)" :src="'src/assets/waifu-image/' + waifu.imgPATH">
-                </div>
-                <p>{{waifu.name}} Level {{ waifu.lvl }}</p>
-            </div>
-        </div>
-    </div>
+    <WaifuGridDisplayComponent :waifus=waifus :columns=columnsToSend()></WaifuGridDisplayComponent>
     <div v-if="focusedView">
         <div @click="closeWaifuDisplay()" id="veil"></div>
         <WaifuDisplayComponent :waifu="waifuToDisplay()" :count=-1></WaifuDisplayComponent>
@@ -116,24 +107,6 @@ export default {
 }
 #filters, #waifuIcons {
     display: grid;
-}
-.waifuDisplay {
-    margin: 2vh 2vw;
-    width: 10vw;
-}
-.waifuIcon {
-    border-radius: 15px;
-    max-width: 10vw;
-    max-height: 20vh;
-    overflow: hidden;
-}
-.waifuIcon img {
-    max-width: 15vw;
-    max-height: 35vh;
-    cursor: pointer;
-}
-.waifuDisplay p {
-    text-align: center;
 }
 #veil {
     position: absolute;

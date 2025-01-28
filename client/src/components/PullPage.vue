@@ -6,6 +6,7 @@ import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
 import PullBannerHistory from '@/classes/pull_history';
 import type Dictionary from '@/classes/dictionary';
 import User from '@/classes/user';
+import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
 
 export default {
     name : "PullPage",
@@ -37,6 +38,7 @@ export default {
     },
     components: {
         WaifuDisplayComponent,
+        WaifuGridDisplayComponent,
     },
     mounted(){
         this.selected_banner = this.banners[0]
@@ -69,6 +71,9 @@ export default {
         waifuToSend(){
             return this.pulled_waifus[this.count]
         },
+        waifusToSend(){
+            return this.pulled_waifus
+        },
         countToSend(){
             return this.count
         },
@@ -88,20 +93,13 @@ export default {
             <button @click="pull(10)">Pull 10</button>
             <span>Gacha Currency : {{ gacha_currency }}</span>
         </div>
-        <div id="gachaPull" v-if="focusedView && pulled_waifus[0] != undefined">
-            <div @click="incrementCount" id="veil"></div>
-            <WaifuDisplayComponent :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
-        </div>
-        <div id="gridPull" v-else>
-            <div id="waifuIcons">
-                <div v-for="waifu in pulled_waifus">
-                    <div class="waifuDisplay">
-                        <div class="waifuIcon">
-                        <img :src="'src/assets/waifu-image/' + waifu.imgPATH">
-                        </div>
-                        <p>{{waifu.name}} Level {{ waifu.lvl }}</p>
-                    </div>
-                </div>
+        <div v-if="pulled_waifus[0] != undefined">
+            <div id="gachaPull" v-if=focusedView>
+                <div @click="incrementCount" id="veil"></div>
+                <WaifuDisplayComponent :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
+            </div>
+            <div id="gridPull" v-else>
+                <WaifuGridDisplayComponent :waifus="waifusToSend()" :columns=5></WaifuGridDisplayComponent>
             </div>
         </div>
     </div>
@@ -144,31 +142,5 @@ export default {
 #gridPull {
     display: grid;
     
-}
-#waifuIcons {
-    padding: 0 17.27vw;
-    position:relative;
-}
-#waifuIcons {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-}
-.waifuDisplay {
-    margin: 2vh 2vw;
-    width: 10vw;
-}
-.waifuIcon {
-    border-radius: 15px;
-    max-width: 10vw;
-    max-height: 20vh;
-    overflow: hidden;
-}
-.waifuIcon img {
-    max-width: 15vw;
-    max-height: 35vh;
-    cursor: pointer;
-}
-.waifuDisplay p {
-    text-align: center;
 }
 </style>
