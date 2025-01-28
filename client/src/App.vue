@@ -2,7 +2,6 @@
 import { useRoute, RouterLink, RouterView } from 'vue-router'
 
 import NNNHeader from './components/NNNHeader.vue'
-import StatsBlock from './components/StatsBlock.vue'
 import Homepage from './components/Homepage.vue'
 import UserPage from './components/UserPage.vue'
 import UserOptionPage from './components/UserOptionPage.vue'
@@ -30,6 +29,8 @@ import Waifu from './classes/waifu'
 import Page from './classes/page'
 import NotificationSeverity from './classes/notification_severity'
 import OsuBeatmap from './classes/beatmap'
+import Inventory from './classes/inventory/inventory'
+import ItemManagerPage from './components/ItemManagerPage.vue'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -51,7 +52,6 @@ export default {
 	},
 	components:{
 		NNNHeader,
-		StatsBlock,
     	Homepage,
 		UserPage,
 		UserOptionPage,
@@ -61,6 +61,8 @@ export default {
 		WaifuManagerPage,
 		PullPage,
 		WaifuListPage,
+		Inventory,
+		ItemManagerPage,
 	},
 	
 	methods : {
@@ -108,6 +110,8 @@ export default {
 				else 					return 50
 			case Page.PullPage:
 				return 120
+			case Page.ItemManagerPage:
+				return 130
 			default:
 				return 40
 		}
@@ -196,10 +200,10 @@ export default {
 	<div id="main" :class="[user.theme]">
 		<NNNHeader :dev=dev :logged=logged :admin=user.admin @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
-		<Homepage image="src/assets/homepage.png"></Homepage>
+			<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
 		<div v-else-if="loadingPage === 20">
-			Inventory
+			<Inventory></Inventory>
 			<!--<StatsBlock :objectType="objectType" :stars="stars" :rarity="rarity" :value="value" :owner="owner" :xp="xp" :lvl="lvl" :b_int="b_int" :b_luck="b_luck" :b_exp="b_exp" :o_int="o_int" :o_luck="o_luck"
 			:o_exp="o_exp" :u_int="u_int" :u_exp="u_exp" :diffLvlup="diffLvlup"></StatsBlock>-->
 		</div>
@@ -230,6 +234,9 @@ export default {
 		</div>
 		<div v-else-if="loadingPage === 120">
 			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"></PullPage>
+		</div>
+		<div v-else-if="loadingPage === 130">
+			<ItemManagerPage></ItemManagerPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 	</div>

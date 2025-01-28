@@ -14,6 +14,7 @@ enum Page {
 	PAD2,
 	NotificationMenu,
 	WaifuListPage,
+	ItemManagerPage,
 }
 
 export default Page

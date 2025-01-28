@@ -1,13 +1,7 @@
 <script lang="ts">
 
 export default {
-    name : "Homepage",
-    props: {
-        image : {
-            type : String,
-            required : true
-        },
-    },
+    name : "InventoryPage",
     methods:{
         onClickChangePage(page:number){
 
@@ -27,7 +21,7 @@ export default {
         </ul>
     </div>
     <div class="InventoryBody">
-
+        
     </div>
 </template>
 

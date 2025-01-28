@@ -38,8 +38,9 @@ export default {
             <p @click="onClickChangePage(0)">Nanina</p>
         </div>
         <ul id="pages" v-if="logged">
-            <li @click="onClickChangePage(1)"><span>Inventory </span></li>
+            <li @click="onClickChangePage(1)"><span>Inventory</span></li>
             <li @click="onClickChangePage(14)"><span>Waifus</span></li>
+            <li @click="onClickChangePage(15)" v-if="admin"><span>Item DB</span></li>
             <li @click="onClickChangePage(7)"><span>Fighting</span></li>
             <li @click="onClickChangePage(9)"><span>Pull!!</span></li>
             <li @click="onClickChangePage(8)" v-if="admin"><span>Waifu DB</span></li>
@@ -89,9 +90,5 @@ header {
 
 li, #logo{
     align-content: center;
-}
-
-li {
-    list-style: none;
 }
 </style>

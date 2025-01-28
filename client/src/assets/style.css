@@ -49,6 +49,9 @@ body {
     border: violet 2px solid;
 }
 
+li {
+    list-style: none;
+}
 
 /*remove arrow from input boxes*/
 /* Chrome, Safari, Edge, Opera */
