@@ -98,7 +98,13 @@ export default {
             <div id="waifuInfos">
                 {{waifuToDisplay.name}} Level {{ waifuToDisplay.lvl }} ({{ waifuToDisplay.xp }} / {{ waifuToDisplay.xpToLvlUp }})<br>
                 id : {{ waifuToDisplay.id }}<br>
-                Difficulty to level up : {{ waifuToDisplay.diffLvlUp }}
+                Difficulty to level up : {{ waifuToDisplay.diffLvlUp }}<br>
+                STR : {{ waifuToDisplay.b_str }}<br>
+                KAW : {{ waifuToDisplay.b_kaw }}<br>
+                INT : {{ waifuToDisplay.b_int }}<br>
+                AGI : {{ waifuToDisplay.b_agi }}<br>
+                DEX : {{ waifuToDisplay.b_dex }}<br>
+                LUCK : {{ waifuToDisplay.b_luck }}<br>
             </div>
         </div>
     </div>

@@ -24,8 +24,18 @@ export default {
             this.all_waifus.push(waifu)
         },
         UpdateWaifus(){
+            
+            let updated_waifus = this.all_waifus.map(waifu => {
+                waifu.b_agi = waifu.o_agi
+                waifu.b_luck = waifu.o_luck
+                waifu.b_str = waifu.o_str
+                waifu.b_int = waifu.o_int
+                waifu.b_kaw = waifu.o_kaw
+                waifu.b_dex = waifu.o_dex
+                return waifu;
+            })
             //@ts-ignore
-            this.ws.send(JSON.stringify({type:"update waifu db", data:JSON.stringify(this.all_waifus), id: this.id}))
+            this.ws.send(JSON.stringify({type:"update waifu db", data:JSON.stringify(updated_waifus), id: this.id}))
         },
         DeleteWaifu(id : string){
             this.all_waifus.splice(this.all_waifus.findIndex(waifu => waifu.id == id), 1)
