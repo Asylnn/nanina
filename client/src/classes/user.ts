@@ -3,6 +3,7 @@ import Waifu from './waifu'
 import type Dictionary from './dictionary'
 import PullBannerHistory from './pull_history'
 import type Fight from './fight'
+import type Inventory from './inventory/inventory'
 
 
 
@@ -21,6 +22,7 @@ export default class User {
     public localFightTimestamp : number = 0
     public claimTimestamp : number = 0
     public fights : Fight[] = []
+    public inventory! : Inventory
     
     public verification : any = {} //One day any objects should be properly be typed
     constructor(obj : any){

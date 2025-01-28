@@ -1,5 +1,8 @@
 public class Inventory {
     public Dictionary<string, Equipement> equipment;
+    public Dictionary<string, Materials> materials;
+    public Dictionary<string, UserConsumable> userConsumable;
+    public Dictionary<string, WaifuConsumable> waifuConsumable;
 }
 
 public abstract class Item {
@@ -37,10 +40,12 @@ public class WaifuConsumable : Item{
     public WaifuConsumable[] modifiers;
 }
 
+public class Materials : Item {}
+
 public abstract class Modifier {
     public int id;
     public long timeout;
-    public string amount;
+    public int amount;
 }
 
 public class UserModifier : Modifier {}

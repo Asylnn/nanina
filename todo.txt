@@ -61,4 +61,5 @@ TODO : Make in sort to thrust NOTHING coming from client and test EVERYTHING
 TODO : Is not deleting old unused sessions ids not secure? To think about.
 TODO : any objects in ts should be properly be typed
 TODO : not sending the user object everytime to save bandwidth
-TODO : Implement Setting page/component (Notifications)             
+TODO : Implement Setting page/component (Notifications)
+TODO : BUY AN 9070XT IF IT'S AFFORDABLE
