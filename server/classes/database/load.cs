@@ -121,7 +121,7 @@ public static class LoadServer {
                 /*if(user.waifus.id == null){
                     user.waifus.id = "0";
                 }*/
-                user.waifus.ForEach(waifu => Waifu.UpdateWaifu(waifu));
+                user.waifus.ForEach(waifu => waifu.Update());
                     //Is it still working?
                 userCol.Update(user);
 

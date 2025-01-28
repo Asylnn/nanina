@@ -54,16 +54,44 @@ public class Waifu
         if(xp >= xpToLvlUp){
             xp -= xpToLvlUp;
             int temp_xp = xp;
-            lvl++;
+            LevelUp();
             xp = 0;
-            Console.WriteLine(name + " Just leveled up! She is now level " + (float) lvl);
             GiveXP(temp_xp);
         }
     }
-    public static void UpdateWaifu(Waifu poco){
-        var waifu = DBUtils.GetWaifu(poco.id);
-        poco.diffLvlUp = waifu.diffLvlUp;
-        poco.imgPATH = waifu.imgPATH;
-        poco.name = waifu.name;
+    public void LevelUp()
+    {
+        lvl++;
+        b_str += o_str;
+        b_agi += o_agi;
+        b_kaw += o_kaw;
+        b_int += o_int;
+        b_dex += o_dex;
+        b_luck += o_luck;
+    }
+    public void Update(){
+        Console.WriteLine("i'm here");
+        var DBwaifu = DBUtils.GetWaifu(id);
+        diffLvlUp = DBwaifu.diffLvlUp;
+        imgPATH = DBwaifu.imgPATH;
+        name = DBwaifu.name;
+        o_str = DBwaifu.o_str;
+        u_str = DBwaifu.u_str;
+        b_str = o_str + (lvl-1)*u_str;
+        o_kaw = DBwaifu.o_kaw;
+        u_kaw = DBwaifu.u_kaw;
+        b_kaw = o_kaw + (lvl-1)*u_kaw;
+        o_dex = DBwaifu.o_dex;
+        u_dex = DBwaifu.u_dex;
+        b_dex = o_dex + (lvl-1)*u_dex;
+        o_agi = DBwaifu.o_agi;
+        u_agi = DBwaifu.u_agi;
+        b_agi = o_agi + (lvl-1)*u_agi;
+        o_int = DBwaifu.o_int;
+        u_int = DBwaifu.u_int;
+        b_int = o_int + (lvl-1)*u_int;
+        o_luck = DBwaifu.o_luck;
+        u_luck = DBwaifu.u_luck;
+        b_luck = o_luck + (lvl-1)*u_luck;
     }
 }

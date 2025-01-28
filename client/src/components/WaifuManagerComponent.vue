@@ -4,11 +4,6 @@
 import Waifu from '../classes/waifu';
 export default {
     name : "WaifuManagerComponent",
-    /*data () {
-        return {
-            str: 0,
-        }
-    },*/
     props:{
         waifu : {
             type: Waifu,
@@ -20,13 +15,6 @@ export default {
             this.$emit("delete", this.waifu.id)
         }
     },
-    computed() {
-        str:{
-            get() {
-                return this.waifu.o_str
-            }
-        }
-    }
 }
 
 </script>
