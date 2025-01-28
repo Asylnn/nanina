@@ -1,4 +1,4 @@
-abstract class Item {
+export default abstract class Item {
     public count! : number;
     public id! : number;
     public imgPATH! : string;
