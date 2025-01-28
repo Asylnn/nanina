@@ -23,25 +23,13 @@ export default {
 </script>
 
 <template>
-    <div v-if="count != -1">
-        <div id="focusedWaifu">
-            <div id="waifuPic"><img :src="'src/assets/waifu-image/' + waifu.imgPATH"></div>
-            <div id="waifuInfos">
-                Pull number {{ count+1 }}<br>
-                {{waifu.name}} Level {{ waifu.lvl }} ({{ waifu.xp }} / {{ waifu.xpToLvlUp }})<br>
-                id : {{ waifu.id }}<br>
-                Difficulty to level up : {{ waifu.diffLvlUp }}
-            </div>
-        </div>
-    </div>
-    <div v-else>
-        <div id="focusedWaifu">
-            <div id="waifuPic"><img :src="'src/assets/waifu-image/' + waifu.imgPATH"></div>
-            <div id="waifuInfos">
-                {{waifu.name}} Level {{ waifu.lvl }} ({{ waifu.xp }} / {{ waifu.xpToLvlUp }})<br>
-                id : {{ waifu.id }}<br>
-                Difficulty to level up : {{ waifu.diffLvlUp }}
-            </div>
+    <div id="focusedWaifu">
+        <div id="waifuPic"><img :src="'src/assets/waifu-image/' + waifu.imgPATH"></div>
+        <div id="waifuInfos">
+            <span v-if="count != -1">Pull number {{ count+1 }}</span><br>
+            {{waifu.name}} Level {{ waifu.lvl }} ({{ waifu.xp }} / {{ waifu.xpToLvlUp }})<br>
+            id : {{ waifu.id }}<br>
+            Difficulty to level up : {{ waifu.diffLvlUp }}
         </div>
     </div>
 </template>
