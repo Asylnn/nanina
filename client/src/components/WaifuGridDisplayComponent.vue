@@ -16,7 +16,7 @@ export default {
         columns: { //grid-template-columns
             type : Number,
             required : true
-        }
+        },
     },
     computed: { //omg a computed that actually works??????????
         generateGridTemplateColumns() {
@@ -27,7 +27,13 @@ export default {
             gridTemplateColumns += '; ';
             return gridTemplateColumns
         },
-    }
+    },
+    emits: ["show-waifu"],
+    methods: {
+        showWaifu(waifu : Waifu) {
+            this.$emit("show-waifu", waifu)
+        },
+    },
 }
 
 </script>
@@ -37,7 +43,7 @@ export default {
         <div v-for="waifu in waifus">
             <div class="waifuDisplay">
                 <div class="waifuIcon">
-                <img :src="'src/assets/waifu-image/' + waifu.imgPATH">
+                <img @click="showWaifu(waifu)" :src="'src/assets/waifu-image/' + waifu.imgPATH">
                 </div>
                 <p>{{waifu.name}} Level {{ waifu.lvl }}</p>
             </div>

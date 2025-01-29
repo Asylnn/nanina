@@ -30,6 +30,12 @@ export default {
             {{waifu.name}} Level {{ waifu.lvl }} ({{ waifu.xp }} / {{ waifu.xpToLvlUp }})<br>
             id : {{ waifu.id }}<br>
             Difficulty to level up : {{ waifu.diffLvlUp }}
+            STR : {{ waifu.b_str }}<br>
+            KAW : {{ waifu.b_kaw }}<br>
+            INT : {{ waifu.b_int }}<br>
+            AGI : {{ waifu.b_agi }}<br>
+            DEX : {{ waifu.b_dex }}<br>
+            LUCK : {{ waifu.b_luck }}<br>
         </div>
     </div>
 </template>
