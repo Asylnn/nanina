@@ -1,20 +1,36 @@
 public class Inventory {
-    public Dictionary<string, Equipement> equipment;
-    public Dictionary<string, Materials> materials;
+    public Dictionary<string, Equipment> equipment;
+    public Dictionary<string, Material> material;
     public Dictionary<string, UserConsumable> userConsumable;
     public Dictionary<string, WaifuConsumable> waifuConsumable;
 }
 
-public abstract class Item {
-    public int count;
-    public int id;
-    public string imgPATH;
-    public string name;
-    public string description;
+public enum ItemType {
+    Equipment,
+    UserConsumable,
+    WaifuConsumable,
+    Material,
 }
 
-public class Equipement : Item{
-    public int kaw_flat;
+public enum EquipmentPiece {
+    Weapon,
+    Dress,
+    Accessory,
+}
+
+public abstract class Item {
+    public int count {get; set;}
+    public int id {get; set;}
+    public ItemType type {get; set;}
+    public string imgPATH {get; set;}
+    public string name {get; set;}
+    public string description {get; set;}
+    public short rarity {get; set;}
+}
+
+public class Equipment : Item{
+    public new ItemType type {get; set;} = ItemType.Equipment;
+    /*public int kaw_flat;
     public int kaw_percent;
     public int int_flat;
     public int int_percent;
@@ -25,27 +41,32 @@ public class Equipement : Item{
     public int str_flat;
     public int str_percent;
     public int dex_flat;
-    public int dex_percent;
-    public int set_id;
-    public string set_name;
-    public WaifuModifier[] modifiers;
-    public WaifuModifier[] set_modifiers;
+    public int dex_percent;*/
+    public int set_id {get; set;}
+    public string set_name {get; set;}
+    public EquipmentPiece piece {get; set;}
+    public WaifuModifier[] modifiers {get; set;}
+    public WaifuModifier[] setModifiers {get; set;}
 }
 
 public class UserConsumable : Item{
-    public UserModifier[] modifiers;
+    public new ItemType type = ItemType.UserConsumable;
+    public UserModifier[] modifiers {get; set;}
 }
 
 public class WaifuConsumable : Item{
-    public WaifuConsumable[] modifiers;
+    public new ItemType type {get; set;} = ItemType.WaifuConsumable;
+    public WaifuConsumable[] modifiers {get; set;}
 }
 
-public class Materials : Item {}
+public class Material : Item {
+    public new ItemType type {get; set;}= ItemType.Material;
+}
 
 public abstract class Modifier {
-    public int id;
-    public long timeout;
-    public int amount;
+    public int id {get; set;}
+    public long timeout {get; set;}
+    public float amount {get; set;}
 }
 
 public class UserModifier : Modifier {}

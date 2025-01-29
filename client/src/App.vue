@@ -46,6 +46,7 @@ export default {
 			notifs : Array(),
 			dev : true, //Is this dev or prod? IMPORTANT!!
 			all_waifus : [],
+			item_db : [],
 			pulled_waifus : [],
 			banners : [],
 		}
@@ -149,6 +150,8 @@ export default {
 					if(this.user.admin){
 						//@ts-ignore
 						this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))
+						//@ts-ignore
+						this.ws.send(JSON.stringify({type:"request item db", data:"", id:this.user.Id}))
 					}
 					break
 				case "map link" :
@@ -163,6 +166,11 @@ export default {
 					break
 				case "waifu db" :
 					this.all_waifus = JSON.parse(res.data)
+					break
+				case "item db" :
+					this.item_db = JSON.parse(res.data)
+					console.log("ITEM DATABASE")
+					console.log(this.item_db)
 					break
 				case "get banners":
 					this.banners = JSON.parse(res.data)
@@ -236,7 +244,7 @@ export default {
 			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"></PullPage>
 		</div>
 		<div v-else-if="loadingPage === 130">
-			<ItemManagerPage></ItemManagerPage>
+			<ItemManagerPage :id="user.Id" :item_db="item_db"></ItemManagerPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 	</div>

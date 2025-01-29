@@ -1,4 +1,4 @@
-import { StatCount } from './stats'
+import StatCount from './stats'
 import Waifu from './waifu'
 import type Dictionary from './dictionary'
 import PullBannerHistory from './pull_history'

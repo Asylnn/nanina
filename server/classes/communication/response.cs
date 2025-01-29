@@ -35,6 +35,13 @@ partial class WS : WebSocketBehavior
                 case "update waifu db": 
                     UpdateWaifuDatabase(rawData);
                     break;
+                case "request item db" :
+                    RequestItemDatabase(rawData);
+                    break;
+
+                case "update item db": 
+                    UpdateItemDatabase(rawData);
+                    break;
 
                 case "get map to fight": 
                     GetMapToFight(rawData);

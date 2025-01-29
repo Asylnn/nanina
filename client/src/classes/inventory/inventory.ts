@@ -1,14 +1,14 @@
 import type Dictionary from "../dictionary";
-import type Equipement from "./equipement";
+import type Equipment from "./equipment";
 import type UserConsumable from "./user_consumable";
 import type WaifuConsumable from "./waifu_consumable";
-import type Materials from "./materials";
+import type Material from "./material";
 
 export default class Inventory {
-    public equipment!: Dictionary<Equipement>;
+    public equipment!: Dictionary<Equipment>;
     public userConsumable!: Dictionary<UserConsumable>;
-    public waifuConsumbale!: Dictionary<WaifuConsumable>;
-    public materials!: Dictionary<Materials>;
+    public waifuConsumable!: Dictionary<WaifuConsumable>;
+    public material!: Dictionary<Material>;
 }
 
 

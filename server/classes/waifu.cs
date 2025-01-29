@@ -70,7 +70,6 @@ public class Waifu
         b_luck += o_luck;
     }
     public void Update(){
-        Console.WriteLine("i'm here");
         var DBwaifu = DBUtils.GetWaifu(id);
         diffLvlUp = DBwaifu.diffLvlUp;
         imgPATH = DBwaifu.imgPATH;
