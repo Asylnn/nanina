@@ -45,7 +45,7 @@ export default {
             this.focusedView = !this.focusedView
         },
         closeWaifuDisplay() {
-            this.focusedView = !this.focusedView
+            this.focusedView = false
             this.waifuDisplayed = new Waifu({})
         },
         updateColumns(num : number){
@@ -56,6 +56,10 @@ export default {
         },
         columnsToSend(){
             return this.columns
+        },
+        onEscape(){
+            console.log("uwu")
+            this.closeWaifuDisplay()
         }
     },
     components: {
@@ -68,7 +72,7 @@ export default {
 </script>
 
 <template>
-    <div id="filters">
+    <div id="filters" >
         <div id="rowFilter">
             <label>Number per row : </label>
             <select value="4">
@@ -88,10 +92,11 @@ export default {
             </select>
         </div>
     </div>
-    <WaifuGridDisplayComponent @show-waifu="openWaifuDisplay" :waifus=waifus :columns=columnsToSend()></WaifuGridDisplayComponent>
+    <!-- tabindex is weird... truly html moment-->
+    <WaifuGridDisplayComponent @show-waifu="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :waifus=waifus :columns=columnsToSend()></WaifuGridDisplayComponent>
     <div v-if="focusedView">
-        <div @click="closeWaifuDisplay()" id="veil"></div>
-        <WaifuDisplayComponent :waifu="waifuToDisplay()" :count=-1></WaifuDisplayComponent>
+        <div @click="closeWaifuDisplay" id="veil" ></div>
+        <WaifuDisplayComponent  @input="onEscape" :waifu="waifuToDisplay()" tabindex="0" @keydown.esc="closeWaifuDisplay" :count=-1></WaifuDisplayComponent>
     </div>
 </template>
 
