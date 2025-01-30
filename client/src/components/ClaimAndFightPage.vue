@@ -5,6 +5,8 @@ import config from '../../../config.json'
 
 import OsuBeatmap from '@/classes/beatmap';
 import User from '@/classes/user';
+import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
+import Waifu from '@/classes/waifu';
 
 
 
@@ -25,6 +27,7 @@ export default {
             fight_timing_out: false,
             claim_timing_out: false,
             config: config, //You have to do this to access config inside html code
+            chosen_waifu : new Waifu({}),
         }
     },
     props: {
@@ -95,6 +98,12 @@ export default {
             this.updateTimer()
             //@ts-ignore
 			this.ws.send(JSON.stringify({type:"claim fight", data:0, id: this.user.Id}))
+        },
+        selectWaifu(waifu : Waifu) {
+            this.chosen_waifu = waifu
+        },
+        resetWaifu() {
+            this.chosen_waifu = new Waifu({})
         }
     },
 }
@@ -127,14 +136,19 @@ export default {
             </span><br>
             and<br>
             <p>Playing me by submitting a score</p><br>
-            If you manage to submit a score, I will gift you XP !
+            If you manage to submit a score, I will gift you XP !<br>
+            Select which waifu would recieve rewards if you are worthy !
+            <WaifuGridDisplayComponent @show-waifu="selectWaifu" :waifus="user.waifus" :columns="5"></WaifuGridDisplayComponent>
+            <div v-if="chosen_waifu != undefined">
+                <WaifuGridDisplayComponent @show-waifu="resetWaifu" :waifus="chosen_waifu" :columns="1"></WaifuGridDisplayComponent>
+            </div>
             <span id="timerClaim" v-if="claim_timing_out">
                 Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
             </span>
             <span v-else id="claim" @click="getXP">Prove that you are worth<br>getting XP!</span>
         </div>
         <div v-else-if="xp != 0">
-            <p> You earned {{ xp }}XP! </p>
+            <p> You earned {{ xp }}XP on {{chosen_waifu.name}}! </p>
         </div>
     </div>
 </template>
@@ -145,7 +159,7 @@ export default {
 }
 #windowFight {
     margin: 0 25vw;
-    text-align: center;
+    text-align: left;
     font-size: larger;
 }
 span, a {
@@ -160,6 +174,7 @@ a {
 }
 #fightButton, #timerFight, #timerClaim{
     margin: 1vh 15vw;
+    text-align: center;
 }
 #download, #claim {
     margin: 1vh 10vw;

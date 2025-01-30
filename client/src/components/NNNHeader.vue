@@ -6,6 +6,11 @@ import Page from '../classes/page';
 
 export default {
     name : "NNNHeader",
+    data() {
+        return {
+            actiMenu : false
+        }
+    },
     props: {
         logged : {
             type : Boolean,
@@ -26,6 +31,9 @@ export default {
             this.$emit("page-change", page)
 
         },
+        updateActiviesMenu() {
+            this.actiMenu = !this.actiMenu
+        }
     },
 }
 
@@ -38,11 +46,21 @@ export default {
             <p @click="onClickChangePage(0)">Nanina</p>
         </div>
         <ul id="pages" v-if="logged">
+            <li @click="updateActiviesMenu">
+                <span >Activities</span><img width=30px src="../assets/fleche-vers-le-bas.png">
+                <ul id="actiMenu" v-if="actiMenu">
+                    <li>Maid Café</li>
+                    <li>Minage de minerais</li>
+                    <li>Arbre de technologie</li>
+                    <li>Artisanat de gadgets</li>
+                    <li>Explorations</li>
+                </ul>
+            </li>
             <li @click="onClickChangePage(1)"><span>Inventory</span></li>
             <li @click="onClickChangePage(14)"><span>Waifus</span></li>
-            <li @click="onClickChangePage(15)" v-if="admin"><span>Item DB</span></li>
             <li @click="onClickChangePage(7)"><span>Fighting</span></li>
             <li @click="onClickChangePage(9)"><span>Pull!!</span></li>
+            <li @click="onClickChangePage(15)" v-if="admin"><span>Item DB</span></li>
             <li @click="onClickChangePage(8)" v-if="admin"><span>Waifu DB</span></li>
             <li @click="onClickChangePage(6)" v-if="admin && dev"><span>Add Beatmap</span></li>
         </ul>
@@ -58,16 +76,24 @@ export default {
 header, #pages, #buttList {
     display: grid;
 }
-
+header, #actiMenu li {
+    text-align: center;
+    background-color: rgb(39, 11, 65);
+}
 header {
     position:sticky;
     top:0;
     height:6vh;
-    text-align: center;
-    background-color: rgb(39, 11, 65);
     grid-template-columns: 1fr 4fr 0.5fr;
     padding: 0 15vw;
+    z-index: 9000;
+}
+#actiMenu {
+    position: absolute;
     z-index: 9999;
+}
+#actiMenu li {
+    padding: 0.727vh 0.5vw;
 }
 #logo, #pages, #buttList {
     cursor: pointer;

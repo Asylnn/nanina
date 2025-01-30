@@ -1,0 +1,76 @@
+Fights normaux soient infinis par jour mais l'exp est réduite de manière exponantielle à chaque fight (se reset à Xh tous les jours) (genshin moment)
+Si chaque fight -10% de restant et xp proportionnelle a la stamina dépensée -> début bcp consommé = beaucoup xp / fin pas bcp consommé = pas bcp xp (meta endgame = double compte = double compte osu = BANNED)
+ou alors compte sur plusieurs jeux de rythme différents si la ressource est par jeu
+
+Systeme de fight continu :
+ne se cumule pas aux fights normaux, gagne un % de l'exp a chaque score submit et reduit les temps des trucs timegated
+
+(A refléchir) :
+Fight normal et fight continu réduisent tous les 2 du temps de truc timegated
+Fight normal et fight continu possèdent un choix entre gagner de l'exp et réduire le temps (possiblement choisir des pourcentage de reward pour avoir une partie des 2)
+
+Achievements -> rewards permanents (basé sur les hush-hush) genre passer une map ar11 od11 hp11
+
+User level -> Gagne des bonus semi-linéaires selon les bonus / + de stamina max par level (gain constant)
+
+Armure / Tenue = Pieces séparées avec des sets différents (bonus de set si X pièces equipées) 
+    full set = un truc sinon rien
+    2/3/4/5 pieces = un truc a chaque palier (ou augmentation du meme truc a chaque palier)
+    Paliers en mode haut + bas = truc / tete + chapeau = truc
+
+Accessoires / Bijoux = Pieces séparées avec des sets différents (bonus de set si X pièces equipées) 
+    full set = un truc sinon rien
+    2/3/4/5 pieces = un truc a chaque palier (ou augmentation du meme truc a chaque palier)
+    Paliers en mode haut + bas = truc / tete + chapeau = truc
+
+Arme = Pieces séparées avec des sets différents (bonus de set si X pièces equipées) peut etre 1 au début, pourquoi pas une deuxieme plus tard
+
+Quid du powercreep? Quid de l'ancien BiS? Quid du fomo?
+
+Powercreep de tout ce qui a des stats.
+
+Waifus : 3 slots (1 arme 1 tenue 1 accessoire) + 1/2 gadgets 
+    Consommables qui ne s'utilisent qu'une fois par waifu donnant des bonus permanents
+    Système d'étoiles -> Toutes peuvent monter max meme si elles démarrent plus bas (commencent 2/3 star)
+        Pourquoi pull 3 star et pas 1/2? Esthétique/notre waifu préférée/powercreep
+    Pour monter soit duplicata de la waifu soit un item event/rare/limité qui le fait a la place
+    Kit de sorts (passif + auto attack + spell + ult)
+
+Qu'est ce qu'il y a à faire?
+    Créer un compte + lien un compte d'un jeu de rythme
+    Bannière limitée
+    Bannière permanente
+    Waifus de base au début (waifus qui couvrent tous les types de dégats)
+    Fights (normal ou continu) + claim ou auto-claim
+    Dungons (Fight un boss/ un ennemi) et tu fais des dégats en finissant la map proposée par l'ennemi de manière dynamique (peut etre debuffs par le boss/peut etre regen/peut etre combat limité par le temps x minutes pour le battre)
+        Partie active (tu joue pour les aider et faire des dégats toi meme) (passif et ult)
+        Partie inactive (tu fais la pom pom girl qui veut pas se friter) (passif et auto et spell)
+        Principe d'un combat de dungon -> ex : 10minutes pour battre eugeo -> les waifus tapent avec leur partie inactive du début a la fin et tu peux les aider en faisant la/les map/maps proposée par eugeo 
+            si tu réussis, tu fais des dégats et/ou ca active des passifs et/ou ults de 1 ou plusieurs waifus puis il te propose une autre map. 10min pour mettre ses hp a 0
+            (Variantes : claims offensifs/défensifs, limité a 3 claim par fight ce qui crée une sorte de dmg check, conséquence tu passe au prochain set de maps proposés?)
+            Buffs/Débuffs/Cleanse/Hard CC crées par les waifus, le boss, le user (via consommable et via claim)
+    
+
+
+Stats offensives pour les waifus :
+    KAW = dégats psychiques
+    STR = dégats physiques
+    INT = dégats magiques
+    LUCK = crit chance (200% crit = crit crit / 150% crit = crit + 50% chance crit) /// Tu peux crit tout sauf les débuffs recus
+    DEXT = Augmentation durée buff/reduction durée debuffs
+    AGI = Crit dmg (+ de dégats mais aussi potency buff/débuff)
+
+Stats hors combat :
+    KAW = maid café/concerts d'idol -> Thune
+    STR = Minage de minerais -> Cristaux donnant les bonus permanents
+    INT = Arbre de techno /// unlock content / % bonus a rechercher a l'infini / ressources générées en X temps
+    LUCK = Plus de truc /// Plus de thune / Plus de cristaux ou plus de chance d'avoir plus rare / plus de ressources générées en X temps / plus de chance de meilleure qualité gadget / Plus de loot dans explo
+    DEXT = Artisanat de gadgets
+    AGI = Explorations (Matériaux pour artisanat et amélioration de waifu)
+
+
+A faire pour moi :
+Changer fight pour pouvoir select une waifu (avec barre recherche en lazy si j suis pas lazy)
+Commencer la page inventory avec arme, tenue, accessoire, gadget, consommable
+
+
