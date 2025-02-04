@@ -29,7 +29,9 @@ public static class LoadServer {
         }
     }
     public static void LoadOsuApi(){
-        if(Environment.GetEnvironmentVariable("DEV") == "false" || false){ //put to true for refreshing osu tokens
+        if(Environment.GetEnvironmentVariable("DEV") == "false" || true){ //put to true for refreshing osu tokens
+            Console.Error.WriteLine("Creating new osu tokens ...");
+
             var code = "long string"; 
             // for sending messages used for verifications, to get the code, check the following link :
             //https://osu.ppy.sh/oauth/authorize?client_id=422727&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=chat.write
@@ -40,6 +42,7 @@ public static class LoadServer {
             //_ = Global.RunInBackground(TimeSpan.FromSeconds(OsuApi.tokens.expires_in - 3600), OsuApi.RefreshTokens);
         }
         else {
+            Console.Error.WriteLine("Loading osu tokens ...");
             //Console.WriteLine("uwu ", File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
             if(File.Exists(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")))
                 OsuApi.tokens = JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
@@ -76,11 +79,12 @@ public static class LoadServer {
             var databasePath = Environment.GetEnvironmentVariable("DATABASE_PATH");
             
             File.Copy(databasePath, backUpPath, true);
-            Console.WriteLine ("Backup...");
+            Console.WriteLine ("Doing backup...");
         }
     }
 
     public static void FirstLoad(){
+        Console.WriteLine("Launching first time configuration ...");
         var waifu = new Waifu()
         {
             name = "Rem",
@@ -95,15 +99,14 @@ public static class LoadServer {
             waifuCol.Insert(waifu);
             waifuCol.EnsureIndex(x => x.id, true);
         }
-        var info = new Info{
-            first_time_running = false
-        };
-        File.WriteAllText(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH"), JsonConvert.SerializeObject(info));
+        Global.config.first_time_running = false;
+        File.WriteAllText("../config.json", JsonConvert.SerializeObject(Global.config));
     }
 
     public static void UpdateUserDB()
     {
-         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        Console.WriteLine("Updating user database...");
+        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var userCol = db.GetCollection<User>("userdb");
             var users = userCol.FindAll();
             //Update
