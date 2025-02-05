@@ -1,29 +1,21 @@
 using WebSocketSharp.Server;
 using Newtonsoft.Json;
 using LiteDB;
-using RestSharp;
 
 partial class WS : WebSocketBehavior
 {
-    protected void GetUserFromSessionId(ClientWebSocketResponse rawData){
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-            var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
-            Console.WriteLine("sessionId : " + rawData.data);
-            var sessionList = sessionCol.Find(x => x.id == rawData.data);
-            if (sessionList.Count() != 1) return;
-            var session = sessionList.First();
-            //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(user.waifu.ToPoco()));
-            if (!session.hasUserAssociatedWithSession) return;
-            var userCol = db.GetCollection<User>("userdb");
-            var requestedUser = userCol.Find(x => x.Id == session.userId).First();
-            Console.WriteLine("username : " + requestedUser.username);
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-            {
-                type = "user",
-                data = JsonConvert.SerializeObject(requestedUser),
-            }));
-
-            
+    protected void UpdateLocale(ClientWebSocketResponse rawData){
+        using var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}");
+        var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
+        var sessions = sessionCol.Find(x => x.id == rawData.id);
+        if(sessions.Count() == 0) {Console.Error.WriteLine("request changing locale without valid session id??"); return;}
+        var session = sessions.First();
+        session.locale = rawData.data;
+        sessionCol.Update(session);
+        if(session.hasUserAssociatedWithSession){
+            var user = DBUtils.GetUser(session.userId);
+            user.locale = rawData.data;
+            DBUtils.UpdateUser(user);
         }
     }
 
@@ -33,13 +25,18 @@ partial class WS : WebSocketBehavior
             var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
             var sessions = sessionCol.Find(x => x.id == rawData.data);
             if(sessions.Count() == 0){
-                CreateNewSession();
+                var session = Communication.CreateNewSession();
+                Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                    type = "session",
+                    data = JsonConvert.SerializeObject(session),
+                }));
             }
             else{
                 var session = sessions.First();
+                Console.WriteLine(JsonConvert.SerializeObject(session));
                 Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                    type = "session_id",
-                    data = session.id,
+                    type = "session",
+                    data = JsonConvert.SerializeObject(session),
                 }));
                 if(session.hasUserAssociatedWithSession){
                     Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
@@ -54,29 +51,5 @@ partial class WS : WebSocketBehavior
                 }
             }
         }
-    }
-
-
-    protected SessionDBEntry CreateNewSession()
-    {
-        var sessionId = Guid.NewGuid().ToString();
-        using var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}");
-        var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
-        Console.WriteLine("Entering new session ID into database! id : " + sessionId);
-        var session = new SessionDBEntry {
-            userId = null,
-            hasUserAssociatedWithSession = false,
-            id = sessionId,
-            date = Utils.GetTimestamp(),
-            lang = "en",
-        };
-        sessionCol.Insert(session);
-        sessionCol.EnsureIndex(x => x.id);
-        
-        Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-            type = "session_id",
-            data = sessionId,
-        }));
-        return session;
     }
 }

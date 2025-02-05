@@ -33,6 +33,9 @@ export default {
         },
         updateActiviesMenu() {
             this.actiMenu = !this.actiMenu
+        },
+        onChangeLocale(){
+            this.ws.send(JSON.stringify({type:"change locale", data:this.$i18n.locale, id:this.$cookies.get("session_id")}))
         }
     },
 }
@@ -47,7 +50,7 @@ export default {
         </div>
         <ul id="pages" v-if="logged">
             <li @click="updateActiviesMenu">
-                <span >Activities</span><img width=30px src="../assets/fleche-vers-le-bas.png">
+                <span >{{ $t("header.activities") }}</span><img width=30px src="../assets/fleche-vers-le-bas.png">
                 <ul id="actiMenu" v-if="actiMenu">
                     <li>Maid Café</li>
                     <li>Minage de minerais</li>
@@ -56,15 +59,19 @@ export default {
                     <li>Explorations</li>
                 </ul>
             </li>
-            <li @click="onClickChangePage(1)"><span>Inventory</span></li>
-            <li @click="onClickChangePage(14)"><span>Waifus</span></li>
-            <li @click="onClickChangePage(7)"><span>Fighting</span></li>
-            <li @click="onClickChangePage(9)"><span>Pull!!</span></li>
-            <li @click="onClickChangePage(15)" v-if="admin"><span>Item DB</span></li>
+            <li @click="onClickChangePage(1)"><span>{{ $t("header.inventory") }}</span></li>
+            <li @click="onClickChangePage(14)"><span>{{ $t("header.waifus") }}</span></li>
+            <li @click="onClickChangePage(7)"><span>{{ $t("header.fighting") }}</span></li>
+            <li @click="onClickChangePage(9)"><span>{{ $t("header.pull") }}</span></li>
+            <li @click="onClickChangePage(15)" v-if="admin"><span>Item DB</span></li>   
             <li @click="onClickChangePage(8)" v-if="admin"><span>Waifu DB</span></li>
             <li @click="onClickChangePage(6)" v-if="admin && dev"><span>Add Beatmap</span></li>
         </ul>
         <ul id="buttList">
+            <select id="language" v-model="$i18n.locale" @change="onChangeLocale()">
+                <option value = "en">🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                <option value = "fr">🇫🇷</option>
+            </select>
             <li v-if="!logged"><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
             <li v-else><span @click="onClickChangePage(5)"><img height=25px width=25px src="../assets/option_gear_from_google_probably_not_free_of_use.png"></span></li>
         </ul>
@@ -72,6 +79,17 @@ export default {
 </template>
 
 <style lang="css" scoped>
+
+#language{
+    font-size : 30px;
+    align-content: center;
+}
+
+select {
+    border:0;
+    background:none;
+    -webkit-appearance: none;
+}
 
 header, #pages, #buttList {
     display: grid;

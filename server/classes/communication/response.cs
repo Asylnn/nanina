@@ -35,6 +35,10 @@ partial class WS : WebSocketBehavior
                     RequestItemDatabase(rawData);
                     break;
 
+                case "change locale":
+                    UpdateLocale(rawData);
+                    break;
+
                 case "update item db": 
                     UpdateItemDatabase(rawData);
                     break;

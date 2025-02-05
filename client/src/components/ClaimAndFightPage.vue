@@ -115,7 +115,7 @@ export default {
 <template>
     <div id="windowFight">
         <p id="welcomeText">
-            Welcome to the Fighting section !<br>
+            {{ $t("fighting.welcome") }}<br>
             In this section you can gain some juicy xp for your favourite waifus !<br>
             Do you think you have what it takes to succeed ?<br>
             It's time to find out !

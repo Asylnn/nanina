@@ -1,0 +1,15 @@
+{
+    "header":{
+        "inventory":"Inventaire",
+        "waifus":"Waifus",
+        "pull":"Pull",
+        "activities":"Activitées",
+        "fighting":"Fighting"
+    },
+    "message": {
+        "hello": "bonjour"
+    },
+    "fighting": {
+        "welcome":"Bienvenue dans la section de combat !"
+    }
+}

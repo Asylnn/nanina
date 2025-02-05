@@ -3,5 +3,5 @@ public class SessionDBEntry {
     public bool hasUserAssociatedWithSession {get; set;}
     public string userId {get; set;}
     public long date {get; set;}
-    public string lang {get; set;}
+    public string locale {get; set;}
 }

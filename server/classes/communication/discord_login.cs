@@ -75,7 +75,7 @@ partial class WS : WebSocketBehavior
             var sessions = sessionCol.Find(x => x.id == rawData.id);
             SessionDBEntry session = null;
             if(sessions.Count() == 0)
-                session = CreateNewSession();
+                session = Communication.CreateNewSession();
             else 
                 session = sessions.First();
             rawData.data = rawData.id;

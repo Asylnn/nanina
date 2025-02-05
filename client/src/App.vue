@@ -50,6 +50,7 @@ export default {
 			item_db : [],
 			pulled_waifus : [],
 			banners : [],
+			localeSetByUser : false,
 		}
 	},
 	components:{
@@ -142,8 +143,12 @@ export default {
 			console.log(`received message: ${ev.data}`);
 			var res : WebSocketReponse = JSON.parse(ev.data)
 			switch (res.type) {
-				case "session_id" :
-					$cookies.set("session_id", res.data)
+				case "session" :
+					let session = JSON.parse(res.data)
+					$cookies.set("session_id", session.id)
+					console.log(session)
+					if(this.localeSetByUser)
+						this.$i18n.locale = session.locale
 					break
 				case "user" :
 					this.logged = true
@@ -152,6 +157,8 @@ export default {
 					this.user = new User(JSON.parse(res.data))
 					this.user.waifus = this.user.waifus.map(waifu => new Waifu(waifu))
 					this.user.localFightTimestamp = localFightTimestamp
+					this.$i18n.locale = this.user.locale
+					this.localeSetByUser = true
 					if(this.user.admin){
 						//@ts-ignore
 						this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))
@@ -205,9 +212,6 @@ export default {
 	
 		<NNNHeader :dev=dev :logged=logged :admin=user.admin @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
-			<div id="app">
-				<p>{{ $t("message.hello") }}</p>
-			</div>
 			<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
 		<div v-else-if="loadingPage === 20">
