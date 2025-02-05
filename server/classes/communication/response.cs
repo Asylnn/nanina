@@ -16,10 +16,6 @@ partial class WS : WebSocketBehavior
 
                 //Recieve a request from the client to get a user from a sessionId stored in cookies.
                 //It check the database for that sessionId and return, if found, the user associated with that session ID.
-                case "request user with session id": 
-                    GetSessionFromUserId(rawData);
-                    break;
-
                 case "update theme": 
                     UpdateTheme(rawData);
                     break;
@@ -52,8 +48,9 @@ partial class WS : WebSocketBehavior
                     break;
 
                 case "get session id":
-                    GetSessionId();
+                    ProvideSessionAndUser(rawData);
                     break;
+                    
                 case "add beatmap with id": 
                     AddMapToDatabase(rawData);
                     break;

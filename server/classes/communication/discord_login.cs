@@ -71,11 +71,16 @@ partial class WS : WebSocketBehavior
                 user = list.First();
                 Console.Error.WriteLine("There is more than two people in the user database with the same discord user id! The id is : " + discordUserInformationResponse.id);
             }
-            Send(JsonConvert.SerializeObject(Communication.UpdateSessionId(user.Id, true)));
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                type = "user",
-                data = JsonConvert.SerializeObject(user)
-            }));
+            var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
+            var sessions = sessionCol.Find(x => x.id == rawData.id);
+            SessionDBEntry session = null;
+            if(sessions.Count() == 0)
+                session = CreateNewSession();
+            else 
+                session = sessions.First();
+            rawData.data = rawData.id;
+            Communication.UpdateSessionWithUserId(session, user.Id);
+            ProvideSessionAndUser(rawData);
         }
     }
 }

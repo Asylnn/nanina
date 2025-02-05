@@ -1,23 +1,28 @@
 using LiteDB;
 using WebSocketSharp.Server;
+
 public static class Communication {
 
-    public static ServerWebSocketResponse UpdateSessionId(string userId = "", bool hasUserAssociatedWithSession = false) {
-        var sessionId = Guid.NewGuid().ToString();
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
-            var session_col = db.GetCollection<SessionDBEntry>("sessiondb");
-            Console.WriteLine("Entering new session ID into database! id : " + sessionId);
-            session_col.Insert(new SessionDBEntry {
-                userId = userId,
-                hasUserAssociatedWithSession = hasUserAssociatedWithSession,
-                sessionId = sessionId,
-                date = Utils.GetTimestamp()
-            });
-            session_col.EnsureIndex(x => x.sessionId);
-        }
-        return new ServerWebSocketResponse {
-            type = "session_id",
-            data = sessionId
-        };
+    public static void UpdateSessionWithUserId(SessionDBEntry session, string userId) {
+        session.hasUserAssociatedWithSession = true;
+        session.userId = userId;
+        using var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}");
+        var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
+        sessionCol.Update(session);
     }
+
+    public static void UpdateSessionLanguage(string sessionId, string lang) {
+        
+    }
+
+    
+
+    public static SessionDBEntry GetSession(string sessionId){
+        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+            var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
+            return sessionCol.Find(x => x.id == sessionId).First();
+        }
+    }
+
+    
 }

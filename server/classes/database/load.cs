@@ -11,7 +11,7 @@ public static class LoadServer {
         LoadOsuApi();
         LoadWebSocketServer();
         Gacha.LoadBanners();
-        if(!File.Exists(Environment.GetEnvironmentVariable("INFO_STORAGE_PATH"))) 
+        if(Global.config.first_time_running) 
             FirstLoad();
         UpdateUserDB(); //Update Database when updating game
 
@@ -29,7 +29,7 @@ public static class LoadServer {
         }
     }
     public static void LoadOsuApi(){
-        if(Environment.GetEnvironmentVariable("DEV") == "false" || true){ //put to true for refreshing osu tokens
+        if(Environment.GetEnvironmentVariable("DEV") == "false" || false){ //put to true for refreshing osu tokens
             Console.Error.WriteLine("Creating new osu tokens ...");
 
             var code = "long string"; 

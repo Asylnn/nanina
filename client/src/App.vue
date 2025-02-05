@@ -33,7 +33,6 @@ import Inventory from './classes/inventory/inventory'
 import ItemManagerPage from './components/ItemManagerPage.vue'
 import WaifuDisplayComponent from './components/WaifuDisplayComponent.vue'
 import WaifuGridDisplayComponent from './components/WaifuGridDisplayComponent.vue'
-
 export default {
 	name: "La SDA de la mort qui tue",
 	data() {
@@ -127,16 +126,18 @@ export default {
 		const $cookies = inject<VueCookies>('$cookies')!; 
 		$cookies.config("30m") //ATENTION !!!!!
 		var has_session_id = $cookies.isKey("session_id")
-		if (!has_session_id) {
-			//@ts-ignore
+		
+		const url = new URL(window.location.href);
+		const queryParams = new URLSearchParams(url.search);
+		if(queryParams.has("code")){
+			var code = queryParams.get("code") + ""
+			this.ws.send(JSON.stringify({type:"connect with discord", data:queryParams.get("code"), id:$cookies.get("session_id") || ""}))
+		}
+		if (!has_session_id) 
 			this.ws.send(`{"type":"get session id", "data":""}`)
-		}
-		else {
-			
-			console.log("Sent request for user using session Id, waiting for response...")
-			//@ts-ignore
-			this.ws.send(JSON.stringify({type:"request user with session id", data:$cookies.get("session_id"), id:""}))
-		}
+		else 
+			this.ws.send(JSON.stringify({type:"get session id", data:$cookies.get("session_id"), id:""}))
+		
 		const ListenForData = (i: Websocket, ev: MessageEvent) => {
 			console.log(`received message: ${ev.data}`);
 			var res : WebSocketReponse = JSON.parse(ev.data)
@@ -194,15 +195,6 @@ export default {
 		//@ts-ignore
 		this.ws.addEventListener(WebsocketEvent.message, ListenForData);
 		 
-		const url = new URL(window.location.href);
-		const queryParams = new URLSearchParams(url.search);
-		if(queryParams.has("code")){
-			var code = queryParams.get("code") + ""
-			//@ts-ignore
-			this.ws.send(JSON.stringify({type:"connect with discord", data:queryParams.get("code"), id:""}))
-		}
-		else {
-		}
 	},
 }
 
@@ -210,8 +202,12 @@ export default {
 
 <template>
 	<div id="main" :class="[user.theme]">
+	
 		<NNNHeader :dev=dev :logged=logged :admin=user.admin @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
+			<div id="app">
+				<p>{{ $t("message.hello") }}</p>
+			</div>
 			<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
 		<div v-else-if="loadingPage === 20">
