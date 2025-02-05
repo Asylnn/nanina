@@ -1,4 +1,4 @@
-{
+[{
     "bannerName":"The PP club",
     "bannerDescription":"The PP club",
     "bannerId":"ppclub",
@@ -12,4 +12,4 @@
     "threeStarsPollId": ["3"],
     "rateUpTwoStarsPollId":[],
     "rateUpThreeStarsPollId":[]
-}
+}]
