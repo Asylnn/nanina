@@ -21,6 +21,19 @@ public static class DBUtils {
             user_col.Update(user);
         }
     }
+    public static List<Equipment> GetEquipment(int setId){
+        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+            var itemCol = db.GetCollection<Equipment>("itemdb");
+            var items = itemCol.Find(x => x.setId == setId);
+            if (items.Count() >= 1){
+                return items.ToList();
+            }
+            else {
+                Console.Error.WriteLine($"Somehow got a setId ({setId}) wrong with no associated items? Returning no items");
+                return [];
+            }
+        }
+    }
     public static Waifu GetWaifu(string id){
         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var waifuCol = db.GetCollection<Waifu>("waifudb");

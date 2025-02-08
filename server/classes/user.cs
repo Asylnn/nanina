@@ -49,7 +49,7 @@ public class User(string username, Ids ids)
     public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; }
     public Verification verification { get; set; } = new() { osuVerificationCode=null, osuVerificationCodetimestamp = 0, isOsuIdVerified=false };
     public long claimTimestamp { get; set; }
-
+    public Inventory inventory { get; set; }
     private static string CreateId()
     {   
         Random rng = new Random();

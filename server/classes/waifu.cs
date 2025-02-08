@@ -32,6 +32,15 @@ public class Waifu
     public int b_dex { get; set; }
     public int o_dex { get; set; }
     public int u_dex { get; set; }
+    public float _dex { get; set; }
+    public float _int { get; set; }
+    public float _agi { get; set; }
+    public float _str { get; set; }
+    public float _kaw { get; set; }
+    public float _luck { get; set; }
+    public float psychic { get; set; }
+    public float magical { get; set; }
+    public float physical { get; set; }
     public short stars { get; set; }
     private int xpToLvlUp 
     {

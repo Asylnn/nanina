@@ -42,7 +42,7 @@ export default {
             <button @click="Delete">delete</button>
                 
             <span class="attribute">Id  <input class="numberInput" v-model="item.id" type="number"></span>
-            <span class="attribute">Set Id<input class="numberInput" v-model="item.set_id" type="number"></span>
+            <span class="attribute">Set Id<input class="numberInput" v-model="item.setId" type="number"></span>
 
             <span class="attribute">Name <input class="name" v-model="item.name" type="text"></span>
             <span class="attribute">Set  <input class="name" v-model="item.set_name" type="text"></span>

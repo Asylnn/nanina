@@ -42,7 +42,7 @@ public class Equipment : Item{
     public int str_percent;
     public int dex_flat;
     public int dex_percent;*/
-    public int set_id {get; set;}
+    public int setId {get; set;}
     public string set_name {get; set;}
     public EquipmentPiece piece {get; set;}
     public WaifuModifier[] modifiers {get; set;}

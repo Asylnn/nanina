@@ -60,7 +60,11 @@ partial class WS : WebSocketBehavior
             }
             Send(ClientNotification.NotificationData("admin", "updated the waifu database!", 0));
         }
+    }
 
-        
+    public static void InsertItem(Item item, ILiteCollection<Item> col){
+        col.Insert(item);
+        col.EnsureIndex(x => x.id, true);
+        col.EnsureIndex(x => x.set_id, false);
     }
 }
