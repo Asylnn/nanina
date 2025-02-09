@@ -7,12 +7,12 @@ using System.Security.Claims;
 
 partial class WS : WebSocketBehavior
     {
+        //static private List<WS> webSocketConnections = [];
         protected override void OnMessage(MessageEventArgs e)
         {
             Console.WriteLine("DATA : " + (string) e.Data); 
             ClientWebSocketResponse rawData = Newtonsoft.Json.JsonConvert.DeserializeObject<ClientWebSocketResponse>(e.Data);
             switch (rawData.type) {
-
 
                 //Recieve a request from the client to get a user from a sessionId stored in cookies.
                 //It check the database for that sessionId and return, if found, the user associated with that session ID.
@@ -74,8 +74,16 @@ partial class WS : WebSocketBehavior
 
             }
         }
+
+        protected override void OnClose(CloseEventArgs e)
+        {
+            //webSocketConnections.Remove(this);
+            Console.WriteLine("Bye :'(");
+        }
+
         protected override void OnOpen()
         {
+            //webSocketConnections.Add(this);
             Console.WriteLine("Hello <3");
         }
     }

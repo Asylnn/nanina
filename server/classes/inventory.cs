@@ -1,8 +1,59 @@
+/*
+
+WaifuModifiers : 
+
+0 : %PhysicalDmg
+1 : %MagicalDmg
+2 : %PsychicDmg
+
+3 : +STR
+5 : +KAW
+7 : +INT
+4 : %STR
+6 : %KAW
+8 : %INT
+
+15 : %CriticalDamage
+16 : +CriticalChance
+17 : %DebuffPotency
+18 : %BuffPotency
+19 : %BuffLength
+20 : %Debufflength
+
+###########################
+
+9  : +AGI
+11 : +DEXT
+10 : %AGI
+12 : %DEXT
+
+21 : %DebuffPotency
+22 : %BuffPotency
+23 : +BuffLength
+24 : +Debufflength
+25 : +DebuffResist
+
+############################
+
+13 : +LUCK
+14 : %LUCK
+
+0 : 
+
+*/
+
 public class Inventory {
-    public Dictionary<string, Equipment> equipment;
-    public Dictionary<string, Material> material;
-    public Dictionary<string, UserConsumable> userConsumable;
-    public Dictionary<string, WaifuConsumable> waifuConsumable;
+    public uint equipmentCount;
+    public Dictionary<uint, Equipment> equipment;
+    public Dictionary<uint, Material> material;
+    public Dictionary<uint, UserConsumable> userConsumable;
+    public Dictionary<uint, WaifuConsumable> waifuConsumable;
+
+    public void AddEquipment(Equipment eqp){
+        equipmentCount++;
+        eqp.equipmentId = equipmentCount;
+        equipment.Add(eqp.equipmentId, eqp);
+    }
 }
 
 public enum ItemType {
@@ -19,13 +70,13 @@ public enum EquipmentPiece {
 }
 
 public abstract class Item {
-    public int count {get; set;}
-    public int id {get; set;}
+    public uint count {get; set;}
+    public ushort id {get; set;}
     public ItemType type {get; set;}
     public string imgPATH {get; set;}
     public string name {get; set;}
     public string description {get; set;}
-    public short rarity {get; set;}
+    public byte rarity {get; set;}
 }
 
 public class Equipment : Item{
@@ -42,11 +93,17 @@ public class Equipment : Item{
     public int str_percent;
     public int dex_flat;
     public int dex_percent;*/
-    public int setId {get; set;}
+    public uint equipmentId {get; set;}
+    public ushort setId {get; set;}
     public string set_name {get; set;}
     public EquipmentPiece piece {get; set;}
+    public WaifuModifier stat {get; set;}
     public WaifuModifier[] modifiers {get; set;}
     public WaifuModifier[] setModifiers {get; set;}
+
+    public WaifuModifier[] GetAllModifiers(){
+        return (WaifuModifier[]) modifiers.Concat(setModifiers).Append(stat);
+    }
 }
 
 public class UserConsumable : Item{
@@ -60,12 +117,12 @@ public class WaifuConsumable : Item{
 }
 
 public class Material : Item {
-    public new ItemType type {get; set;}= ItemType.Material;
+    public new ItemType type {get; set;} = ItemType.Material;
 }
 
 public abstract class Modifier {
-    public int id {get; set;}
-    public long timeout {get; set;}
+    public ushort id {get; set;}
+    public ulong timeout {get; set;}
     public float amount {get; set;}
 }
 

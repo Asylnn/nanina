@@ -6,11 +6,10 @@ using Newtonsoft.Json;
 public static class LoadServer {
 
     public static void Load(){
-        LoadConfig();
+        //LoadConfig();
         LoadEnv();
         LoadOsuApi();
         LoadWebSocketServer();
-        Gacha.LoadBanners();
         if(Global.config.first_time_running) 
             FirstLoad();
         UpdateUserDB(); //Update Database when updating game
@@ -18,10 +17,10 @@ public static class LoadServer {
         
     }
 
-    public static void LoadConfig(){
+    /*public static void LoadConfig(){
         Console.WriteLine("loading config : ..." + File.ReadAllText("../config.json"));
-        Global.config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../config.json"));
-    }
+        Global.config = 
+    }*/
     public static void LoadEnv(){
         var dotEnvLoadStatus = DotEnv.Load("../.env");
         if (dotEnvLoadStatus == false) {

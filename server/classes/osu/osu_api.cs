@@ -83,8 +83,8 @@ public static class OsuApi {
         }
     }
 
-    public static int GetXP(OsuScoreExtended score){
-        return (int) Math.Ceiling(score.accuracy*score.beatmap.hit_length*score.beatmap.difficulty_rating);
+    public static uint GetXP(OsuScoreExtended score){
+        return (uint) Math.Ceiling(score.accuracy*score.beatmap.hit_length*score.beatmap.difficulty_rating);
     }
 
     public static async Task<OsuBeatmap> GetBeatmapById(string beatmapId){

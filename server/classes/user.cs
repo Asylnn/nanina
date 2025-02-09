@@ -1,5 +1,5 @@
 public class StatCount {
-    public int std_claim_count { get; set; } 
+    public uint std_claim_count { get; set; } 
 
 }
 
@@ -15,7 +15,7 @@ public class Tokens {
 }
 
 public class Verification {
-    public long osuVerificationCodetimestamp { get; set; }
+    public ulong osuVerificationCodetimestamp { get; set; }
     public bool isOsuIdVerified { get; set; }
     public string osuVerificationCode { get; set; }
 }
@@ -23,7 +23,7 @@ public class Verification {
 public class Fight {
     public string game { get; set; }
     public string id { get; set; }
-    public long timestamp { get; set; }
+    public ulong timestamp { get; set; }
     public bool completed { get; set; }
 }
 
@@ -45,10 +45,10 @@ public class User(string username, Ids ids)
     public string avatarPATH { get; set; } = "";
     public StatCount statCount { get; set; } = new();
     public List<Fight> fights { get; set; } = [];
-    public int gacha_currency { get; set; } = 0;
+    public uint gacha_currency { get; set; } = 0;
     public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; }
     public Verification verification { get; set; } = new() { osuVerificationCode=null, osuVerificationCodetimestamp = 0, isOsuIdVerified=false };
-    public long claimTimestamp { get; set; }
+    public ulong claimTimestamp { get; set; }
     public Inventory inventory { get; set; }
     private static string CreateId()
     {   

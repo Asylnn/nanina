@@ -1,6 +1,8 @@
+using Newtonsoft.Json;
+
 public class GachaPullClientRequest {
     public string bannerId {get; set;}
-    public short pullAmount {get; set;}
+    public byte pullAmount {get; set;}
 }
 
 public class Banner {
@@ -8,26 +10,23 @@ public class Banner {
     public string bannerDescription;
     public string bannerId;
     public short pityAmount;
-    public int pullCost;
-    public int twoStarsWeight;
-    public int threeStarsWeight;
-    public int rateUpTwoStarsWeight;
-    public int rateUpThreeStarsWeight;
+    public uint pullCost;
+    public uint twoStarsWeight;
+    public uint threeStarsWeight;
+    public uint rateUpTwoStarsWeight;
+    public uint rateUpThreeStarsWeight;
     public string[] twoStarsPollId;
     public string[] threeStarsPollId;
     public string[] rateUpTwoStarsPollId;
     public string[] rateUpThreeStarsPollId;
 }
 
-public class Gacha() {
-    public static Banner[] banners;
+public static class Gacha {    
+    public static readonly Banner[] banners = JsonConvert.DeserializeObject<Banner[]>(File.ReadAllText(Environment.GetEnvironmentVariable("BANNER_STORAGE_PATH")));
     
-    public static int GetBannerCost(string bannerId, short pullAmount){
+    public static uint GetBannerCost(string bannerId, byte pullAmount){
         var banner = banners.ToList().Find(banner => bannerId == banner.bannerId);
         return banner.pullCost*pullAmount;
-    }
-    public static void LoadBanners(){
-        banners = Newtonsoft.Json.JsonConvert.DeserializeObject<Banner[]>(File.ReadAllText(Environment.GetEnvironmentVariable("BANNER_STORAGE_PATH")));
     }
     public static bool BannerExists(string bannerId){
         return banners.Any(x => x.bannerId == bannerId);

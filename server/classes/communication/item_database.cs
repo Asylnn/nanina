@@ -62,9 +62,12 @@ partial class WS : WebSocketBehavior
         }
     }
 
+    public static void InsertEquipment(Equipment item, ILiteCollection<Equipment> col){
+        InsertItem(item, (ILiteCollection<Item>) col);
+        col.EnsureIndex(x => x.setId, false);
+    }
     public static void InsertItem(Item item, ILiteCollection<Item> col){
         col.Insert(item);
         col.EnsureIndex(x => x.id, true);
-        col.EnsureIndex(x => x.set_id, false);
     }
 }

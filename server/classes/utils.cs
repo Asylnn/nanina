@@ -3,8 +3,8 @@ using System.Runtime.CompilerServices;
 
 public static class Utils
 {
-    public static long GetTimestamp()
+    public static ulong GetTimestamp()
     {
-        return new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+        return (ulong)new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
     }
 }

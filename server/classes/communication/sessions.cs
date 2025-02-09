@@ -33,7 +33,6 @@ partial class WS : WebSocketBehavior
             }
             else{
                 var session = sessions.First();
-                Console.WriteLine(JsonConvert.SerializeObject(session));
                 Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
                     type = "session",
                     data = JsonConvert.SerializeObject(session),
@@ -47,6 +46,11 @@ partial class WS : WebSocketBehavior
                     {
                         type = "get banners",
                         data = JsonConvert.SerializeObject(Gacha.banners),
+                    }));
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = "get dungeons",
+                        data = JsonConvert.SerializeObject(DungeonManager.dungeons),
                     }));
                 }
             }
