@@ -102,6 +102,7 @@ header, #actiMenu li {
 header {
     position:sticky;
     top:0;
+    min-height: 60px;
     height:6vh;
     grid-template-columns: 1fr 4fr 0.5fr;
     padding: 0 15vw;

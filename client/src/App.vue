@@ -256,7 +256,7 @@ export default {
 			<ItemManagerPage :id="user.Id" :item_db="item_db"></ItemManagerPage>
 		</div>
 		<div v-else-if="loadingPage === 140">
-			<InventoryManagerPage></InventoryManagerPage>
+			<InventoryManagerPage :user="user" :items="item_db"></InventoryManagerPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 	</div>
