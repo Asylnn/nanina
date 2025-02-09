@@ -5,8 +5,12 @@ import type UserConsumable from '@/classes/inventory/user_consumable';
 import type WaifuConsumable from '@/classes/inventory/waifu_consumable';
 import InventoryPage from './InventoryPage.vue';
 import User from '@/classes/user';
-import type Item from '@/classes/inventory/item';
+import Item from '@/classes/inventory/item';
 import ItemType from '@/classes/inventory/item_type';
+import EquipmentManagerComponent from './ItemManagerComponent/EquipmentManagerComponent.vue';
+import UserConsumableManagerComponent from './ItemManagerComponent/UserConsumableManagerComponent.vue';
+import WaifuConsumableManagerComponent from './ItemManagerComponent/WaifuConsumableManagerComponent.vue';
+import MaterialManagerComponent from './ItemManagerComponent/MaterialManagerComponent.vue';
 
 /*Selectionner un user pour regarder son inventaire et pouvoir le modifier ##PLUS TARD
 * Ajouter un item -> 
@@ -26,8 +30,12 @@ export default {
     data() {
         return {
             categManager : ItemType.Equipment,
-            modeManager : "add"
-
+            modeManager : "add",
+            itemToModify : null as Item | null,
+            equipment: new Array<Equipment>(),
+            user_consumable: new Array<UserConsumable>(),
+            waifu_consumable: new Array<WaifuConsumable>(),
+            material: new Array<Material>(),
         }
     },
     props : {
@@ -41,7 +49,11 @@ export default {
         },
     },
     components: {
-        InventoryPage
+        InventoryPage,
+        EquipmentManagerComponent,
+        UserConsumableManagerComponent,
+        WaifuConsumableManagerComponent,
+        MaterialManagerComponent,
     },
     methods: {
         changeCateg(categ : ItemType){
@@ -50,6 +62,32 @@ export default {
         changeMode(mode : string) {
             this.modeManager = mode
         },
+        showItemToModify(item : Item) {
+            this.itemToModify = item
+        },
+
+        DeleteEquipement(id: number){
+            this.equipment.splice(this.equipment.findIndex(equipment => equipment.id == id), 1)
+        },
+        DeleteMaterial(id: number){
+            this.material.splice(this.material.findIndex(material => material.id == id), 1)
+        },
+        DeleteWaifuConsumable(id: number){
+            this.waifu_consumable.splice(this.waifu_consumable.findIndex(waifu_consumable => waifu_consumable.id == id), 1)
+        },
+        DeleteUserConsumable(id: number){
+            this.user_consumable.splice(this.user_consumable.findIndex(user_consumable => user_consumable.id == id), 1)
+        },
+
+        UpdateDatabase(){
+            var new_item_db = {
+                equipment:this.equipment,
+                material:this.material,
+                waifu_consumable:this.waifu_consumable,
+                user_consumable:this.user_consumable,
+            }
+            this.ws.send(JSON.stringify({type:"update item db", data:JSON.stringify(this.user.inventory), id: this.user.Id}))
+        }
     },
 }
 
@@ -58,7 +96,27 @@ export default {
 <template>
     <div id="inventoryManager">
         <div id="theInventory">
-            <InventoryPage :user="user"></InventoryPage>
+            <div v-if="modeManager === 'add'">
+                <InventoryPage :user="user"></InventoryPage>
+            </div>
+            <div v-else>
+                <div v-for="dico in user.inventory">
+                    <div v-for="item in dico">
+                        <div v-if="item.type == ItemType.Equipment">
+                                <EquipmentManagerComponent :item="item" @delete-item="DeleteEquipement"></EquipmentManagerComponent>
+                        </div>
+                        <div v-else-if="item.type == ItemType.UserConsumable">
+                            <UserConsumableManagerComponent :item="item" @delete-item="DeleteUserConsumable"></UserConsumableManagerComponent>
+                        </div>
+                        <div v-else-if="item.type == ItemType.WaifuConsumable">
+                            <WaifuConsumableManagerComponent :item="item" @delete-item="DeleteWaifuConsumable"></WaifuConsumableManagerComponent>
+                        </div>
+                        <div v-else>
+                            <MaterialManagerComponent :item="item" @delete-item="DeleteMaterial"></MaterialManagerComponent>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="theManager">
             Bienvenue a l'inventaire manager<br>
@@ -81,45 +139,27 @@ export default {
                 </select>
                 {{ categManager }}
             </div>
-
-            <div v-if="modeManager === 'add'">
-                <div v-for="item in items">
-                    <div v-if="item.type == categManager">
-                        <div class="itemDisplay">
-                            <img class="waifuIcon" :src="'src/assets/item-image/' + item.imgPATH">
-                            {{ item.name }}
-                            <label>Quantité : </label>
-                            <input type="number">
-                            <button>Add</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div v-else-if="modeManager === 'update'">
-                <div v-for="dico in user.inventory">
-                    <div v-for="item in dico">
+            <div v-if="itemToModify == null">
+                <div v-if="modeManager === 'add'">
+                    <div v-for="item in items">
                         <div v-if="item.type == categManager">
                             <div class="itemDisplay">
                                 <img class="waifuIcon" :src="'src/assets/item-image/' + item.imgPATH">
                                 {{ item.name }}
-                                <button>Update</button>
+                                <label>Quantité : </label>
+                                <input type="number">
+                                <button>Add</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-else><!--modeManager === delete-->
-                <div v-for="dico in user.inventory">
-                    <div v-for="item in dico">
-                        <div v-if="item.type == categManager">
-                            <div class="itemDisplay">
-                                <img class="waifuIcon" :src="'src/assets/item-image/' + item.imgPATH">
-                                {{ item.name }}
-                                <input type="text">
-                                <button>Delete</button>
-                            </div>
-                        </div>
-                    </div>
+            <div v-else>
+                <div class="itemDisplay">
+                    <img class="waifuIcon" :src="'src/assets/item-image/' + itemToModify.imgPATH">
+                    {{ itemToModify.name }}
+                    <input type="text">
+                    <button>Update in DB</button>
                 </div>
             </div>
         </div>

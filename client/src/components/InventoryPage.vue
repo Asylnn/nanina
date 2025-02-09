@@ -49,7 +49,7 @@ export default {
                         <div class="waifuIcon">
                         <img :src="'src/assets/item-image/' + item.imgPATH">
                         </div>
-                        <p>item.name</p>
+                        <p>{{item.name}}</p>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@ export default {
                         <div class="waifuIcon">
                         <img :src="'src/assets/item-image/' + item.imgPATH">
                         </div>
-                        <p>item.name + nombre : + item.count</p>
+                        <p>{{item.name}} + nombre : + {{item.count}}</p>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@ export default {
                         <div class="waifuIcon">
                         <img :src="'src/assets/item-image/' + item.imgPATH">
                         </div>
-                        <p>item.name + nombre : + item.count</p>
+                        <p>{{item.name}} + nombre : + {{item.count}}</p>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@ export default {
                         <div class="waifuIcon">
                         <img :src="'src/assets/item-image/' + item.imgPATH">
                         </div>
-                        <p>item.name + nombre : + item.count</p>
+                        <p>{{item.name}} + nombre : + {{item.count}}</p>
                     </div>
                 </div>
             </div>
