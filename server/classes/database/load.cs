@@ -111,6 +111,7 @@ public static class LoadServer {
             //Update
             foreach (User user in users) {
                 user.fights = [];
+                user.inventory ??= new ();
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();

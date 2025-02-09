@@ -1,10 +1,35 @@
 <script lang="ts">
+import type Equipment from '@/classes/inventory/equipment';
+import User from '@/classes/user';
+
+//
+//
+///
+//
+//
+//
+//
+//
+//
+//
+
 
 export default {
     name : "InventoryPage",
+    data(){
+        return {
+            category : "all"
+        }
+    },
+    props: {
+        user: {
+            type: User,
+            required: true
+        }
+    },
     methods:{
-        onClickChangePage(page:number){
-
+        changeTab(categ : string){
+            this.category = categ
         }
     }
 }
@@ -12,22 +37,78 @@ export default {
 
 </script>
 <template>
-    <div class="InventoryHeader">
-        <ul id="pages">
-            <li @click="onClickChangePage(1)"><span>Equipment</span></li>
-            <li @click="onClickChangePage(2)"><span>User Consumables</span></li>
-            <li @click="onClickChangePage(3)"><span>Waifu Consumables</span></li>
-            <li @click="onClickChangePage(4)"><span>Materials</span></li>
-        </ul>
-    </div>
-    <div class="InventoryBody">
-        
+    <div id="inventory">
+        User : {{ user.username }}<br>
+        Categ choisie : {{ category }}
+        <div class="InventoryHeader">
+            <div id="filterCateg">
+                <label>Categ : </label>
+                <select value="a">
+                    <option @click="changeTab('all')" value="a">All</option>
+                    <option @click="changeTab('equipment')" value="e">Equipement</option>
+                    <option @click="changeTab('user_consumable')" value="u">User Consumable</option>
+                    <option @click="changeTab('waifu_consumable')" value="w">Waifu Consumable</option>
+                    <option @click="changeTab('materials')" value="m">Materials</option>
+                </select>
+            </div>
+        </div>
+        <div class="InventoryBody">
+            <div v-if="category === 'equipment' || category === 'all'">
+                <span>Equipement :</span><br>
+                <div v-for="item in user.inventory.equipment">
+                    <div class="itemDisplay">
+                        <div class="waifuIcon">
+                        <img :src="'src/assets/item-image/' + item.imgPATH">
+                        </div>
+                        <p>item.name</p>
+                    </div>
+                </div>
+            </div>
+            <div v-if="category === 'user_consumable' || category === 'all'">
+                <span>User Consumable :</span><br>
+                <div v-for="item in user.inventory.userConsumable">
+                    <div class="itemDisplay">
+                        <div class="waifuIcon">
+                        <img :src="'src/assets/item-image/' + item.imgPATH">
+                        </div>
+                        <p>item.name + nombre : + item.count</p>
+                    </div>
+                </div>
+            </div>
+            <div v-if="category === 'waifu_consumable' || category === 'all'">
+                <span>Waifu Consumable :</span><br>
+                <div v-for="item in user.inventory.waifuConsumable">
+                    <div class="itemDisplay">
+                        <div class="waifuIcon">
+                        <img :src="'src/assets/item-image/' + item.imgPATH">
+                        </div>
+                        <p>item.name + nombre : + item.count</p>
+                    </div>
+                </div>
+            </div>
+            <div v-if="category === 'materials' || category === 'all'">
+                <span>Materials :</span><br>
+                <div v-for="item in user.inventory.material">
+                    <div class="itemDisplay">
+                        <div class="waifuIcon">
+                        <img :src="'src/assets/item-image/' + item.imgPATH">
+                        </div>
+                        <p>item.name + nombre : + item.count</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <style lang="css" scoped>
-img {
-    width: 100%;
-    height: 100%;
+
+span {
+    color: blueviolet;
+    font-size: x-large;
 }
+#inventory {
+    height: 80vh;
+}
+
 </style>

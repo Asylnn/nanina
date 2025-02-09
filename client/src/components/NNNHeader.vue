@@ -66,6 +66,7 @@ export default {
             <li @click="onClickChangePage(15)" v-if="admin"><span>Item DB</span></li>   
             <li @click="onClickChangePage(8)" v-if="admin"><span>Waifu DB</span></li>
             <li @click="onClickChangePage(6)" v-if="admin && dev"><span>Add Beatmap</span></li>
+            <li @click="onClickChangePage(16)" v-if="admin && dev"><span>InventoryManager</span></li>
         </ul>
         <ul id="buttList">
             <select id="language" v-model="$i18n.locale" @change="onChangeLocale()">
