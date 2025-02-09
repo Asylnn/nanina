@@ -63,6 +63,7 @@ export default {
             <li @click="onClickChangePage(14)"><span>{{ $t("header.waifus") }}</span></li>
             <li @click="onClickChangePage(7)"><span>{{ $t("header.fighting") }}</span></li>
             <li @click="onClickChangePage(9)"><span>{{ $t("header.pull") }}</span></li>
+            <li @click="onClickChangePage(10)"><span>{{ $t("header.dungeon") }}</span></li>
             <li @click="onClickChangePage(15)" v-if="admin"><span>Item DB</span></li>   
             <li @click="onClickChangePage(8)" v-if="admin"><span>Waifu DB</span></li>
             <li @click="onClickChangePage(6)" v-if="admin && dev"><span>Add Beatmap</span></li>

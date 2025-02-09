@@ -43,7 +43,7 @@ WaifuModifiers :
 */
 
 public class Inventory {
-    public uint equipmentCount;
+    public uint equipmentCount {get; set;} = 0;
     public Dictionary<uint, Equipment> equipment {get; set;} = [];
     public Dictionary<uint, Material> material {get; set;} = [];
     public Dictionary<uint, UserConsumable> userConsumable {get; set;} = [];

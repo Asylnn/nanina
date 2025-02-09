@@ -4,12 +4,18 @@
         "waifus":"Waifus",
         "pull":"Pull",
         "activities":"Activités",
-        "fighting":"Fighting"
+        "fighting":"Fighting",
+        "dungeon":"Donjon"
     },
     "message": {
         "hello": "bonjour"
     },
     "fighting": {
         "welcome":"Bienvenue dans la section de combat !"
+    },
+    "dungeon":{
+        "shit":{
+            "name":"Le Donjon de Merde"
+        }
     }
 }

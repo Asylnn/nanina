@@ -4,12 +4,18 @@
         "waifus": "Waifus",
         "pull": "Pull",
         "activities": "Activities",
-        "fighting": "Fighting"
+        "fighting": "Fighting",
+        "dungeon":"Dungeon"
     },
     "message": {
         "hello": "hello"
     },
     "fighting": {
         "welcome":"Welcome to the Fighting section !"
+    },
+    "dungeon":{
+        "shit":{
+            "name":"The Shit Dungeon"
+        }
     }
 }

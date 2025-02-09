@@ -31,13 +31,14 @@ public class DungeonTemplate {
     public byte difficulty;
 }
 
-public struct DungeonLog {
+public class DungeonLog {
     public string waifuId;
     public string attackType;
     public float dmg;
 }
 
 public partial class ActiveDungeon {
+    public ulong instanceId;
     public WebSocketSessionManager WSSession;
     public string webSocketId;
     public DungeonTemplate dungeonTemplate;
@@ -48,8 +49,10 @@ public partial class ActiveDungeon {
     public float health; 
     public bool isCompleted = false;
     public List<Equipment> loot;
+    public PeriodicTimer damageTimer = new (new (Global.config.dungeon_attack_timer_in_milliseconds*10_000));
 
-    public ActiveDungeon(DungeonTemplate dungeon, User user, List<Waifu> EquipedWaifus, string wsId, WebSocketSessionManager session){
+    public ActiveDungeon(DungeonTemplate dungeon, User user, List<Waifu> EquipedWaifus, string wsId, WebSocketSessionManager session, ulong _instanceId){
+        instanceId = _instanceId;
         WSSession = session;
         webSocketId = wsId;
         dungeonTemplate = dungeon;
@@ -59,18 +62,22 @@ public partial class ActiveDungeon {
         Console.WriteLine("Dungeon Created!");
         StartDungeon();
     }
+
+    public void StopDungeon(){
+        damageTimer.Dispose();
+        isCompleted = true;
+        DungeonManager.UpdateDungeonOfClient(this);
+    }
     public async void StartDungeon(){
-        var timer = Global.config.dungeon_attack_timer_in_milliseconds*10_000;
-        Console.WriteLine(timer);
-        var damageTimer = new PeriodicTimer(new (timer));
         while (await damageTimer.WaitForNextTickAsync())
-        {            
+        {   
             Console.WriteLine("Dungeon Started!");
             DealDamage();
             
              
             if(health <= 0) {
-                isCompleted = false;
+                health = 0;
+                isCompleted = true;
                 
                 
                 ConcludeDungeon();
@@ -79,7 +86,7 @@ public partial class ActiveDungeon {
                 damageTimer.Dispose();
             }
             else {
-                 //webSocket.UpdateDungeonOfClient(this); //I don't like this tbh...
+                DungeonManager.UpdateDungeonOfClient(this); //I don't like this tbh...
             }
            
                 
@@ -117,17 +124,19 @@ public partial class ActiveDungeon {
                 attackType = attackType,
                 dmg = dmg,
             });
-
             //DungeonManager.UpdateDungeonOfClient(this);
         }
+    }
 
-        
+    public ActiveDungeon ToClient(){
+        ActiveDungeon dungeon = (ActiveDungeon)MemberwiseClone();
+        dungeon.WSSession = null;
+        dungeon.webSocketId = null;
+        return dungeon;
     }
 
     public override string ToString(){
-        ActiveDungeon dungeon = (ActiveDungeon)MemberwiseClone();
-        dungeon.WSSession = null;
-        return JsonConvert.SerializeObject(dungeon);
+        return JsonConvert.SerializeObject(ToClient());
     }
 
     public void ConcludeDungeon(){
