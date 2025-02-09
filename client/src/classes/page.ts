@@ -1,6 +1,6 @@
 enum Page {
 	Homepage,
-	Inventory,
+	InventoryPage,
 	NotFound,
 	YouSomehowEndedUpThere,
 	User,
@@ -15,6 +15,7 @@ enum Page {
 	NotificationMenu,
 	WaifuListPage,
 	ItemManagerPage,
+	InventoryManagerPage,
 }
 
 export default Page

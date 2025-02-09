@@ -29,10 +29,12 @@ import Waifu from './classes/waifu'
 import Page from './classes/page'
 import NotificationSeverity from './classes/notification_severity'
 import OsuBeatmap from './classes/beatmap'
-import Inventory from './classes/inventory/inventory'
 import ItemManagerPage from './components/ItemManagerPage.vue'
 import WaifuDisplayComponent from './components/WaifuDisplayComponent.vue'
 import WaifuGridDisplayComponent from './components/WaifuGridDisplayComponent.vue'
+import InventoryManagerPage from './components/InventoryManagerPage.vue'
+import InventoryPage from './components/InventoryPage.vue'
+
 export default {
 	name: "La SDA de la mort qui tue",
 	data() {
@@ -64,10 +66,11 @@ export default {
 		WaifuManagerPage,
 		PullPage,
 		WaifuListPage,
-		Inventory,
+		InventoryPage,
 		ItemManagerPage,
 		WaifuDisplayComponent,
 		WaifuGridDisplayComponent,
+		InventoryManagerPage,
 	},
 	
 	methods : {
@@ -92,7 +95,7 @@ export default {
 		switch (this.page) {
 			case Page.Homepage :
 				return 10
-			case Page.Inventory :
+			case Page.InventoryPage :
 				if (this.logged === true) return 20
 				else return 40
 			case Page.NotFound :
@@ -117,6 +120,8 @@ export default {
 				return 120
 			case Page.ItemManagerPage:
 				return 130
+			case Page.InventoryManagerPage:
+				return 140
 			default:
 				return 40
 		}
@@ -215,7 +220,7 @@ export default {
 			<Homepage image="src/assets/homepage.png"></Homepage>
 		</div>
 		<div v-else-if="loadingPage === 20">
-			<Inventory></Inventory>
+			<InventoryPage :user="user"></InventoryPage>
 			<!--<StatsBlock :objectType="objectType" :stars="stars" :rarity="rarity" :value="value" :owner="owner" :xp="xp" :lvl="lvl" :b_int="b_int" :b_luck="b_luck" :b_exp="b_exp" :o_int="o_int" :o_luck="o_luck"
 			:o_exp="o_exp" :u_int="u_int" :u_exp="u_exp" :diffLvlup="diffLvlup"></StatsBlock>-->
 		</div>
@@ -249,6 +254,9 @@ export default {
 		</div>
 		<div v-else-if="loadingPage === 130">
 			<ItemManagerPage :id="user.Id" :item_db="item_db"></ItemManagerPage>
+		</div>
+		<div v-else-if="loadingPage === 140">
+			<InventoryManagerPage></InventoryManagerPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 	</div>

@@ -7,14 +7,15 @@ using RestSharp;
 partial class WS : WebSocketBehavior
 {
     protected async void UpdateOsuId(ClientWebSocketResponse rawData){
+        Console.WriteLine("rawData : " + JsonConvert.SerializeObject(rawData));
         var user = DBUtils.GetUser(rawData.id);
         var rng = new Random();
         var code = rng.Next(999999).ToString();
         var success = await OsuApi.SendMessageToUser(rawData.data, code);
-        Console.WriteLine("code"+ code);
+        Console.WriteLine("code "+ code);
         
 
-        if(!success){
+        if(!success && !user.admin){
             Send(ClientNotification.NotificationData("Update osu ID", "We can't find the user associated with that id! (or other server side issues)", 1)); return;
         }
         else {

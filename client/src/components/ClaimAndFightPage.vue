@@ -128,7 +128,7 @@ export default {
         </span>
         <span id="fightButton" v-else @click="fight">Fight !</span>
         <div id="inFight" v-if="fighting">
-            <img :href="beatmap.beatmapset.covers.cover2x" :src="beatmap.beatmapset.covers.cover2x">
+            <img id="bgMap" :href="beatmap.beatmapset.covers.cover2x" :src="beatmap.beatmapset.covers.cover2x">
             Mouhahahahhaha !<br>
             I am the spirit of the map, prove me your worth by :<br>
             <p>Downloading me</p> <br>
@@ -141,13 +141,13 @@ export default {
             <p>Playing me by submitting a score</p><br>
             If you manage to submit a score, I will gift you XP !<br>
             Select which waifu would recieve rewards if you are worthy !
-            <WaifuGridDisplayComponent v-if="chosen_waifu == null" @show-waifu="selectWaifu" :waifus="user.waifus" :columns="5"></WaifuGridDisplayComponent>
-            <div v-if="chosen_waifu != null">
+            <WaifuGridDisplayComponent v-if="chosen_waifu == null" @show-waifu="selectWaifu" :waifus="user.waifus" :columns="3"></WaifuGridDisplayComponent>
+            <div id="afterSelect" v-if="chosen_waifu != null">
                 <WaifuGridDisplayComponent @show-waifu="resetWaifu" :waifus="[chosen_waifu]" :columns="1"></WaifuGridDisplayComponent>
                 <span id="timerClaim" v-if="claim_timing_out">
                 Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
                 </span>
-                <span v-else id="claim" @click="getXP">Prove that you are worth<br>getting XP!</span>
+                <span v-else id="claim" @click="getXP">Prove that you are worth getting XP!</span><br>
             </div>
         </div>
         <div v-else-if="xp != 0">
@@ -157,7 +157,7 @@ export default {
 </template>
 
 <style lang="css" scoped>
-#windowFight, #inFight {
+#windowFight, #inFight, #afterSelect{
     display: grid;
 }
 #windowFight {
@@ -178,9 +178,11 @@ a {
 #fightButton, #timerFight, #timerClaim{
     margin: 1vh 15vw;
     text-align: center;
+    max-width: 20vw;
 }
 #download, #claim {
     margin: 1vh 10vw;
+    text-align: center;
 }
 #timerFight, #timerClaim {
     cursor:default;
@@ -190,5 +192,12 @@ a {
 }
 #inFight p {
     color: red;
+}
+#bgMap {
+    width: 50vw;
+}
+
+#waifuIcons {
+    padding: 0;
 }
 </style>
