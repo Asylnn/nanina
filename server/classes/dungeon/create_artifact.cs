@@ -1,6 +1,7 @@
 
 using System.ComponentModel;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 public partial class ActiveDungeon {
 
@@ -28,10 +29,14 @@ public partial class ActiveDungeon {
         uint totalWeight = (uint) modifierWeights.Aggregate(0, (accum, current) => (int)(accum + current)); //Add all the weights
         Random rng = new ();
         var rand = rng.Next((int)totalWeight);  //Ugh, another cast
-        modifierWeights.Each((weight, i) => {   //Algorithm to get a random id from weights
-            totalWeight -= weight;      
+        for (var i = 0; i <= modifierWeights.Count; i++){//Algorithm to get a random id from weights
+            
+            totalWeight -= modifierWeights[i];  
+
             if(totalWeight <= rand){
-                var statRandomness = (float) rng.NextDouble()*Global.config.dungeon_stat_randomness;
+
+                //This only work for multiplicative modifiers 
+                var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.config.dungeon_stat_randomness;
                 var statDifficultyMultiplier = dungeonTemplate.difficulty switch
                 {
                     1 => 1,
@@ -41,25 +46,34 @@ public partial class ActiveDungeon {
                     5 => Global.config.star5_equipment_stat_base_ammount_multiplier,
                     _ => 0,
                 };
+                var amount = Global.config.star1_equipment_stat_base_ammount[modifierId[i]]*statDifficultyMultiplier;
+                amount = 1 + (amount - 1)*statRandomness;
                 equipment.stat = new WaifuModifier(){
                     id = modifierId[i],
-                    amount = Global.config.star1_equipment_stat_base_ammount[i]*statDifficultyMultiplier,
+                    amount = amount,
                     timeout = 0
                 };
-            }         
-        });
+                break;
+            }
+        }
     }
     public List<Equipment> GetLoot(){
         List<Equipment> loot = new ([]);
-        for(int i = 0; i < dungeonTemplate.numberOfRewards; i++){
-            Random rng = new ();
+        Random rng = new ();
+        var setId = dungeonTemplate.setRewards.ElementAt(rng.Next(dungeonTemplate.setRewards.Length));
+        var equipments = DBUtils.GetEquipment(setId);
 
-            var setId = dungeonTemplate.setRewards.ElementAt(rng.Next(dungeonTemplate.setRewards.Length));
-            var equipments = DBUtils.GetEquipment(setId);
-            
-            var equipment = equipments.ElementAt(rng.Next(dungeonTemplate.setRewards.Length));
+        for(int i = 0; i < dungeonTemplate.numberOfRewards; i++){
+            Console.WriteLine(i);
+
+            Console.WriteLine(JsonConvert.SerializeObject(equipments));
+            Console.WriteLine(equipments.Count);
+            Equipment equipment = (Equipment) equipments.ElementAt(rng.Next(equipments.Count)).Clone();
+            Console.WriteLine(JsonConvert.SerializeObject((equipment)));
+
             AttributeRandomStatToEquipment(equipment);
             loot.Add(equipment);
+            
         }
         return loot;
     }

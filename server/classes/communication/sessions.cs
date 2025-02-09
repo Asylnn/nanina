@@ -47,6 +47,8 @@ partial class WS : WebSocketBehavior
                         type = "get banners",
                         data = JsonConvert.SerializeObject(Gacha.banners),
                     }));
+                    Console.WriteLine(JsonConvert.SerializeObject(Global.config));
+                    Console.WriteLine(JsonConvert.SerializeObject(Global.config.dungeon_storage_path));
                     Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
                     {
                         type = "get dungeons",

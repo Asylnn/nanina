@@ -21,7 +21,7 @@ public static class DBUtils {
             user_col.Update(user);
         }
     }
-    public static List<Equipment> GetEquipment(int setId){
+    public static List<Equipment> GetEquipment(ushort setId){
         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var itemCol = db.GetCollection<Equipment>("itemdb");
             var items = itemCol.Find(x => x.setId == setId);

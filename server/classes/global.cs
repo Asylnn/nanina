@@ -26,4 +26,5 @@ public class Config {
     public float star5_equipment_stat_base_ammount_multiplier;
     public uint[] additive_or_multiplicative_waifu_modifier; 
     public uint dungeon_attack_timer_in_milliseconds;
+    public string dungeon_storage_path;
 }

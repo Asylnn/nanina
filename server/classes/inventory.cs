@@ -44,10 +44,10 @@ WaifuModifiers :
 
 public class Inventory {
     public uint equipmentCount;
-    public Dictionary<uint, Equipment> equipment;
-    public Dictionary<uint, Material> material;
-    public Dictionary<uint, UserConsumable> userConsumable;
-    public Dictionary<uint, WaifuConsumable> waifuConsumable;
+    public Dictionary<uint, Equipment> equipment {get; set;} = [];
+    public Dictionary<uint, Material> material {get; set;} = [];
+    public Dictionary<uint, UserConsumable> userConsumable {get; set;} = [];
+    public Dictionary<uint, WaifuConsumable> waifuConsumable {get; set;} = [];
 
     public void AddEquipment(Equipment eqp){
         equipmentCount++;
@@ -69,7 +69,8 @@ public enum EquipmentPiece {
     Accessory,
 }
 
-public abstract class Item {
+public abstract class Item : ICloneable
+{
     public uint count {get; set;}
     public ushort id {get; set;}
     public ItemType type {get; set;}
@@ -77,6 +78,11 @@ public abstract class Item {
     public string name {get; set;}
     public string description {get; set;}
     public byte rarity {get; set;}
+
+    public object Clone()
+    {
+        return this.MemberwiseClone();
+    }
 }
 
 public class Equipment : Item{

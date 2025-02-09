@@ -71,6 +71,9 @@ partial class WS : WebSocketBehavior
                 case "get map back":
                     SendMapToClient(rawData);
                     break;
+                case "start dungeon":
+                    StartDungeon(rawData);
+                    break;
 
             }
         }

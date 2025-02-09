@@ -112,6 +112,7 @@ public static class LoadServer {
             foreach (User user in users) {
                 user.fights = [];
                 user.waifus ??= [];
+                user.inventory = new ();
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
                 if(user.waifu != null)

@@ -41,29 +41,26 @@ partial class WS : WebSocketBehavior
         Console.WriteLine(JsonConvert.SerializeObject(items));
         using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
             var itemCol = db.GetCollection<Item>("itemdb");
+            var equipmentCol = db.GetCollection<Equipment>("itemdb");
             itemCol.DeleteAll();
             foreach (var item in items.material) {
-                itemCol.Insert(item);
-                itemCol.EnsureIndex(x => x.id, true);
+                InsertItem(item, itemCol);
             }
             foreach (var item in items.waifu_consumable) {
-                itemCol.Insert(item);
-                itemCol.EnsureIndex(x => x.id, true);
+                InsertItem(item, itemCol);
             }
             foreach (var item in items.user_consumable) {
-                itemCol.Insert(item);
-                itemCol.EnsureIndex(x => x.id, true);
+                InsertItem(item, itemCol);
             }
             foreach (var item in items.equipment) {
-                itemCol.Insert(item);
-                itemCol.EnsureIndex(x => x.id, true);
+                InsertEquipment(item, itemCol, equipmentCol);
             }
             Send(ClientNotification.NotificationData("admin", "updated the waifu database!", 0));
         }
     }
 
-    public static void InsertEquipment(Equipment item, ILiteCollection<Equipment> col){
-        InsertItem(item, (ILiteCollection<Item>) col);
+    public static void InsertEquipment(Equipment item, ILiteCollection<Item> itemCol, ILiteCollection<Equipment> col){
+        InsertItem(item, itemCol);
         col.EnsureIndex(x => x.setId, false);
     }
     public static void InsertItem(Item item, ILiteCollection<Item> col){
