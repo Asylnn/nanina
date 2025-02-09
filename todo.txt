@@ -29,6 +29,9 @@ TODO : Implement Money System (page/component/database)
 TODO : Implement Shop System (page/component/database)
 TODO : Implement First Version of the leaderboard system
 TODO : Implement "World Level" mechanic
+TODO : Namespacing and Folderising the c# code
+TODO : Scoping classes (public / private /abstract)
+TODO : Make a waifu selector for dungeons
 
 STEP 4 : Release Version 0.3
 
@@ -63,3 +66,5 @@ TODO : any objects in ts should be properly be typed
 TODO : not sending the user object everytime to save bandwidth
 TODO : Implement Setting page/component (Notifications)
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca
+TODO : MUTEX Counter in DungeonManager
+TODO : Optimize data sent to client, for example don't send old data each time there is an attack in the dungeon

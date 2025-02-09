@@ -27,7 +27,7 @@ export default {
             fight_timing_out: false,
             claim_timing_out: false,
             config: config, //You have to do this to access config inside html code
-            chosen_waifu : new Waifu({}),
+            chosen_waifu : null as Waifu | null,
         }
     },
     props: {
@@ -103,9 +103,12 @@ export default {
             this.chosen_waifu = waifu
         },
         resetWaifu() {
-            this.chosen_waifu = new Waifu({})
+            this.chosen_waifu = null
         }
     },
+    components: {
+        WaifuGridDisplayComponent,
+    }
 }
 
 
@@ -138,17 +141,17 @@ export default {
             <p>Playing me by submitting a score</p><br>
             If you manage to submit a score, I will gift you XP !<br>
             Select which waifu would recieve rewards if you are worthy !
-            <WaifuGridDisplayComponent @show-waifu="selectWaifu" :waifus="user.waifus" :columns="5"></WaifuGridDisplayComponent>
-            <div v-if="chosen_waifu != undefined">
-                <WaifuGridDisplayComponent @show-waifu="resetWaifu" :waifus="chosen_waifu" :columns="1"></WaifuGridDisplayComponent>
-            </div>
-            <span id="timerClaim" v-if="claim_timing_out">
+            <WaifuGridDisplayComponent v-if="chosen_waifu == null" @show-waifu="selectWaifu" :waifus="user.waifus" :columns="5"></WaifuGridDisplayComponent>
+            <div v-if="chosen_waifu != null">
+                <WaifuGridDisplayComponent @show-waifu="resetWaifu" :waifus="[chosen_waifu]" :columns="1"></WaifuGridDisplayComponent>
+                <span id="timerClaim" v-if="claim_timing_out">
                 Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
-            </span>
-            <span v-else id="claim" @click="getXP">Prove that you are worth<br>getting XP!</span>
+                </span>
+                <span v-else id="claim" @click="getXP">Prove that you are worth<br>getting XP!</span>
+            </div>
         </div>
         <div v-else-if="xp != 0">
-            <p> You earned {{ xp }}XP on {{chosen_waifu.name}}! </p>
+            <p> You earned {{ xp }}XP on {{chosen_waifu!.name}}! </p>
         </div>
     </div>
 </template>
