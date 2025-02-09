@@ -18,5 +18,5 @@
     "star4_equipment_stat_base_ammount_multiplier":1.9,
     "star5_equipment_stat_base_ammount_multiplier":2.5,
     "dungeon_attack_timer_in_milliseconds":3000,
-    "dungeon_storage_path": "/mnt/storage/storage/Projects/Nanina/save/dungeons.json"
+    "dungeon_storage_path": "../save/dungeons.json"
 }
