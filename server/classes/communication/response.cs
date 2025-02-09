@@ -74,6 +74,9 @@ partial class WS : WebSocketBehavior
                 case "start dungeon":
                     StartDungeon(rawData);
                     break;
+                case "stop dungeon":
+                    StopDungeon(rawData);
+                    break;
 
             }
         }

@@ -8,12 +8,12 @@ partial class WS : WebSocketBehavior
         var user = DBUtils.GetUser(rawData.id);
         var dungeon = DungeonManager.dungeons.Where(dungeon => dungeon.id == rawData.data).First();
         if(dungeon == null) {Send(ClientNotification.NotificationData("Dungeon", "The dungeon you tried to start doesn't exist!", 1)); return ;}
-        var activeDungeon = DungeonManager.InstantiateDungeon(dungeon, user, user.waifus, ID, Sessions);
-        Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-        {
-            type = "dungeon",
-            data = activeDungeon.ToString()
-        }));
+        DungeonManager.InstantiateDungeon(dungeon, user, user.waifus, ID, Sessions);
+    }
+
+    protected void StopDungeon(ClientWebSocketResponse rawData){
+        var dungeon = DungeonManager.activeDungeons[(ulong)Convert.ToInt64(rawData.data)];
+        dungeon.StopDungeon();
     }
 
     

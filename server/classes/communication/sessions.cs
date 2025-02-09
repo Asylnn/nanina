@@ -47,11 +47,11 @@ partial class WS : WebSocketBehavior
                         type = "get banners",
                         data = JsonConvert.SerializeObject(Gacha.banners),
                     }));
-                    /*Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
                     {
                         type = "get dungeons",
                         data = JsonConvert.SerializeObject(DungeonManager.dungeons),
-                    }));*/
+                    }));
                 }
             }
         }

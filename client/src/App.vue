@@ -34,6 +34,11 @@ import WaifuDisplayComponent from './components/WaifuDisplayComponent.vue'
 import WaifuGridDisplayComponent from './components/WaifuGridDisplayComponent.vue'
 import InventoryManagerPage from './components/InventoryManagerPage.vue'
 import InventoryPage from './components/InventoryPage.vue'
+import DungeonPage from './components/DungeonPage.vue'
+import type DungeonTemplate from './classes/dungeons/template_dungeons'
+import type Banner from './classes/banner'
+import type Item from './classes/inventory/item'
+import ActiveDungeon from './classes/dungeons/active_dungeon'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -48,16 +53,18 @@ export default {
 			xp : 0,
 			notifs : Array(),
 			dev : true, //Is this dev or prod? IMPORTANT!!
-			all_waifus : [],
-			item_db : [],
-			pulled_waifus : [],
-			banners : [],
+			all_waifus : [] as Waifu[],
+			item_db : [] as Item[],
+			pulled_waifus : [] as Waifu[],
+			banners : [] as Banner[],
+			dungeons : [] as DungeonTemplate[],
+			active_dungeon : new ActiveDungeon,
 			localeSetByUser : false,
 		}
 	},
-	components:{
+	components: {
 		NNNHeader,
-    	Homepage,
+		Homepage,
 		UserPage,
 		UserOptionPage,
 		AddMap,
@@ -71,8 +78,8 @@ export default {
 		WaifuDisplayComponent,
 		WaifuGridDisplayComponent,
 		InventoryManagerPage,
-	},
-	
+		DungeonPage,
+	},	
 	methods : {
 		updateTheme(theme : string) {
 			this.user.theme = theme
@@ -110,6 +117,8 @@ export default {
 				return 80
 			case Page.ClaimAndFightPage:
 				return 100
+			case Page.DungeonPage:
+				return 150
 			case Page.AddMap :
 				if (this.user.admin == true)	return 90
 				else 					return 50
@@ -191,14 +200,26 @@ export default {
 					break
 				case "get banners":
 					this.banners = JSON.parse(res.data)
+					console.log("Banners data : ")
+					console.log(this.banners)
 					break
 				case "notification":
 					let notification = Object.assign(new Notification("","",0), JSON.parse(res.data))
 					this.notifs.push(notification)
 					break
 				case "pull results":
-					console.log(res.data)
 					this.pulled_waifus = JSON.parse(res.data)
+					console.log("Pulled Waifus data : ")
+					console.log(this.pulled_waifus)
+					break
+				case "get dungeons":
+					this.dungeons = JSON.parse(res.data)
+					console.log("Dungeon data : ")
+					console.log(this.dungeons)
+					
+					break
+				case "get active dungeon":
+					this.active_dungeon = JSON.parse(res.data)
 					break
 				
 			} 
@@ -257,6 +278,9 @@ export default {
 		</div>
 		<div v-else-if="loadingPage === 140">
 			<InventoryManagerPage></InventoryManagerPage>
+		</div>
+		<div v-else-if="loadingPage === 150">
+			<DungeonPage :dungeons="dungeons" :user="user" :active_dungeon="active_dungeon"></DungeonPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 	</div>

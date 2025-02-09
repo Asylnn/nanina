@@ -9,13 +9,14 @@ enum Page {
 	ClaimAndFightPage,
 	WaifuManagerPage,
 	PullPage,
-	PAD0,
+	DungeonPage,
 	PAD1,
 	PAD2,
 	NotificationMenu,
 	WaifuListPage,
 	ItemManagerPage,
 	InventoryManagerPage,
+
 }
 
 export default Page

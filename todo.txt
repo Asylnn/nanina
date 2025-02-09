@@ -68,3 +68,4 @@ TODO : Implement Setting page/component (Notifications)
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca
 TODO : MUTEX Counter in DungeonManager
 TODO : Optimize data sent to client, for example don't send old data each time there is an attack in the dungeon
+TODO : Make dungeon not linked with websocket session
