@@ -2,17 +2,6 @@
 import type Equipment from '@/classes/inventory/equipment';
 import User from '@/classes/user';
 
-//
-//
-///
-//
-//
-//
-//
-//
-//
-//
-
 
 export default {
     name : "InventoryPage",
@@ -106,9 +95,6 @@ export default {
 span {
     color: blueviolet;
     font-size: x-large;
-}
-#inventory {
-    height: 80vh;
 }
 
 </style>

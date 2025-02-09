@@ -277,7 +277,7 @@ export default {
 			<ItemManagerPage :id="user.Id" :item_db="item_db"></ItemManagerPage>
 		</div>
 		<div v-else-if="loadingPage === 140">
-			<InventoryManagerPage></InventoryManagerPage>
+			<InventoryManagerPage :user="user" :items="item_db"></InventoryManagerPage>
 		</div>
 		<div v-else-if="loadingPage === 150">
 			<DungeonPage :dungeons="dungeons" :user="user" :active_dungeon="active_dungeon"></DungeonPage>
