@@ -4,16 +4,13 @@ using Nanina.Database;
 namespace Nanina.Communication {
     public static class Communication {
 
-        public static void UpdateSessionWithUserId(SessionDBEntry session, string userId) {
+        public static void UpdateSessionWithUserId(SessionDBEntry session, string userId) 
+        {
             session.hasUserAssociatedWithSession = true;
             session.userId = userId;
             using var db = new LiteDatabase($@"{Global.config.database_path}");
             var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
             sessionCol.Update(session);
-        }
-
-        public static void UpdateSessionLanguage(string sessionId, string lang) {
-            
         }
 
         public static SessionDBEntry CreateNewSession()

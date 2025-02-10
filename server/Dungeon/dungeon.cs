@@ -51,7 +51,6 @@ namespace Nanina.Dungeon
         public async void StartDungeon(){
             while (await damageTimer.WaitForNextTickAsync())
             {   
-                Console.WriteLine("Dungeon Started!");
                 DealDamage();
                 
                 

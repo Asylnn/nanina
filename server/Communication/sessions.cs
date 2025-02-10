@@ -26,40 +26,42 @@ namespace Nanina.Communication
 
         protected void ProvideSessionAndUser(ClientWebSocketResponse rawData)
         {
-            using(var db = new LiteDatabase($@"{Global.config.database_path}")){
-                var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
-                var sessions = sessionCol.Find(x => x.id == rawData.data);
-                if(sessions.Count() == 0){
-                    var session = Communication.CreateNewSession();
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
+            var sessions = sessionCol.Find(x => x.id == rawData.data);
+            if(sessions.Count() == 0)
+            {
+                var session = Communication.CreateNewSession();
+                Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                    type = "session",
+                    data = JsonConvert.SerializeObject(session),
+                }));
+            }
+            else
+            {
+                var session = sessions.First();
+                Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                    type = "session",
+                    data = JsonConvert.SerializeObject(session),
+                }));
+                if(session.hasUserAssociatedWithSession){
                     Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                        type = "session",
-                        data = JsonConvert.SerializeObject(session),
+                        type = "user",
+                        data = JsonConvert.SerializeObject(DBUtils.GetUser(session.userId)),
                     }));
-                }
-                else{
-                    var session = sessions.First();
-                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                        type = "session",
-                        data = JsonConvert.SerializeObject(session),
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = "get banners",
+                        data = JsonConvert.SerializeObject(GachaManager.banners),
                     }));
-                    if(session.hasUserAssociatedWithSession){
-                        Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                            type = "user",
-                            data = JsonConvert.SerializeObject(DBUtils.GetUser(session.userId)),
-                        }));
-                        Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-                        {
-                            type = "get banners",
-                            data = JsonConvert.SerializeObject(GachaManager.banners),
-                        }));
-                        Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-                        {
-                            type = "get dungeons",
-                            data = JsonConvert.SerializeObject(DungeonManager.dungeons),
-                        }));
-                    }
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = "get dungeons",
+                        data = JsonConvert.SerializeObject(DungeonManager.dungeons),
+                    }));
                 }
             }
+            
         }
     }
 }

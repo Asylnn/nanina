@@ -37,12 +37,8 @@ namespace Nanina.Communication
 
             if(DBUtils.GetUser(rawData.id).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
-            Console.WriteLine("this is the items before deserializations: ");
-            Console.WriteLine(rawData.data);
 
             var items = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
-            Console.WriteLine("this is the items : ");
-            Console.WriteLine(JsonConvert.SerializeObject(items));
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
                 var itemCol = db.GetCollection<Item>("itemdb");
                 var equipmentCol = db.GetCollection<Equipment>("itemdb");

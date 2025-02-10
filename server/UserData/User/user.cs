@@ -14,7 +14,7 @@ namespace Nanina.UserData
         public string theme { get; set; } = "dark_theme";
         public Ids ids { get; set; } = ids;
         public Tokens tokens { get; set; } = new ();
-        public string locale { get; set; } = "us-en";
+        public string locale { get; set; } = "en";
         public string avatarPATH { get; set; } = "";
         public StatCount statCount { get; set; } = new();
         public List<Fight> fights { get; set; } = [];
@@ -26,7 +26,7 @@ namespace Nanina.UserData
         private static string CreateId()
         {   
             Random rng = new Random();
-            return Utils.GetTimestamp().ToString() + rng.Next(10000000).ToString();
+            return Utils.GetTimestamp().ToString() + rng.Next(99_999_999).ToString();
         }
 
         /*public PocoUser ToPocoServer(){

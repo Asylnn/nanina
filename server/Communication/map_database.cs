@@ -1,7 +1,6 @@
 using WebSocketSharp.Server;
 using Newtonsoft.Json;
 using LiteDB;
-using RestSharp;
 using Nanina.Database;
 using Nanina.Osu;
 
@@ -20,7 +19,7 @@ namespace Nanina.Communication
                 Console.WriteLine("mapsCol count : " + mapsCol.Count());
                 Console.WriteLine("Beatmap: " + JsonConvert.SerializeObject(Beatmap));
                 if(mapsCol.Count() != 0 ){
-                    if(mapsCol.Count() != 0 && mapsCol.Exists(x => x.id == Beatmap.id)){Send(ClientNotification.NotificationData("Admin", "The beatmap is already in the database!", 1)); return ;} //If the map is already on the data base, don't add it again.
+                    if(mapsCol.Exists(x => x.id == Beatmap.id)){Send(ClientNotification.NotificationData("Admin", "The beatmap is already in the database!", 1)); return ;} //If the map is already on the data base, don't add it again.
                 }
                 mapsCol.Insert(Beatmap);
                 mapsCol.EnsureIndex(x => x.id, true);

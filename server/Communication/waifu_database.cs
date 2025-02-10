@@ -11,9 +11,9 @@ namespace Nanina.Communication
         protected void RequestWaifuDatabase(ClientWebSocketResponse rawData){
             if(!DBUtils.GetUser(rawData.id).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
-                var waifusDB = db.GetCollection<Waifu>("waifudb").FindAll();
+                var waifuCol = db.GetCollection<Waifu>("waifudb").FindAll();
 
-                var data = JsonConvert.SerializeObject(waifusDB);
+                var data = JsonConvert.SerializeObject(waifuCol);
 
                 var response = new ServerWebSocketResponse
                 {

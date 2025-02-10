@@ -9,6 +9,11 @@ namespace Nanina.UserData.ItemData
     }
 
 
+    public class Set
+    {
+        public string id;
+        public WaifuModifier[] modifiers;
+    }
 
     public class Equipment : Item
     {
@@ -33,7 +38,8 @@ namespace Nanina.UserData.ItemData
         public WaifuModifier[] modifiers {get; set;}
         public WaifuModifier[] setModifiers {get; set;}
 
-        public WaifuModifier[] GetAllModifiers(){
+        public WaifuModifier[] GetAllModifiers()
+        {
             return (WaifuModifier[]) modifiers.Concat(setModifiers).Append(stat);
         }
     }

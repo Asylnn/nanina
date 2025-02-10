@@ -1,7 +1,7 @@
 export default class Banner {
     public bannerName: string = "Choose a Banner";
     public bannerDescription : string = "";
-    public bannerId : string = "";
+    public id : string = "";
     public pityAmount : number = 0;
     public pullCost : number = 0;
     public twoStarsWeight : number = 0;

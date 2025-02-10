@@ -6,7 +6,8 @@ using Newtonsoft.Json;
 namespace Nanina.Dungeon
 {
     public partial class ActiveDungeon {
-        public void AttributeRandomStatToEquipment(Equipment equipment){
+        public void AttributeRandomStatToEquipment(Equipment equipment)
+        {
             List<uint> modifierWeights = [];
             List<ushort> modifierId = [];
             switch(equipment.piece){
@@ -47,7 +48,8 @@ namespace Nanina.Dungeon
                     };
                     var amount = Global.config.star1_equipment_stat_base_ammount[modifierId[i]]*statDifficultyMultiplier;
                     amount = 1 + (amount - 1)*statRandomness;
-                    equipment.stat = new WaifuModifier(){
+                    equipment.stat = new WaifuModifier()
+                    {
                         id = modifierId[i],
                         amount = amount,
                         timeout = 0
@@ -57,18 +59,14 @@ namespace Nanina.Dungeon
             }
         }
         public List<Equipment> GetLoot(){
-            List<Equipment> loot = new ([]);
             Random rng = new ();
-            var setId = dungeonTemplate.setRewards.ElementAt(rng.Next(dungeonTemplate.setRewards.Length));
-            var equipments = DBUtils.GetEquipment(setId);
+            
 
-            for(int i = 0; i < dungeonTemplate.numberOfRewards; i++){
-                Console.WriteLine(i);
-
-                Console.WriteLine(JsonConvert.SerializeObject(equipments));
-                Console.WriteLine(equipments.Count);
+            for(int i = 0; i < dungeonTemplate.numberOfRewards; i++)
+            {
+                var setId = dungeonTemplate.setRewards.ElementAt(rng.Next(dungeonTemplate.setRewards.Length));
+                var equipments = DBUtils.GetEquipment(setId);
                 Equipment equipment = (Equipment) equipments.ElementAt(rng.Next(equipments.Count)).Clone();
-                Console.WriteLine(JsonConvert.SerializeObject((equipment)));
 
                 AttributeRandomStatToEquipment(equipment);
                 loot.Add(equipment);

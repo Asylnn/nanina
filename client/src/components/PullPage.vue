@@ -48,8 +48,7 @@ export default {
             this.showing_history = !this.showing_history
         },
         pull(pullAmount: number){
-            //@ts-ignore
-			this.ws.send(JSON.stringify({type:"pull request", data:JSON.stringify({bannerId:this.selected_banner.bannerId, pullAmount:pullAmount}), id: this.user.Id}))
+			this.ws.send(JSON.stringify({type:"pull request", data:JSON.stringify({bannerId:this.selected_banner.id, pullAmount:pullAmount}), id: this.user.Id}))
             console.log("J'ai pull")
             this.count = 0
             this.focusedView = true

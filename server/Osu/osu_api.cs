@@ -9,15 +9,17 @@ namespace Nanina.Osu
         public static OAuthTokens chat_tokens = new OAuthTokens();
 
 
-        public static string Linkify(Beatmap map){
+        /*public static string Linkify(Beatmap map){
             return $"{map.url}{map.beatmapset_id}#{map.mode}/{map.id}";
-        }
-        public static void AddDefaultHeader(RestRequest request){
+        }*/
+        public static void AddDefaultHeader(RestRequest request)
+        {
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
             request.AddHeader("Authorization", $"Bearer {tokens.access_token}");
         }
-        public static async void RefreshTokens(){
+        public static async void GetTokens()
+        {
             var request = new RestRequest(Environment.GetEnvironmentVariable("OSU_OAUTH_URL"), Method.Post);
             //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddHeader("Accept", "application/json");
@@ -27,15 +29,16 @@ namespace Nanina.Osu
             request.AddParameter("scope","public");
             var response = await new RestClient().ExecutePostAsync(request);
             Console.WriteLine("updated osu tokens");
-            tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
+            tokens = JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
 
             File.WriteAllText(Global.config.osu_tokens_storage_path, response.Content);
         }
 
-        public static async Task<ScoreExtended[]> GetUserRecentScores(string id, string mode){
+        public static async Task<ScoreExtended[]> GetUserRecentScores(string id, string mode)
+        {
             var request = new RestRequest($"users/{id}/scores/recent", Method.Get);
             AddDefaultHeader(request);
-            request.AddQueryParameter("limit","11");
+            request.AddQueryParameter("limit","11"); //# Of scores you get from the Api
             request.AddQueryParameter("mode",mode);
             var response = await client.ExecuteGetAsync(request);
 
@@ -44,17 +47,10 @@ namespace Nanina.Osu
             
             if(response.IsSuccessStatusCode)
             {
-                //try { //Temporary fix, seems like empty arrays are crashing Newtonsoft
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<ScoreExtended[]>(response.Content,  new JsonSerializerSettings
+                return JsonConvert.DeserializeObject<ScoreExtended[]>(response.Content,  new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore
                 });
-                
-                //}
-            //  catch {
-                    Console.WriteLine("Caught error, scores might be empty?");
-                    return [];
-            //}
             }
             else 
             {
@@ -64,11 +60,13 @@ namespace Nanina.Osu
             }
         }
 
-        public static uint GetXP(ScoreExtended score){
+        public static uint GetXP(ScoreExtended score)
+        {
             return (uint) Math.Ceiling(score.accuracy*score.beatmap.hit_length*score.beatmap.difficulty_rating);
         }
 
-        public static async Task<Beatmap> GetBeatmapById(string beatmapId){
+        public static async Task<Beatmap> GetBeatmapById(string beatmapId)
+        {
             var request = new RestRequest($"/beatmaps/{beatmapId}", Method.Get);
             AddDefaultHeader(request);
             //request.AddQueryParameter("id",beatmapId);
@@ -91,7 +89,7 @@ namespace Nanina.Osu
                     NullValueHandling = NullValueHandling.Ignore
                 });
                 
-                if(beatmap.beatmapset.covers.cover2x != null) beatmap.beatmapset.covers.cover2x = beatmap.beatmapset.covers.cover2x.Replace("cover2x", "cover@2x");
+                beatmap.beatmapset.covers.cover2x ??= beatmap.beatmapset.covers.cover2x.Replace("cover2x", "cover@2x");
                 if(beatmap.beatmapset.covers.card2x != null) beatmap.beatmapset.covers.card2x = beatmap.beatmapset.covers.card2x.Replace("card2x", "card@2x");
                 if(beatmap.beatmapset.covers.list2x != null) beatmap.beatmapset.covers.list2x = beatmap.beatmapset.covers.list2x.Replace("list2x", "list@2x");
                 if(beatmap.beatmapset.covers.slimcover2x != null) beatmap.beatmapset.covers.slimcover2x = beatmap.beatmapset.covers.slimcover2x.Replace("slimcover", "slimcover@2x");
@@ -104,7 +102,8 @@ namespace Nanina.Osu
             }
         }
 
-        public static async Task<LookUpBeatmap> LookUpBeatmapById(string id){
+        /*public static async Task<LookUpBeatmap> LookUpBeatmapById(string id)
+        {
 
             var request = new RestRequest($"beatmaps/lookup", Method.Get);
             AddDefaultHeader(request);
@@ -127,9 +126,9 @@ namespace Nanina.Osu
                 Console.WriteLine("osu api response error content" + response.Content);
                 return null;
             }
-        }
+        }*/
 
-        public static async Task<Beatmap> GetBeatmapSetById(string beatmapsetId){
+        /*public static async Task<Beatmap> GetBeatmapSetById(string beatmapsetId){
             Console.WriteLine("GetBeatmapSetById : id "+ beatmapsetId);
 
             var request = new RestRequest($"/beatmapsets/{beatmapsetId}", Method.Get);
@@ -153,8 +152,9 @@ namespace Nanina.Osu
                 Console.WriteLine("osu api response error content" + response.Content);
                 return null;
             }
-        }
-        public static async Task<bool> SendMessageToUser(string osuUserId, string message){
+        }*/
+        public static async Task<bool> SendMessageToUser(string osuUserId, string message)
+        {
             var request = new RestRequest($"chat/new", Method.Post);
 
             request.AddHeader("Content-Type", "application/json");
@@ -170,9 +170,8 @@ namespace Nanina.Osu
             
             var response = await client.ExecutePostAsync(request);
             Console.WriteLine("osu api response status code " + response.StatusCode);
-            if(response.IsSuccessStatusCode)
-                return true;
-            else 
+            
+            if(!response.IsSuccessStatusCode)
                 Console.WriteLine("osu api response error content" + response.Content);
             
             return response.IsSuccessStatusCode;

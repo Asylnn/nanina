@@ -28,10 +28,6 @@ namespace Nanina.Communication
         }
         protected void VerifyOsuId(ClientWebSocketResponse rawData){
             var user = DBUtils.GetUser(rawData.id);
-            Console.WriteLine(user.verification.osuVerificationCodetimestamp);
-            Console.WriteLine(user.verification);
-            Console.WriteLine(JsonConvert.SerializeObject(Global.config));
-            Console.WriteLine(Global.config);
             if(Utils.GetTimestamp() - user.verification.osuVerificationCodetimestamp > Global.config.time_limit_for_osu_code_verification_in_milliseconds)
                 {Send(ClientNotification.NotificationData("Update osu ID", "The code expired", 1)); return;}
             
