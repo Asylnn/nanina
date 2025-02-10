@@ -126,7 +126,6 @@ public partial class ActiveDungeon {
                 attackType = attackType,
                 dmg = dmg,
             });
-            //DungeonManager.UpdateDungeonOfClient(this);
         }
     }
 

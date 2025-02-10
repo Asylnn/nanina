@@ -27,4 +27,14 @@ public class Config {
     public uint[] additive_or_multiplicative_waifu_modifier; 
     public uint dungeon_attack_timer_in_milliseconds;
     public string dungeon_storage_path;
+    public string database_path;
+    public uint automatic_backup_interval_in_seconds;
+    public string automatic_backup_database_storage_path;
+    public string automatic_backup_database_storage_path2;
+    public string osu_tokens_storage_path;
+    public string osu_chat_tokens_storage_path;
+    public string banners_storage_path;
+    public string discord_api_url;
+    public string osu_api_url;
+    public bool dev;
 }

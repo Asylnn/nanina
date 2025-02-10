@@ -5,7 +5,7 @@ using LiteDB;
 partial class WS : WebSocketBehavior
 {
     protected void UpdateLocale(ClientWebSocketResponse rawData){
-        using var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}");
+        using var db = new LiteDatabase($@"{Global.config.database_path}");
         var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
         var sessions = sessionCol.Find(x => x.id == rawData.id);
         if(sessions.Count() == 0) {Console.Error.WriteLine("request changing locale without valid session id??"); return;}
@@ -21,7 +21,7 @@ partial class WS : WebSocketBehavior
 
     protected void ProvideSessionAndUser(ClientWebSocketResponse rawData)
     {
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
             var sessions = sessionCol.Find(x => x.id == rawData.data);
             if(sessions.Count() == 0){

@@ -22,7 +22,7 @@ public class Banner {
 }
 
 public static class Gacha {    
-    public static readonly Banner[] banners = JsonConvert.DeserializeObject<Banner[]>(File.ReadAllText(Environment.GetEnvironmentVariable("BANNER_STORAGE_PATH")));
+    public static readonly Banner[] banners = JsonConvert.DeserializeObject<Banner[]>(File.ReadAllText(Global.config.banners_storage_path));
     
     public static uint GetBannerCost(string bannerId, byte pullAmount){
         var banner = banners.ToList().Find(banner => bannerId == banner.bannerId);

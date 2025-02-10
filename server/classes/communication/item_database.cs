@@ -14,7 +14,7 @@ partial class WS : WebSocketBehavior
     }
     protected void RequestItemDatabase(ClientWebSocketResponse rawData){
         if(!DBUtils.GetUser(rawData.id).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             
             var itemCol = db.GetCollection<Item>("itemdb");
             var data = JsonConvert.SerializeObject(itemCol.FindAll());
@@ -32,14 +32,14 @@ partial class WS : WebSocketBehavior
         
 
         if(DBUtils.GetUser(rawData.id).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-        if(Environment.GetEnvironmentVariable("DEV") != "true") {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
+        if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
         Console.WriteLine("this is the items before deserializations: ");
         Console.WriteLine(rawData.data);
 
         var items = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
         Console.WriteLine("this is the items : ");
         Console.WriteLine(JsonConvert.SerializeObject(items));
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var itemCol = db.GetCollection<Item>("itemdb");
             var equipmentCol = db.GetCollection<Equipment>("itemdb");
             itemCol.DeleteAll();

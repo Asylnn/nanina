@@ -18,5 +18,17 @@
     "star4_equipment_stat_base_ammount_multiplier":1.9,
     "star5_equipment_stat_base_ammount_multiplier":2.5,
     "dungeon_attack_timer_in_milliseconds":3000,
-    "dungeon_storage_path": "../save/dungeons.json"
+    "dungeon_storage_path": "../save/dungeons.json",
+    "database_path":"../save/database.db",
+    "automatic_backup_interval_in_seconds":86400,
+    "automatic_backup_database_storage_path":"../save/database_backup.db",
+    "automatic_backup_database_storage_path2":"../save/database_backup2.db",
+    "osu_tokens_storage_path":"../save/osutokens.json",
+    "osu_chat_tokens_storage_path":"../save/chatosutokens.json",
+    "banners_storage_path":"../save/banners.json",
+    "discord_api_url":"https://discord.com/api/",
+    "osu_api_url":"https://osu.ppy.sh/api/v2/",
+    "dev":true
+    
+
 }

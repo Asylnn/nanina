@@ -7,10 +7,9 @@ partial class WS : WebSocketBehavior
 {
     protected async void DiscordLogin(ClientWebSocketResponse rawData){
         Console.WriteLine("code : " + rawData.data);
-        Console.WriteLine("url : " + Environment.GetEnvironmentVariable("DISCORD_API_URL") + "token");
         var base64code = $"{Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID")}:{Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET")}";
 
-        var client = new RestClient(Environment.GetEnvironmentVariable("DISCORD_API_URL"));
+        var client = new RestClient(Global.config.discord_api_url);
         var request_access_token = new RestRequest("oauth2/token", Method.Post);
         request_access_token.AddHeader("Authorization", $"Basic {System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(base64code))}");
         //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -32,7 +31,7 @@ partial class WS : WebSocketBehavior
         Console.WriteLine("response user information data : " + response_user_information.Content);
         var discordUserInformationResponse = JsonConvert.DeserializeObject<DiscordUserInformationResponse>(response_user_information.Content);
 
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var user_col = db.GetCollection<User>("userdb");
             //We have to unpoco the user for using the constructor
             User user;

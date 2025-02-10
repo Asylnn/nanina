@@ -6,7 +6,7 @@ public static class Communication {
     public static void UpdateSessionWithUserId(SessionDBEntry session, string userId) {
         session.hasUserAssociatedWithSession = true;
         session.userId = userId;
-        using var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}");
+        using var db = new LiteDatabase($@"{Global.config.database_path}");
         var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
         sessionCol.Update(session);
     }
@@ -18,7 +18,7 @@ public static class Communication {
     public static SessionDBEntry CreateNewSession()
     {
         var sessionId = Guid.NewGuid().ToString();
-        using var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}");
+        using var db = new LiteDatabase($@"{Global.config.database_path}");
         var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
         Console.WriteLine("Entering new session ID into database! id : " + sessionId);
         var session = new SessionDBEntry {
@@ -36,7 +36,7 @@ public static class Communication {
     }
 
     public static SessionDBEntry GetSession(string sessionId){
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
             return sessionCol.Find(x => x.id == sessionId).First();
         }

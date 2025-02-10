@@ -23,13 +23,13 @@ public class OsuOAuthTokens {
 
 
 public static class OsuApi {
-    public static RestClient client = new RestClient(Environment.GetEnvironmentVariable("OSU_API_URL"));
+    public static RestClient client = new RestClient(Global.config.osu_api_url);
     public static OsuOAuthTokens tokens = new OsuOAuthTokens();
     public static OsuOAuthTokens chat_tokens = new OsuOAuthTokens();
 
 
     public static string Linkify(OsuBeatmap map){
-        return $"{Environment.GetEnvironmentVariable("OSU_BEATMAP_URL")}{map.beatmapset_id}#{map.mode}/{map.id}";
+        return $"{map.url}{map.beatmapset_id}#{map.mode}/{map.id}";
     }
     public static void AddDefaultHeader(RestRequest request){
         request.AddHeader("Content-Type", "application/json");
@@ -48,7 +48,7 @@ public static class OsuApi {
         Console.WriteLine("updated osu tokens");
         tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(response.Content);
 
-        File.WriteAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH"), response.Content);
+        File.WriteAllText(Global.config.osu_tokens_storage_path, response.Content);
     }
 
     public static async Task<OsuScoreExtended[]> GetUserRecentScores(string id, string mode){
@@ -222,7 +222,7 @@ public static class OsuApi {
         Console.WriteLine("osu api response status code " + response.StatusCode);
 
         chat_tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OsuOAuthTokens>(response.Content);
-        File.WriteAllText(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH"), response.Content);
+        File.WriteAllText(Global.config.osu_chat_tokens_storage_path, response.Content);
 
 
     }

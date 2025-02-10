@@ -28,7 +28,7 @@ public static class LoadServer {
         }
     }
     public static void LoadOsuApi(){
-        if(Environment.GetEnvironmentVariable("DEV") == "false" || false){ //put to true for refreshing osu tokens
+        if(!Global.config.dev || false){ //put to true for refreshing osu tokens
             Console.Error.WriteLine("Creating new osu tokens ...");
 
             var code = "long string"; 
@@ -42,15 +42,14 @@ public static class LoadServer {
         }
         else {
             Console.Error.WriteLine("Loading osu tokens ...");
-            //Console.WriteLine("uwu ", File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
-            if(File.Exists(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")))
-                OsuApi.tokens = JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_TOKEN_STORAGE_PATH")));
+            if(File.Exists(Global.config.osu_tokens_storage_path))
+                OsuApi.tokens = JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Global.config.osu_tokens_storage_path));
             else {
                 OsuApi.tokens = new OsuOAuthTokens();
                 Console.Error.WriteLine("There is no Osu api tokens found, all features related to osu won't work");
             }
-            if(File.Exists(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH")))
-                OsuApi.chat_tokens = JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Environment.GetEnvironmentVariable("OSU_API_CHAT_TOKEN_STORAGE_PATH")));
+            if(File.Exists(Global.config.osu_chat_tokens_storage_path))
+                OsuApi.chat_tokens = JsonConvert.DeserializeObject<OsuOAuthTokens>(File.ReadAllText(Global.config.osu_chat_tokens_storage_path));
             else {
                 Console.Error.WriteLine("There is no Osu chat api tokens found, user verification won't work, to make it work, please provide a valid code in the OsuApi.AuthorizeSelf using the link inside the same function");
                 OsuApi.tokens = new OsuOAuthTokens();
@@ -71,11 +70,11 @@ public static class LoadServer {
             Console.WriteLine ("- {0}", path);
         }
 
-        var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(Convert.ToDouble(Environment.GetEnvironmentVariable("AUTOMATIC_BACKUP_TIME"))));
+        var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(Global.config.automatic_backup_interval_in_seconds));
         while (await periodicTimer.WaitForNextTickAsync())
         {
-            var backUpPath = Environment.GetEnvironmentVariable("AUTOMATIC_BACKUP_STORAGE_PATH");
-            var databasePath = Environment.GetEnvironmentVariable("DATABASE_PATH");
+            var backUpPath = Global.config.automatic_backup_database_storage_path;
+            var databasePath = Global.config.database_path;
             
             File.Copy(databasePath, backUpPath, true);
             Console.WriteLine ("Doing backup...");
@@ -93,7 +92,7 @@ public static class LoadServer {
             diffLvlUp = 3,
             id = "0"
         };
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var waifuCol = db.GetCollection<Waifu>("waifudb");
             waifuCol.Insert(waifu);
             waifuCol.EnsureIndex(x => x.id, true);
@@ -105,7 +104,7 @@ public static class LoadServer {
     public static void UpdateUserDB()
     {
         Console.WriteLine("Updating user database...");
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var userCol = db.GetCollection<User>("userdb");
             var users = userCol.FindAll();
             //Update

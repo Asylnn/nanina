@@ -5,7 +5,7 @@ using LiteDB;
 partial class WS : WebSocketBehavior
 {
     protected void SendMapToClient(ClientWebSocketResponse rawData){
-        using var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}");
+        using var db = new LiteDatabase($@"{Global.config.database_path}");
         var mapsCol = db.GetCollection<OsuBeatmap>("osumapsdb");
         var maps = mapsCol.Find(x => x.id == Convert.ToInt64(rawData.data));
         var mapstest = mapsCol.Find(x => true).First();
@@ -20,7 +20,7 @@ partial class WS : WebSocketBehavior
         var user = DBUtils.GetUser(rawData.id);
         if(user.fights.Count() != 0 && user.fights.Last().timestamp + Global.config.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) { Send(ClientNotification.NotificationData("Fighting", "You have a too much recent fight", 1)); return; }                    
         
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var mapsCol = db.GetCollection<OsuBeatmap>("osumapsdb");
             var maps = mapsCol.Find(x => x.difficulty_rating <= 7.27*2.7);
             if(maps.Count() == 0){Console.WriteLine("There isn't any map in the database!!!"); return;} //Peut etre faire un if else ici?

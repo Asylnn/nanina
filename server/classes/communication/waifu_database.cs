@@ -8,7 +8,7 @@ partial class WS : WebSocketBehavior
 {
     protected void RequestWaifuDatabase(ClientWebSocketResponse rawData){
         if(!DBUtils.GetUser(rawData.id).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var waifusDB = db.GetCollection<Waifu>("waifudb").FindAll();
 
             var data = JsonConvert.SerializeObject(waifusDB);
@@ -23,9 +23,9 @@ partial class WS : WebSocketBehavior
     }
     protected void UpdateWaifuDatabase(ClientWebSocketResponse rawData){
         if(DBUtils.GetUser(rawData.id).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-        if(Environment.GetEnvironmentVariable("DEV") != "true") {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
+        if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
         var waifus = JsonConvert.DeserializeObject<Waifu[]>(rawData.data);
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var waifuCol = db.GetCollection<Waifu>("waifudb");
             waifuCol.DeleteAll();
             /*var new_waifus = waifus.Where(x => !waifuCol.Exists(y => y.id == x.id));

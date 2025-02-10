@@ -11,7 +11,7 @@ partial class WS : WebSocketBehavior
         if (user.admin == false ) {Send(ClientNotification.NotificationData("Admin", "You don't have the permissions for this action!", 0)); return;}
         var Beatmap = await OsuApi.GetBeatmapById(rawData.data);
         if(Beatmap == null) {Send(ClientNotification.NotificationData("Admin", "This beatmap doesn't exist!", 1)); return;}
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var mapsCol = db.GetCollection<OsuBeatmap>("osumapsdb");
             Console.WriteLine("mapsCol count : " + mapsCol.Count());
             Console.WriteLine("Beatmap: " + JsonConvert.SerializeObject(Beatmap));

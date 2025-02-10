@@ -2,7 +2,7 @@ using LiteDB;
 using RestSharp.Authenticators.OAuth;
 public static class DBUtils {
     public static User GetUser(string id){
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var user_col = db.GetCollection<User>("userdb");
             var list = user_col.Find(x => x.Id == id);
             if (list.Count() >= 1){
@@ -16,13 +16,13 @@ public static class DBUtils {
     }
 
     public static void UpdateUser(User user){
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var user_col = db.GetCollection<User>("userdb");
             user_col.Update(user);
         }
     }
     public static List<Equipment> GetEquipment(ushort setId){
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var itemCol = db.GetCollection<Equipment>("itemdb");
             var items = itemCol.Find(x => x.setId == setId);
             if (items.Count() >= 1){
@@ -35,7 +35,7 @@ public static class DBUtils {
         }
     }
     public static Waifu GetWaifu(string id){
-        using(var db = new LiteDatabase($@"{Environment.GetEnvironmentVariable("DATABASE_PATH")}")){
+        using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var waifuCol = db.GetCollection<Waifu>("waifudb");
             var list = waifuCol.Find(x => x.id == id);
             if (list.Count() >= 1){
