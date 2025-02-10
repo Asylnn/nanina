@@ -51,19 +51,40 @@ export default {
         </div>
         <div v-else>
             <button @click="LeaveDungeon">Leave Dungeon</button>
-            <p>Boss Health : {{ active_dungeon.health }}/{{ active_dungeon.dungeonTemplate.maxHealth }}</p>
-            <p>Log : </p>
+            <div id="playingField">
+                <p>Boss Health : {{ active_dungeon.health }}/{{ Math.floor(active_dungeon.dungeonTemplate.maxHealth) }}</p>
+                <div id="attackLines">
+                    Attacks : 
+                    <div v-for="log in active_dungeon.log">
+                        <p class="attackLine">{{ log.waifuName }} with id {{ log.waifuId }} dealt {{ Math.floor(log.dmg) }} {{log.attackType}} damage to the boss!</p>
+                    </div>
+                </div>
+            </div>
             <div v-if="active_dungeon.isCompleted">
-                {{ JSON.stringify(active_dungeon.loot) }}
-            </div>
-            <div v-for="log in active_dungeon.log">
-                <p>{{ log.waifuId }} dealt {{ Math.floor(log.dmg) }} {{log.attackType}} damage to the boss!</p>
-            </div>
-            
+                    <p>Log : </p>
+                    {{ JSON.stringify(active_dungeon.loot) }}
+                </div>
         </div>
     </div>
 </template>
 
 <style lang="css" scoped>
+
+#playingField {
+    height: 50vh;
+    width: 100vw;
+    background-image: url("src/assets/playingField.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#attackLines {
+    margin-top:37vh;
+    margin-left: 5vw;
+    height: 10vh;
+    width: 35vw;
+    font-size: small;
+    color:bisque;
+    overflow: scroll;
+}
 
 </style>

@@ -103,7 +103,7 @@ export default {
                 <div v-for="dico in user.inventory">
                     <div v-for="item in dico">
                         <div v-if="item.type == ItemType.Equipment">
-                                <EquipmentManagerComponent :item="item" @delete-item="DeleteEquipement"></EquipmentManagerComponent>
+                            <EquipmentManagerComponent :item="item" @delete-item="DeleteEquipement"></EquipmentManagerComponent>
                         </div>
                         <div v-else-if="item.type == ItemType.UserConsumable">
                             <UserConsumableManagerComponent :item="item" @delete-item="DeleteUserConsumable"></UserConsumableManagerComponent>

@@ -33,6 +33,7 @@ public class DungeonTemplate {
 
 public class DungeonLog {
     public string waifuId;
+    public string waifuName;
     public string attackType;
     public float dmg;
 }
@@ -51,13 +52,13 @@ public partial class ActiveDungeon {
     public List<Equipment> loot;
     public PeriodicTimer damageTimer = new (new (Global.config.dungeon_attack_timer_in_milliseconds*10_000));
 
-    public ActiveDungeon(DungeonTemplate dungeon, User user, List<Waifu> EquipedWaifus, string wsId, WebSocketSessionManager session, ulong _instanceId){
+    public ActiveDungeon(DungeonTemplate dungeon, User user, List<Waifu> EquippedWaifus, string wsId, WebSocketSessionManager session, ulong _instanceId){
         instanceId = _instanceId;
         WSSession = session;
         webSocketId = wsId;
         dungeonTemplate = dungeon;
         userId = user.Id;
-        waifus = [EquipedWaifus.First()];
+        waifus = [EquippedWaifus.First()];
         health = dungeonTemplate.maxHealth;
         Console.WriteLine("Dungeon Created!");
         StartDungeon();
@@ -121,6 +122,7 @@ public partial class ActiveDungeon {
             health -= dmg;
             log.Add(new () {
                 waifuId = waifu.id,
+                waifuName = waifu.name,
                 attackType = attackType,
                 dmg = dmg,
             });
