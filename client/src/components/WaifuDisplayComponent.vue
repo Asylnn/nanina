@@ -23,7 +23,7 @@ export default {
 </script>
 
 <template>
-    <div id="focusedWaifu" v-on:keyup.{escape}>
+    <div id="focusedWaifu" >
         <div id="waifuPic"><img :src="'src/assets/waifu-image/' + waifu.imgPATH"></div>
         <div id="waifuInfos">
             <span v-if="count != -1">Pull number {{ count+1 }}</span><br>
