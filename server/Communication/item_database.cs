@@ -10,9 +10,9 @@ namespace Nanina.Communication
     {
         private class ItemDBResponse
         {
-            public List<Material> material;
-            public List<WaifuConsumable> waifu_consumable;
-            public List<UserConsumable> user_consumable;
+            public List<Item> material;
+            public List<Item> waifu_consumable;
+            public List<Item> user_consumable;
             public List<Equipment> equipment;
 
         }
@@ -61,7 +61,7 @@ namespace Nanina.Communication
 
         public static void InsertEquipment(Equipment item, ILiteCollection<Item> itemCol, ILiteCollection<Equipment> col){
             InsertItem(item, itemCol);
-            col.EnsureIndex(x => x.setId, false);
+            col.EnsureIndex(x => x.set.id, false);
         }
         public static void InsertItem(Item item, ILiteCollection<Item> col){
             col.Insert(item);

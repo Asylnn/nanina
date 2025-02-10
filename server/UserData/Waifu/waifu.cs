@@ -9,6 +9,7 @@ Kawaii -> Attaque psychique, Maid café
 
 using Nanina.Database;
 using Nanina.UserData.ItemData;
+using Nanina.UserData.ModifierData;
 using Newtonsoft.Json;
 
 namespace Nanina.UserData.WaifuData
@@ -43,10 +44,10 @@ namespace Nanina.UserData.WaifuData
         public ushort o_dex { get; set; }
         public ushort u_dex { get; set; }
         public float Dex {
-            get => b_dex*GetModificators(12); 
+            get => b_dex*GetModificators(StatModifier.DEX); 
         }
         public float Int {
-            get => b_int*GetModificators(8); 
+            get => b_int*GetModificators(StatModifier.INT); 
         }
         public float Agi {
             get => b_agi*GetModificators(10); 
@@ -136,11 +137,11 @@ namespace Nanina.UserData.WaifuData
             b_luck = (uint)(o_luck + (lvl-1)*u_luck);
         }
 
-        public float GetModificators(ushort id){
-            var baseAmount = (float) Global.config.additive_or_multiplicative_waifu_modifier[id];
+        public float GetModificators(StatModifier statModifier){
+            var baseAmount = (float) Global.config.additive_or_multiplicative_waifu_modifier[(int)statModifier];
             //The following line probably doesn't work?
             var modificators = weapon?.GetAllModifiers().Concat(dress?.GetAllModifiers()).Concat(accessory?.GetAllModifiers());
-            return modificators?.Aggregate(baseAmount, (amount, modif) => amount += modif?.amount ?? 0) ?? baseAmount;
+            return modificators?.Aggregate(baseAmount, (amount, modificator) => amount += modificator?.amount ?? 0) ?? baseAmount;
         }
     }
 

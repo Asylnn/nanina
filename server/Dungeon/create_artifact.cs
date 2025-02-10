@@ -9,7 +9,7 @@ namespace Nanina.Dungeon
         public void AttributeRandomStatToEquipment(Equipment equipment)
         {
             List<uint> modifierWeights = [];
-            List<ushort> modifierId = [];
+            List<StatModifier> modifierId = [];
             switch(equipment.piece){
                 case EquipmentPiece.Weapon :
                     modifierWeights = Global.config.dungeon_weapon_modifier_weights;
@@ -48,12 +48,13 @@ namespace Nanina.Dungeon
                     };
                     var amount = Global.config.star1_equipment_stat_base_ammount[modifierId[i]]*statDifficultyMultiplier;
                     amount = 1 + (amount - 1)*statRandomness;
-                    equipment.stat = new WaifuModifier()
+                    equipment.modifiers.Add( new ()
                     {
-                        id = modifierId[i],
+                        operationType = OperationType.Multiplicative,
+                        statModifier = (StatModifier) modifierId[i],
                         amount = amount,
                         timeout = 0
-                    };
+                    });
                     break;
                 }
             }

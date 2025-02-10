@@ -73,7 +73,8 @@ namespace Nanina.Dungeon
         }
 
         public void DealDamage(){
-            foreach (var waifu in waifus) {
+            foreach (var waifu in waifus) 
+            {
                 Random rng = new();
                 float dmg;
                 string attackType;
@@ -92,8 +93,9 @@ namespace Nanina.Dungeon
                     dmg = waifu.Psychic*(1 - dungeonTemplate.bossResistances.psychicResistance);
                 }
                 var critDmgMult = (float)(Math.Truncate(waifu.CritChance)*waifu.CritDamage); //Super crit
-                var randCrit = rng.NextDouble();
                 var critChance = waifu.CritChance - Math.Truncate(waifu.CritChance);
+                var randCrit = rng.NextDouble();
+                
                 if(randCrit <= critChance)
                     critDmgMult += waifu.CritDamage;
                 dmg *= (1 + critDmgMult);
@@ -121,7 +123,7 @@ namespace Nanina.Dungeon
         public void ConcludeDungeon(){
             loot = GetLoot();
             var user = DBUtils.GetUser(userId);
-            loot.ForEach(equipment => user.inventory.AddEquipment(equipment));
+            loot.ForEach(equipment => user.inventory.equipment.Add(equipment));
             DBUtils.UpdateUser(user);
         }
     }

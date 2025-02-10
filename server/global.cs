@@ -1,4 +1,6 @@
 using System.Net.Http;
+using Nanina.Dungeon;
+using Nanina.UserData.ModifierData;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -17,9 +19,9 @@ namespace Nanina
         public List<uint> dungeon_accessory_modifier_weights;
         public List<uint> dungeon_dress_modifier_weights;
         public List<uint> dungeon_weapon_modifier_weights;
-        public List<ushort> dungeon_accessory_modifier_id;
-        public List<ushort> dungeon_dress_modifier_id;
-        public List<ushort> dungeon_weapon_modifier_id;
+        public List<StatModifier> dungeon_accessory_modifier_id;
+        public List<StatModifier> dungeon_dress_modifier_id;
+        public List<StatModifier> dungeon_weapon_modifier_id;
         public float dungeon_stat_randomness;
         public float[] star1_equipment_stat_base_ammount;
         public float star2_equipment_stat_base_ammount_multiplier;
