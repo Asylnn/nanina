@@ -8,50 +8,45 @@ namespace Nanina.Dungeon
     public partial class ActiveDungeon {
         public void AttributeRandomStatToEquipment(Equipment equipment)
         {
-            List<uint> modifierWeights = [];
-            List<StatModifier> modifierId = [];
+            ModifierChance[] modifierChances = [];
             switch(equipment.piece){
                 case EquipmentPiece.Weapon :
-                    modifierWeights = Global.config.dungeon_weapon_modifier_weights;
-                    modifierId = Global.config.dungeon_weapon_modifier_id;
+                    modifierChances = dungeonTemplate.modifierChancesWeapon;
                     break;
                 case EquipmentPiece.Dress :
-                    modifierWeights = Global.config.dungeon_dress_modifier_weights;
-                    modifierId = Global.config.dungeon_dress_modifier_id;
+                    modifierChances = dungeonTemplate.modifierChancesDress;
                     break;
                 case EquipmentPiece.Accessory :
-                    modifierWeights = Global.config.dungeon_accessory_modifier_weights;
-                    modifierId = Global.config.dungeon_accessory_modifier_id;
+                    modifierChances = dungeonTemplate.modifierChancesAccessory;
                     break;
             }
-            //When applied to a uint List, Sum requires to cast uint into decimal, which is not really problematic but I don't like it.
-            //You need to cast here because 0 is an int and not a uint...
-            uint totalWeight = (uint) modifierWeights.Aggregate(0, (accum, current) => (int)(accum + current)); //Add all the weights
+            uint start = 0; //0 is an int and not a uint and aggregate want start to be a uint...
+            uint totalWeight = modifierChances.Aggregate(start, (accum, current) => accum + current.weight); //Add all the weights
             Random rng = new ();
             var rand = rng.Next((int)totalWeight);  //Ugh, another cast
-            for (var i = 0; i <= modifierWeights.Count; i++){//Algorithm to get a random id from weights
+            for (var i = 0; i <= modifierChances.Length; i++){//Algorithm to get a random id from weights
                 
-                totalWeight -= modifierWeights[i];  
+                totalWeight -= modifierChances[i].weight;  
 
                 if(totalWeight <= rand){
-
-                    //This only work for multiplicative modifiers 
-                    var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.config.dungeon_stat_randomness;
+                    float baseValue = modifierChances[i].modifier.operationType == OperationType.Multiplicative ? 
+                        Global.baseValues.baseStatsMulti[modifierChances[i].modifier.statModifier.ToString()] : Global.baseValues.baseStatsAdd[modifierChances[i].modifier.statModifier.ToString()]; // <- Cooking
+                    var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.baseValues.dungeon_stat_randomness;
                     var statDifficultyMultiplier = dungeonTemplate.difficulty switch
                     {
                         1 => 1,
-                        2 => Global.config.star2_equipment_stat_base_ammount_multiplier,
-                        3 => Global.config.star3_equipment_stat_base_ammount_multiplier,
-                        4 => Global.config.star4_equipment_stat_base_ammount_multiplier,
-                        5 => Global.config.star5_equipment_stat_base_ammount_multiplier,
+                        2 => Global.baseValues.star2_equipment_stat_base_amount_multiplier,
+                        3 => Global.baseValues.star3_equipment_stat_base_amount_multiplier,
+                        4 => Global.baseValues.star4_equipment_stat_base_amount_multiplier,
+                        5 => Global.baseValues.star5_equipment_stat_base_amount_multiplier,
                         _ => 0,
                     };
-                    var amount = Global.config.star1_equipment_stat_base_ammount[modifierId[i]]*statDifficultyMultiplier;
+                    var amount = baseValue*statDifficultyMultiplier;
                     amount = 1 + (amount - 1)*statRandomness;
                     equipment.modifiers.Add( new ()
                     {
-                        operationType = OperationType.Multiplicative,
-                        statModifier = (StatModifier) modifierId[i],
+                        operationType = modifierChances[i].modifier.operationType,
+                        statModifier = (StatModifier) modifierChances[i].modifier.statModifier,
                         amount = amount,
                         timeout = 0
                     });
@@ -62,11 +57,9 @@ namespace Nanina.Dungeon
         public List<Equipment> GetLoot(){
             Random rng = new ();
             
-
             for(int i = 0; i < dungeonTemplate.numberOfRewards; i++)
             {
-                var setId = dungeonTemplate.setRewards.ElementAt(rng.Next(dungeonTemplate.setRewards.Length));
-                var equipments = DBUtils.GetEquipment(setId);
+                var equipments = DBUtils.GetEquipment(dungeonTemplate.setRewards.ElementAt(rng.Next(dungeonTemplate.setRewards.Length))); //je sais pas ca fait quoi
                 Equipment equipment = (Equipment) equipments.ElementAt(rng.Next(equipments.Count)).Clone();
 
                 AttributeRandomStatToEquipment(equipment);

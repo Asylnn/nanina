@@ -1,23 +1,6 @@
 {
-    "time_for_allowing_another_fight_in_milliseconds": 1,
-    "time_limit_for_osu_code_verification_in_milliseconds": 300000,
-    "time_for_allowing_another_claim_in_milliseconds": 1,
     "first_time_running": false,
     "default_locale":"en",
-    "dungeon_accessory_modifier_weights": [80,60,60],
-    "dungeon_dress_modifier_weights": [80,80,60,60,60],
-    "dungeon_weapon_modifier_weights": [100,100,100,80,80,80,60],
-    "dungeon_accessory_modifier_id": [14,19,20],
-    "dungeon_dress_modifier_id": [10,12,25,17,18],
-    "dungeon_weapon_modifier_id": [0,1,2,4,6,8,15],
-    "dungeon_stat_randomness":0.20,
-    "star1_equipment_stat_base_ammount":[1.1, 1.1, 1.1, 1.1,1.1, 1.1, 1.1, 1.1,1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1],
-    "additive_or_multiplicative_waifu_modifier":[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    "star2_equipment_stat_base_ammount_multiplier":1.2,
-    "star3_equipment_stat_base_ammount_multiplier":1.5,
-    "star4_equipment_stat_base_ammount_multiplier":1.9,
-    "star5_equipment_stat_base_ammount_multiplier":2.5,
-    "dungeon_attack_timer_in_milliseconds":3000,
     "dungeon_storage_path": "../save/dungeons.json",
     "database_path":"../save/database.db",
     "automatic_backup_interval_in_seconds":86400,
@@ -29,6 +12,4 @@
     "discord_api_url":"https://discord.com/api/",
     "osu_api_url":"https://osu.ppy.sh/api/v2/",
     "dev":true
-    
-
 }

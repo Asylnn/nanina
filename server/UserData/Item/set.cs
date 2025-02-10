@@ -4,7 +4,7 @@ namespace Nanina.UserData.ItemData
 {
     public class Set
     {
-        public string id;
+        public ushort id;
         public Modifier[] modifiers;
     }
 }

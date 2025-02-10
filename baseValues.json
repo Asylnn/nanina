@@ -1,0 +1,50 @@
+[{
+    "baseStatsMulti":{
+        "Physical":1.1,
+        "Magical":1.1,
+        "Psychic":1.1,
+        "STR":1.1,
+        "INT":1.1,
+        "KAW":1.1,
+        "CriticalDamage":1.1,
+        "CriticalChance":1.1,
+        "DebuffPotency":1.1,
+        "BuffPotency":1.1,
+        "BuffLength":1.1,
+        "DebuffLength":1.1,
+        "AGI":1.1,
+        "DEXT":1.1,
+        "DebuffResist":1.1,
+        "LUCK":1.1
+    },
+
+    "baseStatsAdd":{
+        "Physical":42,
+        "Magical":42,
+        "Psychic":42,
+        "STR":42,
+        "INT":42,
+        "KAW":42,
+        "CriticalDamage":42,
+        "CriticalChance":42,
+        "DebuffPotency":42,
+        "BuffPotency":42,
+        "BuffLength":42,
+        "DebuffLength":42,
+        "AGI":42,
+        "DEXT":42,
+        "DebuffResist":42,
+        "LUCK":42
+    },
+
+    "star2_equipment_stat_base_amount_multiplier":1.2,
+    "star3_equipment_stat_base_amount_multiplier":1.5,
+    "star4_equipment_stat_base_amount_multiplier":1.9,
+    "star5_equipment_stat_base_amount_multiplier":2.5,
+
+    "dungeon_stat_randomness":0.20,
+    "dungeon_attack_timer_in_milliseconds":3000,
+    "time_for_allowing_another_fight_in_milliseconds": 1,
+    "time_limit_for_osu_code_verification_in_milliseconds": 300000,
+    "time_for_allowing_another_claim_in_milliseconds": 1
+}]

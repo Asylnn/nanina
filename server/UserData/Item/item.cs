@@ -21,7 +21,7 @@ namespace Nanina.UserData.ItemData
         {
             return this.MemberwiseClone();
         }
-        public override List<Modifier> GetAllModifiers()
+        public List<Modifier> GetAllModifiers()
         {
             return modifiers;
         }
