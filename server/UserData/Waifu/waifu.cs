@@ -71,15 +71,15 @@ namespace Nanina.UserData.WaifuData
             get => 2*Str*GetMultModificators(StatModifier.Physical); 
         }
         public float CritChance {
-            get => (float)(0.05 + Luck/10)*GetMultModificators(StatModifier.CritDamage); 
+            get => (0.05f + Luck/10)*GetMultModificators(StatModifier.CritDamage); 
         }
         public float CritDamage {
-            get => (float)(0.50 + Dex/20)*GetMultModificators(StatModifier.CritChance); 
+            get => (0.50f + Dex/20)*GetMultModificators(StatModifier.CritChance); 
         }
         public byte stars { get; set; }
         private uint XpToLvlUp
         {
-            get => (uint) (diffLvlUp * (10 * lvl + 20));
+            get => (uint) Math.Floor(diffLvlUp * (10 * lvl + 20));
         }
         public Waifu()
         {

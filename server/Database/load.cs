@@ -12,6 +12,8 @@ namespace Nanina.Database
 
         public static async void Load(){
             //LoadConfig();
+
+            Global.db = new LiteDatabase($@"{Global.config.database_path}");
             LoadEnv();
             LoadOsuApi();
             LoadWebSocketServer();
@@ -72,15 +74,15 @@ namespace Nanina.Database
             }
         }
         public static void LoadWebSocketServer(){
-            var ws = new WebSocketServer("ws://localhost:4889");
-            ws.AddWebSocketService<WS> ("/");
-            ws.AddWebSocketService<WS> ("/test");
-            ws.Start();
+            Global.ws = new WebSocketServer("ws://localhost:4889");
+            Global.ws.AddWebSocketService<WS> ("/");
+            Global.ws.AddWebSocketService<WS> ("/test");
+            Global.ws.Start();
 
-            if (ws.IsListening) {
-                Console.WriteLine ("Listening on port {0}, and providing WebSocket services:", ws.Port);
+            if (Global.ws.IsListening) {
+                Console.WriteLine ("Listening on port {0}, and providing WebSocket services:", Global.ws.Port);
 
-            foreach (var path in ws.WebSocketServices.Paths)
+            foreach (var path in Global.ws.WebSocketServices.Paths)
                 Console.WriteLine ("- {0}", path);
             }
         }

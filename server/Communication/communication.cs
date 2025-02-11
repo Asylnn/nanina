@@ -1,43 +1,55 @@
+using WebSocketSharp.Server;
+using Newtonsoft.Json;
 using LiteDB;
 using Nanina.Database;
+using Nanina.Gacha;
+using Nanina.Dungeon;
+using Nanina.UserData;
 
-namespace Nanina.Communication {
-    public static class Communication {
+namespace Nanina.Communication
+{
+    partial class WS : WebSocketBehavior
+    {
+        
 
-        public static void UpdateSessionWithUserId(SessionDBEntry session, string userId) 
+        protected void ProvideSessionAndUser(ClientWebSocketResponse rawData)
         {
-            session.hasUserAssociatedWithSession = true;
-            session.userId = userId;
             using var db = new LiteDatabase($@"{Global.config.database_path}");
-            var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
-            sessionCol.Update(session);
-        }
-
-        public static SessionDBEntry CreateNewSession()
-        {
-            var sessionId = Guid.NewGuid().ToString();
-            using var db = new LiteDatabase($@"{Global.config.database_path}");
-            var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
-            Console.WriteLine("Entering new session ID into database! id : " + sessionId);
-            var session = new SessionDBEntry {
-                userId = null,
-                hasUserAssociatedWithSession = false,
-                id = sessionId,
-                date = Utils.GetTimestamp(),
-                locale = Global.config.default_locale,
-            };
-            sessionCol.Insert(session);
-            sessionCol.EnsureIndex(x => x.id);
-            
-            
-            return session;
-        }
-
-        public static SessionDBEntry GetSession(string sessionId){
-            using(var db = new LiteDatabase($@"{Global.config.database_path}")){
-                var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
-                return sessionCol.Find(x => x.id == sessionId).First();
+            var sessionCol = db.GetCollection<Session>("sessiondb");
+            var sessions = sessionCol.Find(x => x.id == rawData.data);
+            if(sessions.Count() == 0)
+            {
+                var session = Session.NewSession(this.ID);
+                Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                    type = "session",
+                    data = JsonConvert.SerializeObject(session),
+                }));
             }
+            else
+            {
+                var session = sessions.First();
+                Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                    type = "session",
+                    data = JsonConvert.SerializeObject(session),
+                }));
+                if(session.hasUserAssociatedWithSession){
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                        type = "user",
+                        data = JsonConvert.SerializeObject(DBUtils.GetUser(session.userId)),
+                    }));
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = "get banners",
+                        data = JsonConvert.SerializeObject(GachaManager.banners),
+                    }));
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = "get dungeons",
+                        data = JsonConvert.SerializeObject(DungeonManager.dungeons),
+                    }));
+                }
+            }
+            
         }
-    }   
+    }
 }

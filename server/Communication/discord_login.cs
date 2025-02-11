@@ -73,15 +73,15 @@ namespace Nanina.Communication
                 user = list.First();
                 Console.Error.WriteLine("There is more than two people in the user database with the same discord user id! The id is : " + discordUserInformationResponse.id);
             }
-            var sessionCol = db.GetCollection<SessionDBEntry>("sessiondb");
+            var sessionCol = db.GetCollection<Session>("sessiondb");
             var sessions = sessionCol.Find(x => x.id == rawData.id);
-            SessionDBEntry session;
+            Session session;
             if(sessions.Count() == 0)
-                session = Communication.CreateNewSession();
+                session = Session.NewSession(this.ID);
             else 
                 session = sessions.First();
             rawData.data = rawData.id;
-            Communication.UpdateSessionWithUserId(session, user.Id);
+            session.UpdateUserId(user.Id);
             ProvideSessionAndUser(rawData);
             
         }

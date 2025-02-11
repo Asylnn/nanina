@@ -51,5 +51,11 @@ namespace Nanina.Database {
                 }
             }
         }
+        public static Session GetSession(string sessionId){
+            using(var db = new LiteDatabase($@"{Global.config.database_path}")){
+                var sessionCol = db.GetCollection<Session>("sessiondb");
+                return sessionCol.Find(x => x.id == sessionId).First();
+            }
+        }
     }
 }

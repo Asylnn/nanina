@@ -14,7 +14,7 @@ namespace Nanina.UserData
         public string theme { get; set; } = "dark_theme";
         public Ids ids { get; set; } = ids;
         public Tokens tokens { get; set; } = new ();
-        public string locale { get; set; } = "en";  
+        public string locale { get; set; } = Global.config.default_locale;  
         public string avatarPATH { get; set; } = ""; //Unused
         public StatCount statCount { get; set; } = new();
         public List<Fight> fights { get; set; } = [];

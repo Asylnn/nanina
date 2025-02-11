@@ -1,5 +1,7 @@
 using WebSocketSharp.Server;
 using WebSocketSharp;
+using Nanina.Database;
+using System.Data.Common;
 
 namespace Nanina.Communication
 {
@@ -34,7 +36,7 @@ namespace Nanina.Communication
                     break;
 
                 case "change locale":
-                    UpdateLocale(rawData);
+                    Global.db.GetCollection<Session>("sessiondb").Find(session => session.id == rawData.id).First().UpdateLocale(rawData.data);
                     break;
 
                 case "update item db": 
@@ -78,16 +80,16 @@ namespace Nanina.Communication
 
             }
         }
-
         protected override void OnClose(CloseEventArgs e)
         {
-            //webSocketConnections.Remove(this);
+            var sessionCol = Global.db.GetCollection<Session>("sessiondb");
+            var session = sessionCol.Find(session => session.webSocketId == this.ID).First();
+            session.UpdateWebSocketId(null, false);
             Console.WriteLine("Bye :'(");
         }
 
         protected override void OnOpen()
         {
-            //webSocketConnections.Add(this);
             Console.WriteLine("Hello <3");
         }
     }

@@ -23,7 +23,7 @@ namespace Nanina.Communication
         }
         public void GetMapToFight(ClientWebSocketResponse rawData){ //somehow protected doesn't work?
             var user = DBUtils.GetUser(rawData.id);
-            if(user.fights.Count() != 0 && user.fights.Last().timestamp + Global.config.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
+            if(user.fights.Count() != 0 && user.fights.Last().timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You have a too much recent fight", 1)); return; }                    
             
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
@@ -51,7 +51,7 @@ namespace Nanina.Communication
             
             if(user.fights.Last().completed) 
                 { Send(ClientNotification.NotificationData("Fighting", "You completed the last fight! You need to start a new one!", 0)); return; }
-            if(user.claimTimestamp + Global.config.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) 
+            if(user.claimTimestamp + Global.baseValues.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
             if(!user.verification.isOsuIdVerified) 
                 { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return; }
