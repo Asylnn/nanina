@@ -10,7 +10,7 @@ namespace Nanina.Database
 {
     public static class LoadServer {
 
-        public static void Load(){
+        public static async void Load(){
             //LoadConfig();
             LoadEnv();
             LoadOsuApi();
@@ -19,6 +19,15 @@ namespace Nanina.Database
                 FirstLoad();
             UpdateUserDB(); //Update Database when updating game
 
+            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(Global.config.automatic_backup_interval_in_seconds));
+            while (await periodicTimer.WaitForNextTickAsync())
+            {
+                var backUpPath = Global.config.automatic_backup_database_storage_path;
+                var databasePath = Global.config.database_path;
+                
+                File.Copy(databasePath, backUpPath, true);
+                Console.WriteLine ("Doing backup...");
+            }
             
         }
 
@@ -42,7 +51,7 @@ namespace Nanina.Database
                 //replace client_id with your osu client id, same with the redicted_uri
                 
                 Osu.Api.AuthorizeSelf(code);
-                Osu.Api.RefreshTokens();
+                Osu.Api.GetTokens();
                 //_ = Global.RunInBackground(TimeSpan.FromSeconds(OsuApi.tokens.expires_in - 3600), OsuApi.RefreshTokens);
             }
             else {
@@ -62,7 +71,7 @@ namespace Nanina.Database
                     
             }
         }
-        public static async void LoadWebSocketServer(){
+        public static void LoadWebSocketServer(){
             var ws = new WebSocketServer("ws://localhost:4889");
             ws.AddWebSocketService<WS> ("/");
             ws.AddWebSocketService<WS> ("/test");
@@ -73,16 +82,6 @@ namespace Nanina.Database
 
             foreach (var path in ws.WebSocketServices.Paths)
                 Console.WriteLine ("- {0}", path);
-            }
-
-            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(Global.config.automatic_backup_interval_in_seconds));
-            while (await periodicTimer.WaitForNextTickAsync())
-            {
-                var backUpPath = Global.config.automatic_backup_database_storage_path;
-                var databasePath = Global.config.database_path;
-                
-                File.Copy(databasePath, backUpPath, true);
-                Console.WriteLine ("Doing backup...");
             }
         }
 
