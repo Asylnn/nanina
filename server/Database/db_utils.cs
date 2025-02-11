@@ -13,8 +13,8 @@ namespace Nanina.Database {
                     return list.First();
                 }
                 else {
-                    Console.Error.WriteLine($"Somehow got a userID ({id}) wrong with no associated account? Returning blank user");
-                    return new ("name", new());
+                    Console.Error.WriteLine($"Somehow got a userID ({id}) wrong with no associated account? Returning null");
+                    return null;
                 }
             }
         }
@@ -28,7 +28,7 @@ namespace Nanina.Database {
         public static List<Equipment> GetEquipment(ushort setId){
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
                 var itemCol = db.GetCollection<Equipment>("itemdb");
-                var items = itemCol.Find(x => x.set.id == setId);
+                var items = itemCol.Find(x => x.setId == setId);
                 if (items.Count() >= 1){
                     return items.ToList();
                 }
@@ -46,8 +46,8 @@ namespace Nanina.Database {
                     return list.First();
                 }
                 else {
-                    Console.Error.WriteLine($"Somehow got a waifu ({id}) wrong with no associated waifu? Returning blank waifu");
-                    return new Waifu();
+                    Console.Error.WriteLine($"Somehow got a waifu ({id}) wrong with no associated waifu? Returning null");
+                    return null;
                 }
             }
         }

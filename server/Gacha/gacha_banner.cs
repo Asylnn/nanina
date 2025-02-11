@@ -53,9 +53,6 @@ namespace Nanina.Gacha
                 
                 
                 var randdom = rng.Next(waifuPoll.Length);
-                Console.WriteLine(randdom);
-                Console.WriteLine(waifuPoll.Length);
-                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(waifuPoll));
                 var waifuId = waifuPoll.ElementAt(randdom);
                 user.pullBannerHistory[bannerId].pullHistory.Add(waifuId);
                 waifus.Add(DBUtils.GetWaifu(waifuId));

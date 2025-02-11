@@ -32,7 +32,8 @@ namespace Nanina.Database
             UpdateDB();
         }
         
-        public void UpdateDB(){
+        public void UpdateDB()
+        {
             var sessionCol = Global.db.GetCollection<Session>("sessiondb");
             sessionCol.Update(this);
         }

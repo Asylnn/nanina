@@ -92,11 +92,21 @@ namespace Nanina.Database
             var waifu = new Waifu()
             {
                 name = "Rem",
-                xp = 0,
-                lvl = 1,
                 imgPATH = "GYrXGACboAACxp7.jpg",
                 diffLvlUp = 3,
-                id = "0"
+                id = "0",
+                o_str = 10,
+                u_str = 2,
+                o_kaw = 10,
+                u_kaw = 2,
+                o_int = 10,
+                u_int = 2,
+                o_dex = 10,
+                u_dex = 2,
+                o_agi = 10,
+                u_agi = 2,
+                o_luck = 10,
+                u_luck = 2,
             };
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
                 var waifuCol = db.GetCollection<Waifu>("waifudb");

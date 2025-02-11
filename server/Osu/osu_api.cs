@@ -170,14 +170,15 @@ namespace Nanina.Osu
             
             var response = await client.ExecutePostAsync(request);
             Console.WriteLine("osu api response status code " + response.StatusCode);
-            
+
             if(!response.IsSuccessStatusCode)
                 Console.WriteLine("osu api response error content" + response.Content);
             
             return response.IsSuccessStatusCode;
         }
 
-        public static async void AuthorizeSelf(string code){
+        public static async void AuthorizeSelf(string code)
+        {
 
             // for sending messages used for verifications, to get the code, check the following link :
             //https://osu.ppy.sh/oauth/authorize?client_id=422727&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=chat.write

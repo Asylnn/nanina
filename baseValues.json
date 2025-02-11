@@ -37,10 +37,7 @@
         "LUCK":42
     },
 
-    "star2_equipment_stat_base_amount_multiplier":1.2,
-    "star3_equipment_stat_base_amount_multiplier":1.5,
-    "star4_equipment_stat_base_amount_multiplier":1.9,
-    "star5_equipment_stat_base_amount_multiplier":2.5,
+    "star2_equipment_stat_base_amount_multiplier":[1,1.2,1.5,1.9,2.5],
 
     "dungeon_stat_randomness":0.20,
     "dungeon_attack_timer_in_milliseconds":3000,

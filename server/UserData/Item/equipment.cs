@@ -14,11 +14,7 @@ namespace Nanina.UserData.ItemData
     public class Equipment : Item
     {
         public new ItemType type {get; set;} = ItemType.Equipment;
-        public Set set {get; set;}
+        public ushort setId {get; set;}
         public EquipmentPiece piece {get; set;}
-        public new List<Modifier> GetAllModifiers()
-        {
-            return (List<Modifier>) modifiers.Concat(set.modifiers);
-        }
     }
 }

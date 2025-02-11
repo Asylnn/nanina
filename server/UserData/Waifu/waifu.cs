@@ -17,14 +17,12 @@ namespace Nanina.UserData.WaifuData
     public class Waifu
     {
         public string name { get; set; }
-        public uint xp { get; set; }
-        public byte lvl { get; set; }
+        public uint xp { get; set; } = 0;
+        public byte lvl { get; set; } = 1;
         public float diffLvlUp { get; set; }
         public string id { get; set; }
         public string imgPATH { get; set; }
-        public Equipment weapon { get; set; }
-        public Equipment dress { get; set; }
-        public Equipment accessory { get; set; }
+        public WaifuEquipmentManager equipment { get; set; } = new ();
         public ushort o_str { get; set; }
         public ushort u_str { get; set; }
         public uint b_str { get; set; }
@@ -81,15 +79,6 @@ namespace Nanina.UserData.WaifuData
         {
             get => (uint) Math.Floor(diffLvlUp * (10 * lvl + 20));
         }
-        public Waifu()
-        {
-            this.name = "no_name";
-            this.id = "-1";
-            this.lvl = 1;
-            this.xp = 0;
-            this.imgPATH = "no_waifu_img";
-            diffLvlUp = 1;
-        }
 
         public void GiveXP(uint _xp)
         {
@@ -137,9 +126,35 @@ namespace Nanina.UserData.WaifuData
             b_luck = o_luck + (lvl-1u)*u_luck;
         }
 
+        public Equipment Equip(Equipment newEquipment)
+        {
+            Equipment oldEquipment = null;
+            switch(newEquipment.piece){
+                case EquipmentPiece.Weapon:
+                    oldEquipment = equipment.weapon;
+                    equipment.weapon = newEquipment;
+                    break;
+                case EquipmentPiece.Dress:
+                    oldEquipment = equipment.dress;
+                    equipment.dress = newEquipment;
+                    break;
+                case EquipmentPiece.Accessory:
+                    oldEquipment = equipment.accessory;
+                    equipment.accessory = newEquipment;
+                    break;
+            }
+            if(equipment.weapon.setId == equipment.dress.setId && equipment.dress.setId == equipment.accessory.setId)
+            {
+                var setCol = Global.db.GetCollection<Set>("setdb");
+                equipment.set = setCol.Find(set => set.id == equipment.weapon.setId).First();
+            }
+                
+            return oldEquipment;
+        }
+
         public float GetMultModificators(StatModifier statModifier){
             //The following line probably doesn't work?
-            var modificators = weapon?.GetAllModifiers().Concat(dress?.GetAllModifiers()).Concat(accessory?.GetAllModifiers());
+            var modificators = equipment.weapon?.GetAllModifiers().Concat(equipment.dress?.GetAllModifiers()).Concat(equipment.accessory?.GetAllModifiers()).Concat(equipment.set?.modifiers);
             modificators = modificators.Where(modif => modif.operationType == OperationType.Multiplicative && modif.statModifier == statModifier);
             return modificators?.Aggregate(1.0f, (amount, modificator) => amount += modificator?.amount ?? 0) ?? 1.0f;
         }

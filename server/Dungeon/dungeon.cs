@@ -120,13 +120,15 @@ namespace Nanina.Dungeon
         public void ConcludeDungeon(){
             health = 0;
             isCompleted = true;
-            DungeonManager.UpdateDungeonOfClient(this);
-            WSSession = null;
-            webSocketId = null;
             loot = GetLoot();
             var user = DBUtils.GetUser(userId);
             loot.ForEach(equipment => user.inventory.equipment.Add(equipment));
             DBUtils.UpdateUser(user);
+            
+            DungeonManager.UpdateDungeonOfClient(this);
+            WSSession = null;
+            webSocketId = null;
+            
         }
     }
 }
