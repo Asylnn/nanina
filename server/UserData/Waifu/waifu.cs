@@ -44,37 +44,37 @@ namespace Nanina.UserData.WaifuData
         public ushort o_dex { get; set; }
         public ushort u_dex { get; set; }
         public float Dex {
-            get => b_dex*GetModificators(StatModifier.DEX); 
+            get => b_dex*GetMultModificators(StatModifier.DEX); 
         }
         public float Int {
-            get => b_int*GetModificators(StatModifier.INT); 
+            get => b_int*GetMultModificators(StatModifier.INT); 
         }
         public float Agi {
-            get => b_agi*GetModificators(10); 
+            get => b_agi*GetMultModificators(StatModifier.AGI); 
         }
         public float Str {
-            get => b_str*GetModificators(4); 
+            get => b_str*GetMultModificators(StatModifier.STR); 
         }
         public float Kaw {
-            get => b_kaw*GetModificators(6); 
+            get => b_kaw*GetMultModificators(StatModifier.KAW); 
         }
         public float Luck {
-            get => b_luck*GetModificators(14); 
+            get => b_luck*GetMultModificators(StatModifier.LUCK); 
         }
         public float Psychic {
-            get => 2*Kaw*GetModificators(2); 
+            get => 2*Kaw*GetMultModificators(StatModifier.Psychic); 
         }
         public float Magical {
-            get => 2*Int*GetModificators(1); 
+            get => 2*Int*GetMultModificators(StatModifier.Magical); 
         }
         public float Physical {
-            get => 2*Str*GetModificators(0); 
+            get => 2*Str*GetMultModificators(StatModifier.Physical); 
         }
         public float CritChance {
-            get => (float)(0.05 + Luck/10)*GetModificators(16); 
+            get => (float)(0.05 + Luck/10)*GetMultModificators(StatModifier.CritDamage); 
         }
         public float CritDamage {
-            get => (float)(0.50 + Dex/20)*GetModificators(15); 
+            get => (float)(0.50 + Dex/20)*GetMultModificators(StatModifier.CritChance); 
         }
         public byte stars { get; set; }
         private uint XpToLvlUp
@@ -119,29 +119,29 @@ namespace Nanina.UserData.WaifuData
             name = DBwaifu.name;
             o_str = DBwaifu.o_str;
             u_str = DBwaifu.u_str;
-            b_str = (uint)(o_str + (lvl-1)*u_str);
+            b_str = o_str + (lvl-1u)*u_str;
             o_kaw = DBwaifu.o_kaw;
             u_kaw = DBwaifu.u_kaw;
-            b_kaw = (uint)(o_kaw + (lvl-1)*u_kaw);
+            b_kaw = o_kaw + (lvl-1u)*u_kaw;
             o_dex = DBwaifu.o_dex;
             u_dex = DBwaifu.u_dex;
-            b_dex = (uint)(o_dex + (lvl-1)*u_dex);
+            b_dex = o_dex + (lvl-1u)*u_dex;
             o_agi = DBwaifu.o_agi;
             u_agi = DBwaifu.u_agi;
-            b_agi = (uint)(o_agi + (lvl-1)*u_agi);
+            b_agi = o_agi + (lvl-1u)*u_agi;
             o_int = DBwaifu.o_int;
             u_int = DBwaifu.u_int;
-            b_int = (uint)(o_int + (lvl-1)*u_int);
+            b_int = o_int + (lvl-1u)*u_int;
             o_luck = DBwaifu.o_luck;
             u_luck = DBwaifu.u_luck;
-            b_luck = (uint)(o_luck + (lvl-1)*u_luck);
+            b_luck = o_luck + (lvl-1u)*u_luck;
         }
 
-        public float GetModificators(StatModifier statModifier){
-            var baseAmount = (float) Global.config.additive_or_multiplicative_waifu_modifier[(int)statModifier];
+        public float GetMultModificators(StatModifier statModifier){
             //The following line probably doesn't work?
             var modificators = weapon?.GetAllModifiers().Concat(dress?.GetAllModifiers()).Concat(accessory?.GetAllModifiers());
-            return modificators?.Aggregate(baseAmount, (amount, modificator) => amount += modificator?.amount ?? 0) ?? baseAmount;
+            modificators = modificators.Where(modif => modif.operationType == OperationType.Multiplicative && modif.statModifier == statModifier);
+            return modificators?.Aggregate(1.0f, (amount, modificator) => amount += modificator?.amount ?? 0) ?? 1.0f;
         }
     }
 

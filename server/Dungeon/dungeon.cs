@@ -29,7 +29,7 @@ namespace Nanina.Dungeon
         public float health; 
         public bool isCompleted = false;
         public List<Equipment> loot;
-        public PeriodicTimer damageTimer = new (new (Global.config.dungeon_attack_timer_in_milliseconds*10_000));
+        public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
 
         public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string wsId, WebSocketSessionManager session, ulong _instanceId){
             instanceId = _instanceId;
@@ -55,14 +55,11 @@ namespace Nanina.Dungeon
                 
                 
                 if(health <= 0) {
-                    health = 0;
-                    isCompleted = true;
                     
                     
-                    ConcludeDungeon();
-                    DungeonManager.UpdateDungeonOfClient(this); //I don't know if Disposing the timer cut the execution, so i'm putting this here for now
-                    WSSession = null;
                     damageTimer.Dispose();
+                    ConcludeDungeon();
+                    
                 }
                 else {
                     DungeonManager.UpdateDungeonOfClient(this); //I don't like this tbh...
@@ -121,6 +118,11 @@ namespace Nanina.Dungeon
         }
 
         public void ConcludeDungeon(){
+            health = 0;
+            isCompleted = true;
+            DungeonManager.UpdateDungeonOfClient(this);
+            WSSession = null;
+            webSocketId = null;
             loot = GetLoot();
             var user = DBUtils.GetUser(userId);
             loot.ForEach(equipment => user.inventory.equipment.Add(equipment));

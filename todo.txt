@@ -29,7 +29,7 @@ TODO : Implement Money System (page/component/database)
 TODO : Implement Shop System (page/component/database)
 TODO : Implement First Version of the leaderboard system
 TODO : Implement "World Level" mechanic
-TODO : Namespacing and Folderising the c# code
+TODO : Namespacing and Folderising the c# code                      #Done
 TODO : Scoping classes (public / private /abstract)
 TODO : Make a waifu selector for dungeons                           
 

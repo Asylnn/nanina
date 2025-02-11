@@ -8,45 +8,36 @@ namespace Nanina.Dungeon
     public partial class ActiveDungeon {
         public void AttributeRandomStatToEquipment(Equipment equipment)
         {
-            ModifierChance[] modifierChances = [];
+            ModifierWeights[] ModifierWeights = [];
             switch(equipment.piece){
                 case EquipmentPiece.Weapon :
-                    modifierChances = dungeonTemplate.modifierChancesWeapon;
+                    ModifierWeights = dungeonTemplate.modifierWeightsWeapon;
                     break;
                 case EquipmentPiece.Dress :
-                    modifierChances = dungeonTemplate.modifierChancesDress;
+                    ModifierWeights = dungeonTemplate.modifierWeightsDress;
                     break;
                 case EquipmentPiece.Accessory :
-                    modifierChances = dungeonTemplate.modifierChancesAccessory;
+                    ModifierWeights = dungeonTemplate.modifierWeightsAccessory;
                     break;
             }
-            uint start = 0; //0 is an int and not a uint and aggregate want start to be a uint...
-            uint totalWeight = modifierChances.Aggregate(start, (accum, current) => accum + current.weight); //Add all the weights
+            uint totalWeight = ModifierWeights.Aggregate(0u, (accum, current) => accum + current.weight); //Add all the weights
             Random rng = new ();
-            var rand = rng.Next((int)totalWeight);  //Ugh, another cast
-            for (var i = 0; i <= modifierChances.Length; i++){//Algorithm to get a random id from weights
+            var rand = rng.Next((int)totalWeight);
+            for (var i = 0; i <= ModifierWeights.Length; i++){      //Algorithm to get a random id from weights
                 
-                totalWeight -= modifierChances[i].weight;  
+                totalWeight -= ModifierWeights[i].weight;  
 
-                if(totalWeight <= rand){
-                    float baseValue = modifierChances[i].modifier.operationType == OperationType.Multiplicative ? 
-                        Global.baseValues.baseStatsMulti[modifierChances[i].modifier.statModifier.ToString()] : Global.baseValues.baseStatsAdd[modifierChances[i].modifier.statModifier.ToString()]; // <- Cooking
+                if(totalWeight <= rand)
+                {
+                    float baseValue = ModifierWeights[i].modifier.operationType == OperationType.Multiplicative ? 
+                        Global.baseValues.baseStatsMulti[ModifierWeights[i].modifier.statModifier.ToString()] : Global.baseValues.baseStatsAdd[ModifierWeights[i].modifier.statModifier.ToString()]; // <- Cooking
                     var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.baseValues.dungeon_stat_randomness;
-                    var statDifficultyMultiplier = dungeonTemplate.difficulty switch
-                    {
-                        1 => 1,
-                        2 => Global.baseValues.star2_equipment_stat_base_amount_multiplier,
-                        3 => Global.baseValues.star3_equipment_stat_base_amount_multiplier,
-                        4 => Global.baseValues.star4_equipment_stat_base_amount_multiplier,
-                        5 => Global.baseValues.star5_equipment_stat_base_amount_multiplier,
-                        _ => 0,
-                    };
-                    var amount = baseValue*statDifficultyMultiplier;
+                    var amount = baseValue*Global.baseValues.equipment_stat_base_amount_multiplier[dungeonTemplate.difficulty-1];
                     amount = 1 + (amount - 1)*statRandomness;
                     equipment.modifiers.Add( new ()
                     {
-                        operationType = modifierChances[i].modifier.operationType,
-                        statModifier = (StatModifier) modifierChances[i].modifier.statModifier,
+                        operationType = ModifierWeights[i].modifier.operationType,
+                        statModifier = ModifierWeights[i].modifier.statModifier,
                         amount = amount,
                         timeout = 0
                     });

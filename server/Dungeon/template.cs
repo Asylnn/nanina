@@ -10,13 +10,13 @@ namespace Nanina.Dungeon
         public ushort[] setRewards; 
         public float maxHealth;
         public byte difficulty;
-        public ModifierChance[] modifierChancesWeapon;
-        public ModifierChance[] modifierChancesDress;
-        public ModifierChance[] modifierChancesAccessory;
+        public ModifierWeights[] modifierWeightsWeapon;
+        public ModifierWeights[] modifierWeightsDress;
+        public ModifierWeights[] modifierWeightsAccessory;
 
     }
 
-    public class ModifierChance {
+    public class ModifierWeights {
         public Modifier modifier;
         public uint weight;
     }

@@ -10,7 +10,7 @@ namespace Nanina.Communication
             Console.WriteLine("rawData : " + JsonConvert.SerializeObject(rawData));
             var user = DBUtils.GetUser(rawData.id);
             var rng = new Random();
-            var code = rng.Next(999999).ToString();
+            var code = (rng.Next(899_999) + 100_000).ToString();
             var success = await Osu.Api.SendMessageToUser(rawData.data, code);
             Console.WriteLine("code "+ code);
             
@@ -28,7 +28,7 @@ namespace Nanina.Communication
         }
         protected void VerifyOsuId(ClientWebSocketResponse rawData){
             var user = DBUtils.GetUser(rawData.id);
-            if(Utils.GetTimestamp() - user.verification.osuVerificationCodetimestamp > Global.config.time_limit_for_osu_code_verification_in_milliseconds)
+            if(Utils.GetTimestamp() - user.verification.osuVerificationCodetimestamp > Global.baseValues.time_limit_for_osu_code_verification_in_milliseconds)
                 {Send(ClientNotification.NotificationData("Update osu ID", "The code expired", 1)); return;}
             
             if(user.verification.osuVerificationCode != rawData.data)
