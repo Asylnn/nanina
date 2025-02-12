@@ -1,16 +1,10 @@
 <script lang="ts">
-import type Equipment from '@/classes/inventory/equipment';
-import type Material from '@/classes/inventory/material';
-import type UserConsumable from '@/classes/inventory/user_consumable';
-import type WaifuConsumable from '@/classes/inventory/waifu_consumable';
+import type Equipment from '@/classes/item/equipment';
 import InventoryPage from './InventoryPage.vue';
-import User from '@/classes/user';
-import Item from '@/classes/inventory/item';
-import ItemType from '@/classes/inventory/item_type';
-import EquipmentManagerComponent from './ItemManagerComponent/EquipmentManagerComponent.vue';
-import UserConsumableManagerComponent from './ItemManagerComponent/UserConsumableManagerComponent.vue';
-import WaifuConsumableManagerComponent from './ItemManagerComponent/WaifuConsumableManagerComponent.vue';
-import MaterialManagerComponent from './ItemManagerComponent/MaterialManagerComponent.vue';
+import User from '@/classes/user/user';
+import Item from '@/classes/item/item';
+import ItemType from '@/classes/item/item_type';
+import ItemManagerComponent from './ItemManagerComponent/ItemManagerComponent.vue';
 
 /*Selectionner un user pour regarder son inventaire et pouvoir le modifier ##PLUS TARD
 * Ajouter un item -> 
@@ -33,9 +27,10 @@ export default {
             modeManager : "add",
             itemToModify : null as Item | null,
             equipment: new Array<Equipment>(),
-            user_consumable: new Array<UserConsumable>(),
-            waifu_consumable: new Array<WaifuConsumable>(),
-            material: new Array<Material>(),
+            user_consumable: new Array<Item>(),
+            waifu_consumable: new Array<Item>(),
+            material: new Array<Item>(),
+            ItemType : ItemType
         }
     },
     props : {
@@ -50,10 +45,7 @@ export default {
     },
     components: {
         InventoryPage,
-        EquipmentManagerComponent,
-        UserConsumableManagerComponent,
-        WaifuConsumableManagerComponent,
-        MaterialManagerComponent,
+        ItemManagerComponent,
     },
     methods: {
         changeCateg(categ : ItemType){
@@ -103,16 +95,16 @@ export default {
                 <div v-for="dico in user.inventory">
                     <div v-for="item in dico">
                         <div v-if="item.type == ItemType.Equipment">
-                            <EquipmentManagerComponent :item="item" @delete-item="DeleteEquipement"></EquipmentManagerComponent>
+                            <ItemManagerComponent :item="item" @delete-item="DeleteEquipement"></ItemManagerComponent>
                         </div>
                         <div v-else-if="item.type == ItemType.UserConsumable">
-                            <UserConsumableManagerComponent :item="item" @delete-item="DeleteUserConsumable"></UserConsumableManagerComponent>
+                            <ItemManagerComponent :item="item" @delete-item="DeleteUserConsumable"></ItemManagerComponent>
                         </div>
                         <div v-else-if="item.type == ItemType.WaifuConsumable">
-                            <WaifuConsumableManagerComponent :item="item" @delete-item="DeleteWaifuConsumable"></WaifuConsumableManagerComponent>
+                            <ItemManagerComponent :item="item" @delete-item="DeleteWaifuConsumable"></ItemManagerComponent>
                         </div>
                         <div v-else>
-                            <MaterialManagerComponent :item="item" @delete-item="DeleteMaterial"></MaterialManagerComponent>
+                            <ItemManagerComponent :item="item" @delete-item="DeleteMaterial"></ItemManagerComponent>
                         </div>
                     </div>
                 </div>

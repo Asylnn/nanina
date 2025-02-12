@@ -1,7 +1,7 @@
 <script lang="ts">
 import ActiveDungeon from '@/classes/dungeons/active_dungeon';
 import DungeonTemplate from '@/classes/dungeons/template_dungeons';
-import User from '@/classes/user';
+import User from '@/classes/user/user';
 
 
 export default {

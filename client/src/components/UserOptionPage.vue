@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import User from '@/classes/user';
+import User from '@/classes/user/user';
 
 
 /*

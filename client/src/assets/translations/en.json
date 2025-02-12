@@ -5,7 +5,12 @@
         "pull": "Pull",
         "activities": "Activities",
         "fighting": "Fighting",
-        "dungeon":"Dungeon"
+        "dungeon":"Dungeon",
+        "maidCafé":"Maid Café",
+        "mineralMining":"Mining minerals",
+        "technoTree":"Technological tree",
+        "gadgetAnalyse":"Analyzing gadgets",
+        "exploration":"Exploration"
     },
     "message": {
         "hello": "hello"
@@ -17,5 +22,21 @@
         "shit":{
             "name":"The Shit Dungeon"
         }
+    },
+    "waifulist": {
+        "levelAscendant":"Level (Ascendant)",
+        "levelDescendant":"Level (Descendant)",
+        "nameAscendant":"Name (Ascendant)",
+        "nameDescendant":"Name (Descendant)",
+        "nbPerRow":"Number per row : ",
+        "filter":"Filter : "
+    },
+    "useroption": {
+        "chooseTheme":"Choose your favourite theme !",
+        "darkTheme":"Dark Theme",
+        "whiteTheme":"White Theme",
+        "cuteTheme":"Cute Theme",
+        "linkOsuId":"",
+        "verifOsuId":""
     }
 }

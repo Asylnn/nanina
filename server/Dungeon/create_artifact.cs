@@ -30,14 +30,14 @@ namespace Nanina.Dungeon
                 if(totalWeight <= rand)
                 {
                     float baseValue = ModifierWeights[i].modifier.operationType == OperationType.Multiplicative ? 
-                        Global.baseValues.baseStatsMulti[ModifierWeights[i].modifier.statModifier.ToString()] : Global.baseValues.baseStatsAdd[ModifierWeights[i].modifier.statModifier.ToString()]; // <- Cooking
+                        Global.baseValues.baseStatsMulti[ModifierWeights[i].modifier.stat.ToString()] : Global.baseValues.baseStatsAdd[ModifierWeights[i].modifier.stat.ToString()]; // <- Cooking
                     var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.baseValues.dungeon_stat_randomness;
                     var amount = baseValue*Global.baseValues.equipment_stat_base_amount_multiplier[dungeonTemplate.difficulty-1];
                     amount = 1 + (amount - 1)*statRandomness;
                     equipment.modifiers.Add( new ()
                     {
                         operationType = ModifierWeights[i].modifier.operationType,
-                        statModifier = ModifierWeights[i].modifier.statModifier,
+                        stat = ModifierWeights[i].modifier.stat,
                         amount = amount,
                         timeout = 0
                     });

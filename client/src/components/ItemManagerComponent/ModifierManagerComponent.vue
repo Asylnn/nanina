@@ -1,7 +1,5 @@
 <script lang="ts">
-import Modifier from '@/classes/inventory/modifiers/modifiers';
-import UserModifier from '@/classes/inventory/modifiers/user_modifier';
-import WaifuModifier from '@/classes/inventory/modifiers/waifu_modifier';
+import Modifier from '@/classes/modifiers/modifiers';
 
 
 export default {
@@ -15,7 +13,7 @@ export default {
     methods:{
 
         Delete(){
-            this.$emit("delete-modifier", this.modifier.id)
+            this.$emit("delete-modifier", this.modifier.stat)
         },
     },
 }
@@ -25,7 +23,7 @@ export default {
 <template>
     <div>
         <button @click="Delete">delete</button>
-        <span class="attribute">Id  <input class="numberInput" v-model="modifier.id" type="number"></span>
+        <span class="attribute">Stat  <input class="numberInput" v-model="modifier.stat" type="number"></span>
         <span class="attribute">Timeout  <input class="numberInput" v-model="modifier.timeout" type="number"></span>
         <span class="attribute ">Amount <input class="numberInput" v-model="modifier.amount" type="number"></span>
     </div>

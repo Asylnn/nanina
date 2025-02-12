@@ -1,5 +1,5 @@
-import type Equipment from "../inventory/equipment";
-import type Waifu from "../waifu";
+import type Equipment from "../item/equipment";
+import type Waifu from "../waifu/waifu";
 import type DungeonLog from "./dungeon_log";
 import DungeonTemplate from "./template_dungeons";
 

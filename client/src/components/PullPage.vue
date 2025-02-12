@@ -1,11 +1,11 @@
 <script lang="ts">
 
-import Waifu from '@/classes/waifu';
+import Waifu from '@/classes/waifu/waifu';
 import Banner from '@/classes/banner';
 import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
-import PullBannerHistory from '@/classes/pull_history';
+import PullBannerHistory from '@/classes/user/pull_history';
 import type Dictionary from '@/classes/dictionary';
-import User from '@/classes/user';
+import User from '@/classes/user/user';
 import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
 
 export default {

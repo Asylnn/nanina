@@ -77,6 +77,12 @@ namespace Nanina.Communication
                 case "stop dungeon":
                     StopDungeon(rawData);
                     break;
+                case "request set db":
+                    RequestSetDatabase(rawData);
+                    break;
+                case "update set db":
+                    UpdateSetDatabase(rawData);
+                    break;
 
             }
         }

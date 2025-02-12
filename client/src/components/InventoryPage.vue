@@ -1,6 +1,6 @@
 <script lang="ts">
-import type Equipment from '@/classes/inventory/equipment';
-import User from '@/classes/user';
+import type Equipment from '@/classes/item/equipment';
+import User from '@/classes/user/user';
 
 
 export default {

@@ -5,7 +5,12 @@
         "pull":"Pull",
         "activities":"Activités",
         "fighting":"Fighting",
-        "dungeon":"Donjon"
+        "dungeon":"Donjon",
+        "maidCafé":"Café de femme de chambre",
+        "mineralMining":"Minage de minerais",
+        "technoTree":"Arbre des technologies",
+        "gadgetAnalyse":"Analyse de gadgets",
+        "exploration":"Exploration"
     },
     "message": {
         "hello": "bonjour"
@@ -16,6 +21,27 @@
     "dungeon":{
         "shit":{
             "name":"Le Donjon de Merde"
+        }
+    },
+    "waifulist": {
+        "levelAscendant":"Niveau (Croissant)",
+        "levelDescendant":"Niveau (Décroissant)",
+        "nameAscendant":"Nom (Croissant)",
+        "nameDescendant":"Nom (Décroissant)",
+        "nbPerRow":"Nombre par ligne : ",
+        "filter":"Filtre : "
+    },
+    "useroption": {
+        "chooseTheme":"",
+        "darkTheme":"",
+        "whiteTheme":"",
+        "cuteTheme":"",
+        "linkOsuId":"",
+        "verifOsuId":""
+    },
+    "waifu":{
+        "name":{
+            "0":""
         }
     }
 }

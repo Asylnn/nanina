@@ -1,5 +1,5 @@
 <script lang="ts">
-import Waifu from '@/classes/waifu';
+import Waifu from '@/classes/waifu/waifu';
 
 
 export default {

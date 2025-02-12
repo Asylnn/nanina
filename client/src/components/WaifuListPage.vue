@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import Waifu from '@/classes/waifu';
+import Waifu from '@/classes/waifu/waifu';
 import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
 import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
 
@@ -74,7 +74,7 @@ export default {
 <template>
     <div id="filters" >
         <div id="rowFilter">
-            <label>Number per row : </label>
+            <label>{{ $t("waifulist.nbPerRow") }}</label>
             <select value="4">
                 <option @click="updateColumns(5)" value="5">5</option>
                 <option @click="updateColumns(4)" value="4">4</option>
@@ -83,12 +83,12 @@ export default {
             </select>
         </div>
         <div id="idFilter">
-            <label>Filter : </label>
+            <label>{{ $t("waifulist.filter") }}</label>
             <select value="LD">
-                <option @click="updateSorting(0)" value="LA">Level (Ascendant)</option>
-                <option @click="updateSorting(1)" value="LD">Level (Descendant)</option>
-                <option @click="updateSorting(2)" value="NA">Name (Ascendant)</option>
-                <option @click="updateSorting(3)" value="ND">Name (Descendant)</option>
+                <option @click="updateSorting(0)" value="LA">{{ $t("waifulist.levelAscendant") }}</option>
+                <option @click="updateSorting(1)" value="LD">{{ $t("waifulist.levelDescendant") }}</option>
+                <option @click="updateSorting(2)" value="NA">{{ $t("waifulist.nameAscendant") }}</option>
+                <option @click="updateSorting(3)" value="ND">{{ $t("waifulist.nameDescendant") }}</option>
             </select>
         </div>
     </div>

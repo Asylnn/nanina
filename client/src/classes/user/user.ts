@@ -1,9 +1,9 @@
 import StatCount from './stats'
-import Waifu from './waifu'
-import type Dictionary from './dictionary'
+import Waifu from '../waifu/waifu'
+import type Dictionary from '../dictionary'
 import PullBannerHistory from './pull_history'
 import type Fight from './fight'
-import type Inventory from './inventory/inventory'
+import type Inventory from './inventory'
 
 
 

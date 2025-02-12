@@ -55,17 +55,52 @@ namespace Nanina.Communication
                 foreach (var item in items.equipment) {
                     InsertEquipment(item, itemCol, equipmentCol);
                 }
-                Send(ClientNotification.NotificationData("admin", "updated the waifu database!", 0));
+                Send(ClientNotification.NotificationData("admin", "updated the item database!", 0));
             }
+        }
+
+        protected void RequestSetDatabase(ClientWebSocketResponse rawData){
+            if(!DBUtils.GetUser(rawData.id).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+
+            var setCol = Global.db.GetCollection<Set>("setdb");
+            var data = JsonConvert.SerializeObject(setCol.FindAll());
+
+            var response = new ServerWebSocketResponse
+            {
+                type = "set db",
+                data = data
+            };
+            Send(JsonConvert.SerializeObject(response));
+        }
+        protected void UpdateSetDatabase(ClientWebSocketResponse rawData)
+        {
+
+            if(DBUtils.GetUser(rawData.id).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
+
+            var sets = JsonConvert.DeserializeObject<Set[]>(rawData.data);
+            Thread.Sleep(4000);
+            var setCol = Global.db.GetCollection<Set>("setdb");
+            
+            setCol.DeleteAll();
+            foreach (var set in sets) {
+                Console.WriteLine(set);
+                Console.WriteLine(JsonConvert.SerializeObject(set));
+                setCol.EnsureIndex(x => x.id, true);
+            }
+
+            Send(ClientNotification.NotificationData("admin", "updated the set database!", 0));
+            
         }
 
         public static void InsertEquipment(Equipment item, ILiteCollection<Item> itemCol, ILiteCollection<Equipment> col){
             InsertItem(item, itemCol);
-            col.EnsureIndex(x => x.set.id, false);
+            col.EnsureIndex(x => x.setId, false);
         }
         public static void InsertItem(Item item, ILiteCollection<Item> col){
             col.Insert(item);
             col.EnsureIndex(x => x.id, true);
+            col.EnsureIndex(x => x.type, false);
         }
     }
 }

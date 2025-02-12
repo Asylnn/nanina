@@ -52,11 +52,11 @@ export default {
             <li @click="updateActiviesMenu">
                 <span >{{ $t("header.activities") }}</span><img width=30px src="../assets/fleche-vers-le-bas.png">
                 <ul id="actiMenu" v-if="actiMenu">
-                    <li>Maid Café</li>
-                    <li>Minage de minerais</li>
-                    <li>Arbre de technologie</li>
-                    <li>Artisanat de gadgets</li>
-                    <li>Explorations</li>
+                    <li>{{ $t("header.maidCafé") }}</li>
+                    <li>{{ $t("header.mineralMining") }}</li>
+                    <li>{{ $t("header.technoTree") }}</li>
+                    <li>{{ $t("header.gadgetAnalyse") }}</li>
+                    <li>{{ $t("header.exploration") }}</li>
                 </ul>
             </li>
             <li @click="onClickChangePage(1)"><span>{{ $t("header.inventory") }}</span></li>

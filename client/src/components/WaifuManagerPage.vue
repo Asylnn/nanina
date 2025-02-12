@@ -1,7 +1,7 @@
 <script lang="ts">
 
 import WaifuManagerComponent from './WaifuManagerComponent.vue'
-import Waifu from '../classes/waifu';
+import Waifu from '../classes/waifu/waifu';
 export default {
     name : "WaifuManagerPage",
     props: {

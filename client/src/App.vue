@@ -24,8 +24,8 @@ import {
 	WebsocketEvent,
 } from "websocket-ts"
 
-import User from './classes/user'
-import Waifu from './classes/waifu'
+import User from './classes/user/user'
+import Waifu from './classes/waifu/waifu'
 import Page from './classes/page'
 import NotificationSeverity from './classes/notification_severity'
 import OsuBeatmap from './classes/beatmap'
@@ -37,7 +37,8 @@ import InventoryPage from './components/InventoryPage.vue'
 import DungeonPage from './components/DungeonPage.vue'
 import type DungeonTemplate from './classes/dungeons/template_dungeons'
 import type Banner from './classes/banner'
-import type Item from './classes/inventory/item'
+import type Item from './classes/item/item'
+import type Set from './classes/item/set'
 import ActiveDungeon from './classes/dungeons/active_dungeon'
 
 export default {
@@ -55,6 +56,7 @@ export default {
 			dev : true, //Is this dev or prod? IMPORTANT!!
 			all_waifus : [] as Waifu[],
 			item_db : [] as Item[],
+			set_db : [] as Set[],
 			pulled_waifus : [] as Waifu[],
 			banners : [] as Banner[],
 			dungeons : [] as DungeonTemplate[],
@@ -174,10 +176,9 @@ export default {
 					this.$i18n.locale = this.user.locale
 					this.localeSetByUser = true
 					if(this.user.admin){
-						//@ts-ignore
 						this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))
-						//@ts-ignore
 						this.ws.send(JSON.stringify({type:"request item db", data:"", id:this.user.Id}))
+						this.ws.send(JSON.stringify({type:"request set db", data:"", id:this.user.Id}))
 					}
 					break
 				case "map link" :
@@ -196,6 +197,11 @@ export default {
 				case "item db" :
 					this.item_db = JSON.parse(res.data)
 					console.log("ITEM DATABASE")
+					console.log(this.item_db)
+					break
+				case "set db" :
+					this.set_db = JSON.parse(res.data)
+					console.log("SET DATABASE")
 					console.log(this.item_db)
 					break
 				case "get banners":
@@ -274,7 +280,7 @@ export default {
 			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"></PullPage>
 		</div>
 		<div v-else-if="loadingPage === 130">
-			<ItemManagerPage :id="user.Id" :item_db="item_db"></ItemManagerPage>
+			<ItemManagerPage :id="user.Id" :item_db="item_db" :set_db="set_db"></ItemManagerPage>
 		</div>
 		<div v-else-if="loadingPage === 140">
 			<InventoryManagerPage :user="user" :items="item_db"></InventoryManagerPage>

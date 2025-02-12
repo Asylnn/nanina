@@ -1,4 +1,4 @@
-import type WaifuModifier from "./modifiers/waifu_modifier";
+import type WaifuModifier from "../modifiers/waifu_modifier";
 import Item from "./item";
 import EquipmentPiece from "./piece";
 import ItemType from "./item_type";
@@ -16,7 +16,7 @@ export default class Equipment extends Item{
     public str_percent! : number;
     public dex_flat! : number;
     public dex_percent! : number;*/
-    public set_id : number = 0;
+    public setId : number = 0;
     public set_name : string = "set name";
     public modifiers : WaifuModifier[] = [];
     public setModifiers : WaifuModifier[] = [];

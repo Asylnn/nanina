@@ -1,3 +1,5 @@
+import type WaifuEquipmentManager from "./equipment"
+
 export default class Waifu {
     public name : string = "Rem"
     public id : string = "42"
@@ -6,6 +8,7 @@ export default class Waifu {
     public diffLvlUp : number = 3
     public imgPATH : string = "GYrXGACboAACxp7.jpg"
     public stars : number = 2
+    public equipment! : WaifuEquipmentManager
 
     public b_str : number = 0
     public o_str : number = 0

@@ -154,8 +154,9 @@ namespace Nanina.UserData.WaifuData
 
         public float GetMultModificators(StatModifier statModifier){
             //The following line probably doesn't work?
-            var modificators = equipment.weapon?.GetAllModifiers().Concat(equipment.dress?.GetAllModifiers()).Concat(equipment.accessory?.GetAllModifiers()).Concat(equipment.set?.modifiers);
-            modificators = modificators.Where(modif => modif.operationType == OperationType.Multiplicative && modif.statModifier == statModifier);
+            var modificators = new List<Modifier>().Concat(equipment.weapon?.GetAllModifiers() ?? []).Concat(equipment.dress?.GetAllModifiers() ?? []).Concat(equipment.accessory?.GetAllModifiers() ?? []).Concat(equipment.set?.modifiers ?? []);
+            modificators = modificators.Where(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier);
+            
             return modificators?.Aggregate(1.0f, (amount, modificator) => amount += modificator?.amount ?? 0) ?? 1.0f;
         }
     }
