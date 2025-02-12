@@ -79,13 +79,11 @@ namespace Nanina.Communication
             if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
             var sets = JsonConvert.DeserializeObject<Set[]>(rawData.data);
-            Thread.Sleep(4000);
             var setCol = Global.db.GetCollection<Set>("setdb");
             
             setCol.DeleteAll();
             foreach (var set in sets) {
-                Console.WriteLine(set);
-                Console.WriteLine(JsonConvert.SerializeObject(set));
+                setCol.Insert(set);
                 setCol.EnsureIndex(x => x.id, true);
             }
 
