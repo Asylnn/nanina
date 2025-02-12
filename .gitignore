@@ -43,3 +43,8 @@ client/.vscode/*
 
 /save
 .env
+itemdb.json
+osumapsdb.json
+setdb.json
+userdb.json
+waifudb.json
