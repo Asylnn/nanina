@@ -19,7 +19,7 @@ namespace Nanina.UserData
         public StatCount statCount { get; set; } = new();
         public List<Fight> fights { get; set; } = [];
         public uint gacha_currency { get; set; } = Global.baseValues.base_gacha_currency_amount;
-        public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; }
+        public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; } = [];
         public Verification verification { get; set; } = new() { osuVerificationCode=null, osuVerificationCodetimestamp = 0, isOsuIdVerified=false };
         public ulong claimTimestamp { get; set; } = 0;
         public Inventory inventory { get; set; } = new ();

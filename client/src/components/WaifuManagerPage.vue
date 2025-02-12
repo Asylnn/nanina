@@ -34,8 +34,7 @@ export default {
                 waifu.b_dex = waifu.o_dex
                 return waifu;
             })
-            //@ts-ignore
-            this.ws.send(JSON.stringify({type:"update waifu db", data:JSON.stringify(updated_waifus), id: this.id}))
+            this.SendToServer("update waifu db", JSON.stringify(updated_waifus), this.id)
         },
         DeleteWaifu(id : string){
             this.all_waifus.splice(this.all_waifus.findIndex(waifu => waifu.id == id), 1)

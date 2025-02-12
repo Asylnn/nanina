@@ -35,7 +35,7 @@ export default {
             this.actiMenu = !this.actiMenu
         },
         onChangeLocale(){
-            this.ws.send(JSON.stringify({type:"change locale", data:this.$i18n.locale, id:this.$cookies.get("session_id")}))
+            this.SendToServer("change locale", this.$i18n.locale, null)
         }
     },
 }

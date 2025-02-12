@@ -64,9 +64,8 @@ export default {
                 waifu_consumable:this.item_db.filter(item => item.type == ItemType.WaifuConsumable),
                 user_consumable:this.item_db.filter(item => item.type == ItemType.UserConsumable),
             }
-            //@ts-ignore
-            this.ws.send(JSON.stringify({type:"update item db", data:JSON.stringify(new_item_db), id: this.id}))
-            this.ws.send(JSON.stringify({type:"update set db", data:JSON.stringify(this.set_db), id: this.id}))
+            this.SendToServer("update item db", JSON.stringify(new_item_db), this.id)
+            this.SendToServer("update set db", JSON.stringify(this.set_db), this.id)
         }
     }
 }

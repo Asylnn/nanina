@@ -15,8 +15,8 @@ export default {
     },
     methods : {
         updateSettings(){
-            //@ts-ignore
-			this.ws.send(JSON.stringify({type:"add beatmap with id", data:this.entered_id, id: this.id}))
+            this.SendToServer("add beatmap with id", this.entered_id.toString(), this.id)
+
         }
     }
 }

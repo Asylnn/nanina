@@ -53,13 +53,16 @@ export default {
         },
         updateSettings(){
             this.request = true
-            //@ts-ignore
-			this.ws.send(JSON.stringify({type:"update osu id", data:this.entered_id, id: this.user.Id}))
+            this.SendToServer("update osu id", this.entered_id.toString(), this.user.Id)
         },
         verifyOsuId(){
-            //@ts-ignore
-			this.ws.send(JSON.stringify({type:"verify osu id", data:this.code, id: this.user.Id}))
+            this.SendToServer("verify osu id", this.code.toString(), this.user.Id)
         },
+        async Disconect(){
+            this.SendToServer("disconect", "", this.user.Id)
+            await new Promise(r => setTimeout(r, 200));
+            location.href = "/"
+        }
     }
 }
 
@@ -90,6 +93,7 @@ export default {
             <input type="number" v-model.number.lazy="code">
             <button @click="verifyOsuId()">Verify code</button>
         </div>
+        <button @click="Disconect()">Disconect</button>
     </div>
 </template>
 
@@ -124,6 +128,10 @@ export default {
 }
 #optionOsuId button {
     width: 20%;
+}
+
+button {
+    width: 10%;
 }
 #userOsuId {
     color: rgb(0, 211, 0);

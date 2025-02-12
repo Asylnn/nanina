@@ -1,7 +1,7 @@
 [{
     "bannerName":"The PP club",
     "bannerDescription":"The PP club",
-    "bannerId":"ppclub",
+    "id":"ppclub",
     "pityAmount":10,
     "pullCost":12,
     "twoStarsWeight":100,

@@ -86,8 +86,7 @@ export default {
 		updateTheme(theme : string) {
 			this.user.theme = theme
 			if (this.logged) {
-				//@ts-ignore
-				this.ws.send(JSON.stringify({type:"update theme", data:theme, id: this.user.Id}))
+				this.SendToServer("update theme", "", this.user.Id)
 
 				
 			}
@@ -148,37 +147,40 @@ export default {
 		const queryParams = new URLSearchParams(url.search);
 		if(queryParams.has("code")){
 			var code = queryParams.get("code") + ""
-			this.ws.send(JSON.stringify({type:"connect with discord", data:queryParams.get("code"), id:$cookies.get("session_id") || ""}))
+			this.SendToServer("connect with discord", queryParams.get("code")!, this.user.Id)
 		}
-		if (!has_session_id) 
-			this.ws.send(`{"type":"get session id", "data":""}`)
 		else 
-			this.ws.send(JSON.stringify({type:"get session id", data:$cookies.get("session_id"), id:""}))
+			this.SendToServer("get session id", "", null)
+		
+		
 		
 		const ListenForData = (i: Websocket, ev: MessageEvent) => {
-			console.log(`received message: ${ev.data}`);
+			//console.log(`received message: ${ev.data}`);
 			var res : WebSocketReponse = JSON.parse(ev.data)
 			switch (res.type) {
 				case "session" :
 					let session = JSON.parse(res.data)
 					$cookies.set("session_id", session.id)
+					console.log("session : ")
 					console.log(session)
-					if(this.localeSetByUser)
+					if(!this.localeSetByUser)
 						this.$i18n.locale = session.locale
 					break
 				case "user" :
 					this.logged = true
+					console.log("user : ")
 					console.log(new User(JSON.parse(res.data)))
 					let localFightTimestamp = this.user.localFightTimestamp
 					this.user = new User(JSON.parse(res.data))
 					this.user.waifus = this.user.waifus.map(waifu => new Waifu(waifu))
 					this.user.localFightTimestamp = localFightTimestamp
+
 					this.$i18n.locale = this.user.locale
 					this.localeSetByUser = true
 					if(this.user.admin){
-						this.ws.send(JSON.stringify({type:"request waifu db", data:"", id:this.user.Id}))
-						this.ws.send(JSON.stringify({type:"request item db", data:"", id:this.user.Id}))
-						this.ws.send(JSON.stringify({type:"request set db", data:"", id:this.user.Id}))
+						this.SendToServer("request set db", "",this.user.Id)
+						this.SendToServer("request item db", "",this.user.Id)
+						this.SendToServer("request waifu db", "",this.user.Id)
 					}
 					break
 				case "map link" :

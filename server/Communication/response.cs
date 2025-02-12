@@ -2,6 +2,7 @@ using WebSocketSharp.Server;
 using WebSocketSharp;
 using Nanina.Database;
 using System.Data.Common;
+using LiteDB;
 
 namespace Nanina.Communication
 {
@@ -12,6 +13,7 @@ namespace Nanina.Communication
         {
             Console.WriteLine("DATA : " + (string) e.Data); 
             ClientWebSocketResponse rawData = Newtonsoft.Json.JsonConvert.DeserializeObject<ClientWebSocketResponse>(e.Data);
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
             switch (rawData.type) {
 
                 //Recieve a request from the client to get a user from a sessionId stored in cookies.
@@ -36,7 +38,8 @@ namespace Nanina.Communication
                     break;
 
                 case "change locale":
-                    Global.db.GetCollection<Session>("sessiondb").Find(session => session.id == rawData.id).First().UpdateLocale(rawData.data);
+                    
+                    db.GetCollection<Session>("sessiondb").Find(session => session.id == rawData.sessionId).First().UpdateLocale(rawData.data);
                     break;
 
                 case "update item db": 
@@ -83,19 +86,27 @@ namespace Nanina.Communication
                 case "update set db":
                     UpdateSetDatabase(rawData);
                     break;
+                case "disconect":
+                    Disconect(rawData);
+                    break;
 
             }
         }
         protected override void OnClose(CloseEventArgs e)
         {
-            var sessionCol = Global.db.GetCollection<Session>("sessiondb");
-            var session = sessionCol.Find(session => session.webSocketId == this.ID).First();
-            session.UpdateWebSocketId(null, false);
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var sessionCol = db.GetCollection<Session>("sessiondb");
+            var sessions = sessionCol.Find(session => session.webSocketId == this.ID);
+            if(sessions.Count() >= 1 ){
+                var session = sessions.First();
+                session.UpdateWebSocketId(session.id, false);
+            }
             Console.WriteLine("Bye :'(");
         }
 
         protected override void OnOpen()
         {
+            
             Console.WriteLine("Hello <3");
         }
     }

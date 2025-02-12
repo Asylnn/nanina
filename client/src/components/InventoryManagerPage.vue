@@ -72,13 +72,13 @@ export default {
         },
 
         UpdateDatabase(){
-            var new_item_db = {
+            /*var new_item_db = {
                 equipment:this.equipment,
                 material:this.material,
                 waifu_consumable:this.waifu_consumable,
                 user_consumable:this.user_consumable,
             }
-            this.ws.send(JSON.stringify({type:"update item db", data:JSON.stringify(this.user.inventory), id: this.user.Id}))
+            this.ws.send(JSON.stringify({type:"update item db", data:JSON.stringify(this.user.inventory), id: this.user.Id}))*/
         }
     },
 }

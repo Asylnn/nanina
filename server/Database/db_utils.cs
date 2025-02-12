@@ -26,7 +26,8 @@ namespace Nanina.Database {
             }
         }
         public static List<Equipment> GetEquipmentFromSet(ushort setId){
-            var itemCol = Global.db.GetCollection<Equipment>("itemdb");
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var itemCol = db.GetCollection<Equipment>("itemdb");
             var items = itemCol.Find(x => x.setId == setId);
             if (items.Count() >= 1){
                 return items.ToList();

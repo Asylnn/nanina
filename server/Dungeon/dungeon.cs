@@ -19,10 +19,9 @@ namespace Nanina.Dungeon
 {
     public partial class ActiveDungeon {
         public ulong instanceId;
-        public WebSocketSessionManager WSSession;
-        public string webSocketId;
         public Template dungeonTemplate;
         public string userId;
+        public string sessionId;
         public List<Waifu> waifus;
         public ulong timestamp = Utils.GetTimestamp();
         public List<DungeonLog> log = [];
@@ -31,10 +30,9 @@ namespace Nanina.Dungeon
         public List<Equipment> loot = [];
         public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
 
-        public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string wsId, WebSocketSessionManager session, ulong _instanceId){
+        public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId){
             instanceId = _instanceId;
-            WSSession = session;
-            webSocketId = wsId;
+            sessionId = _sessionId;
             dungeonTemplate = dungeon;
             userId = user.Id;
             waifus = [EquippedWaifus.First()];
@@ -106,15 +104,8 @@ namespace Nanina.Dungeon
             }
         }
 
-        public ActiveDungeon ToClient(){
-            ActiveDungeon dungeon = (ActiveDungeon)MemberwiseClone();
-            dungeon.WSSession = null;
-            dungeon.webSocketId = null;
-            return dungeon;
-        }
-
         public override string ToString(){
-            return JsonConvert.SerializeObject(ToClient());
+            return JsonConvert.SerializeObject(this);
         }
 
         public void ConcludeDungeon(){
@@ -126,8 +117,6 @@ namespace Nanina.Dungeon
             DBUtils.UpdateUser(user);
             
             DungeonManager.UpdateDungeonOfClient(this);
-            WSSession = null;
-            webSocketId = null;
             
         }
     }

@@ -53,8 +53,7 @@ export default {
         if(this.user.fights.length != 0){
             if(!this.user.fights[this.user.fights.length - 1].completed){
                 //this.fighting = true
-                //@ts-ignore
-			    this.ws.send(JSON.stringify({type:"get map back", data:this.user.fights[this.user.fights.length - 1].id, id: this.user.Id}))
+                this.SendToServer("get map back", this.user.fights[this.user.fights.length - 1].id, this.user.Id)
             }
             if(this.user.fights[this.user.fights.length - 1].timestamp + config.time_for_allowing_another_fight_in_milliseconds >= this.date_milli ){
                 this.fight_timing_out = true
@@ -89,15 +88,13 @@ export default {
             this.user.localFightTimestamp = Date.now() 
             this.fight_timing_out = true
             this.updateTimer()
-            //@ts-ignore
-			this.ws.send(JSON.stringify({type:"get map to fight", data:0, id: this.user.Id}))
+            this.SendToServer("get map to fight", "", this.user.Id)
         },
         getXP(){
             this.user.claimTimestamp = Date.now()
             this.claim_timing_out = true
             this.updateTimer()
-            //@ts-ignore
-			this.ws.send(JSON.stringify({type:"claim fight", data:0, id: this.user.Id}))
+            this.SendToServer("claim fight", "", this.user.Id)
         },
         selectWaifu(waifu : Waifu) {
             this.chosen_waifu = waifu

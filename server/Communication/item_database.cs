@@ -17,7 +17,7 @@ namespace Nanina.Communication
 
         }
         protected void RequestItemDatabase(ClientWebSocketResponse rawData){
-            if(!DBUtils.GetUser(rawData.id).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(!DBUtils.GetUser(rawData.userId).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
                 
                 var itemCol = db.GetCollection<Item>("itemdb");
@@ -35,7 +35,7 @@ namespace Nanina.Communication
 
             
 
-            if(DBUtils.GetUser(rawData.id).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(DBUtils.GetUser(rawData.userId).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
             var items = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
@@ -60,9 +60,10 @@ namespace Nanina.Communication
         }
 
         protected void RequestSetDatabase(ClientWebSocketResponse rawData){
-            if(!DBUtils.GetUser(rawData.id).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(!DBUtils.GetUser(rawData.userId).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
 
-            var setCol = Global.db.GetCollection<Set>("setdb");
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var setCol = db.GetCollection<Set>("setdb");
             var data = JsonConvert.SerializeObject(setCol.FindAll());
 
             var response = new ServerWebSocketResponse
@@ -75,11 +76,12 @@ namespace Nanina.Communication
         protected void UpdateSetDatabase(ClientWebSocketResponse rawData)
         {
 
-            if(DBUtils.GetUser(rawData.id).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(DBUtils.GetUser(rawData.userId).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
 
             var sets = JsonConvert.DeserializeObject<Set[]>(rawData.data);
-            var setCol = Global.db.GetCollection<Set>("setdb");
+            var setCol = db.GetCollection<Set>("setdb");
             
             setCol.DeleteAll();
             foreach (var set in sets) {

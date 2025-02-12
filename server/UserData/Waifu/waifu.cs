@@ -7,6 +7,7 @@ Dextérité -> Coups critiques, Analyse
 Kawaii -> Attaque psychique, Maid café
 */
 
+using LiteDB;
 using Nanina.Database;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.ModifierData;
@@ -145,7 +146,8 @@ namespace Nanina.UserData.WaifuData
             }
             if(equipment.weapon.setId == equipment.dress.setId && equipment.dress.setId == equipment.accessory.setId)
             {
-                var setCol = Global.db.GetCollection<Set>("setdb");
+                using var db = new LiteDatabase($@"{Global.config.database_path}");
+                var setCol = db.GetCollection<Set>("setdb");
                 equipment.set = setCol.Find(set => set.id == equipment.weapon.setId).First();
             }
                 

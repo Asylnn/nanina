@@ -8,10 +8,11 @@ namespace Nanina.Communication
     partial class WS : WebSocketBehavior
     {
         protected void StartDungeon(ClientWebSocketResponse rawData){
-            var user = DBUtils.GetUser(rawData.id);
+            var user = DBUtils.GetUser(rawData.userId);
+            var session = DBUtils.GetSession(rawData.sessionId);
             var dungeon = DungeonManager.dungeons.Where(dungeon => dungeon.id == rawData.data).First();
             if(dungeon == null) {Send(ClientNotification.NotificationData("Dungeon", "The dungeon you tried to start doesn't exist!", 1)); return ;}
-            DungeonManager.InstantiateDungeon(dungeon, user, user.waifus, ID, Sessions);
+            DungeonManager.InstantiateDungeon(dungeon, user, user.waifus, session.id);
         }
 
         protected void StopDungeon(ClientWebSocketResponse rawData){

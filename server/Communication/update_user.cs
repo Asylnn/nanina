@@ -8,7 +8,7 @@ namespace Nanina.Communication
     {
         protected async void UpdateOsuId(ClientWebSocketResponse rawData){
             Console.WriteLine("rawData : " + JsonConvert.SerializeObject(rawData));
-            var user = DBUtils.GetUser(rawData.id);
+            var user = DBUtils.GetUser(rawData.userId);
             var rng = new Random();
             var code = (rng.Next(899_999) + 100_000).ToString();
             var success = await Osu.Api.SendMessageToUser(rawData.data, code);
@@ -27,7 +27,7 @@ namespace Nanina.Communication
             }
         }
         protected void VerifyOsuId(ClientWebSocketResponse rawData){
-            var user = DBUtils.GetUser(rawData.id);
+            var user = DBUtils.GetUser(rawData.userId);
             if(Utils.GetTimestamp() - user.verification.osuVerificationCodetimestamp > Global.baseValues.time_limit_for_osu_code_verification_in_milliseconds)
                 {Send(ClientNotification.NotificationData("Update osu ID", "The code expired", 1)); return;}
             
@@ -47,7 +47,7 @@ namespace Nanina.Communication
             }));
         }
         protected void UpdateTheme(ClientWebSocketResponse rawData){
-            var user = DBUtils.GetUser(rawData.id);
+            var user = DBUtils.GetUser(rawData.userId);
             user.theme = rawData.data;
             DBUtils.UpdateUser(user);
         }

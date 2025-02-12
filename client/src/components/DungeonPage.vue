@@ -30,11 +30,11 @@ export default {
     methods:{
         EnterDungeon(){
             this.is_fighting_a_dungeon = true
-            this.ws.send(JSON.stringify({type:"start dungeon", data:this.selected_dungeon.id, id: this.user.Id}))
+            this.SendToServer("start dungeon", this.selected_dungeon.id, this.user.Id)
         },
         LeaveDungeon(){
             this.is_fighting_a_dungeon = false
-            this.ws.send(JSON.stringify({type:"stop dungeon", data:this.active_dungeon.instanceId, id: this.user.Id}))
+            this.SendToServer("stop dungeon", this.active_dungeon.instanceId, this.user.Id)
         }
     }
 }

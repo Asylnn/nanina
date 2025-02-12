@@ -8,7 +8,7 @@ namespace Nanina.Communication
     partial class WS : WebSocketBehavior
     {
         protected void Pull(ClientWebSocketResponse rawData){
-            var user = DBUtils.GetUser(rawData.id);
+            var user = DBUtils.GetUser(rawData.userId);
 
             var pullData = JsonConvert.DeserializeObject<PullRequest>(rawData.data);
             if(!GachaManager.BannerExists(pullData.bannerId)){

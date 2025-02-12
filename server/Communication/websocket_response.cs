@@ -5,7 +5,8 @@ namespace Nanina.Communication
     {
         public string type;
         public string data;
-        public string id;
+        public string sessionId;
+        public string? userId;
     }
 
     public class ServerWebSocketResponse

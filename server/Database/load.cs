@@ -12,8 +12,6 @@ namespace Nanina.Database
 
         public static async void Load(){
             //LoadConfig();
-
-            Global.db = new LiteDatabase($@"{Global.config.database_path}");
             LoadEnv();
             LoadOsuApi();
             LoadWebSocketServer();
@@ -140,9 +138,9 @@ namespace Nanina.Database
                     /*if(user.waifus.id == null){
                         user.waifus.id = "0";
                     }*/
-                    user.waifus.ForEach(waifu => waifu.Update());
+                    //user.waifus.ForEach(waifu => waifu.Update());
                         //Is it still working?
-                    userCol.Update(user);
+                    //userCol.Update(user);
 
                 }
             }

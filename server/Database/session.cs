@@ -1,3 +1,6 @@
+using LiteDB;
+using Newtonsoft.Json;
+
 namespace Nanina.Database
 {
     public class Session() {
@@ -12,18 +15,23 @@ namespace Nanina.Database
         public static Session NewSession(string _webSocketId)
         {
             var session = new Session();
-            var sessionCol = Global.db.GetCollection<Session>("sessiondb");
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var sessionCol = db.GetCollection<Session>("sessiondb");
             session.webSocketId = _webSocketId;
+            Console.WriteLine("New session with id : " + session.id);
+
             sessionCol.Insert(session);
-            sessionCol.EnsureIndex(x => x.id);
-            sessionCol.EnsureIndex(x => x.webSocketId);
+            sessionCol.EnsureIndex(x => x.id, true);
+            sessionCol.EnsureIndex(x => x.webSocketId, false);
             return session;
         }
         public void UpdateLocale(string newLocale){
             
             locale = newLocale;
-            
+            Console.WriteLine("hey 1" + newLocale);
+            Console.WriteLine(newLocale);
             if(hasUserAssociatedWithSession){
+                Console.WriteLine("hey 2");
                 var user = DBUtils.GetUser(userId);
                 user.locale = locale;
                 DBUtils.UpdateUser(user);
@@ -34,12 +42,17 @@ namespace Nanina.Database
         
         public void UpdateDB()
         {
-            var sessionCol = Global.db.GetCollection<Session>("sessiondb");
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var sessionCol = db.GetCollection<Session>("sessiondb");
             sessionCol.Update(this);
+            
         }
         public void UpdateUserId(string id) 
         {
-            hasUserAssociatedWithSession = true;
+            if(id != null)
+                hasUserAssociatedWithSession = true;
+            else
+                hasUserAssociatedWithSession = false;
             userId = id;
             UpdateDB();
         }

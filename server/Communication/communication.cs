@@ -11,12 +11,19 @@ namespace Nanina.Communication
     partial class WS : WebSocketBehavior
     {
         
-
+        protected void Disconect(ClientWebSocketResponse rawData){
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var sessionCol = db.GetCollection<Session>("sessiondb");
+            var session = sessionCol.Find(x => x.id == rawData.sessionId).First();
+            session.UpdateUserId(null);
+            
+            Console.WriteLine(JsonConvert.SerializeObject(session));
+        }
         protected void ProvideSessionAndUser(ClientWebSocketResponse rawData)
         {
             using var db = new LiteDatabase($@"{Global.config.database_path}");
             var sessionCol = db.GetCollection<Session>("sessiondb");
-            var sessions = sessionCol.Find(x => x.id == rawData.data);
+            var sessions = sessionCol.Find(x => x.id == rawData.sessionId);
             if(sessions.Count() == 0)
             {
                 var session = Session.NewSession(this.ID);
@@ -28,6 +35,7 @@ namespace Nanina.Communication
             else
             {
                 var session = sessions.First();
+                session.UpdateWebSocketId(ID, true);
                 Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
                     type = "session",
                     data = JsonConvert.SerializeObject(session),
@@ -47,7 +55,9 @@ namespace Nanina.Communication
                         type = "get dungeons",
                         data = JsonConvert.SerializeObject(DungeonManager.dungeons),
                     }));
+                    
                 }
+                
             }
             
         }

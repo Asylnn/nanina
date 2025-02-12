@@ -22,7 +22,7 @@ namespace Nanina.Communication
             }));
         }
         public void GetMapToFight(ClientWebSocketResponse rawData){ //somehow protected doesn't work?
-            var user = DBUtils.GetUser(rawData.id);
+            var user = DBUtils.GetUser(rawData.userId);
             if(user.fights.Count() != 0 && user.fights.Last().timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You have a too much recent fight", 1)); return; }                    
             
@@ -47,7 +47,7 @@ namespace Nanina.Communication
             }
         }
         protected async void ClaimFight(ClientWebSocketResponse rawData){
-            var user = DBUtils.GetUser(rawData.id);
+            var user = DBUtils.GetUser(rawData.userId);
             
             if(user.fights.Last().completed) 
                 { Send(ClientNotification.NotificationData("Fighting", "You completed the last fight! You need to start a new one!", 0)); return; }

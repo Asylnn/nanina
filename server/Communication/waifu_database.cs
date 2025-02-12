@@ -9,7 +9,7 @@ namespace Nanina.Communication
     partial class WS : WebSocketBehavior
     {
         protected void RequestWaifuDatabase(ClientWebSocketResponse rawData){
-            if(!DBUtils.GetUser(rawData.id).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(!DBUtils.GetUser(rawData.userId).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
                 var waifuCol = db.GetCollection<Waifu>("waifudb").FindAll();
 
@@ -24,7 +24,7 @@ namespace Nanina.Communication
             }
         }
         protected void UpdateWaifuDatabase(ClientWebSocketResponse rawData){
-            if(DBUtils.GetUser(rawData.id).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(DBUtils.GetUser(rawData.userId).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
             var waifus = JsonConvert.DeserializeObject<Waifu[]>(rawData.data);
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){

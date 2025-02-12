@@ -40,12 +40,12 @@ namespace Nanina.Communication
             User user;
 
             var list = userCol.Find(x => x.ids.discordId == discordUserInformationResponse.id);
+            
             if (list.Count() == 0){
 
                 var ids = new Ids() {discordId = discordUserInformationResponse.id};
                 //ids.discordId = discordUserInformationResponse.id;
                 user = new (discordUserInformationResponse.global_name, ids);
-                user.locale = discordUserInformationResponse.locale;
                 
                 Console.WriteLine("Inserted new user! Id : " + user.Id);
                 var tokens = new Tokens(){
@@ -74,16 +74,15 @@ namespace Nanina.Communication
                 Console.Error.WriteLine("There is more than two people in the user database with the same discord user id! The id is : " + discordUserInformationResponse.id);
             }
             var sessionCol = db.GetCollection<Session>("sessiondb");
-            var sessions = sessionCol.Find(x => x.id == rawData.id);
+            var sessions = sessionCol.Find(x => x.id == rawData.sessionId);
             Session session;
-            if(sessions.Count() == 0)
+            if(sessions.Count() == 0) //Should not happen.
                 session = Session.NewSession(this.ID);
             else 
                 session = sessions.First();
-            rawData.data = rawData.id;
-            session.UpdateUserId(user.Id);
+            rawData.userId = user.Id;
+            session.UpdateUserId(user.Id);            
             ProvideSessionAndUser(rawData);
-            
         }
     }
 }

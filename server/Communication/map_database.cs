@@ -10,7 +10,7 @@ namespace Nanina.Communication
     {
         protected async void AddMapToDatabase(ClientWebSocketResponse rawData){
 
-        var user = DBUtils.GetUser(rawData.id);
+        var user = DBUtils.GetUser(rawData.userId);
         if (user.admin == false ) {Send(ClientNotification.NotificationData("Admin", "You don't have the permissions for this action!", 0)); return;}
         var Beatmap = await Osu.Api.GetBeatmapById(rawData.data);
         if(Beatmap == null) {Send(ClientNotification.NotificationData("Admin", "This beatmap doesn't exist!", 1)); return;}
