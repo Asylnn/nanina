@@ -91,6 +91,7 @@ select {
     border:0;
     background:none;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 header, #pages, #buttList {

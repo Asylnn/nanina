@@ -22,7 +22,6 @@ export default {
 <template>
     <div class="WaifuManagerComponent">
         <button @click="Delete">delete</button>
-        <span class="attribute"><input class="name" v-model="waifu.name" type="text"></span>
         <span class="attribute">Id  <input class="numberInput" v-model="waifu.id" type="text"></span>
         <span class="attribute">Diff  <input class="numberInput" v-model="waifu.diffLvlUp" type="number"></span>
         <span class="attribute">★  <input class="numberInput" v-model="waifu.stars" type="number"></span>

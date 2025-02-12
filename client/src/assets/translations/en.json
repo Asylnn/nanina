@@ -38,5 +38,10 @@
         "cuteTheme":"Cute Theme",
         "linkOsuId":"",
         "verifOsuId":""
+    },
+    "item":{
+        "1":{
+            "name":"THE EPIC SWORD OF THE END OF TIME"
+        }
     }
 }

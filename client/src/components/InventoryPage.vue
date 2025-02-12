@@ -1,13 +1,14 @@
 <script lang="ts">
 import type Equipment from '@/classes/item/equipment';
 import User from '@/classes/user/user';
-
+import ItemComponent from './ItemComponent/ItemComponent.vue';
 
 export default {
     name : "InventoryPage",
     data(){
         return {
-            category : "all"
+            category : "all",
+            focusedView : false,
         }
     },
     props: {
@@ -19,7 +20,13 @@ export default {
     methods:{
         changeTab(categ : string){
             this.category = categ
-        }
+        },
+        closeItemDisplay(){
+
+        },
+    },
+    components:{
+        ItemComponent,
     }
 }
 
@@ -33,7 +40,7 @@ export default {
             <div id="filterCateg">
                 <label>Categ : </label>
                 <select value="a">
-                    <option @click="changeTab('all')" value="a">All</option>
+                    <option @click="category = 'all'" value="a">All</option>
                     <option @click="changeTab('equipment')" value="e">Equipement</option>
                     <option @click="changeTab('user_consumable')" value="u">User Consumable</option>
                     <option @click="changeTab('waifu_consumable')" value="w">Waifu Consumable</option>
@@ -45,11 +52,9 @@ export default {
             <div v-if="category === 'equipment' || category === 'all'">
                 <span>Equipement :</span><br>
                 <div v-for="item in user.inventory.equipment">
-                    <div class="itemDisplay">
-                        <div class="waifuIcon">
-                        <img :src="'src/assets/item-image/' + item.imgPATH">
-                        </div>
-                        <p>{{item.name}}</p>
+                    <div v-if="focusedView">
+                        <!--<div @click="closeItemDisplay" id="veil" ></div>
+                        <WaifuDisplayComponent :waifu="waifuToDisplay()" tabindex="0" @keydown.esc="closeItemDisplay" :count=-1></WaifuDisplayComponent>-->
                     </div>
                 </div>
             </div>

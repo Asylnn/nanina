@@ -50,8 +50,8 @@ export default {
                 <option :value = ItemType.Material>Material</option>
             </select>
             <span class="attribute">Rarity  <input class="numberInput"v-model="item.rarity" type="number"></span>
-            <span v-if="item.type == ItemType.Equipment" class="attribute">Set Id<input class="numberInput" v-model="item.setId" type="number"></span>
-            <select v-if="item.type == ItemType.Equipment" class="attribute" v-model="item.piece">
+            <span v-if="item.type == ItemType.Equipment" class="attribute">Set Id<input class="numberInput" v-model="(item as Equipment).setId" type="number"></span>
+            <select v-if="item.type == ItemType.Equipment" class="attribute" v-model="(item as Equipment).piece">
                 <option :value = 0>Weapon</option>
                 <option :value = 1>Dress</option>
                 <option :value = 2>Accessory</option>
