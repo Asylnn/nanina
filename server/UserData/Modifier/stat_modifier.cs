@@ -8,16 +8,17 @@ namespace Nanina.UserData.ModifierData
         STR,
         INT,
         KAW,
-        CritDamage,
-        CritChance,
-        DebuffPotency,
-        BuffPotency,
-        BuffLength,
-        DebuffLength,
         AGI,
         DEX,
-        DebuffResist,
         LUCK,
+        CritDamage,
+        CritChance,
+        BuffPotency,
+        BuffLength,
+        DebuffPotency,
+        DebuffLength,
+        DebuffResist,
+        
     }
 }
 

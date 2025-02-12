@@ -30,7 +30,7 @@ namespace Nanina.Dungeon
                 if(totalWeight <= rand)
                 {
                     float baseValue = ModifierWeights[i].modifier.operationType == OperationType.Multiplicative ? 
-                        Global.baseValues.baseStatsMulti[ModifierWeights[i].modifier.stat.ToString()] : Global.baseValues.baseStatsAdd[ModifierWeights[i].modifier.stat.ToString()]; // <- Cooking
+                        Global.baseValues.baseStatsMulti[ModifierWeights[i].modifier.stat.ToString()] : Global.baseValues.baseStatsAdd[ModifierWeights[i].modifier.stat.ToString()]; // <- Cooking (fair enough!)
                     var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.baseValues.dungeon_stat_randomness;
                     var amount = baseValue*Global.baseValues.equipment_stat_base_amount_multiplier[dungeonTemplate.difficulty-1];
                     amount = 1 + (amount - 1)*statRandomness;
@@ -46,12 +46,16 @@ namespace Nanina.Dungeon
             }
         }
         public List<Equipment> GetLoot(){
-            Random rng = new ();
             
             for(int i = 0; i < dungeonTemplate.numberOfRewards; i++)
             {
-                var equipments = DBUtils.GetEquipment(dungeonTemplate.setRewards.ElementAt(rng.Next(dungeonTemplate.setRewards.Length))); //je sais pas ca fait quoi
-                Equipment equipment = (Equipment) equipments.ElementAt(rng.Next(equipments.Count)).Clone();
+                var setId = dungeonTemplate.setRewards.RandomElement();
+                Console.WriteLine(setId);
+                var equipments = DBUtils.GetEquipmentFromSet(setId); //je sais pas ca fait quoi
+                Console.WriteLine(JsonConvert.SerializeObject(equipments));
+                var equipment = equipments.RandomElement();
+                //Je suis d'accord avec toi c'était pas une ligne simple, j'espère que c'est mieux comme ca :3
+                
 
                 AttributeRandomStatToEquipment(equipment);
                 loot.Add(equipment);

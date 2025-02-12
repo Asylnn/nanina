@@ -2,8 +2,9 @@ namespace Nanina.UserData.ModifierData
 {
     public enum OperationType
     {
+        Additive,
         Multiplicative,
-        Additive
+        
     }
     public class Modifier 
     {

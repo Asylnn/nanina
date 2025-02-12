@@ -25,18 +25,17 @@ namespace Nanina.Database {
                 user_col.Update(user);
             }
         }
-        public static List<Equipment> GetEquipment(ushort setId){
-            using(var db = new LiteDatabase($@"{Global.config.database_path}")){
-                var itemCol = db.GetCollection<Equipment>("itemdb");
-                var items = itemCol.Find(x => x.setId == setId);
-                if (items.Count() >= 1){
-                    return items.ToList();
-                }
-                else {
-                    Console.Error.WriteLine($"Somehow got a setId ({setId}) wrong with no associated items? Returning no items");
-                    return [];
-                }
+        public static List<Equipment> GetEquipmentFromSet(ushort setId){
+            var itemCol = Global.db.GetCollection<Equipment>("itemdb");
+            var items = itemCol.Find(x => x.setId == setId);
+            if (items.Count() >= 1){
+                return items.ToList();
             }
+            else {
+                Console.Error.WriteLine($"Somehow got a setId ({setId}) wrong with no associated items? Returning no items");
+                return [];
+            }
+        
         }
         public static Waifu GetWaifu(string id){
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){

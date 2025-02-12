@@ -28,7 +28,7 @@ namespace Nanina.Dungeon
         public List<DungeonLog> log = [];
         public float health; 
         public bool isCompleted = false;
-        public List<Equipment> loot;
+        public List<Equipment> loot = [];
         public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
 
         public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string wsId, WebSocketSessionManager session, ulong _instanceId){
