@@ -70,3 +70,5 @@ TODO : MUTEX Counter in DungeonManager
 TODO : Optimize data sent to client, for example don't send old data each time there is an attack in the dungeon
 TODO : Make dungeon not linked with websocket session
 TODO : Remove discord link from button in client side
+TODO : Verify data from client is well formed.
+TODO : Implement IRedDotYouMustClaim/Notification/WhatYouSeeInGacha

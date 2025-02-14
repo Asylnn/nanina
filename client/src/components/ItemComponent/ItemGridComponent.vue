@@ -6,6 +6,7 @@ export default {
     name : "ItemGridComponent",
     data() {
         return {
+            publicPath : import.meta.env.BASE_URL
         }
     },
     props: {
@@ -43,7 +44,7 @@ export default {
         <div v-for="item in items">
             <div class="waifuDisplay">
                 <div class="waifuIcon">
-                    <img @click="showItem(item)" :src="'src/assets/item-image/' + item.imgPATH">
+                    <img @click="showItem(item)" :src="`${publicPath}/item-image/${item.imgPATH}`">
                 </div>
             </div>
         </div>

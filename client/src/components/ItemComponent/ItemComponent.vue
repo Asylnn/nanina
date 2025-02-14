@@ -9,6 +9,7 @@ export default {
     data() {
         return {
             ItemType : ItemType,
+            publicPath : import.meta.env.BASE_URL,
         }
     },
     props: {
@@ -24,7 +25,7 @@ export default {
 
 <template>
     <div id="focusedObject" >
-        <div id="waifuPic"><img :src="'src/assets/item-image/' + item.imgPATH"></div>
+        <div id="waifuPic"><img :src="`${publicPath}/item-image/${item.imgPATH}`"></div>
         <div id="ItemInfo">
             {{ $t(`item.${item.id}.name`) }}<br>
             {{ $t(`item.${item.id}.description`) }}<br>

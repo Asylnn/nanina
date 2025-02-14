@@ -11,5 +11,13 @@
     "banners_storage_path": "../save/banners.json",
     "discord_api_url": "https://discord.com/api/",
     "osu_api_url": "https://osu.ppy.sh/api/v2/",
+    "ws_prod_server_url":"wss://asyln.moe",
+    "ws_dev_server_url":"ws://localhost",
+    "base_url":"/nanina",
+    "ws_port":4890,
+    "prod_ws_port":443,
+    "note":"It is expected to have a reverse proxy redirecting to your ws_port",
+    "dev_discord_oauth_url":"https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify",
+    "prod_discord_oauth_url":"https://discord.com/oauth2/authorize?client_id=328524418911567873&response_type=code&redirect_uri=https%3A%2F%2Fasyln.moe%2Fnanina&scope=identify",
     "dev": true
 }

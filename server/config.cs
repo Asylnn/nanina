@@ -11,5 +11,9 @@ public class Config {
         public string banners_storage_path;
         public string discord_api_url;
         public string osu_api_url;
+        public string ws_prod_server_url;
+        public int ws_port;
+        public string ws_dev_server_url;
+        public string base_url;
         public bool dev;
-    }
+}

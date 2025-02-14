@@ -19,7 +19,8 @@ namespace Nanina.Communication
             //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request_access_token.AddParameter("grant_type", "authorization_code");
             request_access_token.AddParameter("code", rawData.data);
-            request_access_token.AddParameter("redirect_uri", Environment.GetEnvironmentVariable("DISCORD_REDIRECT_URI"));
+            var redirect_uri = Global.config.dev ? Environment.GetEnvironmentVariable("DEV_DISCORD_REDIRECT_URI") : Environment.GetEnvironmentVariable("PROD_DISCORD_REDIRECT_URI") ;
+            request_access_token.AddParameter("redirect_uri", redirect_uri);
 
             var response_access_token = await client.ExecutePostAsync(request_access_token);
             if(!response_access_token.IsSuccessStatusCode) {Console.WriteLine("Status code: " + response_access_token.StatusCode + " et " + response_access_token.Content);return;}

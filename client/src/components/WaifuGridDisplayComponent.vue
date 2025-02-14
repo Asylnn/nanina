@@ -6,6 +6,7 @@ export default {
     name : "WaifuGridDisplayComponent",
     data() {
         return {
+            publicPath : import.meta.env.BASE_URL
         }
     },
     props: {
@@ -43,7 +44,7 @@ export default {
         <div v-for="waifu in waifus">
             <div class="waifuDisplay">
                 <div class="waifuIcon">
-                <img @click="showWaifu(waifu)" :src="'src/assets/waifu-image/' + waifu.imgPATH">
+                <img @click="showWaifu(waifu)" :src="`${publicPath}/waifu-image/${waifu.imgPATH}`">
                 </div>
                 <p>{{waifu.name}} Level {{ waifu.lvl }}</p>
             </div>

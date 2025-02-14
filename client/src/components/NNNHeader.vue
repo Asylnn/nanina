@@ -3,12 +3,14 @@
 
 import type { PropType } from 'vue';
 import Page from '../classes/page';
+import config from '../../../config.json'
 
 export default {
     name : "NNNHeader",
     data() {
         return {
-            actiMenu : false
+            actiMenu : false,
+            config: config
         }
     },
     props: {
@@ -74,7 +76,7 @@ export default {
                 <option value = "en">🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
                 <option value = "fr">🇫🇷</option>
             </select>
-            <li v-if="!logged"><a href="https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify">Discord</a></li>
+            <li v-if="!logged"><a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url">Discord</a></li>
             <li v-else><span @click="onClickChangePage(5)"><img height=25px width=25px src="../assets/option_gear_from_google_probably_not_free_of_use.png"></span></li>
         </ul>
     </header>

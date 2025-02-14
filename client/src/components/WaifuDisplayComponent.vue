@@ -6,6 +6,7 @@ export default {
     name : "WaifuDisplayComponent",
     data() {
         return {
+            publicPath : import.meta.env.BASE_URL
         }
     },
     props: {
@@ -24,7 +25,7 @@ export default {
 
 <template>
     <div id="focusedWaifu" >
-        <div id="waifuPic"><img :src="'src/assets/waifu-image/' + waifu.imgPATH"></div>
+        <div id="waifuPic"><img :src="`${publicPath}/waifu-image/${waifu.imgPATH}`"></div>
         <div id="waifuInfos">
             <span v-if="count != -1">Pull number {{ count+1 }}</span><br>
             {{waifu.name}} Level {{ waifu.lvl }} ({{ waifu.xp }} / {{ waifu.xpToLvlUp }})<br>

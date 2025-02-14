@@ -246,7 +246,7 @@ export default {
 	
 		<NNNHeader :dev=dev :logged=logged :admin=user.admin @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
-			<Homepage image="src/assets/homepage.png"></Homepage>
+			<Homepage></Homepage>
 		</div>
 		<div v-else-if="loadingPage === 20">
 			<InventoryPage :user="user"></InventoryPage>

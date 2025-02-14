@@ -10,7 +10,8 @@ export default {
     name : "ItemManagerComponent",
     data(){
         return {
-            ItemType : ItemType //cringe tbh
+            ItemType : ItemType, //cringe tbh
+            publicPath : import.meta.env.BASE_URL
         }
     },
     props: {
@@ -57,7 +58,7 @@ export default {
                 <option :value = 2>Accessory</option>
             </select>
             <span class="attribute">Img  <input class="imgImput"v-model="item.imgPATH" type="text"></span>
-            <img  class="img" :src="'src/assets/item-image/' + item.imgPATH">
+            <img  class="img" :src="`${publicPath}/item-image/${item.imgPATH}`">
         </div>
         
         

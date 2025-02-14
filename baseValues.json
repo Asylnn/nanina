@@ -43,5 +43,6 @@
     "dungeon_attack_timer_in_milliseconds":3000,
     "time_for_allowing_another_fight_in_milliseconds": 1,
     "time_limit_for_osu_code_verification_in_milliseconds": 300000,
-    "time_for_allowing_another_claim_in_milliseconds": 1
+    "time_for_allowing_another_claim_in_milliseconds": 1,
+    "base_gacha_currency_amount":10000
 }

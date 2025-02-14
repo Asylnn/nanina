@@ -3,6 +3,8 @@ import App from './App.vue'
 import {createI18n} from 'vue-i18n'
 import fr from './assets/translations/fr.json'
 import en from './assets/translations/en.json'
+import config from '../../config.json'
+
 //import router from './router'
 import {
 	ArrayQueue,
@@ -41,8 +43,11 @@ export const app = createApp(App)
 app.use(VueCookies)
 app.use(i18n)
 
-
-app.config.globalProperties.ws = new WebsocketBuilder("ws://localhost:4889")
+let url = (config.dev ? config.ws_dev_server_url : config.ws_prod_server_url) 
+let port = (config.dev ? config.ws_port : config.prod_ws_port) 
+url += ":" + port + "/ws"
+console.log("listening on url: " + url)
+app.config.globalProperties.ws = new WebsocketBuilder(url)
     .withBuffer(new ArrayQueue())           // buffer messages when disconnected
     .withBackoff(new ConstantBackoff(1000)) // retry every 1s
     .build();

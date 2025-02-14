@@ -39,6 +39,10 @@ client/.vscode/*
 /server/bin
 .vscode
 
+#Static assets (waifu and item images...)
+
+client/public
+
 #Database
 
 /save

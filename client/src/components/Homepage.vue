@@ -2,19 +2,14 @@
 
 export default {
     name : "Homepage",
-    props: {
-        image : {
-            type : String,
-            required : true
-        },
-    }
+
 }
 
 
 </script>
 <template>
     <div>
-        <img :src="image">
+        <img src="/src/assets/homepage.png">
     </div>
 </template>
 

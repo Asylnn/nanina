@@ -193,7 +193,8 @@ namespace Nanina.Osu
             request.AddParameter("grant_type", "authorization_code");
             request.AddParameter("client_id", Environment.GetEnvironmentVariable("OSU_CLIENT_ID"));
             request.AddParameter("client_secret", Environment.GetEnvironmentVariable("OSU_CLIENT_SECRET"));
-            request.AddParameter("redirect_uri", Environment.GetEnvironmentVariable("OSU_REDIRECT_URI"));
+            var redirect_uri = Global.config.dev ? Environment.GetEnvironmentVariable("DEV_OSU_REDIRECT_URI") : Environment.GetEnvironmentVariable("PROD_OSU_REDIRECT_URI") ;
+            request.AddParameter("redirect_uri", redirect_uri);
             request.AddParameter("code", code);
 
 

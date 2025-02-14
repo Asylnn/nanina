@@ -5,6 +5,7 @@ using Nanina.Osu;
 using Nanina.UserData;
 using Nanina.Communication;
 using Nanina.UserData.WaifuData;
+using System.Net;
 
 namespace Nanina.Database
 {
@@ -72,9 +73,9 @@ namespace Nanina.Database
             }
         }
         public static void LoadWebSocketServer(){
-            Global.ws = new WebSocketServer("ws://localhost:4889");
+            Global.ws = new WebSocketServer(IPAddress.Any, Global.config.ws_port ,false);
             Global.ws.AddWebSocketService<WS> ("/");
-            Global.ws.AddWebSocketService<WS> ("/test");
+            Global.ws.AddWebSocketService<WS> ("/ws");
             Global.ws.Start();
 
             if (Global.ws.IsListening) {
