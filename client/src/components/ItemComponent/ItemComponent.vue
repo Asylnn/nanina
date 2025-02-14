@@ -41,8 +41,10 @@ export default {
 
 #focusedObject {
     position: fixed;
-    width: 40vw;
-    height: 50vh;
+    min-width: 400px;
+    min-height: 100px;
+    width: 30vw;
+    height: 15vh;
     border-radius: 15px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -55,6 +57,8 @@ export default {
 #focusedObject img {
     max-width: 25vw;
     max-height: 60vh;
+    height: 100px;
+    width: 100px;
 }
 
 #waifuPic {

@@ -2,6 +2,8 @@
 import type Equipment from '@/classes/item/equipment';
 import User from '@/classes/user/user';
 import ItemComponent from './ItemComponent/ItemComponent.vue';
+import GridDisplayComponent from './GridDisplayComponent.vue';
+import Item from '@/classes/item/item';
 
 export default {
     name : "InventoryPage",
@@ -9,6 +11,7 @@ export default {
         return {
             category : "all",
             focusedView : false,
+            item_to_display : new Item()
         }
     },
     props: {
@@ -22,11 +25,21 @@ export default {
             this.category = categ
         },
         closeItemDisplay(){
-
+            this.focusedView = false
+            this.item_to_display = new Item()
         },
+        showItem(item : Item){
+            this.focusedView = true
+            this.item_to_display = item
+            
+        },
+        onEscape(){
+
+        }
     },
     components:{
         ItemComponent,
+        GridDisplayComponent,
     }
 }
 
@@ -50,13 +63,12 @@ export default {
         </div>
         <div class="InventoryBody">
             <div v-if="category === 'equipment' || category === 'all'">
-                <span>Equipement :</span><br>
-                <div v-for="item in user.inventory.equipment">
-                    <div v-if="focusedView">
-                        <!--<div @click="closeItemDisplay" id="veil" ></div>
-                        <WaifuDisplayComponent :waifu="waifuToDisplay()" tabindex="0" @keydown.esc="closeItemDisplay" :count=-1></WaifuDisplayComponent>-->
-                    </div>
+                <GridDisplayComponent :elements="user.inventory.equipment" @show-element="showItem" :columns=5></GridDisplayComponent>
+                <div v-if="focusedView">
+                    <div @click="closeItemDisplay" id="veil" ></div>
+                    <ItemComponent  @input="onEscape" :item="item_to_display" tabindex="0" @keydown.esc="closeItemDisplay"></ItemComponent>
                 </div>
+                
             </div>
             <div v-if="category === 'user_consumable' || category === 'all'">
                 <span>User Consumable :</span><br>
@@ -93,6 +105,7 @@ export default {
             </div>
         </div>
     </div>
+    
 </template>
 
 <style lang="css" scoped>

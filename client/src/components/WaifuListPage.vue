@@ -3,6 +3,7 @@
 import Waifu from '@/classes/waifu/waifu';
 import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
 import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
+import GridDisplayComponent from './GridDisplayComponent.vue';
 
 export default {
     name : "WaifuListPage",
@@ -51,20 +52,14 @@ export default {
         updateColumns(num : number){
             this.columns = num
         },
-        waifuToDisplay(){
-            return this.waifuDisplayed
-        },
-        columnsToSend(){
-            return this.columns
-        },
         onEscape(){
-            console.log("uwu")
             this.closeWaifuDisplay()
         }
     },
     components: {
         WaifuDisplayComponent,
         WaifuGridDisplayComponent,
+        GridDisplayComponent,
     }
 }
 
@@ -93,10 +88,10 @@ export default {
         </div>
     </div>
     <!-- tabindex is weird... truly html moment-->
-    <WaifuGridDisplayComponent @show-waifu="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :waifus=waifus :columns=columnsToSend()></WaifuGridDisplayComponent>
+    <GridDisplayComponent @show-element="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :elements=waifus :columns=columns></GridDisplayComponent>
     <div v-if="focusedView">
         <div @click="closeWaifuDisplay" id="veil" ></div>
-        <WaifuDisplayComponent  @input="onEscape" :waifu="waifuToDisplay()" tabindex="0" @keydown.esc="closeWaifuDisplay" :count=-1></WaifuDisplayComponent>
+        <WaifuDisplayComponent  @input="onEscape" :waifu="waifuDisplayed" tabindex="0" @keydown.esc="closeWaifuDisplay" :count=-1></WaifuDisplayComponent>
     </div>
 </template>
 
@@ -113,13 +108,5 @@ export default {
 #filters {
     display: grid;
 }
-#veil {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0,0,0,0.8);
-    z-index: 726;
-}
+
 </style>

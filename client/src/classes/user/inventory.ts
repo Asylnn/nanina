@@ -4,10 +4,10 @@ import type Item from "../item/item";
 
 
 export default class Inventory {
-    public equipment!: Dictionary<Equipment>;
-    public userConsumable!: Dictionary<Item>;
-    public waifuConsumable!: Dictionary<Item>;
-    public material!: Dictionary<Item>;
+    public equipment!: Array<Equipment>;
+    public userConsumable!: Array<Item>;
+    public waifuConsumable!: Array<Item>;
+    public material!: Array<Item>;
 }
 
 
