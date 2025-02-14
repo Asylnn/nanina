@@ -31,7 +31,6 @@ import NotificationSeverity from './classes/notification_severity'
 import OsuBeatmap from './classes/beatmap'
 import ItemManagerPage from './components/ItemManagerPage.vue'
 import WaifuDisplayComponent from './components/WaifuDisplayComponent.vue'
-import WaifuGridDisplayComponent from './components/WaifuGridDisplayComponent.vue'
 import InventoryManagerPage from './components/InventoryManagerPage.vue'
 import InventoryPage from './components/InventoryPage.vue'
 import DungeonPage from './components/DungeonPage.vue'
@@ -78,7 +77,6 @@ export default {
 		InventoryPage,
 		ItemManagerPage,
 		WaifuDisplayComponent,
-		WaifuGridDisplayComponent,
 		InventoryManagerPage,
 		DungeonPage,
 	},	

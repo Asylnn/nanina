@@ -6,7 +6,7 @@ import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
 import PullBannerHistory from '@/classes/user/pull_history';
 import type Dictionary from '@/classes/dictionary';
 import User from '@/classes/user/user';
-import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
+import GridDisplayComponent from './GridDisplayComponent.vue';
 
 export default {
     name : "PullPage",
@@ -38,7 +38,7 @@ export default {
     },
     components: {
         WaifuDisplayComponent,
-        WaifuGridDisplayComponent,
+        GridDisplayComponent,
     },
     mounted(){
         this.selected_banner = this.banners[0]
@@ -98,7 +98,7 @@ export default {
                 <WaifuDisplayComponent :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
             </div>
             <div id="gridPull" v-else>
-                <WaifuGridDisplayComponent :waifus="waifusToSend()" :columns=5></WaifuGridDisplayComponent>
+                <GridDisplayComponent :elements="waifusToSend()" :columns=5></GridDisplayComponent>
             </div>
         </div>
     </div>

@@ -5,8 +5,8 @@ import config from '../../../baseValues.json'
 
 import OsuBeatmap from '@/classes/beatmap';
 import User from '@/classes/user/user';
-import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
 import Waifu from '@/classes/waifu/waifu';
+import GridDisplayComponent from './GridDisplayComponent.vue';
 
 
 
@@ -104,7 +104,7 @@ export default {
         }
     },
     components: {
-        WaifuGridDisplayComponent,
+        GridDisplayComponent,
     }
 }
 
@@ -138,9 +138,9 @@ export default {
             <p>Playing me by submitting a score</p><br>
             If you manage to submit a score, I will gift you XP !<br>
             Select which waifu would recieve rewards if you are worthy !
-            <WaifuGridDisplayComponent v-if="chosen_waifu == null" @show-waifu="selectWaifu" :waifus="user.waifus" :columns="3"></WaifuGridDisplayComponent>
+            <GridDisplayComponent v-if="chosen_waifu == null" @show-element="selectWaifu" :elements="user.waifus" :columns="3"></GridDisplayComponent>
             <div id="afterSelect" v-if="chosen_waifu != null">
-                <WaifuGridDisplayComponent @show-waifu="resetWaifu" :waifus="[chosen_waifu]" :columns="1"></WaifuGridDisplayComponent>
+                <GridDisplayComponent @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
                 <span id="timerClaim" v-if="claim_timing_out">
                 Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
                 </span>

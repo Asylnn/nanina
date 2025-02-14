@@ -2,7 +2,6 @@
 
 import Waifu from '@/classes/waifu/waifu';
 import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
-import WaifuGridDisplayComponent from './WaifuGridDisplayComponent.vue';
 import GridDisplayComponent from './GridDisplayComponent.vue';
 
 export default {
@@ -58,7 +57,6 @@ export default {
     },
     components: {
         WaifuDisplayComponent,
-        WaifuGridDisplayComponent,
         GridDisplayComponent,
     }
 }
