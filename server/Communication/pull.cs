@@ -9,6 +9,7 @@ namespace Nanina.Communication
     {
         protected void Pull(ClientWebSocketResponse rawData){
             var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
 
             var pullData = JsonConvert.DeserializeObject<PullRequest>(rawData.data);
             if(!GachaManager.BannerExists(pullData.bannerId)){
@@ -19,7 +20,7 @@ namespace Nanina.Communication
                 Send(ClientNotification.NotificationData("Pulling", "You don't have enough gacha currency!", 3));
                 return;
             }
-            if(pullData.pullAmount == 1 && pullData.pullAmount == 10){
+            if(pullData.pullAmount != 1 && pullData.pullAmount != 10){
                 Send(ClientNotification.NotificationData("Pulling", "You can't pull a different amount of 1 or 10 times", 1));
                 return;
             }

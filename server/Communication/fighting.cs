@@ -14,15 +14,18 @@ namespace Nanina.Communication
             using var db = new LiteDatabase($@"{Global.config.database_path}");
             var mapsCol = db.GetCollection<Beatmap>("osumapsdb");
             var maps = mapsCol.Find(x => x.id == Convert.ToInt64(rawData.data));
-            
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            if(maps.Count() != 0)
             {
-                type = "map link",
-                data = JsonConvert.SerializeObject(maps.First())
-            }));
+                Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                {
+                    type = "map link",
+                    data = JsonConvert.SerializeObject(maps.First())
+                }));
+            }
         }
         public void GetMapToFight(ClientWebSocketResponse rawData){ //somehow protected doesn't work?
             var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(user.fights.Count() != 0 && user.fights.Last().timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You have a too much recent fight", 1)); return; }                    
             
@@ -48,7 +51,7 @@ namespace Nanina.Communication
         }
         protected async void ClaimFight(ClientWebSocketResponse rawData){
             var user = DBUtils.GetUser(rawData.userId);
-            
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(user.fights.Last().completed) 
                 { Send(ClientNotification.NotificationData("Fighting", "You completed the last fight! You need to start a new one!", 0)); return; }
             if(user.claimTimestamp + Global.baseValues.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) 

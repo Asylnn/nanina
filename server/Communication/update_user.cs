@@ -7,8 +7,8 @@ namespace Nanina.Communication
     partial class WS : WebSocketBehavior
     {
         protected async void UpdateOsuId(ClientWebSocketResponse rawData){
-            Console.WriteLine("rawData : " + JsonConvert.SerializeObject(rawData));
             var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             var rng = new Random();
             var code = (rng.Next(899_999) + 100_000).ToString();
             var success = await Osu.Api.SendMessageToUser(rawData.data, code);
@@ -28,6 +28,7 @@ namespace Nanina.Communication
         }
         protected void VerifyOsuId(ClientWebSocketResponse rawData){
             var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(Utils.GetTimestamp() - user.verification.osuVerificationCodetimestamp > Global.baseValues.time_limit_for_osu_code_verification_in_milliseconds)
                 {Send(ClientNotification.NotificationData("Update osu ID", "The code expired", 1)); return;}
             
@@ -48,8 +49,10 @@ namespace Nanina.Communication
         }
         protected void UpdateTheme(ClientWebSocketResponse rawData){
             var user = DBUtils.GetUser(rawData.userId);
-            user.theme = rawData.data;
-            DBUtils.UpdateUser(user);
+            if(user != null){
+                user.theme = rawData.data;
+                DBUtils.UpdateUser(user);
+            }   
         }
     }
 }

@@ -17,7 +17,9 @@ namespace Nanina.Communication
 
         }
         protected void RequestItemDatabase(ClientWebSocketResponse rawData){
-            if(!DBUtils.GetUser(rawData.userId).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            if(!user.admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
                 
                 var itemCol = db.GetCollection<Item>("itemdb");
@@ -33,9 +35,10 @@ namespace Nanina.Communication
         }
         protected void UpdateItemDatabase(ClientWebSocketResponse rawData){
 
-            
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
 
-            if(DBUtils.GetUser(rawData.userId).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(user.admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
             var items = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
@@ -60,7 +63,10 @@ namespace Nanina.Communication
         }
 
         protected void RequestSetDatabase(ClientWebSocketResponse rawData){
-            if(!DBUtils.GetUser(rawData.userId).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+
+            if(!user.admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
 
             using var db = new LiteDatabase($@"{Global.config.database_path}");
             var setCol = db.GetCollection<Set>("setdb");

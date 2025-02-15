@@ -9,7 +9,9 @@ namespace Nanina.Communication
     partial class WS : WebSocketBehavior
     {
         protected void RequestWaifuDatabase(ClientWebSocketResponse rawData){
-            if(!DBUtils.GetUser(rawData.userId).admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            if(!user.admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
                 var waifuCol = db.GetCollection<Waifu>("waifudb").FindAll();
 
@@ -24,7 +26,9 @@ namespace Nanina.Communication
             }
         }
         protected void UpdateWaifuDatabase(ClientWebSocketResponse rawData){
-            if(DBUtils.GetUser(rawData.userId).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            if(user.admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
             var waifus = JsonConvert.DeserializeObject<Waifu[]>(rawData.data);
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){

@@ -10,10 +10,11 @@ namespace Nanina.Communication
     {
         protected async void AddMapToDatabase(ClientWebSocketResponse rawData){
 
-        var user = DBUtils.GetUser(rawData.userId);
-        if (user.admin == false ) {Send(ClientNotification.NotificationData("Admin", "You don't have the permissions for this action!", 0)); return;}
-        var Beatmap = await Osu.Api.GetBeatmapById(rawData.data);
-        if(Beatmap == null) {Send(ClientNotification.NotificationData("Admin", "This beatmap doesn't exist!", 1)); return;}
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            if (user.admin == false ) {Send(ClientNotification.NotificationData("Admin", "You don't have the permissions for this action!", 0)); return;}
+            var Beatmap = await Osu.Api.GetBeatmapById(rawData.data);
+            if(Beatmap == null) {Send(ClientNotification.NotificationData("Admin", "This beatmap doesn't exist!", 1)); return;}
             using(var db = new LiteDatabase($@"{Global.config.database_path}")){
             var mapsCol = db.GetCollection<Beatmap>("osumapsdb");
                 Console.WriteLine("mapsCol count : " + mapsCol.Count());
