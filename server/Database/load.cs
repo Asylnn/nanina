@@ -13,7 +13,7 @@ namespace Nanina.Database
 
         public static async void Load(){
             //LoadConfig();
-            LoadEnv();
+            DotEnv.Load("../.env");
             LoadOsuApi();
             LoadWebSocketServer();
             if(Global.config.first_time_running) 
@@ -36,18 +36,13 @@ namespace Nanina.Database
             Console.WriteLine("loading config : ..." + File.ReadAllText("../config.json"));
             Global.config = 
         }*/
-        public static void LoadEnv(){
-            var dotEnvLoadStatus = DotEnv.Load("../.env");
-            if (dotEnvLoadStatus == false) {
-                System.Environment.Exit(1);
-            }
-        }
+
         public static void LoadOsuApi(){
             if(!Global.config.dev || false){ //put to true for refreshing osu tokens
                 Console.Error.WriteLine("Creating new osu tokens ...");
 
                 var code = "long string"; 
-                // for sending messages used for verifications, to get the code, check the following link :
+                // to get the code used for sending messages used for verifications, check the following link :
                 //https://osu.ppy.sh/oauth/authorize?client_id=422727&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=chat.write
                 //replace client_id with your osu client id, same with the redicted_uri
                 
@@ -81,8 +76,8 @@ namespace Nanina.Database
             if (Global.ws.IsListening) {
                 Console.WriteLine ("Listening on port {0}, and providing WebSocket services:", Global.ws.Port);
 
-            foreach (var path in Global.ws.WebSocketServices.Paths)
-                Console.WriteLine ("- {0}", path);
+                foreach (var path in Global.ws.WebSocketServices.Paths)
+                    Console.WriteLine ("- {0}", path);
             }
         }
 
@@ -107,11 +102,11 @@ namespace Nanina.Database
                 o_luck = 10,
                 u_luck = 2,
             };
-            using(var db = new LiteDatabase($@"{Global.config.database_path}")){
-                var waifuCol = db.GetCollection<Waifu>("waifudb");
-                waifuCol.Insert(waifu);
-                waifuCol.EnsureIndex(x => x.id, true);
-            }
+
+            var waifuCol = DBUtils.GetCollection<Waifu>();
+            waifuCol.Insert(waifu);
+            waifuCol.EnsureIndex(x => x.id, true);
+            
             Global.config.first_time_running = false;
             File.WriteAllText("../config.json", JsonConvert.SerializeObject(Global.config));
         }
@@ -119,29 +114,24 @@ namespace Nanina.Database
         public static void UpdateUserDB()
         {
             Console.WriteLine("Updating user database...");
-            using(var db = new LiteDatabase($@"{Global.config.database_path}")){
-                var userCol = db.GetCollection<UserData.User>("userdb");
-                var users = userCol.FindAll();
-                //Update
-                foreach (UserData.User user in users) {
-                    user.inventory ??= new ();
-                    user.waifus ??= [];
-                    user.verification ??= new();
-                    user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
-                    if(user.waifu != null)
-                    {
-                        user.waifus.Add(user.waifu);
-                        user.waifu = null;
-                    }
-                    
-                    /*if(user.waifus.id == null){
-                        user.waifus.id = "0";
-                    }*/
-                    //user.waifus.ForEach(waifu => waifu.Update());
-                        //Is it still working?
-                    //userCol.Update(user);
+            
+            var userCol = DBUtils.GetCollection<UserData.User>();
+            var users = userCol.FindAll();
+            //Update
+            foreach (UserData.User user in users) {
+                user.inventory ??= new ();
+                user.waifus ??= [];
+                user.verification ??= new();
+                user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
+                
+                /*if(user.waifus.id == null){
+                    user.waifus.id = "0";
+                }*/
+                //user.waifus.ForEach(waifu => waifu.Update());
+                    //Is it still working?
+                //userCol.Update(user);
 
-                }
+                
             }
         }
     }

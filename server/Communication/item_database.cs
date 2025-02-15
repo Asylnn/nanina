@@ -8,68 +8,79 @@ namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
     {
+        /*
+            This is how the client send back the item database
+        */
         private class ItemDBResponse
         {
             public List<Item> material;
             public List<Item> waifu_consumable;
             public List<Item> user_consumable;
             public List<Equipment> equipment;
-
         }
-        protected void RequestItemDatabase(ClientWebSocketResponse rawData){
-            var user = DBUtils.GetUser(rawData.userId);
-            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
-            if(!user.admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-            using(var db = new LiteDatabase($@"{Global.config.database_path}")){
-                
-                var itemCol = db.GetCollection<Item>("itemdb");
-                var data = JsonConvert.SerializeObject(itemCol.FindAll());
 
-                var response = new ServerWebSocketResponse
-                {
-                    type = "item db",
-                    data = data
-                };
-                Send(JsonConvert.SerializeObject(response));
-            }
+        /*
+            If the user is an admin, then it sends the item database
+        */
+        protected void ProvideItemDatabase(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) 
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
+            if(!user.admin)
+                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            var itemCol = DBUtils.GetCollection<Item>();
+            var data = JsonConvert.SerializeObject(itemCol.FindAll());
+
+            var response = new ServerWebSocketResponse
+            {
+                type = "item db",
+                data = data
+            };
+            Send(JsonConvert.SerializeObject(response));
         }
-        protected void UpdateItemDatabase(ClientWebSocketResponse rawData){
+        protected void UpdateItemDatabase(ClientWebSocketResponse rawData)
+        {
 
             var user = DBUtils.GetUser(rawData.userId);
-            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
 
-            if(user.admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-            if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
+            if(user == null)
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
+            if(user.admin == false)
+                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(!Global.config.dev) 
+                {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
             var items = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
-            using(var db = new LiteDatabase($@"{Global.config.database_path}")){
-                var itemCol = db.GetCollection<Item>("itemdb");
-                var equipmentCol = db.GetCollection<Equipment>("itemdb");
-                itemCol.DeleteAll();
-                foreach (var item in items.material) {
-                    InsertItem(item, itemCol);
-                }
-                foreach (var item in items.waifu_consumable) {
-                    InsertItem(item, itemCol);
-                }
-                foreach (var item in items.user_consumable) {
-                    InsertItem(item, itemCol);
-                }
-                foreach (var item in items.equipment) {
-                    InsertEquipment(item, itemCol, equipmentCol);
-                }
-                Send(ClientNotification.NotificationData("admin", "updated the item database!", 0));
+            
+            var itemCol = DBUtils.GetCollection<Item>();
+            var equipmentCol = DBUtils.GetCollection<Equipment>();
+            itemCol.DeleteAll();
+            foreach (var item in items.material) {
+                InsertItem(item, itemCol);
             }
+            foreach (var item in items.waifu_consumable) {
+                InsertItem(item, itemCol);
+            }
+            foreach (var item in items.user_consumable) {
+                InsertItem(item, itemCol);
+            }
+            foreach (var item in items.equipment) {
+                InsertEquipment(item, itemCol, equipmentCol);
+            }
+            Send(ClientNotification.NotificationData("admin", "updated the item database!", 0));
+            
         }
 
-        protected void RequestSetDatabase(ClientWebSocketResponse rawData){
+        protected void ProvideSetDatabase(ClientWebSocketResponse rawData)
+        {
             var user = DBUtils.GetUser(rawData.userId);
-            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            if(user == null) 
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
+            if(!user.admin)
+                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
 
-            if(!user.admin){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-
-            using var db = new LiteDatabase($@"{Global.config.database_path}");
-            var setCol = db.GetCollection<Set>("setdb");
+            var setCol = DBUtils.GetCollection<Set>();
             var data = JsonConvert.SerializeObject(setCol.FindAll());
 
             var response = new ServerWebSocketResponse
@@ -82,17 +93,19 @@ namespace Nanina.Communication
         protected void UpdateSetDatabase(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.GetUser(rawData.userId);
-            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
-
-            if(user.admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-            if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
-            using var db = new LiteDatabase($@"{Global.config.database_path}");
-
-            var sets = JsonConvert.DeserializeObject<Set[]>(rawData.data);
-            var setCol = db.GetCollection<Set>("setdb");
+            if(user == null) 
+                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            if(user.admin == false)
+                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(!Global.config.dev) 
+                {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
+            
+            
+            var setCol = DBUtils.GetCollection<Set>();
             
             setCol.DeleteAll();
-            foreach (var set in sets) {
+            foreach (var set in setCol.FindAll()) 
+            {
                 setCol.Insert(set);
                 setCol.EnsureIndex(x => x.id, true);
             }

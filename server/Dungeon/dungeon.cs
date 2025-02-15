@@ -30,7 +30,8 @@ namespace Nanina.Dungeon
         public List<Equipment> loot = [];
         public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
 
-        public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId){
+        public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId)
+        {
             instanceId = _instanceId;
             sessionId = _sessionId;
             dungeonTemplate = dungeon;
@@ -50,27 +51,18 @@ namespace Nanina.Dungeon
             while (await damageTimer.WaitForNextTickAsync())
             {   
                 DealDamage();
-                
-                
                 if(health <= 0) {
-                    
-                    
                     damageTimer.Dispose();
                     ConcludeDungeon();
-                    
                 }
-                else {
-                    DungeonManager.UpdateDungeonOfClient(this); //I don't like this tbh...
-                }
-            
-                    
+                else 
+                    DungeonManager.UpdateDungeonOfClient(this);
             }
         }
 
         public void DealDamage(){
             foreach (var waifu in waifus) 
             {
-                Random rng = new();
                 float dmg;
                 string attackType;
 
@@ -84,12 +76,12 @@ namespace Nanina.Dungeon
                     attackType = "magical";
                 }
                 else{
-                    attackType = "psychic";
                     dmg = waifu.Psychic*(1 - dungeonTemplate.bossResistances.psychicResistance);
+                    attackType = "psychic";
                 }
                 var critDmgMult = (float)(Math.Truncate(waifu.CritChance)*waifu.CritDamage); //Super crit
                 var critChance = waifu.CritChance - Math.Truncate(waifu.CritChance);
-                var randCrit = rng.NextDouble();
+                var randCrit = new Random().NextDouble();
                 
                 if(randCrit <= critChance)
                     critDmgMult += waifu.CritDamage;

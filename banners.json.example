@@ -8,8 +8,8 @@
     "threeStarsWeight":10,
     "rateUpTwoStarsWeight": 0,
     "rateUpThreeStarsWeight":0,
-    "twoStarsPollId": ["1", "2"],
-    "threeStarsPollId": ["3"],
-    "rateUpTwoStarsPollId":[],
-    "rateUpThreeStarsPollId":[]
+    "twoStarsPoolId": ["1", "2"],
+    "threeStarsPoolId": ["3"],
+    "rateUpTwoStarsPoolId":[],
+    "rateUpThreeStarsPoolId":[]
 }]

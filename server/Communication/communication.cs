@@ -5,61 +5,66 @@ using Nanina.Database;
 using Nanina.Gacha;
 using Nanina.Dungeon;
 using Nanina.UserData;
+using System.Data.Common;
 
 namespace Nanina.Communication
 {
+    /*
+        This file is for extending the partial class WS. Most files in Communication are for this purpose
+        This file in particular is for managing the client session.
+    */
     partial class WS : WebSocketBehavior
     {
-        
-        protected void Disconect(ClientWebSocketResponse rawData){
-            using var db = new LiteDatabase($@"{Global.config.database_path}");
-            var sessionCol = db.GetCollection<Session>("sessiondb");
-            var session = sessionCol.Find(x => x.id == rawData.sessionId).First();
+        /*
+            This function is called when the client click on the disconnect button.
+            It remove the userId from the session.
+        */
+        protected void Disconnect(ClientWebSocketResponse rawData){
+            var session = DBUtils.GetSession(rawData.sessionId);
+            if(session == null) 
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
             session.UpdateUserId(null);
-            
-            Console.WriteLine(JsonConvert.SerializeObject(session));
         }
-        protected void ProvideSessionAndUser(ClientWebSocketResponse rawData)
+
+        /*
+            This is used to provide the session to the client. It also checks if the session has a user
+            associated with it. In that case, it also send the user and some other data
+        */
+        protected void ProvideSessionToClient(ClientWebSocketResponse rawData)
         {
-            using var db = new LiteDatabase($@"{Global.config.database_path}");
-            var sessionCol = db.GetCollection<Session>("sessiondb");
-            var sessions = sessionCol.Find(x => x.id == rawData.sessionId);
-            if(sessions.Count() == 0)
-            {
-                var session = Session.NewSession(this.ID);
-                Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                    type = "session",
-                    data = JsonConvert.SerializeObject(session),
-                }));
-            }
+            var session = DBUtils.GetSession(rawData.sessionId);
+            if(session == null)
+                session = Session.NewSession(ID);
             else
             {
-                var session = sessions.First();
-                session.UpdateWebSocketId(ID, true);
-                Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                    type = "session",
-                    data = JsonConvert.SerializeObject(session),
-                }));
-                if(session.hasUserAssociatedWithSession){
-                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                        type = "user",
-                        data = JsonConvert.SerializeObject(DBUtils.GetUser(session.userId)),
-                    }));
-                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-                    {
-                        type = "get banners",
-                        data = JsonConvert.SerializeObject(GachaManager.banners),
-                    }));
-                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-                    {
-                        type = "get dungeons",
-                        data = JsonConvert.SerializeObject(DungeonManager.dungeons),
-                    }));
-                    
-                }
-                
+                Console.WriteLine(ID);
+                session.UpdateWebSocketId(ID);
+                Console.WriteLine(JsonConvert.SerializeObject(session));
+                if(session.userId != null)
+                    ProvideUserToClient(session.userId);
             }
-            
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                type = "session",
+                data = JsonConvert.SerializeObject(session),
+            }));
+        }
+
+        protected void ProvideUserToClient(string userId)
+        {
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+                type = "user",
+                data = JsonConvert.SerializeObject(DBUtils.GetUser(userId)),
+            }));
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "get banners",
+                data = JsonConvert.SerializeObject(GachaManager.banners),
+            }));
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "get dungeons",
+                data = JsonConvert.SerializeObject(DungeonManager.dungeons),
+            }));
         }
     }
 }

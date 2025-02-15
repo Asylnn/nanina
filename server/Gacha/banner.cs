@@ -10,9 +10,9 @@ namespace Nanina.Gacha
         public uint threeStarsWeight;
         public uint rateUpTwoStarsWeight;
         public uint rateUpThreeStarsWeight;
-        public string[] twoStarsPollId;
-        public string[] threeStarsPollId;
-        public string[] rateUpTwoStarsPollId;
-        public string[] rateUpThreeStarsPollId;
+        public string[] twoStarsPoolId;
+        public string[] threeStarsPoolId;
+        public string[] rateUpTwoStarsPoolId;
+        public string[] rateUpThreeStarsPoolId;
     }
 }

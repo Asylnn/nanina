@@ -12,34 +12,35 @@ namespace Nanina.Osu
         /*public static string Linkify(Beatmap map){
             return $"{map.url}{map.beatmapset_id}#{map.mode}/{map.id}";
         }*/
-        public static void AddDefaultHeader(RestRequest request)
+        public static RestRequest AddDefaultHeader(RestRequest request)
         {
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Authorization", $"Bearer {tokens.access_token}");
+            return request.AddHeader("Content-Type", "application/json")
+                .AddHeader("Accept", "application/json")
+                .AddHeader("Authorization", $"Bearer {tokens.access_token}");
         }
         public static async void GetTokens()
         {
             var request = new RestRequest(Environment.GetEnvironmentVariable("OSU_OAUTH_URL"), Method.Post);
             //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddHeader("Accept", "application/json");
-            request.AddParameter("grant_type", "client_credentials");
-            request.AddParameter("client_id", Environment.GetEnvironmentVariable("OSU_CLIENT_ID"));
-            request.AddParameter("client_secret", Environment.GetEnvironmentVariable("OSU_CLIENT_SECRET"));
-            request.AddParameter("scope","public");
+            request.AddHeader("Accept", "application/json")
+                .AddParameter("grant_type", "client_credentials")
+                .AddParameter("client_id", Environment.GetEnvironmentVariable("OSU_CLIENT_ID"))
+                .AddParameter("client_secret", Environment.GetEnvironmentVariable("OSU_CLIENT_SECRET"))
+                .AddParameter("scope","public");
             var response = await new RestClient().ExecutePostAsync(request);
-            Console.WriteLine("updated osu tokens");
+            
             tokens = JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
 
             File.WriteAllText(Global.config.osu_tokens_storage_path, response.Content);
+            Console.WriteLine("updated osu tokens");
         }
 
         public static async Task<ScoreExtended[]> GetUserRecentScores(string id, string mode)
         {
             var request = new RestRequest($"users/{id}/scores/recent", Method.Get);
-            AddDefaultHeader(request);
-            request.AddQueryParameter("limit","1"); //# Of scores you get from the Api
-            request.AddQueryParameter("mode",mode);
+            AddDefaultHeader(request)
+                .AddQueryParameter("limit", "1") //# Of scores you get from the Api
+                .AddQueryParameter("mode", mode);
             var response = await client.ExecuteGetAsync(request);
 
             Console.WriteLine("GetUserRecentScores : id : " + id + " mode : "  + mode);
@@ -69,37 +70,29 @@ namespace Nanina.Osu
         {
             var request = new RestRequest($"/beatmaps/{beatmapId}", Method.Get);
             AddDefaultHeader(request);
-            //request.AddQueryParameter("id",beatmapId);
 
-            
             var response = await client.ExecuteGetAsync(request);
-            Console.WriteLine("GetBeatmapById : response content "+ response.Content);
             Console.WriteLine("GetBeatmapById : osu api response status code "+ response.StatusCode);
 
-
-            if(response.IsSuccessStatusCode)
+            
+            if(!response.IsSuccessStatusCode)
+                {Console.WriteLine("osu api response error content" + response.Content); return null;}
+            
+            var content = response.Content
+                .Replace("cover@2x", "cover2x")
+                .Replace("card@2x", "cover2x")
+                .Replace("list@2x", "cover2x")
+                .Replace("slimcover@2x", "cover2x");
+            var beatmap =  JsonConvert.DeserializeObject<Beatmap>(content,  new JsonSerializerSettings
             {
-                var content = response.Content;
-                content = content.Replace("cover@2x", "cover2x");
-                content = content.Replace("card@2x", "cover2x");
-                content = content.Replace("list@2x", "cover2x");
-                content = content.Replace("slimcover@2x", "cover2x");
-                var beatmap =  JsonConvert.DeserializeObject<Beatmap>(content,  new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
-                
-                beatmap.beatmapset.covers.cover2x ??= beatmap.beatmapset.covers.cover2x.Replace("cover2x", "cover@2x");
-                if(beatmap.beatmapset.covers.card2x != null) beatmap.beatmapset.covers.card2x = beatmap.beatmapset.covers.card2x.Replace("card2x", "card@2x");
-                if(beatmap.beatmapset.covers.list2x != null) beatmap.beatmapset.covers.list2x = beatmap.beatmapset.covers.list2x.Replace("list2x", "list@2x");
-                if(beatmap.beatmapset.covers.slimcover2x != null) beatmap.beatmapset.covers.slimcover2x = beatmap.beatmapset.covers.slimcover2x.Replace("slimcover", "slimcover@2x");
-                return beatmap;
-            }
-            else 
-            {
-                Console.WriteLine("osu api response error content" + response.Content);
-                return null;
-            }
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            
+            beatmap.beatmapset.covers.cover2x ??= beatmap.beatmapset.covers.cover2x.Replace("cover2x", "cover@2x");
+            if(beatmap.beatmapset.covers.card2x != null) beatmap.beatmapset.covers.card2x = beatmap.beatmapset.covers.card2x.Replace("card2x", "card@2x");
+            if(beatmap.beatmapset.covers.list2x != null) beatmap.beatmapset.covers.list2x = beatmap.beatmapset.covers.list2x.Replace("list2x", "list@2x");
+            if(beatmap.beatmapset.covers.slimcover2x != null) beatmap.beatmapset.covers.slimcover2x = beatmap.beatmapset.covers.slimcover2x.Replace("slimcover", "slimcover@2x");
+            return beatmap;
         }
 
         /*public static async Task<LookUpBeatmap> LookUpBeatmapById(string id)
@@ -155,17 +148,17 @@ namespace Nanina.Osu
         }*/
         public static async Task<bool> SendMessageToUser(string osuUserId, string message)
         {
-            var request = new RestRequest($"chat/new", Method.Post);
+            var request = new RestRequest($"chat/new", Method.Post)
 
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Authorization", $"Bearer {chat_tokens.access_token}");
+                .AddHeader("Content-Type", "application/json")
+                .AddHeader("Accept", "application/json")
+                .AddHeader("Authorization", $"Bearer {chat_tokens.access_token}")
 
-            request.AddJsonBody(JsonConvert.SerializeObject(new {
-                target_id=Convert.ToInt64(osuUserId),
-                is_action=false,
-                message,
-            }));
+                .AddJsonBody(JsonConvert.SerializeObject(new {
+                    target_id=Convert.ToInt64(osuUserId),
+                    is_action=false,
+                    message,
+                }));
             
             
             var response = await client.ExecutePostAsync(request);
@@ -185,17 +178,17 @@ namespace Nanina.Osu
             //replace client_id with your osu client id, same with the redicted_uri
             
             var request = new RestRequest("https://osu.ppy.sh/oauth/token", Method.Post);
+            var redirect_uri = Global.config.dev ? Environment.GetEnvironmentVariable("DEV_OSU_REDIRECT_URI") : Environment.GetEnvironmentVariable("PROD_OSU_REDIRECT_URI") ;
 
-            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddHeader("Accept", "application/json");
+            request.AddHeader("Content-Type", "application/x-www-form-urlencoded")
+                .AddHeader("Accept", "application/json")
+                .AddParameter("grant_type", "authorization_code")
+                .AddParameter("client_id", Environment.GetEnvironmentVariable("OSU_CLIENT_ID"))
+                .AddParameter("client_secret", Environment.GetEnvironmentVariable("OSU_CLIENT_SECRET"))
+                .AddParameter("redirect_uri", redirect_uri)
+                .AddParameter("code", code);
 
             
-            request.AddParameter("grant_type", "authorization_code");
-            request.AddParameter("client_id", Environment.GetEnvironmentVariable("OSU_CLIENT_ID"));
-            request.AddParameter("client_secret", Environment.GetEnvironmentVariable("OSU_CLIENT_SECRET"));
-            var redirect_uri = Global.config.dev ? Environment.GetEnvironmentVariable("DEV_OSU_REDIRECT_URI") : Environment.GetEnvironmentVariable("PROD_OSU_REDIRECT_URI") ;
-            request.AddParameter("redirect_uri", redirect_uri);
-            request.AddParameter("code", code);
 
 
             var response = await new RestClient().ExecutePostAsync(request);

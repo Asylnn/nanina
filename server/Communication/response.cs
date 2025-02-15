@@ -27,14 +27,14 @@ namespace Nanina.Communication
                     break;
 
                 case "request waifu db" :
-                    RequestWaifuDatabase(rawData);
+                    ProvideWaifuDatabase(rawData);
                     break;
 
                 case "update waifu db": 
                     UpdateWaifuDatabase(rawData);
                     break;
                 case "request item db" :
-                    RequestItemDatabase(rawData);
+                    ProvideItemDatabase(rawData);
                     break;
 
                 case "change locale":
@@ -55,7 +55,7 @@ namespace Nanina.Communication
                     break;
 
                 case "get session id":
-                    ProvideSessionAndUser(rawData);
+                    ProvideSessionToClient(rawData);
                     break;
                     
                 case "add beatmap with id": 
@@ -81,32 +81,31 @@ namespace Nanina.Communication
                     StopDungeon(rawData);
                     break;
                 case "request set db":
-                    RequestSetDatabase(rawData);
+                    ProvideSetDatabase(rawData);
                     break;
                 case "update set db":
                     UpdateSetDatabase(rawData);
                     break;
                 case "disconect":
-                    Disconect(rawData);
+                    Disconnect(rawData);
                     break;
 
             }
         }
         protected override void OnClose(CloseEventArgs e)
         {
-            using var db = new LiteDatabase($@"{Global.config.database_path}");
-            var sessionCol = db.GetCollection<Session>("sessiondb");
-            var sessions = sessionCol.Find(session => session.webSocketId == this.ID);
-            if(sessions.Count() >= 1 ){
+            var sessionCol = DBUtils.GetCollection<Session>();
+            var sessions = sessionCol.Find(session => session.webSocketId == ID);
+            if(sessions.Count() >= 1 )
+            {
                 var session = sessions.First();
-                session.UpdateWebSocketId(session.id, false);
+                session.UpdateWebSocketId(null);
             }
             Console.WriteLine("Bye :'(");
         }
 
         protected override void OnOpen()
         {
-            
             Console.WriteLine("Hello <3");
         }
     }

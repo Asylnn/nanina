@@ -146,9 +146,12 @@ namespace Nanina.UserData.WaifuData
             }
             if(equipment.weapon.setId == equipment.dress.setId && equipment.dress.setId == equipment.accessory.setId)
             {
-                using var db = new LiteDatabase($@"{Global.config.database_path}");
-                var setCol = db.GetCollection<Set>("setdb");
+                var setCol = DBUtils.GetCollection<Set>();
                 equipment.set = setCol.Find(set => set.id == equipment.weapon.setId).First();
+            }
+            else
+            {
+                equipment.set = null;
             }
                 
             return oldEquipment;

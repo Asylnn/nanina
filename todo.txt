@@ -59,16 +59,15 @@ Send Error message when unauthorized
 Future Tasks
 
 TODO : Implement Avatar for user
-TODO : Implement File Serving
-TODO : Make in sort to thrust NOTHING coming from client and test EVERYTHING
+TODO : Implement File Serving                                                                                                   #Done
+TODO : Make in sort to thrust NOTHING coming from client and test EVERYTHING                                                    #Done
 TODO : Is not deleting old unused sessions ids not secure? To think about.
 TODO : any objects in ts should be properly be typed
 TODO : not sending the user object everytime to save bandwidth
-TODO : Implement Setting page/component (Notifications)
+TODO : Implement Setting page/component (Notifications)                                                                         #Done
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca
 TODO : MUTEX Counter in DungeonManager
 TODO : Optimize data sent to client, for example don't send old data each time there is an attack in the dungeon
-TODO : Make dungeon not linked with websocket session
-TODO : Remove discord link from button in client side
-TODO : Verify data from client is well formed.
+TODO : Make dungeon not linked with websocket session                                                                           #Done
+TODO : Remove discord link from button in client side                                                                           #Done
 TODO : Implement IRedDotYouMustClaim/Notification/WhatYouSeeInGacha
