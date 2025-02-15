@@ -38,7 +38,7 @@ namespace Nanina.Osu
         {
             var request = new RestRequest($"users/{id}/scores/recent", Method.Get);
             AddDefaultHeader(request);
-            request.AddQueryParameter("limit","11"); //# Of scores you get from the Api
+            request.AddQueryParameter("limit","1"); //# Of scores you get from the Api
             request.AddQueryParameter("mode",mode);
             var response = await client.ExecuteGetAsync(request);
 
