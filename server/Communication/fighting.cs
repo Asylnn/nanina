@@ -59,6 +59,9 @@ namespace Nanina.Communication
                 { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
             if(!user.verification.isOsuIdVerified) 
                 { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return; }
+            var waifu = user.waifus.Find(waifus => waifus.id == rawData.data);
+            if(waifu == null)
+                { Send(ClientNotification.NotificationData("Fighting", "You didn't choose a waifu to XP!", 0)); return; }
 
             var scores = await Osu.Api.GetUserRecentScores(user.ids.osuId, user.fight.game);
 
@@ -76,7 +79,7 @@ namespace Nanina.Communication
             }
             
             var xp = Osu.Api.GetXP(validscore);
-            user.waifus.First().GiveXP(xp);
+            waifu.GiveXP(xp);
             user.fight.completed = true;
             if(user.fightHistory.ContainsKey(user.fight.game))
             {

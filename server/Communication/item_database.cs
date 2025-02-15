@@ -81,8 +81,10 @@ namespace Nanina.Communication
         }
         protected void UpdateSetDatabase(ClientWebSocketResponse rawData)
         {
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
 
-            if(DBUtils.GetUser(rawData.userId).admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+            if(user.admin == false){Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             if(!Global.config.dev) {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
             using var db = new LiteDatabase($@"{Global.config.database_path}");
 

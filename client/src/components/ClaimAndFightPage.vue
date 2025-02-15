@@ -91,10 +91,12 @@ export default {
             this.SendToServer("get map to fight", "", this.user.Id)
         },
         getXP(){
-            this.user.claimTimestamp = Date.now()
-            this.claim_timing_out = true
-            this.updateTimer()
-            this.SendToServer("claim fight", "", this.user.Id)
+            if(this.chosen_waifu != null){ //This shouldn't happen?
+                this.user.claimTimestamp = Date.now()
+                this.claim_timing_out = true
+                this.updateTimer()
+                this.SendToServer("claim fight", this.chosen_waifu.id, this.user.Id)
+            }
         },
         selectWaifu(waifu : Waifu) {
             this.chosen_waifu = waifu
