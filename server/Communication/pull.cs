@@ -12,6 +12,7 @@ namespace Nanina.Communication
             if(user == null) {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
 
             var pullData = JsonConvert.DeserializeObject<PullRequest>(rawData.data);
+            if(pullData == null){Send(ClientNotification.NotificationData("Pulling", "The banner you tried to pull on doesn't exists!", 1)); return;}
             if(!GachaManager.BannerExists(pullData.bannerId)){
                 Send(ClientNotification.NotificationData("Pulling", "The banner you tried to pull on doesn't exists!", 1));
                 return;
