@@ -2,6 +2,8 @@ using WebSocketSharp.Server;
 using Newtonsoft.Json;
 using Nanina.Database;
 using Nanina.Gacha;
+using Nanina.UserData.WaifuData;
+using Nanina.UserData.ItemData;
 
 namespace Nanina.Communication
 {
@@ -27,7 +29,33 @@ namespace Nanina.Communication
             
             user.gacha_currency -= GachaManager.GetBannerCost(pullData.bannerId, pullData.pullAmount);
             var waifus = GachaManager.Pull(user, pullData.bannerId, pullData.pullAmount);
-            user.waifus.AddRange(waifus);
+
+
+
+            var alreadyOwnedWaifus = waifus.Where(pulledWaifu => user.waifus.Any(userWaifu => pulledWaifu.id == userWaifu.id));
+            var notOwnedWaifus = waifus.Where(pulledWaifu => user.waifus.Any(userWaifu => pulledWaifu.id != userWaifu.id));
+            List<Waifu> aquiredWaifus = [];
+            foreach(var waifu in notOwnedWaifus){
+                if(!aquiredWaifus.Any(aquiredWaifu => waifu.id == aquiredWaifu.id)){
+                    aquiredWaifus.Append(waifu);
+                }
+                else 
+                {
+                    alreadyOwnedWaifus.Append(waifu);
+                }
+            }
+            var baseItem = DBUtils.GetCollection<Item>().FindOne(item => item.id == 50_000); //Item id for waifu essence
+            foreach(var waifu in alreadyOwnedWaifus){
+                var item = baseItem.Clone() as Item;
+                item.id += Convert.ToUInt16(waifu.id);
+                user.inventory.AddMaterial(item);
+            }
+            
+            user.waifus.AddRange(aquiredWaifus);
+
+
+
+
             DBUtils.UpdateUser(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {

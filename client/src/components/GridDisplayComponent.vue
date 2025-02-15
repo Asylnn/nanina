@@ -59,7 +59,7 @@ export default {
                     <div class="icon">
                         <img @click="showElement(element as Item)" :src="`${publicPath}/item-image/${element.imgPATH}`">
                     </div>
-                    <p>{{$t(`item.${element.id}.name`)}}</p>
+                    <p>{{$t(`item.${element.id}.name`)}} ({{ element.count }})</p>
                 </div>
             </div>
         </div>

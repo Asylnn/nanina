@@ -8,5 +8,13 @@ namespace Nanina.UserData
         public List<Item> material {get; set;} = [];
         public List<Item> userConsumable {get; set;} = [];
         public List<Item> waifuConsumable {get; set;} = [];
+        public void AddMaterial(Item obtainedMaterial)
+        {
+            var index = material.FindIndex(item => obtainedMaterial.id == item.id);
+            if(index == -1)
+                material.Add(obtainedMaterial);
+            else 
+                material[index].count += obtainedMaterial.count;
+        }
     }
 }

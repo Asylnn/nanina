@@ -94,13 +94,10 @@ export default {
             </div>
             <div v-if="category === 'materials' || category === 'all'">
                 <span>Materials :</span><br>
-                <div v-for="item in user.inventory.material">
-                    <div class="itemDisplay">
-                        <div class="waifuIcon">
-                        <img :src="'src/assets/item-image/' + item.imgPATH">
-                        </div>
-                        <p>{{item.name}} + nombre : + {{item.count}}</p>
-                    </div>
+                <GridDisplayComponent :elements="user.inventory.material" @show-element="showItem" :columns=5></GridDisplayComponent>
+                <div v-if="focusedView">
+                    <div @click="closeItemDisplay" id="veil" ></div>
+                    <ItemComponent  @input="onEscape" :item="item_to_display" tabindex="0" @keydown.esc="closeItemDisplay"></ItemComponent>
                 </div>
             </div>
         </div>
