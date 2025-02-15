@@ -21,7 +21,8 @@ export default class User {
     public pullBannerHistory: Dictionary<PullBannerHistory> = {}//?
     public localFightTimestamp : number = 0
     public claimTimestamp : number = 0
-    public fights : Fight[] = []
+    public fightHistory : Dictionary<string[]> = {}
+    public fight! : Fight
     public inventory! : Inventory
     
     public verification : any = {} //One day any objects should be properly be typed

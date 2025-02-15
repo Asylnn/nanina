@@ -124,10 +124,8 @@ namespace Nanina.Database
                 var users = userCol.FindAll();
                 //Update
                 foreach (UserData.User user in users) {
-                    user.fights = [];
                     user.inventory ??= new ();
                     user.waifus ??= [];
-                    user.inventory = new ();
                     user.verification ??= new();
                     user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
                     if(user.waifu != null)

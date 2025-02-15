@@ -50,14 +50,14 @@ export default {
     },
     mounted(){
         
-        if(this.user.fights.length != 0){
-            if(!this.user.fights[this.user.fights.length - 1].completed){
+        if(this.user.fight.id != null){
+            if(!this.user.fight.completed){
                 //this.fighting = true
-                this.SendToServer("get map back", this.user.fights[this.user.fights.length - 1].id, this.user.Id)
+                this.SendToServer("get map back", this.user.fight.id, this.user.Id)
             }
-            if(this.user.fights[this.user.fights.length - 1].timestamp + config.time_for_allowing_another_fight_in_milliseconds >= this.date_milli ){
+            if(this.user.fight.timestamp + config.time_for_allowing_another_fight_in_milliseconds >= this.date_milli ){
                 this.fight_timing_out = true
-                this.user.localFightTimestamp = this.user.fights[this.user.fights.length - 1].timestamp 
+                this.user.localFightTimestamp = this.user.fight.timestamp 
             }
         }
         if(this.user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds >= this.date_milli){
@@ -147,8 +147,8 @@ export default {
                 <span v-else id="claim" @click="getXP">Prove that you are worth getting XP!</span><br>
             </div>
         </div>
-        <div v-else-if="xp != 0">
-            <p> You earned {{ xp }}XP on {{chosen_waifu!.name}}! </p>
+        <div v-else-if="xp != 0 && chosen_waifu != null">
+            <p> You earned {{ xp }}XP on {{chosen_waifu.name}}! </p>
         </div>
     </div>
 </template>
