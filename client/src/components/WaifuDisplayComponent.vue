@@ -29,8 +29,6 @@ export default {
         <div id="waifuInfos">
             <span v-if="count != -1">Pull number {{ count+1 }}</span><br>
             {{waifu.name}} Level {{ waifu.lvl }} ({{ waifu.xp }} / {{ waifu.xpToLvlUp }})<br>
-            id : {{ waifu.id }}<br>
-            Difficulty to level up : {{ waifu.diffLvlUp }}
             STR : {{ waifu.b_str }}<br>
             KAW : {{ waifu.b_kaw }}<br>
             INT : {{ waifu.b_int }}<br>
