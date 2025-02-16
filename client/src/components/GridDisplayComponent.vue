@@ -56,15 +56,15 @@ export default {
             </div>
             <div v-else>
                 <div class="slot">
-                    <div class="icon">
+                    <div class="itemIcon">
                         <img @click="showElement(element as Item)" :src="`${publicPath}/item-image/${element.imgPATH}`">
                     </div>
-                    <p>{{$t(`item.${element.id}.name`)}} ({{ element.count }})</p>
+                    <p>{{ element.count }}</p>
                 </div>
             </div>
         </div>
     </div>
-</template>
+</template><<
 
 <style lang="css" scoped>
 
@@ -85,6 +85,12 @@ export default {
     max-width: 10vw;
     max-height: 20vh;
     overflow: hidden;
+}
+
+.itemIcon img
+{
+    min-width: 60px;
+    min-height: 60px;
 }
 
 .icon img {
