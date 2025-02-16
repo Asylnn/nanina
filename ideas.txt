@@ -99,16 +99,56 @@ Item (machin de base instanciable)
 Equipement (dérivée de Item) : + id, piece (valeur de l'enum), objet de type Set
 
 
-Machins enlevés du config json :
-    "dungeon_accessory_modifier_weights": [80,60,60],
-    "dungeon_dress_modifier_weights": [80,80,60,60,60],
-    "dungeon_weapon_modifier_weights": [100,100,100,80,80,80,60],
-    "dungeon_accessory_modifier_id": [14,19,20],
-    "dungeon_dress_modifier_id": [10,12,25,17,18],
-    "dungeon_weapon_modifier_id": [0,1,2,4,6,8,15],
-    "star1_equipment_stat_base_ammount":[1.1, 1.1, 1.1, 1.1,1.1, 1.1, 1.1, 1.1,1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1],
-    "additive_or_multiplicative_waifu_modifier":[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    "star2_equipment_stat_base_ammount_multiplier":1.2,
-    "star3_equipment_stat_base_ammount_multiplier":1.5,
-    "star4_equipment_stat_base_ammount_multiplier":1.9,
-    "star5_equipment_stat_base_ammount_multiplier":2.5,
+Shop & money
+Obtenir money :
+    Maid café -> money
+    Fight continu -> (peut etre Limité par jour)
+    login rewards
+    daily quests
+    Bonus de level up
+    💳
+Utiliser money : 
+    Skins
+    Upgrade Equipement (level 1 à 2 etc)
+    Acheter items dans le Shop <------------------
+    Acheter des couleurs pour le site 
+    Dons aux autres gens
+
+Choses dans le shop (money):
+    Items consommables:
+        Item pour reload un fight (X fois par jour max)
+        Item pour obtenir de l'energie (X fois par jour max) (croissant)
+        Potion de boost xp (fight non continu)???
+        Potion de boost user xp???
+        Potion de boost de dégats???
+
+    Items permanents:
+        Gadgets
+        Equipement
+        Titres
+        Skins
+        Boosts permanents d'exp ou d'autres machins (one time purchase)
+
+    Misc :
+        Un peu de gacha currency par jour (grosse somme d'argent) (in game + 💳)
+        Music Theme
+        Website Theme
+        Background de donjon???
+        Bannière sur le site sur le coté avec le perso préféré???
+
+Choses dans le shop de gacha (avec la gacha currency):
+    Acheter des pulls
+    Achat de boite de sélection de waifu (100% chance d'avoir ce qu'on veut)
+    Achat de boite de sélection de waifu (dans un pool donné) 2* 3* (si ta une waifu elle est enlevée du pool et puis a un moment t aura tout)
+    Achat de duplicate de waifu
+    Titres? (Titre JE NAIME PAS PULL DE WAIFU) (I PLAY FOR THE GAMEPLAY NOT FOR PNGS) (I CAME FOR WAIFU, STAYED FOR IMPROVEMENT) (I DONT LIKE NFTS) (PLEASE ADD MY FAVOURITE ANIME SERIES)
+    Acheter un accès aux bannières en avant première (streams en avance des autres, vidéos etc) (95% evil (maybe 95% good?) never seen before in a gacha game)
+    Accès à une ancienne bannière (durée d'1 jour le temps de pull until pity un truc que tu veux)
+    //Modifier les chances de proba par compte (105% evil (can't be good)) (selling accounts 20% 3* chance on black market) (i spend 3h rerolling account until i get 20% 3* chance to sell the account)
+
+
+
+Rewards unique dans un story mode (questlines once per user with the last quests not being targeted at mrekk level because if you make last quest to do a 2k pp play it's gonna be hard to get)
+Dans ce story mode, il pourrait aussi servir de tutoriel pour ce qui existe dans le site
+
+Inventaire Equipement : limite à 500 ou 1000 (pour pas avoir un user avec 543545436435463 items d'Equipement)
