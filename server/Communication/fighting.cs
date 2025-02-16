@@ -78,7 +78,8 @@ namespace Nanina.Communication
                 Send(ClientNotification.NotificationData("Fighting", "You didn't do the beatmap (must be a pass)", 0)); return;
             }
             
-            var xp = Osu.Api.GetXP(validscore);
+            var spent_energy = user.SpendEnergy();
+            var xp = (uint) Math.Ceiling(Osu.Api.GetXP(validscore)*spent_energy);
             waifu.GiveXP(xp);
             user.fight.completed = true;
             if(user.fightHistory.ContainsKey(user.fight.game))
@@ -90,7 +91,7 @@ namespace Nanina.Communication
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "fighting results",
-                data = JsonConvert.SerializeObject(xp) 
+                data = xp.ToString()
             }));
 
 

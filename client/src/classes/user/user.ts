@@ -11,6 +11,8 @@ export default class User {
     public admin : boolean = false
     public username : string = "Pro Osu Player"
     public theme : string = "dark_theme"
+    public energy!: number
+    public max_energy!: number
     public ids : any = {}
     public statCount : StatCount = new StatCount()
     public waifus : Waifu[] = [new Waifu({})]

@@ -91,6 +91,7 @@ export default {
 {
     min-width: 60px;
     min-height: 60px;
+    cursor: pointer;
 }
 
 .icon img {

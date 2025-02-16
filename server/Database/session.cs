@@ -40,6 +40,13 @@ namespace Nanina.Database
         }
         public void UpdateUserId(string id) 
         {
+            if(id is not null)
+            {
+                Console.WriteLine("updating user active session Id");
+                var user = DBUtils.GetUser(id);
+                user.activeSessionId = this.id;
+                DBUtils.UpdateUser(user);
+            }
             userId = id;
             UpdateDB();
         }

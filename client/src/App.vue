@@ -242,7 +242,7 @@ export default {
 <template>
 	<div id="main" :class="[user.theme]">
 	
-		<NNNHeader :dev=dev :logged=logged :admin=user.admin @page-change="updatePage"></NNNHeader>
+		<NNNHeader :dev=dev :logged=logged :user="user" @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
 			<Homepage></Homepage>
 		</div>

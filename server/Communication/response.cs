@@ -96,7 +96,7 @@ namespace Nanina.Communication
         {
             var sessionCol = DBUtils.GetCollection<Session>();
             var sessions = sessionCol.Find(session => session.webSocketId == ID);
-            if(sessions.Count() >= 1 )
+            if(sessions.Count() >= 1)
             {
                 var session = sessions.First();
                 session.UpdateWebSocketId(null);

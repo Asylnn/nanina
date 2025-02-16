@@ -1,4 +1,5 @@
 using Nanina.Database;
+using Nanina.Osu;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.ModifierData;
 using Newtonsoft.Json;
@@ -41,9 +42,15 @@ namespace Nanina.Dungeon
                 }
             }
         }
-        public List<Equipment> GetLoot(){
+        public List<Equipment> GetLoot(UserData.User user){
+            var spent_energy = user.SpendEnergy();
+            var numberOfRewards = spent_energy/dungeonTemplate.numberOfRewardsPerEnergy;
+            var fraction = numberOfRewards - Math.Floor(numberOfRewards);
+            numberOfRewards = Math.Floor(numberOfRewards);
+            if(fraction >= new Random().NextDouble())
+                numberOfRewards++;
             
-            for(int i = 0; i < dungeonTemplate.numberOfRewards; i++)
+            for(int i = 0; i < numberOfRewards; i++)
             {
                 var setId = dungeonTemplate.setRewards.RandomElement();
                 Console.WriteLine(setId);

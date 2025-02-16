@@ -119,10 +119,15 @@ namespace Nanina.Database
             var users = userCol.FindAll();
             //Update
             foreach (UserData.User user in users) {
+
+                user.max_energy = Global.baseValues.base_max_energy;
+                user.energy = user.max_energy;
+                user.isRegenerating = false;
                 user.inventory ??= new ();
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
+                DBUtils.UpdateUser(user);
                 
                 /*if(user.waifus.id == null){
                     user.waifus.id = "0";

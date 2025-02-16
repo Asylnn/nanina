@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using LiteDB;
 using Microsoft.VisualBasic;
 using Nanina.Osu;
@@ -13,10 +14,9 @@ namespace Nanina.Database
         /*
             This static class is for managing the database
         */
-        public static ILiteCollection<T> GetCollection<T>()
+        private static string GetDatabaseString<T>()
         {
-            var db = new LiteDatabase($@"{Global.config.database_path}");
-            var collection = typeof(T) switch {
+            return typeof(T) switch {
                 Type type when type == typeof(UserData.User) => "userdb",
                 Type type when type == typeof(Session) => "sessiondb",
                 Type type when type == typeof(Waifu) => "waifudb",
@@ -25,7 +25,37 @@ namespace Nanina.Database
                 Type type when type == typeof(Set) => "setdb",
                 _ => null
             };
+        }
+        public static ILiteCollection<T> GetCollection<T>()
+        {
+            var x = GetObject<Waifu>(x => x.id == "true");
+            var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collection = GetDatabaseString<T>();
             return db.GetCollection<T>(collection);
+        }
+
+        public static T GetObject<T>(Expression<Func<T, bool>> ahh)
+        {
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collection = GetDatabaseString<T>();
+            var col =  db.GetCollection<T>(collection);
+            return col.FindOne(ahh);
+        }
+        public static List<T> GetObjectList<T>(Expression<Func<T, bool>> ahh)
+        {
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collection = GetDatabaseString<T>();
+            var col =  db.GetCollection<T>(collection);
+            return col.Find(ahh).ToList();
+        }
+
+        public static void InsertUser(UserData.User user)
+        {
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var col =  db.GetCollection<UserData.User>("userdb");
+            col.Insert(user);
+            col.EnsureIndex(x => x.ids.discordId, true);
+            col.EnsureIndex(x => x.Id, true);
         }
         public static UserData.User GetUser(string id)
         {
@@ -100,7 +130,8 @@ namespace Nanina.Database
             osuCol.InsertBulk(osudb);
         }
 
-        public static void ExportDB(){
+        public static void ExportDB()
+        {
             using var db = new LiteDatabase($@"{Global.config.database_path}");
             var userCol = db.GetCollection<UserData.User>("userdb");
             var waifuCol = db.GetCollection<Waifu>("waifudb");

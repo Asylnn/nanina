@@ -103,8 +103,8 @@ namespace Nanina.Dungeon
         public void ConcludeDungeon(){
             health = 0;
             isCompleted = true;
-            loot = GetLoot();
             var user = DBUtils.GetUser(userId);
+            loot = GetLoot(user);
             loot.ForEach(equipment => user.inventory.equipment.Add(equipment));
             DBUtils.UpdateUser(user);
             
