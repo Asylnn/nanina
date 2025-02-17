@@ -33,9 +33,9 @@ export default {
             return gridTemplateColumns
         },
     },
-    emits: ["show-waifu"],
+    emits: ["show-element"],
     methods: {
-        showElement(waifu : Waifu | Item) {
+        onShowElement(waifu : Waifu | Item) {
             this.$emit("show-element", waifu)
         },
     },
@@ -49,7 +49,7 @@ export default {
             <div v-if="(element as Waifu).b_dex != null"> <!-- Pretty bad way to test if it's a waifu Object, but it works-->
                 <div class="slot">
                     <div class="icon">
-                        <img @click="showElement(element as Waifu)" :src="`${publicPath}/waifu-image/${element.imgPATH}`">
+                        <img @click="onShowElement(element as Waifu)" :src="`${publicPath}/waifu-image/${element.imgPATH}`">
                     </div>
                 </div>
                 <p>{{element.name}} Level {{ (element as Waifu).lvl }}</p>
@@ -57,9 +57,9 @@ export default {
             <div v-else>
                 <div class="slot">
                     <div class="itemIcon">
-                        <img @click="showElement(element as Item)" :src="`${publicPath}/item-image/${element.imgPATH}`">
+                        <img @click="onShowElement(element as Item)" :src="`${publicPath}/item-image/${element.imgPATH}`">
                     </div>
-                    <p>{{ element.count }}</p>
+                    <p>{{ (element as Item).count }}</p>
                 </div>
             </div>
         </div>
@@ -69,6 +69,7 @@ export default {
 <style lang="css" scoped>
 
 #waifuIcons {
+    display:none;
     padding: 0 17.27vw;
     position:relative;
     display: grid;

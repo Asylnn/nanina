@@ -89,7 +89,9 @@ namespace Nanina.Communication
                 case "disconect":
                     Disconnect(rawData);
                     break;
-
+                case "equip item":
+                    EquipItem(rawData);
+                    break;
             }
         }
         protected override void OnClose(CloseEventArgs e)

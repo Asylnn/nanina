@@ -44,15 +44,67 @@
             "0":""
         }
     },
+    "set":{
+        "set":"Set",
+        "0":{
+            
+            "name":"Unsuspicious attire"
+        }
+    },
     "item":{
+        "type": {
+            "type":"Type",
+            "0":"Weapon",
+            "1":"Dress",
+            "2":"Accessory"
+        },
         "1":{
-            "name":"THE EPIC SWORD"
+            "name":"Completely normal sword",
+            "description":"Do NOT contains the soul of its user"
         },
         "2":{
-            "name":"Totally ordinary dress"
+            "name":"Totally ordinary dress",
+            "description":"Do NOT contains the hope and dreams of it's wearer"
         },
         "3":{
-            "name":"diamond ring"
+            "name":"Absolutely real diamond ring",
+            "description":"Do NOT actively spy on your waifu and send data to GlouGlouCorp™"
         }
+    },
+    "modifiers":{
+        "0":{
+            "name":"Physical damage increase"
+        },
+        "1":{
+            "name":"Magical damage increase"
+        },
+        "2":{
+            "name":"Psychic damage increase"
+        },
+        "3":{
+            "name":"STR increase"
+        },
+        "4":{
+            "name":"INT increase"
+        },
+        "5":{
+            "name":"KAW increase"
+        },
+        "6":{
+            "name":"AGI increase"
+        },
+        "7":{
+            "name":"DEX increase"
+        },
+        "8":{
+            "name":"LUCK increase"
+        },
+        "9":{
+            "name":"Critical damage increase"
+        },
+        "10":{
+            "name":"Critical chance increase"
+        }
+        
     }
 }

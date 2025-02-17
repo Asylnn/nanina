@@ -144,7 +144,8 @@ namespace Nanina.UserData.WaifuData
                     equipment.accessory = newEquipment;
                     break;
             }
-            if(equipment.weapon.setId == equipment.dress.setId && equipment.dress.setId == equipment.accessory.setId)
+            Console.WriteLine(JsonConvert.SerializeObject(equipment));
+            if(equipment.weapon?.setId == equipment.dress?.setId && equipment.dress?.setId == equipment.accessory?.setId && equipment.dress?.setId != null)
             {
                 var setCol = DBUtils.GetCollection<Set>();
                 equipment.set = setCol.Find(set => set.id == equipment.weapon.setId).First();
@@ -159,11 +160,10 @@ namespace Nanina.UserData.WaifuData
 
         public float GetMultModificators(StatModifier statModifier){
             //The following line probably doesn't work?
-            var modificators = new List<Modifier>().Concat(equipment.weapon?.GetAllModifiers() ?? []).Concat(equipment.dress?.GetAllModifiers() ?? []).Concat(equipment.accessory?.GetAllModifiers() ?? []).Concat(equipment.set?.modifiers ?? []);
+            var modificators = new List<Modifier>().Concat(equipment.weapon?.modifiers ?? []).Concat(equipment.dress?.modifiers ?? []).Concat(equipment.accessory?.modifiers ?? []).Concat(equipment.set?.modifiers ?? []);
             modificators = modificators.Where(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier);
             
             return modificators?.Aggregate(1.0f, (amount, modificator) => amount += modificator?.amount ?? 0) ?? 1.0f;
         }
     }
-
 }

@@ -105,7 +105,7 @@ namespace Nanina.Dungeon
             isCompleted = true;
             var user = DBUtils.GetUser(userId);
             loot = GetLoot(user);
-            loot.ForEach(equipment => user.inventory.equipment.Add(equipment));
+            loot.ForEach(equipment => user.inventory.AddEquipment(equipment));
             DBUtils.UpdateUser(user);
             
             DungeonManager.UpdateDungeonOfClient(this);

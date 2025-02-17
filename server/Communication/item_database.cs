@@ -102,9 +102,9 @@ namespace Nanina.Communication
             
             
             var setCol = DBUtils.GetCollection<Set>();
-            
+            var sets = JsonConvert.DeserializeObject<Set[]>(rawData.data); 
             setCol.DeleteAll();
-            foreach (var set in setCol.FindAll()) 
+            foreach (var set in sets) 
             {
                 setCol.Insert(set);
                 setCol.EnsureIndex(x => x.id, true);

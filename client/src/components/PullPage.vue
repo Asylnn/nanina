@@ -95,7 +95,7 @@ export default {
         <div v-if="pulled_waifus[0] != undefined">
             <div id="gachaPull" v-if=focusedView>
                 <div @click="incrementCount" id="veil"></div>
-                <WaifuDisplayComponent :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
+                <WaifuDisplayComponent :user="user" :for-pull="true" :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
             </div>
             <div id="gridPull" v-else>
                 <GridDisplayComponent :elements="waifusToSend()" :columns=5></GridDisplayComponent>

@@ -255,7 +255,7 @@ export default {
 			ERREUR 404 AHAHAHAHAH
 		</div>
 		<div v-else-if="loadingPage === 50">
-			<WaifuListPage :waifus="user.waifus"></WaifuListPage>
+			<WaifuListPage :user="user"></WaifuListPage>
 		</div>
 		<div v-else-if="loadingPage === 60">
 			How tf did you even up here?

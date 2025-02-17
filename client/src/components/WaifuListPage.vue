@@ -3,6 +3,7 @@
 import Waifu from '@/classes/waifu/waifu';
 import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
 import GridDisplayComponent from './GridDisplayComponent.vue';
+import User from '@/classes/user/user';
 
 export default {
     name : "WaifuListPage",
@@ -15,8 +16,8 @@ export default {
         }
     },
     props: {
-        waifus : {
-            type : Array<Waifu>,
+        user : {
+            type : User,
             required : true
         },
     },
@@ -24,19 +25,19 @@ export default {
         updateSorting(filter : number) {
             switch (filter) {
                 case 0 :
-                    this.waifus.sort((a, b) => a.lvl-b.lvl)
+                    this.user.waifus.sort((a, b) => a.lvl-b.lvl)
                     break
                 case 1 :
-                    this.waifus.sort((a, b) => b.lvl-a.lvl)
+                    this.user.waifus.sort((a, b) => b.lvl-a.lvl)
                     break
                 case 2 :
-                    this.waifus.sort((a, b) => ('' + a.name).localeCompare(b.name))
+                    this.user.waifus.sort((a, b) => ('' + a.name).localeCompare(b.name))
                     break
                 case 3 :
-                    this.waifus.sort((a, b) => ('' + b.name).localeCompare(a.name))
+                    this.user.waifus.sort((a, b) => ('' + b.name).localeCompare(a.name))
                     break
                 default :
-                    this.waifus.sort((a, b) => a.lvl-b.lvl)
+                    this.user.waifus.sort((a, b) => a.lvl-b.lvl)
                     break
             }
         },
@@ -68,7 +69,7 @@ export default {
     <div id="filters" >
         <div id="rowFilter">
             <label>{{ $t("waifulist.nbPerRow") }}</label>
-            <select value="4">
+            <select value="4">waifus
                 <option @click="updateColumns(5)" value="5">5</option>
                 <option @click="updateColumns(4)" value="4">4</option>
                 <option @click="updateColumns(3)" value="3">3</option>
@@ -86,10 +87,10 @@ export default {
         </div>
     </div>
     <!-- tabindex is weird... truly html moment-->
-    <GridDisplayComponent @show-element="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :elements=waifus :columns=columns></GridDisplayComponent>
+    <GridDisplayComponent @show-element="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :elements=user.waifus :columns=columns></GridDisplayComponent>
     <div v-if="focusedView">
-        <div @click="closeWaifuDisplay" id="veil" ></div>
-        <WaifuDisplayComponent  @input="onEscape" :waifu="waifuDisplayed" tabindex="0" @keydown.esc="closeWaifuDisplay" :count=-1></WaifuDisplayComponent>
+        <div @click="closeWaifuDisplay" class="veil" ></div>
+        <WaifuDisplayComponent :for-pull="false" @input="onEscape" :waifu="waifuDisplayed" :user="user" tabindex="0" @keydown.esc="closeWaifuDisplay" :count=-1></WaifuDisplayComponent>
     </div>
 </template>
 

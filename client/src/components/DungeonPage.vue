@@ -61,9 +61,9 @@ export default {
                 </div>
             </div>
             <div v-if="active_dungeon.isCompleted">
-                    <p>Log : </p>
-                    {{ JSON.stringify(active_dungeon.loot) }}
-                </div>
+                <p>Log : </p>
+                {{ JSON.stringify(active_dungeon.loot) }}
+            </div>
         </div>
     </div>
 </template>

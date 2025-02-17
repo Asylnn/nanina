@@ -57,5 +57,38 @@ namespace Nanina.Communication
                 DBUtils.UpdateUser(user);
             }
         }
+
+        protected class EquipItemFormat
+        {
+            public int equipmentId;
+            public string waifuId;
+        }
+        protected void EquipItem(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null)
+                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            
+            var clientData = JsonConvert.DeserializeObject<EquipItemFormat>(rawData.data);
+
+            var waifu = user.waifus.Find(waifu => clientData.waifuId == waifu.id);
+            if(waifu is null)
+                {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to equip the item with doesn't exist", 1)); return;}
+            var itemIndex = user.inventory.equipment.FindIndex(item => clientData.equipmentId == item.inventoryId);
+            if(itemIndex == -1)
+                {Send(ClientNotification.NotificationData("Equip", "The item you tried to equip doesn't exist", 1)); return;}
+
+            var oldEquipment = waifu.Equip(user.inventory.equipment[itemIndex]);
+            user.inventory.equipment.RemoveAt(itemIndex);
+            if(oldEquipment is not null)
+                user.inventory.AddEquipment(oldEquipment);
+
+            DBUtils.UpdateUser(user);
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "user",
+                data = JsonConvert.SerializeObject(user) 
+            }));
+        }
     }
 }

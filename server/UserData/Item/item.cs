@@ -12,6 +12,7 @@ namespace Nanina.UserData.ItemData
     public class Item : ICloneable
     {
         public ushort id {get; set;}
+        public uint inventoryId {get; set;}
         public uint count {get; set;}
         public ItemType type {get; set;}
         public string imgPATH {get; set;}
@@ -20,10 +21,6 @@ namespace Nanina.UserData.ItemData
         public object Clone()
         {
             return this.MemberwiseClone();
-        }
-        public List<Modifier> GetAllModifiers()
-        {
-            return modifiers;
         }
     }
 }
