@@ -26,24 +26,26 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("Pulling", "You can't pull a different amount of 1 or 10 times", 1)); return;}
             
                 
-            
             user.gacha_currency -= GachaManager.GetBannerCost(pullData.bannerId, pullData.pullAmount);
             var waifus = GachaManager.Pull(user, pullData.bannerId, pullData.pullAmount);
 
-
-
             var alreadyOwnedWaifus = waifus.Where(pulledWaifu => user.waifus.Any(userWaifu => pulledWaifu.id == userWaifu.id));
-            var notOwnedWaifus = waifus.Where(pulledWaifu => user.waifus.Any(userWaifu => pulledWaifu.id != userWaifu.id));
+
+            var notOwnedWaifus = waifus.Where(pulledWaifu => !user.waifus.Any(userWaifu => pulledWaifu.id == userWaifu.id));
+
             List<Waifu> aquiredWaifus = [];
             foreach(var waifu in notOwnedWaifus){
                 if(!aquiredWaifus.Any(aquiredWaifu => waifu.id == aquiredWaifu.id)){
-                    aquiredWaifus.Append(waifu);
+                    aquiredWaifus.Add(waifu);
                 }
                 else 
                 {
                     alreadyOwnedWaifus.Append(waifu);
                 }
             }
+            
+            Console.WriteLine(JsonConvert.SerializeObject(aquiredWaifus));
+            
             var baseItem = DBUtils.GetCollection<Item>().FindOne(item => item.id == 50_000); //Item id for waifu essence
             foreach(var waifu in alreadyOwnedWaifus){
                 var item = baseItem.Clone() as Item;
