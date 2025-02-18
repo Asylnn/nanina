@@ -25,12 +25,7 @@ export default {
     },
     computed: { //omg a computed that actually works??????????
         generateGridTemplateColumns() {
-            var gridTemplateColumns = "grid-template-columns: ";
-            for (let i = 0; i < this.columns; i++) {
-                gridTemplateColumns += "1fr ";
-            }
-            gridTemplateColumns += '; ';
-            return gridTemplateColumns
+            return `grid-template-columns:${"1fr ".repeat(this.columns)};`
         },
     },
     emits: ["show-element"],
@@ -44,11 +39,11 @@ export default {
 </script>
 
 <template>
-    <div id="waifuIcons" :style=generateGridTemplateColumns>
+    <div id="grid" :style="generateGridTemplateColumns">
         <div v-for="element in elements">
             <div v-if="(element as Waifu).b_dex != null"> <!-- Pretty bad way to test if it's a waifu Object, but it works-->
                 <div class="slot">
-                    <div class="icon">
+                    <div class="waifuIcon">
                         <img @click="onShowElement(element as Waifu)" :src="`${publicPath}/waifu-image/${element.imgPATH}`">
                     </div>
                 </div>
@@ -68,36 +63,36 @@ export default {
 
 <style lang="css" scoped>
 
-#waifuIcons {
+#grid {
     display:none;
     padding: 0 17.27vw;
     position:relative;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
-.slot {
-    margin: 2vh 2vw;
-    width: 10vw;
-}
-
-.icon {
+.waifuIcon {
     border-radius: 15px;
     max-width: 10vw;
     max-height: 20vh;
     overflow: hidden;
 }
 
-.itemIcon img
-{
-    min-width: 60px;
-    min-height: 60px;
+.waifuIcon img {
+    max-width: 15vw;
+    max-height: 35vh;
     cursor: pointer;
 }
 
-.icon img {
-    max-width: 15vw;
-    max-height: 35vh;
+.itemIcon {
+    padding-bottom: 6vh;
+    display: table;
+    margin: 0 auto;
+}
+
+.itemIcon img
+{
+    width: 64px;
+    height: 64px;
     cursor: pointer;
 }
 
