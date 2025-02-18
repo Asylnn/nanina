@@ -107,6 +107,11 @@ export default {
     },
     components: {
         GridDisplayComponent,
+    },
+    computed:{
+        mapURL(){
+            return `${this.beatmap.url}#${this.beatmap.mode}/${this.beatmap.id}`
+        }
     }
 }
 
@@ -122,17 +127,17 @@ export default {
             Do you think you have what it takes to succeed ?<br>
             It's time to find out !
         </p>
-        <span id="timerFight" v-if="fight_timing_out">
+        <span class="button" id="timerFight" v-if="fight_timing_out">
             Wait {{ Math.round((user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - date_milli)/60000*60)  }} seconds
         </span>
-        <span id="fightButton" v-else @click="fight">Fight !</span>
+        <span class="button" id="fightButton" v-else @click="fight">Fight !</span>
         <div id="inFight" v-if="fighting">
-            <img id="bgMap" :href="beatmap.beatmapset.covers.cover2x" :src="beatmap.beatmapset.covers.cover2x">
+            <a :href="mapURL"> <img id="bgMap" :src="beatmap.beatmapset.covers.cover2x"></a>
             Mouhahahahhaha !<br>
             I am the spirit of the map, prove me your worth by :<br>
             <p>Downloading me</p> <br>
-            <span id="download">
-                <a :href="beatmap.url+'#'+beatmap.mode+'/'+beatmap.id" target="_blank">
+            <span class="button" id="download">
+                <a :href="mapURL" target="_blank">
                     Download on the osu! website !<br>(not a virus)
                 </a>
             </span><br>
@@ -143,10 +148,10 @@ export default {
             <GridDisplayComponent v-if="chosen_waifu == null" @show-element="selectWaifu" :elements="user.waifus" :columns="3"></GridDisplayComponent>
             <div id="afterSelect" v-if="chosen_waifu != null">
                 <GridDisplayComponent @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
-                <span id="timerClaim" v-if="claim_timing_out">
+                <span class="button" id="timerClaim" v-if="claim_timing_out">
                 Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
                 </span>
-                <span v-else id="claim" @click="getXP">Prove that you are worth getting XP!</span><br>
+                <span class="button" v-else id="claim" @click="getXP">Prove that you are worth getting XP!</span><br>
             </div>
         </div>
         <div v-else-if="xp != 0 && chosen_waifu != null">
@@ -164,16 +169,14 @@ export default {
     text-align: left;
     font-size: larger;
 }
-span, a {
+.button, .button a {
     color: rgb(0, 78, 33);
     font-size: xx-large;
-    cursor: pointer;
     border-radius: 25px;
     background-color: palevioletred;
+    cursor: pointer;
 }
-a {
-    text-decoration: none;
-}
+
 #fightButton, #timerFight, #timerClaim{
     margin: 1vh 15vw;
     text-align: center;
@@ -194,6 +197,7 @@ a {
 }
 #bgMap {
     width: 50vw;
+    cursor:pointer;
 }
 
 #waifuIcons {
