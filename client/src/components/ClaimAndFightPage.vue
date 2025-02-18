@@ -184,7 +184,7 @@ a {
     text-align: center;
 }
 #timerFight, #timerClaim {
-    cursor:default;
+    cursor:not-allowed;
 }
 #welcomeText {
     line-height: 1.5;
