@@ -39,13 +39,9 @@ export default {
             required : true
         }
     },
-    mounted(){
-        console.log(this.user.inventory.equipment)
-    },
     methods:{
 
         openWeaponDisplay(equipment : Equipment){
-            console.log("uwu")
             this.selected_item = equipment
             this.weaponVisible = true
         },
@@ -53,6 +49,11 @@ export default {
         {
             this.selected_item = null
             this.weaponVisible = false
+        },
+        closeAllDisplays()
+        {
+            this.closeWeaponDisplay()
+            this.inventoryVisible = false
         },
         selectItem()
         {
@@ -70,9 +71,8 @@ export default {
             }
             
             console.log('equiping')
-            this.inventoryVisible = false
             this.SendToServer("equip item", JSON.stringify({equipmentId:this.selected_item.inventoryId, waifuId:this.waifu.id}), this.user.Id)
-            this.closeWeaponDisplay()
+            this.closeAllDisplays()
         },
         openDisplay(piece : EquipmentPiece)
         {
@@ -118,9 +118,9 @@ export default {
 
 <template>
     <div v-if="inventoryVisible" @click="inventoryVisible = false" class="veil" id="inventoryveil"></div>
-    <GridDisplayComponent v-if="inventoryVisible" class="grid" @show-element="openWeaponDisplay" tabindex="0" @keydown.esc="" :elements="equipment_to_show" :columns=5></GridDisplayComponent>
+    <GridDisplayComponent v-if="inventoryVisible" class="grid" @show-element="openWeaponDisplay" :elements="equipment_to_show" :columns=5></GridDisplayComponent>
     <div v-if="weaponVisible" @click="closeWeaponDisplay" class="veil" id="itemveil"></div>
-    <ItemComponent @click="selectItem()" :is-for-equiping="true" v-if="selected_item != null" @input="" :item="selected_item" tabindex="0" @keydown.esc="inventoryVisible = false"></ItemComponent>
+    <ItemComponent @click="selectItem()" :is-for-equiping="true" v-if="selected_item != null" @input="" :item="selected_item"></ItemComponent>
 
     <div id="focusedWaifu" >
         <div id="waifuPic"><img :src="`${publicPath}/waifu-image/${waifu.imgPATH}`"></div>
@@ -128,15 +128,33 @@ export default {
             <span v-if="count != -1">Pull number {{ count+1 }}</span><br>
             {{waifu.name}} Level {{ waifu.lvl }} ({{ waifu.xp }} / {{ waifu.xpToLvlUp }})<br>
             <div v-if="!forPull">
-                STR : {{ waifu.Str }}<br>
-                KAW : {{ waifu.Kaw }}<br>
-                INT : {{ waifu.Int }}<br>
-                AGI : {{ waifu.Agi }}<br>
-                DEX : {{ waifu.Dex }}<br>
-                LUCK : {{ waifu.Luck }}<br>
-                Physical : {{ waifu.Physical }} ({{waifu.DisplayModificator(StatModifier.Physical)}})<br>
-                Psychic : {{ Math.floor(waifu.Psychic) }} ({{waifu.DisplayModificator(StatModifier.Psychic)}})<br>
-                Magical : {{ waifu.Magical }} ({{waifu.DisplayModificator(StatModifier.Magical)}})<br>
+                <div class="stat">
+                    <span>STR :</span> <span>{{ Math.floor(waifu.Str) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.STR)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>KAW :</span> <span>{{ Math.floor(waifu.Kaw) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.KAW)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>INT :</span> <span>{{ Math.floor(waifu.Int) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.INT)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>AGI :</span> <span>{{ Math.floor(waifu.Agi) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.AGI)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>DEX :</span> <span>{{ Math.floor(waifu.Dex) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.DEX)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>LUCK :</span> <span>{{ Math.floor(waifu.Luck) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.LUCK)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>Physical :</span> <span>{{ Math.floor(waifu.Physical) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Physical)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>Psychic :</span> <span>{{ Math.floor(waifu.Psychic) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Psychic)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>Magical :</span> <span>{{ Math.floor(waifu.Magical) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Magical)}})</span><br>
+                </div>
                 <div class="equipment">
                     <div @click="openDisplay(EquipmentPiece.Weapon)" class="itemSlot">
                         <img  :src="`${publicPath}item-image/${waifu.equipment.weapon?.imgPATH ?? 'unknown.svg'}`">
@@ -149,12 +167,28 @@ export default {
                     </div>
                 </div>
             </div>
-            
+            <div v-else>
+                STR : {{ waifu.b_str }}<br>
+                KAW : {{ waifu.b_kaw }}<br>
+                INT : {{ waifu.b_int }}<br>
+                AGI : {{ waifu.b_agi }}<br>
+                DEX : {{ waifu.b_dex }}<br>
+                LUCK : {{ waifu.b_luck }}<br>
+            </div>
         </div>
     </div>
 </template>
 
 <style lang="css" scoped>
+
+.stat {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 2fr;
+}
+
+.modifier {
+    width:60px;
+}
 
 #waifuIcons {
     padding:0px;

@@ -6,16 +6,16 @@ enum StatModifier
     STR,
     INT,
     KAW,
+    AGI,
+    DEX,
+    LUCK,
     CritDamage,
     CritChance,
     DebuffPotency,
     BuffPotency,
     BuffLength,
     DebuffLength,
-    AGI,
-    DEX,
     DebuffResist,
-    LUCK,
 }
 
 export default StatModifier

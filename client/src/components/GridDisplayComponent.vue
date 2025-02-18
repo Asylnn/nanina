@@ -65,7 +65,7 @@ export default {
 
 #grid {
     display:none;
-    padding: 0 17.27vw;
+    margin: 0 17.27vw;
     position:relative;
     display: grid;
 }

@@ -63,10 +63,10 @@ export default {
         </div>
         <div class="InventoryBody">
             <div v-if="category === 'equipment' || category === 'all'">
-                <GridDisplayComponent :elements="user.inventory.equipment" @show-element="showItem" :columns=6></GridDisplayComponent>
+                <GridDisplayComponent :elements="user.inventory.equipment" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=6></GridDisplayComponent>
                 <div v-if="focusedView">
                     <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :is-for-equiping="false" @input="onEscape" :item="item_to_display" tabindex="0" @keydown.esc="closeItemDisplay"></ItemComponent>
+                    <ItemComponent :is-for-equiping="false" :item="item_to_display"></ItemComponent>
                 </div>
                 
             </div>
