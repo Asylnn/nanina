@@ -59,7 +59,7 @@ export default {
                     <div class="itemIcon">
                         <img @click="onShowElement(element as Item)" :src="`${publicPath}/item-image/${element.imgPATH}`">
                     </div>
-                    <p>{{ (element as Item).count }}</p>
+                    <p v-if="(element as Item).count != 1">{{ (element as Item).count }}</p>
                 </div>
             </div>
         </div>
