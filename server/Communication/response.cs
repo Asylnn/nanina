@@ -26,25 +26,33 @@ namespace Nanina.Communication
                     UpdateOsuId(rawData);
                     break;
 
-                case "request waifu db" :
+                /*case "request waifu db" :
                     ProvideWaifuDatabase(rawData);
-                    break;
-
-                case "update waifu db": 
-                    UpdateWaifuDatabase(rawData);
                     break;
                 case "request item db" :
                     ProvideItemDatabase(rawData);
                     break;
+                case "request set db":
+                    ProvideSetDatabase(rawData);
+                    break;*/
+
+                case "update waifu db": 
+                    UpdateWaifuDatabase(rawData);
+                    break;
+                case "update item db": 
+                    UpdateItemDatabase(rawData);
+                    break;
+                case "update set db":
+                    UpdateSetDatabase(rawData);
+                    break;
+                
 
                 case "change locale":
                     
                     db.GetCollection<Session>("sessiondb").Find(session => session.id == rawData.sessionId).First().UpdateLocale(rawData.data);
                     break;
 
-                case "update item db": 
-                    UpdateItemDatabase(rawData);
-                    break;
+                
 
                 case "get map to fight": 
                     GetMapToFight(rawData);
@@ -80,12 +88,8 @@ namespace Nanina.Communication
                 case "stop dungeon":
                     StopDungeon(rawData);
                     break;
-                case "request set db":
-                    ProvideSetDatabase(rawData);
-                    break;
-                case "update set db":
-                    UpdateSetDatabase(rawData);
-                    break;
+                
+                
                 case "disconect":
                     Disconnect(rawData);
                     break;

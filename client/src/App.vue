@@ -177,11 +177,11 @@ export default {
 
 					this.$i18n.locale = this.user.locale
 					this.localeSetByUser = true
-					if(this.user.admin){
+					/*if(this.user.admin){
 						this.SendToServer("request set db", "",this.user.Id)
 						this.SendToServer("request item db", "",this.user.Id)
 						this.SendToServer("request waifu db", "",this.user.Id)
-					}
+					}*/
 					break
 				case "map link" :
 					this.fighting = true

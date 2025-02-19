@@ -51,9 +51,10 @@ namespace Nanina.Communication
 
         protected void ProvideUserToClient(string userId)
         {
+            var user = DBUtils.GetUser(userId);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
                 type = "user",
-                data = JsonConvert.SerializeObject(DBUtils.GetUser(userId)),
+                data = JsonConvert.SerializeObject(user),
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
@@ -65,6 +66,12 @@ namespace Nanina.Communication
                 type = "get dungeons",
                 data = JsonConvert.SerializeObject(DungeonManager.dungeons),
             }));
+            if(user.admin)
+            {
+                ProvideItemDatabase(userId);
+                ProvideSetDatabase(userId);
+                ProvideWaifuDatabase(userId);
+            }
         }
     }
 }

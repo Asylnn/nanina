@@ -8,9 +8,9 @@ namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
     {
-        protected void ProvideWaifuDatabase(ClientWebSocketResponse rawData)
+        protected void ProvideWaifuDatabase(string userId)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.GetUser(userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(!user.admin)
