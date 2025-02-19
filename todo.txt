@@ -24,7 +24,7 @@ TODO : Update WaifuDisplay for multiple waifus                      #Done
 
 STEP 3 : Release Version 0.2
 
-TODO : Implement Inventory System (page/component/database)
+TODO : Implement Inventory System (page/component/database)         #Done
 TODO : Implement Money System (page/component/database)
 TODO : Implement Shop System (page/component/database)
 TODO : Implement First Version of the leaderboard system
@@ -35,12 +35,12 @@ TODO : Make a waifu selector for dungeons
 
 STEP 4 : Release Version 0.3
 
-TODO : Implement Waifu Stats
+TODO : Implement Waifu Stats                                        #Done
 TODO : Implement Activities
 
 STEP 5 : Release Version 0.4
 
-TODO : Implement Donjon Systme
+TODO : Implement Donjon System                                      #Done
 
 STEP 6 : Release Version 0.5
 
@@ -52,11 +52,10 @@ Small Non Urgent Tasks
 
 Make the code in repsonse.cs follow camelCase convetion
 Comment the code
-Make a writeline to the console when a status code is different from 200/OK #Done
+Make a writeline to the console when a status code is different from 200/OK     #Done
 Create an extention which add beatmaps to Nanina
-Send Error message when unauthorized
-Update stats when doing dungeon or claim
-make cursor be style locked when claim or fight is timeout
+Update stats when doing dungeon or claim                                        #Done
+make cursor be style locked when claim or fight is timeout                      #Done
 
 Future Tasks
 

@@ -125,35 +125,47 @@ export default {
     <div id="focusedWaifu" >
         <div id="waifuPic"><img :src="`${publicPath}/waifu-image/${waifu.imgPATH}`"></div>
         <div id="waifuInfos">
-            <span v-if="count != -1">Pull number {{ count+1 }}</span><br>
-            {{waifu.name}} Level {{ waifu.lvl }} ({{ waifu.xp }} / {{ waifu.xpToLvlUp }})<br>
+            <span>{{waifu.name}}</span>
+            
             <div v-if="!forPull">
+                
                 <div class="stat">
-                    <span>STR :</span> <span>{{ Math.floor(waifu.Str) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.STR)}})</span><br>
+                    <span>XP</span> <span> {{ waifu.xp }}/{{ waifu.XpToLvlUp }} </span>  <span>Level {{ waifu.lvl }}</span> <br>
+                </div>
+                
+                <div class="stat">
+                    <span>STR</span> <span>{{ Math.floor(waifu.Str) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.STR)}})</span><br>
                 </div>
                 <div class="stat">
-                    <span>KAW :</span> <span>{{ Math.floor(waifu.Kaw) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.KAW)}})</span><br>
+                    <span>KAW</span> <span>{{ Math.floor(waifu.Kaw) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.KAW)}})</span><br>
                 </div>
                 <div class="stat">
-                    <span>INT :</span> <span>{{ Math.floor(waifu.Int) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.INT)}})</span><br>
+                    <span>INT</span> <span>{{ Math.floor(waifu.Int) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.INT)}})</span><br>
                 </div>
                 <div class="stat">
-                    <span>AGI :</span> <span>{{ Math.floor(waifu.Agi) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.AGI)}})</span><br>
+                    <span>AGI</span> <span>{{ Math.floor(waifu.Agi) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.AGI)}})</span><br>
                 </div>
                 <div class="stat">
-                    <span>DEX :</span> <span>{{ Math.floor(waifu.Dex) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.DEX)}})</span><br>
+                    <span>DEX</span> <span>{{ Math.floor(waifu.Dex) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.DEX)}})</span><br>
                 </div>
                 <div class="stat">
-                    <span>LUCK :</span> <span>{{ Math.floor(waifu.Luck) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.LUCK)}})</span><br>
+                    <span>LUCK</span> <span>{{ Math.floor(waifu.Luck) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.LUCK)}})</span><br>
+                </div>
+                <br>
+                <div class="stat">
+                    <span>Physical</span> <span>{{ Math.floor(waifu.Physical) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Physical)}})</span><br>
                 </div>
                 <div class="stat">
-                    <span>Physical :</span> <span>{{ Math.floor(waifu.Physical) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Physical)}})</span><br>
+                    <span>Psychic</span> <span>{{ Math.floor(waifu.Psychic) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Psychic)}})</span><br>
                 </div>
                 <div class="stat">
-                    <span>Psychic :</span> <span>{{ Math.floor(waifu.Psychic) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Psychic)}})</span><br>
+                    <span>Magical</span> <span>{{ Math.floor(waifu.Magical) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Magical)}})</span><br>
                 </div>
                 <div class="stat">
-                    <span>Magical :</span> <span>{{ Math.floor(waifu.Magical) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Magical)}})</span><br>
+                    <span>Crit chance</span> <span>{{ Math.floor(waifu.CritChance*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.CritChance)}})</span><br>
+                </div>
+                <div class="stat">
+                    <span>Crit damage</span> <span>{{ Math.floor(waifu.CritDamage*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.CritDamage)}})</span><br>
                 </div>
                 <div class="equipment">
                     <div @click="openDisplay(EquipmentPiece.Weapon)" class="itemSlot">
@@ -168,6 +180,7 @@ export default {
                 </div>
             </div>
             <div v-else>
+                <span v-if="count != -1">Pull number {{ count+1 }}</span><br>
                 STR : {{ waifu.b_str }}<br>
                 KAW : {{ waifu.b_kaw }}<br>
                 INT : {{ waifu.b_int }}<br>

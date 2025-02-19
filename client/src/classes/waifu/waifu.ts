@@ -43,7 +43,12 @@ export default class Waifu {
     public Physical! : number
     public Magical! : number
 
-    public get xpToLvlUp() : number {
+    public CritChance! : number
+    public CritDamage! : number
+
+    //public XpToLvlUp! : number
+
+    public get XpToLvlUp() : number {
         return Math.floor(this.diffLvlUp*(10*this.lvl + 20))
     }
 
