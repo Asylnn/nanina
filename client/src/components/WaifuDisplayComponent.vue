@@ -26,13 +26,17 @@ export default {
             type : Boolean,
             required : true,
         },
+        forDungeon: {
+            type : Boolean,
+            required : true,
+        },
         waifu: {
             type : Waifu,
             required : true
         },
-        count: { //= -1 for single pull in gacha or for a display in WaifuListPage
+        count: { //undefined for single pull in gacha or for a display in WaifuListPage
             type : Number,
-            required : true
+            required : false
         },
         user: {
             type : User,
@@ -129,6 +133,7 @@ export default {
         GridDisplayComponent,
         ItemComponent
     },
+    emits:["click"],
     computed : {
         equipment_to_show() {
             return this.user.inventory.equipment.filter(equipment => equipment.piece == this.equipmentPiece)
@@ -139,12 +144,14 @@ export default {
 </script>
 
 <template>
-    <div v-if="inventoryVisible" @click="inventoryVisible = false" class="veil" id="inventoryveil"></div>
-    <GridDisplayComponent v-if="inventoryVisible" class="grid" @show-element="openWeaponDisplay" :elements="equipment_to_show" :columns=5></GridDisplayComponent>
-    <div v-if="weaponVisible" @click="closeWeaponDisplay" class="veil" id="itemveil"></div>
-    <ItemComponent @click="selectItem()" :is-for-equiping="true" v-if="selected_item != null" @input="" :item="selected_item"></ItemComponent>
+    <div v-if="!forDungeon && !forPull" class="equipment">
+        <div v-if="inventoryVisible" @click="inventoryVisible = false" class="veil" id="inventoryveil"></div>
+        <GridDisplayComponent v-if="inventoryVisible" id="grid" @show-element="openWeaponDisplay" :elements="equipment_to_show" :columns=5></GridDisplayComponent>
+        <div v-if="weaponVisible" @click="closeWeaponDisplay" class="veil" id="itemveil"></div>
+        <ItemComponent @click="selectItem()" :is-for-equiping="true" v-if="selected_item != null" @input="" :item="selected_item"></ItemComponent>
+    </div>
 
-    <div id="focusedWaifu" >
+    <div id="focusedWaifu" @click="$emit('click')">
         <div id="waifuPic"><img :src="`${publicPath}/waifu-image/${waifu.imgPATH}`"></div>
         <div id="waifuInfos">
             <span>{{waifu.name}}</span>
@@ -189,7 +196,7 @@ export default {
                 <div class="stat">
                     <span>Crit damage</span> <span>{{ Math.floor(waifu.CritDamage*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.CritDamage)}})</span><br>
                 </div>
-                <div class="equipment">
+                <div v-if="!forDungeon" class="equipment">
                     <div @click.right="unequip(EquipmentPiece.Weapon, $event)" @click="openDisplay(EquipmentPiece.Weapon)" class="itemSlot">
                         <img  :src="`${publicPath}item-image/${waifu.equipment.weapon?.imgPATH ?? 'unknown.svg'}`">
                     </div>
@@ -202,7 +209,7 @@ export default {
                 </div>
             </div>
             <div v-else>
-                <span v-if="count != -1">Pull number {{ count+1 }}</span><br>
+                <span v-if="count != undefined">Pull number {{ count+1 }}</span><br>
                 STR : {{ waifu.b_str }}<br>
                 KAW : {{ waifu.b_kaw }}<br>
                 INT : {{ waifu.b_int }}<br>
@@ -245,10 +252,17 @@ export default {
     z-index: 810;
 }
 
-.grid {
+#grid {
     z-index: 780;
     position: sticky;
     top : 10px;
+    right: 0px;
+    left : 0px;
+    padding:0px;
+    margin:10vh 20vw ;
+    position:fixed;
+    height: 80vh;
+    overflow: scroll;
 }
 
 .itemSlot{

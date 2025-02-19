@@ -37,7 +37,7 @@ namespace Nanina.Dungeon
             sessionId = _sessionId;
             dungeonTemplate = dungeon;
             userId = user.Id;
-            waifus = [EquippedWaifus.First()];
+            waifus = EquippedWaifus;
             health = dungeonTemplate.maxHealth;
             Console.WriteLine("Dungeon Created!");
             StartDungeon();
@@ -107,8 +107,9 @@ namespace Nanina.Dungeon
             var user = DBUtils.GetUser(userId);
             loot = GetLoot(user);
             loot.ForEach(equipment => user.inventory.AddEquipment(equipment));
+            user.statCount.total_cleared_dungeon++;
             DBUtils.UpdateUser(user);
-            
+            User.RegenEnergy(user);
             DungeonManager.UpdateDungeonOfClient(this);
             
         }

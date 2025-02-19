@@ -89,7 +89,7 @@ namespace Nanina.Communication
             else
                 user.fightHistory.Add(user.fight.game, [user.fight.id]);
             
-            
+            user.statCount.maimai_claim_count++;
             DBUtils.UpdateUser(user);
             UserData.User.RegenEnergy(user);
 
@@ -193,6 +193,7 @@ namespace Nanina.Communication
             else
                 user.fightHistory.Add(user.fight.game, [user.fight.id]);
 
+            user.statCount.std_claim_count++;
             DBUtils.UpdateUser(user);
             UserData.User.RegenEnergy(user);
             

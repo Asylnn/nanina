@@ -90,7 +90,7 @@ export default {
     <GridDisplayComponent @show-element="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :elements=user.waifus :columns=columns></GridDisplayComponent>
     <div v-if="focusedView">
         <div @click="closeWaifuDisplay" class="veil" ></div>
-        <WaifuDisplayComponent :for-pull="false" @input="onEscape" :waifu="waifuDisplayed" :user="user" tabindex="0" @keydown.esc="closeWaifuDisplay" :count=-1></WaifuDisplayComponent>
+        <WaifuDisplayComponent :for-dungeon="false" :for-pull="false" @input="onEscape" :waifu="waifuDisplayed" :user="user" tabindex="0" @keydown.esc="closeWaifuDisplay" :count=-1></WaifuDisplayComponent>
     </div>
 </template>
 

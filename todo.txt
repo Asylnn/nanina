@@ -25,22 +25,24 @@ TODO : Update WaifuDisplay for multiple waifus                      #Done
 STEP 3 : Release Version 0.2
 
 TODO : Implement Inventory System (page/component/database)         #Done
-TODO : Implement Money System (page/component/database)
-TODO : Implement Shop System (page/component/database)
-TODO : Implement First Version of the leaderboard system
-TODO : Implement "World Level" mechanic
 TODO : Namespacing and Folderising the c# code                      #Done
+TODO : Make a waifu selector for dungeons                           #Done
+TODO : Implement "World Level" mechanic
 TODO : Scoping classes (public / private /abstract)
-TODO : Make a waifu selector for dungeons                           
+TODO : Implement logging
 
 STEP 4 : Release Version 0.3
 
 TODO : Implement Waifu Stats                                        #Done
+TODO : Implement Money System (page/component/database)
+TODO : Implement Shop System (page/component/database)
+TODO : Implement First Version of the leaderboard system
 TODO : Implement Activities
 
 STEP 5 : Release Version 0.4
 
 TODO : Implement Donjon System                                      #Done
+TODO : Implement Buffs/Debuffs                                      
 
 STEP 6 : Release Version 0.5
 
@@ -50,27 +52,33 @@ TODO : Implement Achievements
 
 Small Non Urgent Tasks
 
-Make the code in repsonse.cs follow camelCase convetion
-Comment the code
-Make a writeline to the console when a status code is different from 200/OK     #Done
-Create an extention which add beatmaps to Nanina
 Update stats when doing dungeon or claim                                        #Done
 make cursor be style locked when claim or fight is timeout                      #Done
+Make a writeline to the console when a status code is different from 200/OK     #Done
+Make the code in repsonse.cs follow camelCase convention                        #Done
+Comment the code
+Create an extention which add beatmaps to Nanina
+
 
 Future Tasks
 
-TODO : Implement Avatar for user
+TODO : Make dungeon not linked with websocket session                                                                           #Done
+TODO : Remove discord link from button in client side                                                                           #Done
 TODO : Implement File Serving                                                                                                   #Done
 TODO : Make in sort to thrust NOTHING coming from client and test EVERYTHING                                                    #Done
+TODO : Implement Setting page/component (Notifications)                                                                         #Done
+
+
+TODO : Implement Avatar for user
 TODO : Is not deleting old unused sessions ids not secure? To think about.
 TODO : any objects in ts should be properly be typed
 TODO : not sending the user object everytime to save bandwidth
-TODO : Implement Setting page/component (Notifications)                                                                         #Done
-TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca
 TODO : MUTEX Counter in DungeonManager
 TODO : Optimize data sent to client, for example don't send old data each time there is an attack in the dungeon
-TODO : Make dungeon not linked with websocket session                                                                           #Done
-TODO : Remove discord link from button in client side                                                                           #Done
 TODO : Implement IRedDotYouMustClaim/Notification/WhatYouSeeInGacha
 TODO : Modify break property in Maimai 
 TODO : Crash when schwartzchild (re:mast?)
+TODO : Make stop dungeon safe
+
+
+TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca

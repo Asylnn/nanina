@@ -77,7 +77,11 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             
             var clientData = JsonConvert.DeserializeObject<EquipItemFormat>(rawData.data);
-
+            if(clientData == null)
+                {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
+            if(clientData.waifuId == null || clientData.equipmentId == null)
+                {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
+            
             var waifu = user.waifus.Find(waifu => clientData.waifuId == waifu.id);
             if(waifu is null)
                 {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to equip the item with doesn't exist", 1)); return;}
@@ -105,6 +109,11 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             
             var clientData = JsonConvert.DeserializeObject<UnequipItemFormat>(rawData.data);
+            if(clientData == null)
+                {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
+            if(clientData.waifuId == null || clientData.equipmentPiece == null)
+                {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
+            
 
             var waifu = user.waifus.Find(waifu => clientData.waifuId == waifu.id);
             if(waifu is null)

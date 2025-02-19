@@ -59,7 +59,7 @@ export default {
             </div>
         </div>
     </div>
-</template><<
+</template>
 
 <style lang="css" scoped>
 
