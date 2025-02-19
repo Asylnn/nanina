@@ -73,3 +73,5 @@ TODO : Optimize data sent to client, for example don't send old data each time t
 TODO : Make dungeon not linked with websocket session                                                                           #Done
 TODO : Remove discord link from button in client side                                                                           #Done
 TODO : Implement IRedDotYouMustClaim/Notification/WhatYouSeeInGacha
+TODO : Modify break property in Maimai 
+TODO : Crash when schwartzchild (re:mast?)

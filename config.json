@@ -11,6 +11,7 @@
     "banners_storage_path": "../save/banners.json",
     "discord_api_url": "https://discord.com/api/",
     "osu_api_url": "https://osu.ppy.sh/api/v2/",
+    "maitea_api_url":"https://maitea.app/",
     "ws_prod_server_url":"wss://asyln.moe",
     "ws_dev_server_url":"ws://localhost",
     "base_url":"/nanina",

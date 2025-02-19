@@ -39,6 +39,7 @@ import type Banner from './classes/banner'
 import type Item from './classes/item/item'
 import type Set from './classes/item/set'
 import ActiveDungeon from './classes/dungeons/active_dungeon'
+import Chart from './classes/maimai/chart'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -61,6 +62,7 @@ export default {
 			dungeons : [] as DungeonTemplate[],
 			active_dungeon : new ActiveDungeon,
 			localeSetByUser : false,
+			maimai_chart : null as Chart | null,
 		}
 	},
 	components: {
@@ -187,6 +189,10 @@ export default {
 					this.link = 'https://osu.ppy.sh/beatmapsets/'+this.beatmap.beatmapset_id+'#'+this.beatmap.mode+'/'+this.beatmap.id
 					//this.notifs.push(new Notification("Fight", "You started a fight with the following beatmap! " + this.link, NotificationSeverity.Notification))
 					break
+				case "maimai link" :
+					this.fighting = true
+					this.maimai_chart = JSON.parse(res.data)
+					break
 				case "fighting results" :
 					this.fighting = false 
 					this.xp = res.data
@@ -271,7 +277,7 @@ export default {
 			<AddMap :id="user.Id"></AddMap>
 		</div>
 		<div v-else-if="loadingPage === 100">
-			<ClaimAndFightPage :xp="xp" :fighting="fighting" :user="user" :beatmap="beatmap"></ClaimAndFightPage>
+			<ClaimAndFightPage :maimai_chart="maimai_chart" :xp="xp" :fighting="fighting" :user="user" :beatmap="beatmap"></ClaimAndFightPage>
 		</div>
 		<div v-else-if="loadingPage === 110">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>

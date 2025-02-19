@@ -90,5 +90,30 @@ namespace Nanina.Communication
                 data = JsonConvert.SerializeObject(user) 
             }));
         }
+
+        protected async void VerifyMaimaiToken(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null) 
+                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+
+            var success = await Maimai.Api.VerifyToken(rawData.data);
+            
+
+            if(!success)
+                {Send(ClientNotification.NotificationData("Update osu ID", "We can't find the user associated with that id! (or other server side issues)", 1)); return;}
+                
+            
+            user.tokens.maimai_token = rawData.data;
+            user.verification.isMaimaiTokenVerified = true;
+            DBUtils.UpdateUser(user);
+
+            Send(ClientNotification.NotificationData("Update Maimai token", "You successfully modified your maimai token!", 1));
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "user",
+                data = JsonConvert.SerializeObject(user) 
+            }));
+        }
     }
 }

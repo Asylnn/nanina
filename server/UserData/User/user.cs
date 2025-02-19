@@ -38,13 +38,12 @@ namespace Nanina.UserData
 
         public double SpendEnergy()
         {
-            RegenEnergy(this);
             var spent_energy = energy*Global.baseValues.proportion_of_energy_used_for_each_action;
             energy -= spent_energy;
             return spent_energy + Global.baseValues.free_energy_not_used_for_each_action;
         }
 
-        private static async void RegenEnergy(User user)
+        public static async void RegenEnergy(User user)
         {
             Console.WriteLine("Regen Energy");
             if(user.isRegenerating) return;

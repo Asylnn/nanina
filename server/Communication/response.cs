@@ -92,6 +92,9 @@ namespace Nanina.Communication
                 case "equip item":
                     EquipItem(rawData);
                     break;
+                case "verify maimai token":
+                    VerifyMaimaiToken(rawData);
+                    break;
             }
         }
         protected override void OnClose(CloseEventArgs e)

@@ -8,6 +8,7 @@ Stats offensives pour les waifus :
     AGI = Crit dmg (+ de dégats mais aussi potency buff/débuff)
 */
 
+using Nanina.Communication;
 using Nanina.Database;
 using Nanina.UserData;
 using Nanina.UserData.ItemData;

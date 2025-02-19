@@ -34,6 +34,7 @@ export default {
             entered_id :this.user.ids.osuId,
             request : false,
             code: 0,
+            entered_token: "",
         }
     },
     props:{
@@ -57,6 +58,9 @@ export default {
         },
         verifyOsuId(){
             this.SendToServer("verify osu id", this.code.toString(), this.user.Id)
+        },
+        verifyMaimaiToken(){
+            this.SendToServer("verify maimai token", this.entered_token.toString(), this.user.Id)
         },
         async Disconect(){
             this.SendToServer("disconect", "", this.user.Id)
@@ -94,6 +98,12 @@ export default {
             <button @click="verifyOsuId()">Verify code</button>
         </div>
         <button @click="Disconect()">Disconect</button>
+        <p>Give us your access token so we can steal your rating!</p>
+        <div id="maimaitoken">
+            <input type="text" v-model.lazy="entered_token">
+            <span  v-if="user.verification.isMaimaiTokenVerified"><img src="../assets/green_checkmark.png"></span>
+        </div>
+        <button @click="verifyMaimaiToken()">Update</button>
     </div>
 </template>
 
@@ -139,7 +149,11 @@ button {
 #optionOsuId input {
     width: 5.8vw;
 }
-#userOsuId img {
+
+#maimaitoken input {
+    width: 20vw;
+}
+#userOsuId img, #maimaitoken img {
     padding-left: 0.3vw;
     align-self: center;
     width: 1.25vw;
