@@ -47,13 +47,9 @@ namespace Nanina.Communication
                     break;
                 
 
-                case "change locale":
-                    
+                case "change locale":  
                     db.GetCollection<Session>("sessiondb").Find(session => session.id == rawData.sessionId).First().UpdateLocale(rawData.data);
                     break;
-
-                
-
                 case "get map to fight": 
                     GetMapToFight(rawData);
                     break;
@@ -88,7 +84,9 @@ namespace Nanina.Communication
                 case "stop dungeon":
                     StopDungeon(rawData);
                     break;
-                
+                case "unequip item":
+                    UnequipItem(rawData);
+                    break;
                 
                 case "disconect":
                     Disconnect(rawData);

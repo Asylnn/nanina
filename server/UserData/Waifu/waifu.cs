@@ -144,7 +144,6 @@ namespace Nanina.UserData.WaifuData
                     equipment.accessory = newEquipment;
                     break;
             }
-            Console.WriteLine(JsonConvert.SerializeObject(equipment));
             if(equipment.weapon?.setId == equipment.dress?.setId && equipment.dress?.setId == equipment.accessory?.setId && equipment.dress?.setId != null)
             {
                 var setCol = DBUtils.GetCollection<Set>();

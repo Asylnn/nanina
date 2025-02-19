@@ -57,21 +57,26 @@ export default {
         },
         selectItem()
         {
+            let equip = true;
             if(this.selected_item == null) return;
             switch(this.equipmentPiece){
                 case EquipmentPiece.Weapon:
+                    equip = this.waifu.equipment.weapon?.inventoryId != this.selected_item?.inventoryId
                     this.waifu.equipment.weapon = this.selected_item
                     break;
                 case EquipmentPiece.Dress:
+                    equip = this.waifu.equipment.dress?.inventoryId != this.selected_item?.inventoryId
                     this.waifu.equipment.dress = this.selected_item
                     break;
                 case EquipmentPiece.Accessory:
+                    equip = this.waifu.equipment.accessory?.inventoryId != this.selected_item?.inventoryId
                     this.waifu.equipment.accessory = this.selected_item
                     break;
             }
             
             console.log('equiping')
-            this.SendToServer("equip item", JSON.stringify({equipmentId:this.selected_item.inventoryId, waifuId:this.waifu.id}), this.user.Id)
+            if(equip)
+                this.SendToServer("equip item", JSON.stringify({equipmentId:this.selected_item.inventoryId, waifuId:this.waifu.id}), this.user.Id)
             this.closeAllDisplays()
         },
         openDisplay(piece : EquipmentPiece)
@@ -101,6 +106,23 @@ export default {
                         }
                     break;
             }
+        },
+        unequip(piece: EquipmentPiece, e : Event)
+        {
+            e.preventDefault()
+            let oldEquipment = null as Equipment | null
+            switch(piece){
+                case EquipmentPiece.Weapon:
+                    this.waifu.equipment.weapon = null
+                    break;
+                case EquipmentPiece.Dress:
+                    this.waifu.equipment.dress = null
+                    break;
+                case EquipmentPiece.Accessory:
+                    this.waifu.equipment.accessory = null
+                    break;
+            }
+            this.SendToServer("unequip item", JSON.stringify({equipmentPiece:piece, waifuId:this.waifu.id}), this.user.Id)
         }
     },
     components:{
@@ -168,13 +190,13 @@ export default {
                     <span>Crit damage</span> <span>{{ Math.floor(waifu.CritDamage*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.CritDamage)}})</span><br>
                 </div>
                 <div class="equipment">
-                    <div @click="openDisplay(EquipmentPiece.Weapon)" class="itemSlot">
+                    <div @click.right="unequip(EquipmentPiece.Weapon, $event)" @click="openDisplay(EquipmentPiece.Weapon)" class="itemSlot">
                         <img  :src="`${publicPath}item-image/${waifu.equipment.weapon?.imgPATH ?? 'unknown.svg'}`">
                     </div>
-                    <div @click="openDisplay(EquipmentPiece.Dress)" class="itemSlot">
+                    <div @click.right="unequip(EquipmentPiece.Dress, $event)" @click="openDisplay(EquipmentPiece.Dress)" class="itemSlot">
                         <img :src="`${publicPath}item-image/${waifu.equipment.dress?.imgPATH ?? 'unknown.svg'}`">
                     </div>
-                    <div @click="openDisplay(EquipmentPiece.Accessory)" class="itemSlot">
+                    <div @click.right="unequip(EquipmentPiece.Accessory, $event)" @click="openDisplay(EquipmentPiece.Accessory)" class="itemSlot">
                         <img :src="`${publicPath}item-image/${waifu.equipment.accessory?.imgPATH ?? 'unknown.svg'}`">
                     </div>
                 </div>

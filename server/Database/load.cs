@@ -135,7 +135,7 @@ namespace Nanina.Database
                     };
                     user.inventory.AddEquipment(equipment);
                 }
-                var waifus = user.waifus;
+                var waifus = user.waifus; DO NOT WORK, ERASE ALL WAIFUS
                 string[] ids = [];
                 user.waifus = [];
                 foreach(var waifu in waifus) 

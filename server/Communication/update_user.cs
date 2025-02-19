@@ -1,6 +1,7 @@
 using WebSocketSharp.Server;
 using Newtonsoft.Json;
 using Nanina.Database;
+using Nanina.UserData.ItemData;
 
 namespace Nanina.Communication
 {
@@ -63,6 +64,12 @@ namespace Nanina.Communication
             public int equipmentId;
             public string waifuId;
         }
+
+        protected class UnequipItemFormat
+        {
+            public EquipmentPiece equipmentPiece;
+            public string waifuId;
+        }
         protected void EquipItem(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.GetUser(rawData.userId);
@@ -80,6 +87,48 @@ namespace Nanina.Communication
 
             var oldEquipment = waifu.Equip(user.inventory.equipment[itemIndex]);
             user.inventory.equipment.RemoveAt(itemIndex);
+            if(oldEquipment is not null)
+                user.inventory.AddEquipment(oldEquipment);
+
+            DBUtils.UpdateUser(user);
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "user",
+                data = JsonConvert.SerializeObject(user) 
+            }));
+        }
+
+        protected void UnequipItem(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.GetUser(rawData.userId);
+            if(user == null)
+                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            
+            var clientData = JsonConvert.DeserializeObject<UnequipItemFormat>(rawData.data);
+
+            var waifu = user.waifus.Find(waifu => clientData.waifuId == waifu.id);
+            if(waifu is null)
+                {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to equip the item with doesn't exist", 1)); return;}
+
+            Equipment oldEquipment = null;
+            switch(clientData.equipmentPiece)
+            {
+                case EquipmentPiece.Weapon:
+                    oldEquipment = waifu.equipment.weapon;
+                    waifu.equipment.weapon = null;
+                    break;
+                case EquipmentPiece.Dress:
+                    oldEquipment = waifu.equipment.dress;
+                    waifu.equipment.dress = null;
+                    break;
+                case EquipmentPiece.Accessory:
+                    oldEquipment = waifu.equipment.accessory;
+                    waifu.equipment.accessory = null;
+                    break;
+                default:
+                    Send(ClientNotification.NotificationData("Equip", "Wrong equipment piece", 1));
+                    break;
+            }
             if(oldEquipment is not null)
                 user.inventory.AddEquipment(oldEquipment);
 
