@@ -129,6 +129,7 @@ namespace Nanina.UserData.WaifuData
 
         public Equipment Equip(Equipment newEquipment)
         {
+            // Equips the equipment and check for set changes
             Equipment oldEquipment = null;
             switch(newEquipment.piece){
                 case EquipmentPiece.Weapon:
@@ -146,8 +147,9 @@ namespace Nanina.UserData.WaifuData
             }
             if(equipment.weapon?.setId == equipment.dress?.setId && equipment.dress?.setId == equipment.accessory?.setId && equipment.dress?.setId != null)
             {
-                var setCol = DBUtils.GetCollection<Set>();
-                equipment.set = setCol.Find(set => set.id == equipment.weapon.setId).First();
+
+                /*get set col to find one on the equipement to update equipment.set*/
+                equipment.set = DBUtils.Get<Set>(set => set.id == equipment.weapon.setId);
             }
             else
             {

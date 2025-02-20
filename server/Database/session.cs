@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Nanina.Database
 {
-    public class Session() {
+    public class Session {
         public string id {get; set;} = Guid.NewGuid().ToString();
         public string userId {get; set;} = null;
         public ulong date {get; set;} = Utils.GetTimestamp();
@@ -13,13 +13,9 @@ namespace Nanina.Database
         public static Session NewSession(string _webSocketId)
         {
             var session = new Session();
-            var sessionCol = DBUtils.GetCollection<Session>();
-            session.webSocketId = _webSocketId;
+            /*get session col to insert newly created session to the db*/
             Console.WriteLine("New session with id : " + session.id);
-
-            sessionCol.Insert(session);
-            sessionCol.EnsureIndex(x => x.id, true);
-            sessionCol.EnsureIndex(x => x.webSocketId, false);
+            DBUtils.Insert(session);
             return session;
         }
         public void UpdateLocale(string newLocale)
@@ -36,7 +32,8 @@ namespace Nanina.Database
         
         public void UpdateDB()
         {
-            DBUtils.GetCollection<Session>().Update(this);
+            /*get session col to update this session in the db*/
+            DBUtils.Update(this);
         }
         public void UpdateUserId(string id) 
         {

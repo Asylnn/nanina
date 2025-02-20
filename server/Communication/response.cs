@@ -35,7 +35,9 @@ namespace Nanina.Communication
                 case "request set db":
                     ProvideSetDatabase(rawData);
                     break;*/
-
+                case "change locale":
+                    DBUtils.Get<Session>(session => session.id == rawData.sessionId).UpdateLocale(rawData.data);
+                    break;
                 case "update waifu db": 
                     UpdateWaifuDatabase(rawData);
                     break;
@@ -44,11 +46,6 @@ namespace Nanina.Communication
                     break;
                 case "update set db":
                     UpdateSetDatabase(rawData);
-                    break;
-                
-
-                case "change locale":  
-                    db.GetCollection<Session>("sessiondb").Find(session => session.id == rawData.sessionId).First().UpdateLocale(rawData.data);
                     break;
                 case "get map to fight": 
                     StartFight(rawData);
@@ -101,11 +98,11 @@ namespace Nanina.Communication
         }
         protected override void OnClose(CloseEventArgs e)
         {
-            var sessionCol = DBUtils.GetCollection<Session>();
-            var sessions = sessionCol.Find(session => session.webSocketId == ID);
-            if(sessions.Count() >= 1)
+            /*Get session col
+            to find one session and empty its websocket id*/
+            var session = DBUtils.Get<Session>(session => session.webSocketId == ID);
+            if(session is not null)
             {
-                var session = sessions.First();
                 session.UpdateWebSocketId(null);
             }
             Console.WriteLine("Bye :'(");

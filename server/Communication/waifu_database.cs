@@ -16,13 +16,9 @@ namespace Nanina.Communication
             if(!user.admin)
                 {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             
-            var waifuCol = DBUtils.GetCollection<Waifu>();
-            var data = JsonConvert.SerializeObject(waifuCol.FindAll());
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-            {
-                type = "waifu db",
-                data = data
-            }));
+
+            /*get waifu col to findall and send a websocket containing the whole waifu database*/
+            DBUtils.SendDatabaseToClient<Waifu>(ID);
         }
         protected void UpdateWaifuDatabase(ClientWebSocketResponse rawData)
         {
@@ -35,13 +31,9 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
             var waifus = JsonConvert.DeserializeObject<Waifu[]>(rawData.data);
-            var waifuCol = DBUtils.GetCollection<Waifu>();
-            waifuCol.DeleteAll();
-            foreach (var waifu in waifus) 
-            {
-                waifuCol.Insert(waifu);
-                waifuCol.EnsureIndex(x => x.id, true);
-            }
+            Console.WriteLine("waifus: " + waifus);
+            /*get waifu col to delete all and insert them back*/
+            DBUtils.Rebuild<Waifu>(waifus);
             Send(ClientNotification.NotificationData("admin", "updated the waifu database!", 0));
             
         }

@@ -43,10 +43,9 @@ namespace Nanina.Communication
                     alreadyOwnedWaifus.Append(waifu);
                 }
             }
-            
-            Console.WriteLine(JsonConvert.SerializeObject(aquiredWaifus));
-            
-            var baseItem = DBUtils.GetCollection<Item>().FindOne(item => item.id == 50_000); //Item id for waifu essence
+
+            /*get item db to find one item?*/
+            var baseItem = DBUtils.Get<Item>(item => item.id == 50_000); //Item id for waifu essence
             foreach(var waifu in alreadyOwnedWaifus){
                 var item = baseItem.Clone() as Item;
                 item.id += Convert.ToUInt16(waifu.id);

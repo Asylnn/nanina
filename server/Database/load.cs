@@ -104,9 +104,9 @@ namespace Nanina.Database
                 u_luck = 2,
             };
 
-            var waifuCol = DBUtils.GetCollection<Waifu>();
-            waifuCol.Insert(waifu);
-            waifuCol.EnsureIndex(x => x.id, true);
+            /*get waifu col to insert a waifu*/
+
+            DBUtils.Insert(waifu);
             
             Global.config.first_time_running = false;
             File.WriteAllText("../config.json", JsonConvert.SerializeObject(Global.config));
@@ -116,6 +116,7 @@ namespace Nanina.Database
         {
             Console.WriteLine("Updating user database...");
             
+            /*get user col to update all users*/
             var userCol = DBUtils.GetCollection<UserData.User>();
             var users = userCol.FindAll();
             //Update
@@ -135,7 +136,7 @@ namespace Nanina.Database
                     };
                     user.inventory.AddEquipment(equipment);
                 }
-                var waifus = user.waifus; DO NOT WORK, ERASE ALL WAIFUS
+                var waifus = user.waifus; //DO NOT WORK, ERASE ALL WAIFUS
                 string[] ids = [];
                 user.waifus = [];
                 foreach(var waifu in waifus) 

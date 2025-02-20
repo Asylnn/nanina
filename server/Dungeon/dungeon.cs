@@ -124,8 +124,9 @@ namespace Nanina.Dungeon
                 amount = gc,
             });
             user.statCount.total_cleared_dungeon++;
+            
             User.RegenEnergy(user);
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
             DungeonManager.UpdateDungeonOfClient(this);
             
             DungeonManager.SendLootToClient(this, lootToServer);
