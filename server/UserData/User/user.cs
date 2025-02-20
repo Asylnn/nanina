@@ -36,12 +36,13 @@ namespace Nanina.UserData
             return Utils.GetTimestamp().ToString() + (rng.Next(89_999_999) + 10_000_000).ToString();
         }
 
-        public double SpendEnergy()
+        public (double energy, uint gc) SpendEnergy()
         {
             var spent_energy = energy*Global.baseValues.proportion_of_energy_used_for_each_action;
             energy -= spent_energy;
-            gacha_currency += (uint) Math.Ceiling(spent_energy*Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
-            return spent_energy + Global.baseValues.free_energy_not_used_for_each_action;
+            var gc = (uint) Math.Ceiling(spent_energy*Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
+            gacha_currency += gc;
+            return (energy:spent_energy + Global.baseValues.free_energy_not_used_for_each_action, gc);
         }
 
         public static async void RegenEnergy(User user)

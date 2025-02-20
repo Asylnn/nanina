@@ -80,6 +80,8 @@ TODO : Modify break property in Maimai
 TODO : Crash when schwartzchild (re:mast?)
 TODO : Make stop dungeon safe
 TODO : Add regen tick clock on client
+TODO : left:50%; transform: translateX(-50%); everywhere
+    
 
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca

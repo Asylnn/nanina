@@ -43,7 +43,7 @@ namespace Nanina.Dungeon
             }
         }
         public List<Equipment> GetLoot(UserData.User user){
-            var spent_energy = user.SpendEnergy();
+            var (spent_energy, _) = user.SpendEnergy();
             var numberOfRewards = spent_energy/dungeonTemplate.numberOfRewardsPerEnergy;
             var fraction = numberOfRewards - Math.Floor(numberOfRewards);
             numberOfRewards = Math.Floor(numberOfRewards);

@@ -79,7 +79,7 @@ namespace Nanina.Communication
                 Send(ClientNotification.NotificationData("Fighting", "Did you do the chart?", 0)); return;
             }
             
-            var spent_energy = user.SpendEnergy();
+            var (spent_energy, gc) = user.SpendEnergy();
             
             var xp = (uint) Math.Ceiling(Maimai.Api.GetXP(validscore)*spent_energy);
             waifu.GiveXP(xp);
@@ -92,6 +92,16 @@ namespace Nanina.Communication
             user.statCount.maimai_claim_count++;
             DBUtils.UpdateUser(user);
             UserData.User.RegenEnergy(user);
+
+            SendLoot([
+                new Loot {
+                    lootType = LootType.WaifuXP,
+                    amount = xp,
+                },
+                new Loot {
+                    lootType = LootType.GC,
+                    amount = gc,
+            }]);
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
@@ -184,7 +194,7 @@ namespace Nanina.Communication
                 Send(ClientNotification.NotificationData("Fighting", "You didn't do the beatmap (must be a pass)", 0)); return;
             }
             
-            var spent_energy = user.SpendEnergy();
+            var (spent_energy, _) = user.SpendEnergy();
             var xp = (uint) Math.Ceiling(Osu.Api.GetXP(validscore)*spent_energy);
             waifu.GiveXP(xp);
             user.fight.completed = true;

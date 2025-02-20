@@ -73,5 +73,13 @@ namespace Nanina.Communication
                 ProvideWaifuDatabase(userId);
             }
         }
+        protected void SendLoot(Loot[] loot)
+        {
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "loot",
+                data = JsonConvert.SerializeObject(loot)
+            }));
+        }
     }
 }
