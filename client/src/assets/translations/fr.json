@@ -10,7 +10,8 @@
         "mineralMining":"Minage de minerais",
         "technoTree":"Arbre des technologies",
         "gadgetAnalyse":"Analyse de gadgets",
-        "exploration":"Exploration"
+        "exploration":"Exploration",
+        "stats":"Stats"
     },
     "message": {
         "hello": "bonjour"
@@ -48,63 +49,63 @@
         "set":"Set",
         "0":{
             
-            "name":"Unsuspicious attire"
+            "name":"Equipement tout à fait normal"
         }
     },
     "item":{
         "type": {
             "type":"Type",
-            "0":"Weapon",
-            "1":"Dress",
-            "2":"Accessory"
+            "0":"Arme",
+            "1":"Robe",
+            "2":"Accessoire"
         },
         "1":{
             "name":"Completely normal sword",
-            "description":"Do NOT contains the soul of its user"
+            "description":"Does NOT contains the soul of its user"
         },
         "2":{
             "name":"Totally ordinary dress",
-            "description":"Do NOT contains the hope and dreams of it's wearer"
+            "description":"Does NOT contains the hope and dreams of it's wearer"
         },
         "3":{
             "name":"Absolutely real diamond ring",
-            "description":"Do NOT actively spy on your waifu and send data to GlouGlouCorp™"
+            "description":"Does NOT actively spy on your waifu and send data to GlouGlouCorp™"
         }
     },
     "modifiers":{
+        "modifier":"Modificateurs",
         "0":{
-            "name":"Physical damage increase"
+            "name":"Augmentation des dégats physiques"
         },
         "1":{
-            "name":"Magical damage increase"
+            "name":"Augmentation des dégats magiques"
         },
         "2":{
-            "name":"Psychic damage increase"
+            "name":"Augmentation des dégats psychiques"
         },
         "3":{
-            "name":"STR increase"
+            "name":"Augmentation STR"
         },
         "4":{
-            "name":"INT increase"
+            "name":"Augmentation INT"
         },
         "5":{
-            "name":"KAW increase"
+            "name":"Augmentation KAW"
         },
         "6":{
-            "name":"AGI increase"
+            "name":"Augmentation AGI"
         },
         "7":{
-            "name":"DEX increase"
+            "name":"Augmentation DEX"
         },
         "8":{
-            "name":"LUCK increase"
+            "name":"Augmentation LUCK"
         },
         "9":{
-            "name":"Critical damage increase"
+            "name":"Augmentation des dégats critiques"
         },
         "10":{
-            "name":"Critical chance increase"
+            "name":"Augmentation de la chance d'un coup critique"
         }
-        
     }
 }

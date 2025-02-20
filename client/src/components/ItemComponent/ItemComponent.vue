@@ -42,7 +42,7 @@ export default {
                 {{ $t(`item.type.type`) }} : {{ $t(`item.type.${(item as Equipment).piece}`) }}<br>
                 {{ $t(`set.set`) }} : {{ $t(`set.${(item as Equipment).setId}.name`) }}<br><br>
             </p>
-            <p>Modifiers : </p><br>
+            <p>{{$t("modifiers.modifier")}} </p><br>
             <div v-for="modifier in item.modifiers">
                 <ModifierComponent :modifier="modifier"></ModifierComponent>
             </div>
@@ -62,7 +62,7 @@ export default {
     display: flex;
     flex-direction: row;
     padding: 2vh 2vh;
-    z-index: 727;/*Make the display be at the center of the screen*/
+    z-index: 727;
     top:50%;                                /*Make the display be at the center of the screen*/
     left:50%;
     transform: translate(-50%, -50%);
