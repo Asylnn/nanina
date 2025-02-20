@@ -21,7 +21,6 @@ namespace Maimai
             AddDefaultHeader(request, Environment.GetEnvironmentVariable("MAITEA_AUTH_KEY"));
             var response = await client.ExecuteGetAsync(request);
             Console.WriteLine("response status code "+ response.StatusCode);
-            Console.WriteLine("response content " + response.Content);
             File.WriteAllText("../gettracks.json", response.Content);
         }
 

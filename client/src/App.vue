@@ -40,6 +40,7 @@ import type Item from './classes/item/item'
 import type Set from './classes/item/set'
 import ActiveDungeon from './classes/dungeons/active_dungeon'
 import Chart from './classes/maimai/chart'
+import StatsPage from './components/StatsPage.vue'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -81,6 +82,7 @@ export default {
 		WaifuDisplayComponent,
 		InventoryManagerPage,
 		DungeonPage,
+		StatsPage,
 	},	
 	methods : {
 		updateTheme(theme : string) {
@@ -118,6 +120,8 @@ export default {
 				return 80
 			case Page.ClaimAndFightPage:
 				return 100
+			case Page.StatPage:
+				return 160
 			case Page.DungeonPage:
 				return 150
 			case Page.AddMap :
@@ -293,6 +297,9 @@ export default {
 		</div>
 		<div v-else-if="loadingPage === 150">
 			<DungeonPage :dungeons="dungeons" :user="user" :active_dungeon="active_dungeon"></DungeonPage>
+		</div>
+		<div v-else-if="loadingPage === 160">
+			<StatsPage :user="user"></StatsPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 	</div>

@@ -26,6 +26,10 @@ export default class User {
     public fightHistory : Dictionary<string[]> = {}
     public fight! : Fight
     public inventory! : Inventory
+
+    public get totalClaims() : number{
+        return this.statCount.maimai_claim_count + this.statCount.std_claim_count
+    }
     
     public verification : any = {} //One day any objects should be properly be typed
     constructor(obj : any){
