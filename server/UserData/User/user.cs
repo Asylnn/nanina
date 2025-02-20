@@ -40,6 +40,7 @@ namespace Nanina.UserData
         {
             var spent_energy = energy*Global.baseValues.proportion_of_energy_used_for_each_action;
             energy -= spent_energy;
+            gacha_currency += (uint) Math.Ceiling(spent_energy*Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
             return spent_energy + Global.baseValues.free_energy_not_used_for_each_action;
         }
 

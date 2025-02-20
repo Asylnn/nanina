@@ -22,5 +22,6 @@ namespace Nanina
         public uint energy_regen_tick_amount;
         public double base_max_energy;
         public string base_theme;
+        public double spent_energy_to_gacha_currency_conversion_rate;
     }
 }
