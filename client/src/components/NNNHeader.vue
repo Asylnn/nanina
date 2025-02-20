@@ -4,6 +4,7 @@
 import type { PropType } from 'vue';
 import Page from '../classes/page';
 import config from '../../../config.json'
+import User from '@/classes/user/user';
 
 export default {
     name : "NNNHeader",
@@ -18,14 +19,14 @@ export default {
             type : Boolean,
             required : true
         },
-        admin : {
-            type : Boolean,
-            required : true
-        },
         dev : {
             type : Boolean,
             required : true
         },
+        user : {
+            type : User,
+            required : true
+        }
     },
     emits: ["theme-change","page-change"],
     methods : {
@@ -66,18 +67,27 @@ export default {
             <li @click="onClickChangePage(7)"><span>{{ $t("header.fighting") }}</span></li>
             <li @click="onClickChangePage(9)"><span>{{ $t("header.pull") }}</span></li>
             <li @click="onClickChangePage(10)"><span>{{ $t("header.dungeon") }}</span></li>
-            <li @click="onClickChangePage(15)" v-if="admin"><span>Item DB</span></li>   
-            <li @click="onClickChangePage(8)" v-if="admin"><span>Waifu DB</span></li>
-            <li @click="onClickChangePage(6)" v-if="admin && dev"><span>Add Beatmap</span></li>
-            <li @click="onClickChangePage(16)" v-if="admin && dev"><span>InventoryManager</span></li>
+            <li @click="onClickChangePage(11)"><span>{{ $t("header.stats") }}</span></li>
+            <li @click="onClickChangePage(15)" v-if="user.admin"><span>Item DB</span></li>   
+            <li @click="onClickChangePage(8)" v-if="user.admin"><span>Waifu DB</span></li>
+            <li @click="onClickChangePage(6)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
+            <li @click="onClickChangePage(16)" v-if="user.admin && dev"><span>InventoryManager</span></li>
         </ul>
         <ul id="buttList">
             <select id="language" v-model="$i18n.locale" @change="onChangeLocale()">
                 <option value = "en">🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
                 <option value = "fr">🇫🇷</option>
             </select>
-            <li v-if="!logged"><a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url">Discord</a></li>
-            <li v-else><span @click="onClickChangePage(5)"><img height=25px width=25px src="../assets/option_gear_from_google_probably_not_free_of_use.png"></span></li>
+            <li v-if="!logged">
+                <a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url">Discord</a>
+            </li>
+            <li v-else>
+                <span @click="onClickChangePage(5)">
+                    <img height=25px width=25px src="../assets/option_gear_from_google_probably_not_free_of_use.png">
+                </span>
+                
+            </li>
+            <div v-if="logged">{{ Math.floor(user.energy) }} / {{Math.floor(user.max_energy) }}</div>
         </ul>
     </header>
 </template>
@@ -108,8 +118,8 @@ header {
     top:0;
     min-height: 60px;
     height:6vh;
-    grid-template-columns: 1fr 4fr 0.5fr;
-    padding: 0 15vw;
+    grid-template-columns: 1fr 4fr 0.8fr;
+    padding: 0 12vw;
     z-index: 9000;
 }
 #actiMenu {
@@ -134,7 +144,7 @@ header {
 }
 
 #buttList {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 3fr ;
     color: greenyellow;
 }
 

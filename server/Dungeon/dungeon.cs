@@ -8,6 +8,7 @@ Stats offensives pour les waifus :
     AGI = Crit dmg (+ de dégats mais aussi potency buff/débuff)
 */
 
+using Nanina.Communication;
 using Nanina.Database;
 using Nanina.UserData;
 using Nanina.UserData.ItemData;
@@ -36,7 +37,7 @@ namespace Nanina.Dungeon
             sessionId = _sessionId;
             dungeonTemplate = dungeon;
             userId = user.Id;
-            waifus = [EquippedWaifus.First()];
+            waifus = EquippedWaifus;
             health = dungeonTemplate.maxHealth;
             Console.WriteLine("Dungeon Created!");
             StartDungeon();
@@ -103,12 +104,31 @@ namespace Nanina.Dungeon
         public void ConcludeDungeon(){
             health = 0;
             isCompleted = true;
-            loot = GetLoot();
+            List<Loot> lootToServer = [];
             var user = DBUtils.GetUser(userId);
-            loot.ForEach(equipment => user.inventory.equipment.Add(equipment));
-            DBUtils.UpdateUser(user);
             
+            var (spent_energy, gc) = user.SpendEnergy();
+            loot = GetLoot(spent_energy);
+            foreach(var equipment in loot)
+            {
+                Console.WriteLine("new loot");
+                user.inventory.AddEquipment(equipment);
+                lootToServer.Add(new Loot{
+                    lootType = LootType.Equipment,
+                    item = equipment,
+                });
+                Console.WriteLine("loot : " + JsonConvert.SerializeObject(lootToServer));
+            }
+            lootToServer.Add(new Loot{
+                lootType = LootType.GC,
+                amount = gc,
+            });
+            user.statCount.total_cleared_dungeon++;
+            DBUtils.Update(user);
+            User.RegenEnergy(user);
             DungeonManager.UpdateDungeonOfClient(this);
+            
+            DungeonManager.SendLootToClient(this, lootToServer);
             
         }
     }

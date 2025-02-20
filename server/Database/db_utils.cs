@@ -1,9 +1,6 @@
-using System.Reflection;
 using LiteDB;
-using Microsoft.VisualBasic;
 using Nanina.Communication;
 using Nanina.Osu;
-using Nanina.UserData;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.WaifuData;
 using Newtonsoft.Json;
@@ -15,10 +12,9 @@ namespace Nanina.Database
         /*
             This static class is for managing the database
         */
-        public static ILiteCollection<T> GetCollection<T>()
+        private static string GetDatabaseString<T>()
         {
-            var db = new LiteDatabase($@"{Global.config.database_path}");
-            var collection = typeof(T) switch {
+            return typeof(T) switch {
                 Type type when type == typeof(UserData.User) => "userdb",
                 Type type when type == typeof(Session) => "sessiondb",
                 Type type when type == typeof(Waifu) => "waifudb",
@@ -27,6 +23,11 @@ namespace Nanina.Database
                 Type type when type == typeof(Set) => "setdb",
                 _ => null
             };
+        }
+        public static ILiteCollection<T> GetCollection<T>()
+        {
+            var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collection = GetDatabaseString<T>();
             return db.GetCollection<T>(collection);
         }
 
@@ -269,7 +270,8 @@ namespace Nanina.Database
             osuCol.InsertBulk(osudb);
         }
 
-        public static void ExportDB(){
+        public static void ExportDB()
+        {
             using var db = new LiteDatabase($@"{Global.config.database_path}");
             var userCol = db.GetCollection<UserData.User>("userdb");
             var waifuCol = db.GetCollection<Waifu>("waifudb");

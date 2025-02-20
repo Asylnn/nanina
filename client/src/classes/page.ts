@@ -10,7 +10,7 @@ enum Page {
 	WaifuManagerPage,
 	PullPage,
 	DungeonPage,
-	PAD1,
+	StatPage,
 	PAD2,
 	NotificationMenu,
 	WaifuListPage,

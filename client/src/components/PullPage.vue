@@ -90,12 +90,12 @@ export default {
             </select>
             <button @click="pull(1)">Pull 1</button>
             <button @click="pull(10)">Pull 10</button>
-            <span>Gacha Currency : {{ gacha_currency }}</span>
+            <span>Gacha Currency : {{ Math.floor(gacha_currency) }}</span>
         </div>
         <div v-if="pulled_waifus[0] != undefined">
             <div id="gachaPull" v-if=focusedView>
                 <div @click="incrementCount" id="veil"></div>
-                <WaifuDisplayComponent :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
+                <WaifuDisplayComponent :user="user" :for-dungeon="false" :for-pull="true" :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
             </div>
             <div id="gridPull" v-else>
                 <GridDisplayComponent :elements="waifusToSend()" :columns=5></GridDisplayComponent>

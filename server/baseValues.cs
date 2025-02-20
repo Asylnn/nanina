@@ -16,5 +16,12 @@ namespace Nanina
         public ulong time_limit_for_osu_code_verification_in_milliseconds;
         public ulong time_for_allowing_another_claim_in_milliseconds;
         public uint base_gacha_currency_amount;
+        public float proportion_of_energy_used_for_each_action;
+        public double free_energy_not_used_for_each_action;
+        public uint energy_regen_tick_in_seconds;
+        public uint energy_regen_tick_amount;
+        public double base_max_energy;
+        public string base_theme;
+        public double spent_energy_to_gacha_currency_conversion_rate;
     }
 }

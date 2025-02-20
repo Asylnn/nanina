@@ -2,6 +2,7 @@ import ItemType from "./item_type";
 import Modifier from '../modifiers/modifiers'
 
 export default class Item {
+    public inventoryId! : number
     public count : number = 1;
     public id : number = 0;
     public imgPATH : string = "img path";

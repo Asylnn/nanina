@@ -5,7 +5,7 @@ namespace Nanina.Dungeon
 {
     public class Template {
         public string id;
-        public byte numberOfRewards;
+        public byte numberOfRewardsPerEnergy;
         public BossResistances bossResistances;
         public ushort[] setRewards; 
         public float maxHealth;

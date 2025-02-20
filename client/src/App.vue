@@ -12,6 +12,7 @@ import NotificationMenu from './components/NotificationMenu.vue'
 import Notification from './classes/notif'
 import PullPage from './components/PullPage.vue'
 import WaifuListPage from './components/WaifuListPage.vue'
+import LootComponent from './components/LootComponent.vue'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -39,6 +40,9 @@ import type Banner from './classes/banner'
 import type Item from './classes/item/item'
 import type Set from './classes/item/set'
 import ActiveDungeon from './classes/dungeons/active_dungeon'
+import Chart from './classes/maimai/chart'
+import StatsPage from './components/StatsPage.vue'
+import type Loot from './classes/loot/loot'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -61,6 +65,8 @@ export default {
 			dungeons : [] as DungeonTemplate[],
 			active_dungeon : new ActiveDungeon,
 			localeSetByUser : false,
+			maimai_chart : null as Chart | null,
+			loots : [] as Array<Loot[]>
 		}
 	},
 	components: {
@@ -79,6 +85,8 @@ export default {
 		WaifuDisplayComponent,
 		InventoryManagerPage,
 		DungeonPage,
+		StatsPage,
+		LootComponent,
 	},	
 	methods : {
 		updateTheme(theme : string) {
@@ -116,6 +124,8 @@ export default {
 				return 80
 			case Page.ClaimAndFightPage:
 				return 100
+			case Page.StatPage:
+				return 160
 			case Page.DungeonPage:
 				return 150
 			case Page.AddMap :
@@ -175,17 +185,21 @@ export default {
 
 					this.$i18n.locale = this.user.locale
 					this.localeSetByUser = true
-					if(this.user.admin){
+					/*if(this.user.admin){
 						this.SendToServer("request set db", "",this.user.Id)
 						this.SendToServer("request item db", "",this.user.Id)
 						this.SendToServer("request waifu db", "",this.user.Id)
-					}
+					}*/
 					break
 				case "map link" :
 					this.fighting = true
 					this.beatmap = JSON.parse(res.data)
 					this.link = 'https://osu.ppy.sh/beatmapsets/'+this.beatmap.beatmapset_id+'#'+this.beatmap.mode+'/'+this.beatmap.id
 					//this.notifs.push(new Notification("Fight", "You started a fight with the following beatmap! " + this.link, NotificationSeverity.Notification))
+					break
+				case "maimai link" :
+					this.fighting = true
+					this.maimai_chart = JSON.parse(res.data)
 					break
 				case "fighting results" :
 					this.fighting = false 
@@ -227,6 +241,11 @@ export default {
 				case "get active dungeon":
 					this.active_dungeon = JSON.parse(res.data)
 					break
+				case "loot":
+					this.loots.push(JSON.parse(res.data))
+					console.log("Got loot : ")
+					console.log(this.loots)
+					break
 				
 			} 
 			//i.send(`${ev.data}`);
@@ -242,7 +261,7 @@ export default {
 <template>
 	<div id="main" :class="[user.theme]">
 	
-		<NNNHeader :dev=dev :logged=logged :admin=user.admin @page-change="updatePage"></NNNHeader>
+		<NNNHeader :dev=dev :logged=logged :user="user" @page-change="updatePage"></NNNHeader>
 		<div v-if="loadingPage === 10">
 			<Homepage></Homepage>
 		</div>
@@ -255,7 +274,7 @@ export default {
 			ERREUR 404 AHAHAHAHAH
 		</div>
 		<div v-else-if="loadingPage === 50">
-			<WaifuListPage :waifus="user.waifus"></WaifuListPage>
+			<WaifuListPage :user="user"></WaifuListPage>
 		</div>
 		<div v-else-if="loadingPage === 60">
 			How tf did you even up here?
@@ -271,7 +290,7 @@ export default {
 			<AddMap :id="user.Id"></AddMap>
 		</div>
 		<div v-else-if="loadingPage === 100">
-			<ClaimAndFightPage :xp="xp" :fighting="fighting" :user="user" :beatmap="beatmap"></ClaimAndFightPage>
+			<ClaimAndFightPage :maimai_chart="maimai_chart" :xp="xp" :fighting="fighting" :user="user" :beatmap="beatmap"></ClaimAndFightPage>
 		</div>
 		<div v-else-if="loadingPage === 110">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
@@ -288,7 +307,11 @@ export default {
 		<div v-else-if="loadingPage === 150">
 			<DungeonPage :dungeons="dungeons" :user="user" :active_dungeon="active_dungeon"></DungeonPage>
 		</div>
+		<div v-else-if="loadingPage === 160">
+			<StatsPage :user="user"></StatsPage>
+		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
+		<LootComponent :loots=loots></LootComponent>
 	</div>
 </template>
 

@@ -66,12 +66,22 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-#veil {
+/*Make text unselectable*/
+* {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
+
+.veil {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,0.8);
-    z-index: 726;
+}
+
+a {
+    text-decoration: none;
 }

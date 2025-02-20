@@ -31,6 +31,21 @@ namespace Nanina.Dungeon
                     data = activeDungeon.ToString()
                 }), session.webSocketId);
             }
+            
+        }
+
+        public static void SendLootToClient(ActiveDungeon activeDungeon, List<Loot> loot)
+        {
+            var session = DBUtils.GetSession(activeDungeon.sessionId);
+            if(session == null) return;
+            if(session.webSocketId != null)
+            {
+                Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                {
+                    type = "loot",
+                    data = JsonConvert.SerializeObject(loot)
+                }), session.webSocketId);
+            }
         }
     }
 }

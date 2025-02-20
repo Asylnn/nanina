@@ -11,6 +11,8 @@ export default class User {
     public admin : boolean = false
     public username : string = "Pro Osu Player"
     public theme : string = "dark_theme"
+    public energy!: number
+    public max_energy!: number
     public ids : any = {}
     public statCount : StatCount = new StatCount()
     public waifus : Waifu[] = [new Waifu({})]
@@ -24,6 +26,10 @@ export default class User {
     public fightHistory : Dictionary<string[]> = {}
     public fight! : Fight
     public inventory! : Inventory
+
+    public get totalClaims() : number{
+        return this.statCount.maimai_claim_count + this.statCount.std_claim_count
+    }
     
     public verification : any = {} //One day any objects should be properly be typed
     constructor(obj : any){

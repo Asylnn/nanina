@@ -26,27 +26,29 @@ namespace Nanina.Communication
                     UpdateOsuId(rawData);
                     break;
 
-                case "request waifu db" :
+                /*case "request waifu db" :
                     ProvideWaifuDatabase(rawData);
-                    break;
-
-                case "update waifu db": 
-                    UpdateWaifuDatabase(rawData);
                     break;
                 case "request item db" :
                     ProvideItemDatabase(rawData);
                     break;
-
+                case "request set db":
+                    ProvideSetDatabase(rawData);
+                    break;*/
                 case "change locale":
                     DBUtils.Get<Session>(session => session.id == rawData.sessionId).UpdateLocale(rawData.data);
                     break;
-
+                case "update waifu db": 
+                    UpdateWaifuDatabase(rawData);
+                    break;
                 case "update item db": 
                     UpdateItemDatabase(rawData);
                     break;
-
+                case "update set db":
+                    UpdateSetDatabase(rawData);
+                    break;
                 case "get map to fight": 
-                    GetMapToFight(rawData);
+                    StartFight(rawData);
                     break;
 
                  case "claim fight":
@@ -79,16 +81,19 @@ namespace Nanina.Communication
                 case "stop dungeon":
                     StopDungeon(rawData);
                     break;
-                case "request set db":
-                    ProvideSetDatabase(rawData);
+                case "unequip item":
+                    UnequipItem(rawData);
                     break;
-                case "update set db":
-                    UpdateSetDatabase(rawData);
-                    break;
+                
                 case "disconect":
                     Disconnect(rawData);
                     break;
-
+                case "equip item":
+                    EquipItem(rawData);
+                    break;
+                case "verify maimai token":
+                    VerifyMaimaiToken(rawData);
+                    break;
             }
         }
         protected override void OnClose(CloseEventArgs e)

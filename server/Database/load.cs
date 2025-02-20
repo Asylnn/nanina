@@ -6,6 +6,7 @@ using Nanina.UserData;
 using Nanina.Communication;
 using Nanina.UserData.WaifuData;
 using System.Net;
+using Nanina.UserData.ItemData;
 
 namespace Nanina.Database
 {
@@ -120,10 +121,35 @@ namespace Nanina.Database
             var users = userCol.FindAll();
             //Update
             foreach (UserData.User user in users) {
-                user.inventory ??= new ();
+
+                user.max_energy = Global.baseValues.base_max_energy;
+                user.energy = user.max_energy;
+                user.isRegenerating = false;
+                /*var equipments = user.inventory.equipment;
+                user.inventory.equipment = [];
+                foreach(var equipment in equipments)
+                {
+                    equipment.piece = equipment.imgPATH switch {
+                        "dress.svg" => EquipmentPiece.Dress, 
+                        "ring.svg" => EquipmentPiece.Accessory, 
+                        "sword.svg" => EquipmentPiece.Weapon, 
+                    };
+                    user.inventory.AddEquipment(equipment);
+                }
+                var waifus = user.waifus; //DO NOT WORK, ERASE ALL WAIFUS
+                string[] ids = [];
+                user.waifus = [];
+                foreach(var waifu in waifus) 
+                {
+                    if(ids.Contains(waifu.id))
+                        continue;
+                    ids.Append(waifu.id);
+                    user.waifus.Append(waifu);
+                }*/
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
+                DBUtils.UpdateUser(user);
                 
                 /*if(user.waifus.id == null){
                     user.waifus.id = "0";

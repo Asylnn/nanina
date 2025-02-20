@@ -22,9 +22,9 @@ namespace Nanina.Communication
         /*
             If the user is an admin, then it sends the item database
         */
-        protected void ProvideItemDatabase(ClientWebSocketResponse rawData)
+        protected void ProvideItemDatabase(string userId)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.GetUser(userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
             if(!user.admin)
@@ -73,9 +73,9 @@ namespace Nanina.Communication
             
         }
 
-        protected void ProvideSetDatabase(ClientWebSocketResponse rawData)
+        protected void ProvideSetDatabase(string userId)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.GetUser(userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
             if(!user.admin)

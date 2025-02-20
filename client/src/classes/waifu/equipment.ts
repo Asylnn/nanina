@@ -3,8 +3,8 @@ import Set from '../item/set'
 
 export default interface WaifuEquipmentManager
 {
-    weapon : Equipment
-    dress : Equipment
-    accessory : Equipment
-    set : Set
+    weapon : Equipment | null
+    dress : Equipment | null
+    accessory : Equipment | null
+    set : Set | null
 }
