@@ -126,12 +126,13 @@ export default {
             </div>
         </div>
         <div v-else>
-            <button @click="LeaveDungeon">Leave Dungeon</button>
+            <button @click="LeaveDungeon">{{ $t("dungeon.leave") }}</button>
             <div id="playingField">
-                <p>Boss Health : {{ active_dungeon.health }}/{{ Math.floor(active_dungeon.dungeonTemplate.maxHealth) }}</p>
+                <p> {{$t("dungeon.boss_health")}} : {{ active_dungeon.health }}/{{ Math.floor(active_dungeon.dungeonTemplate.maxHealth) }}</p>
                 <div id="attackLines">
                     Attacks : 
                     <div v-for="log in active_dungeon.log">
+                        <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:log.waifuName, attack_type:log.attackType}) }}</p>
                         <p class="attackLine">{{ log.waifuName }} with id {{ log.waifuId }} dealt {{ Math.floor(log.dmg) }} {{log.attackType}} damage to the boss!</p>
                     </div>
                 </div>

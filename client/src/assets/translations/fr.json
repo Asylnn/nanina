@@ -40,11 +40,6 @@
         "linkOsuId":"",
         "verifOsuId":""
     },
-    "waifu":{
-        "name":{
-            "0":""
-        }
-    },
     "set":{
         "set":"Set",
         "0":{
@@ -107,5 +102,37 @@
         "10":{
             "name":"Augmentation de la chance d'un coup critique"
         }
+    },
+    "waifu":{
+        "stats":{
+            "str":"STR",
+            "int":"INT",
+            "kaw":"KAW",
+            "agi":"AGI",
+            "dex":"DEX",
+            "luck":"Luck",
+            "physical":"Physique",
+            "magical":"Magique",
+            "psychic":"Psychique",
+            "crit_damage":"Dégats Critiques",
+            "crit_chance":"Coup critiques"
+        },
+        "0":{
+            "name":"Rem"
+        },
+        "1":{
+            "name":"Petra"
+        },
+        "2":{
+            "name":"Liliana"
+        },
+        "3":{
+            "name":"Beatrice"
+        }
+    },
+    "attack_type":{
+        "physical":"Physical",
+        "magical":"Magical",
+        "psychic":"Psychic"
     }
 }

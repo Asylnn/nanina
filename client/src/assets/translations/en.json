@@ -22,7 +22,8 @@
     "dungeon":{
         "shit":{
             "name":"The Shit Dungeon"
-        }
+        },
+        "attack":"@:waifu.{waifu_id} dealt @:attack.{attack_type} {damage} to the boss"
     },
     "waifulist": {
         "levelAscendant":"Level (Ascendant)",
@@ -102,6 +103,37 @@
         "10":{
             "name":"Critical chance increase"
         }
-        
+    },
+    "waifu":{
+        "stats":{
+            "str":"STR",
+            "int":"INT",
+            "kaw":"KAW",
+            "agi":"AGI",
+            "dex":"DEX",
+            "luck":"Luck",
+            "physical":"Physical",
+            "magical":"Magical",
+            "psychic":"Psychic",
+            "crit_damage":"Crit Damage",
+            "crit_chance":"Crit Chance"
+        },
+        "0":{
+            "name":"Rem"
+        },
+        "1":{
+            "name":"Petra"
+        },
+        "2":{
+            "name":"Liliana"
+        },
+        "3":{
+            "name":"Beatrice"
+        }
+    },
+    "attack_type":{
+        "physical":"Physical",
+        "magical":"Magical",
+        "psychic":"Psychic"
     }
 }
