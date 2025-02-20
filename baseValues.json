@@ -1,21 +1,21 @@
 {
     "baseStatsMulti":{
-        "Physical":1.1,
-        "Magical":1.1,
-        "Psychic":1.1,
-        "STR":1.1,
-        "INT":1.1,
-        "KAW":1.1,
-        "CritDamage":1.1,
-        "CritChance":1.1,
-        "DebuffPotency":1.1,
-        "BuffPotency":1.1,
-        "BuffLength":1.1,
-        "DebuffLength":1.1,
-        "AGI":1.1,
-        "DEX":1.1,
-        "DebuffResist":1.1,
-        "LUCK":1.1
+        "Physical":0.1,
+        "Magical":0.1,
+        "Psychic":0.1,
+        "STR":0.1,
+        "INT":0.1,
+        "KAW":0.1,
+        "CritDamage":0.1,
+        "CritChance":0.1,
+        "DebuffPotency":0.1,
+        "BuffPotency":0.1,
+        "BuffLength":0.1,
+        "DebuffLength":0.1,
+        "AGI":0.1,
+        "DEX":0.1,
+        "DebuffResist":0.1,
+        "LUCK":0.1
     },
 
     "baseStatsAdd":{
