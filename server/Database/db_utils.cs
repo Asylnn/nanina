@@ -1,5 +1,7 @@
+using System.Reflection;
 using LiteDB;
 using Microsoft.VisualBasic;
+using Nanina.Communication;
 using Nanina.Osu;
 using Nanina.UserData;
 using Nanina.UserData.ItemData;
@@ -27,6 +29,173 @@ namespace Nanina.Database
             };
             return db.GetCollection<T>(collection);
         }
+
+        /*Different use cases :
+        - access to a col to find one #Done
+        - access to a col to insert one (no test) #Done
+        - access to a col to insert one (after testing for duplicate) #Done
+        - access to a col to update one #Done
+        - access to a col to delete all into insert all back #Done
+        - access to a col to pick a random one #Done
+        - access to a col to find all and send the whole table via a websocket #Done
+        - access to a col to find all (without websocket) #Done
+        */
+        public static T Get<T>(System.Linq.Expressions.Expression<Func<T, bool>> func, bool randomized = false)
+        {
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collectionName = GetCollectionName<T>();
+            var col = db.GetCollection<T>(collectionName);
+            return randomized ? col.Find(func).RandomElement() : col.FindOne(func);
+        }
+
+        public static void SendDatabaseToClient<T>(string webSocketId)
+        {
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collectionName = GetCollectionName<T>();
+            var col = db.GetCollection<T>(collectionName);
+            var theEnum = col.FindAll();
+            var prop = "";
+            switch (collectionName){
+                case "waifudb":
+                    prop = "waifu db";
+                    break;
+                case "setdb":
+                    prop = "set db";
+                    break;
+                case "itemdb":
+                    prop = "item db";
+                    break;
+            }
+            if(prop != "") {
+                var data = JsonConvert.SerializeObject(theEnum);
+                Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = prop,
+                        data = data
+                    }), webSocketId);
+            }
+        }
+
+        public static void Insert<T>(T thing)
+        {
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collectionName = GetCollectionName<T>();
+            var col = db.GetCollection<T>(collectionName);
+            col.Insert(thing);
+            Console.WriteLine("insert done");
+            switch(thing){
+                case UserData.User:
+                    var userCol = (ILiteCollection<UserData.User>) col;
+                    userCol.EnsureIndex(x => x.ids.discordId, true);
+                    userCol.EnsureIndex(x => x.Id, true);
+                    Console.WriteLine("ensure index done");
+                    break;
+                case Set:
+                    var setCol = (ILiteCollection<Set>) col;
+                    setCol.EnsureIndex(x => x.id, true);
+                    Console.WriteLine("ensure index done");
+                    break;
+                case Equipment:
+                    var equipCol = (ILiteCollection<Equipment>) col;
+                    equipCol.EnsureIndex(x => x.setId, false);
+                    var eItemCol = (ILiteCollection<Item>) col;
+                    eItemCol.EnsureIndex(x => x.id, true);
+                    eItemCol.EnsureIndex(x => x.type, false);
+                    Console.WriteLine("ensure index done");
+                    break;
+                case Item:
+                    var itemCol = (ILiteCollection<Item>) col;
+                    itemCol.EnsureIndex(x => x.id, true);
+                    itemCol.EnsureIndex(x => x.type, false);
+                    Console.WriteLine("ensure index done");
+                    break;
+                case Beatmap:
+                    var mapsCol = (ILiteCollection<Beatmap>) col;
+                    mapsCol.EnsureIndex(x => x.id, true);
+                    mapsCol.EnsureIndex(x => x.difficulty_rating);
+                    Console.WriteLine("ensure index done");
+                    break;
+                case Waifu:
+                    var waifuCol = (ILiteCollection<Waifu>) col;
+                    waifuCol.EnsureIndex(x => x.id, true);
+                    Console.WriteLine("ensure index done");
+                    break;
+                case Session:
+                    var sessionCol = (ILiteCollection<Session>) col;
+                    sessionCol.EnsureIndex(x => x.id, true);
+                    sessionCol.EnsureIndex(x => x.webSocketId, false);
+                    Console.WriteLine("ensure index done");
+                    break;
+                case null:
+                    throw new ArgumentNullException(nameof(thing));
+                default:
+                    break;
+            };
+        }
+
+        public static bool isMapADuplicate(Beatmap map){
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collectionName = GetCollectionName<Beatmap>();
+            var col = db.GetCollection<Beatmap>(collectionName);
+            return col.Exists(x => x.id == map.id);
+            
+        }
+
+        private static string GetCollectionName<T>()
+        {
+            return typeof(T) switch {
+                Type type when type == typeof(UserData.User) => "userdb",
+                Type type when type == typeof(Session) => "sessiondb",
+                Type type when type == typeof(Waifu) => "waifudb",
+                Type type when type == typeof(Beatmap) => "osumapsdb",
+                Type type when type == typeof(Item) || type == typeof(Equipment) => "itemdb",
+                Type type when type == typeof(Set) => "setdb",
+                _ => null
+            };
+        }
+
+        public static void Update<T>(T thing) {
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collectionName = GetCollectionName<T>();
+            var col = db.GetCollection<T>(collectionName);
+            col.Update(thing);
+            Console.WriteLine("insert done");
+
+        }
+
+        public static void Rebuild<T>(T[] data) {
+            using var db = new LiteDatabase($@"{Global.config.database_path}");
+            var collectionName = GetCollectionName<T>();
+            var col = db.GetCollection<T>(collectionName);
+            col.DeleteAll();
+            switch(data){
+                case Set[] :
+                    foreach (var set in data) {
+                        Insert(set);
+                    }
+                    Console.WriteLine("Rebuilt Set db");
+                    break;
+                case Waifu[]:
+                    Console.WriteLine("Entered rebuild waifu db");
+                    foreach (var waifu in data){
+                        Insert(waifu);
+                    }
+                    Console.WriteLine("Rebuilt Waifu db");
+                    break;
+                case Equipment[]:
+                    //Later
+                    break;
+                case Item[]:
+                    //Later
+                    break;
+                case null:
+                    throw new ArgumentNullException(nameof(data));
+                default:
+                    break;
+            };
+        }
+
+
         public static UserData.User GetUser(string id)
         {
             var userCol = GetCollection<UserData.User>();

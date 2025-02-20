@@ -20,14 +20,13 @@ namespace Nanina.Communication
             if(map == null) 
                 {Send(ClientNotification.NotificationData("Admin", "This beatmap doesn't exist!", 1)); return;}
 
-            var mapsCol = DBUtils.GetCollection<Beatmap>();
 
-            if(mapsCol.Count() != 0 ){
-                if(mapsCol.Exists(x => x.id == map.id)){Send(ClientNotification.NotificationData("Admin", "The beatmap is already in the database!", 1)); return ;} //If the map is already on the data base, don't add it again.
-            }
-            mapsCol.Insert(map);
-            mapsCol.EnsureIndex(x => x.id, true);
-            mapsCol.EnsureIndex(x => x.difficulty_rating);
+            /*Get maps col
+            If maps col not empty, test if it's already inside
+            if it's not inside, insert it in the db
+            */
+            if(DBUtils.isMapADuplicate(map)){Send(ClientNotification.NotificationData("Admin", "The beatmap is already in the database!", 1)); return ;} //If the map is already on the data base, don't add it again.
+            DBUtils.Insert(map);
             Console.WriteLine("Adding map : " + map.id);
             Send(ClientNotification.NotificationData("Admin", "Added the beatmap into the database!", 3));
             

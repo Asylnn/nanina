@@ -43,13 +43,17 @@ namespace Nanina.Communication
             if(!response_access_token.IsSuccessStatusCode) return;
 
             var discordUserInformationResponse = JsonConvert.DeserializeObject<Discord.UserInformationResponse>(response_user_information.Content);
-
-            var userCol = DBUtils.GetCollection<User>();
-            User user;
-
-            var list = userCol.Find(x => x.ids.discordId == discordUserInformationResponse.id);
             
-            if (list.Count() == 0){
+
+            /*  Recup la collection d'objects Users, on find un user avec le bon id,
+                Si on le trouve pas, on l'insert a la db
+                Si on le trouve, on l'update
+                Sinon, on prend le premier de la liste (contenant 2 ou plus users) et on met message d'erreur
+            */
+
+            var user = DBUtils.Get<User>(x => x.ids.discordId == discordUserInformationResponse.id);
+            
+            if (user is null){
 
                 var ids = new Ids() 
                 {
@@ -63,24 +67,17 @@ namespace Nanina.Communication
                     discord_access_token = discordTokenResponse.access_token,
                     discord_refresh_token = discordTokenResponse.refresh_token
                 };
-                userCol.Insert(user);
-                userCol.EnsureIndex(x => x.ids.discordId, true);
-                userCol.EnsureIndex(x => x.Id, true);
+                DBUtils.Insert(user);
             }
 
-            else if(list.Count() == 1){
-                user = list.First();
+            else { //if(list.Count() == 1){
                 user.tokens = new Tokens(){
                     discord_access_token = discordTokenResponse.access_token,
                     discord_refresh_token = discordTokenResponse.refresh_token
                 };
                 
-                userCol.Update(user);
+                DBUtils.Update(user);
 
-            }
-            else {
-                user = list.First();
-                Console.Error.WriteLine("There is more than two people in the user database with the same discord user id! The id is : " + discordUserInformationResponse.id);
             }
             var session = DBUtils.GetSession(rawData.sessionId);
             if(session == null) //Should not happen.

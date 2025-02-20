@@ -28,11 +28,15 @@ namespace Nanina.Communication
             if(user.fight.timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You have a too much recent fight", 1)); return; }                    
             
-            var mapsCol = DBUtils.GetCollection<Beatmap>();
-            var maps = mapsCol.Find(x => x.difficulty_rating <= 7.27*2.7);
-            if(maps.Count() == 0)
+
+            /* Get col de beatmap pour find maps
+            If maps empty, return
+            If maps not empty, pick a random one then update user.fight with said map and send websocket
+            then, update user with the changed user.fight
+            */
+            var map = DBUtils.Get<Beatmap>(x => x.difficulty_rating <= 7.27*2.7,true);
+            if(map is null)
                 {Console.WriteLine("There isn't any map in the database!!!"); return;}
-            var map = maps.RandomElement();
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "map link",
@@ -46,7 +50,7 @@ namespace Nanina.Communication
                 completed = false
             };
 
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
         }
         protected async void ClaimFight(ClientWebSocketResponse rawData){
             var user = DBUtils.GetUser(rawData.userId);
