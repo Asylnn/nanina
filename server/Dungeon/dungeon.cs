@@ -104,13 +104,31 @@ namespace Nanina.Dungeon
         public void ConcludeDungeon(){
             health = 0;
             isCompleted = true;
+            List<Loot> lootToServer = [];
             var user = DBUtils.GetUser(userId);
-            loot = GetLoot(user);
-            loot.ForEach(equipment => user.inventory.AddEquipment(equipment));
+            
+            var (spent_energy, gc) = user.SpendEnergy();
+            loot = GetLoot(spent_energy);
+            foreach(var equipment in loot)
+            {
+                Console.WriteLine("new loot");
+                user.inventory.AddEquipment(equipment);
+                lootToServer.Add(new Loot{
+                    lootType = LootType.Equipment,
+                    item = equipment,
+                });
+                Console.WriteLine("loot : " + JsonConvert.SerializeObject(lootToServer));
+            }
+            lootToServer.Add(new Loot{
+                lootType = LootType.GC,
+                amount = gc,
+            });
             user.statCount.total_cleared_dungeon++;
             DBUtils.UpdateUser(user);
             User.RegenEnergy(user);
             DungeonManager.UpdateDungeonOfClient(this);
+            
+            DungeonManager.SendLootToClient(this, lootToServer);
             
         }
     }

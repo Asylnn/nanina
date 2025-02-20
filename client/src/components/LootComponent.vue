@@ -1,7 +1,7 @@
 <script lang="ts">
 import type Loot from '@/classes/loot/loot';
 import LootType from '@/classes/loot/loot_type';
-
+import ItemComponent from './ItemComponent/ItemComponent.vue';
 
 export default {
     name : "Homepage",
@@ -9,19 +9,39 @@ export default {
         return {
             LootType: LootType,
             publicPath : import.meta.env.BASE_URL,
+            isDisplayingLoot : false,
+            displayedLoot : null as Loot | null
         }
     },
     props:{
         loots:{
             type: Array<Loot[]>,
             required:true,
-        }
+        },
     },
     methods: {
         removeLoot()
         {
             this.loots.pop()
+        },
+        displayLoot(loot : Loot)
+        {
+            this.isDisplayingLoot = true
+            this.displayedLoot = loot
+        },
+        closeLootDisplay()
+        {
+            this.isDisplayingLoot = false
+            this.displayedLoot = null
         }
+    },
+    mounted()
+    {
+        console.log(this.loots)
+    },
+    
+    components:{
+        ItemComponent
     }
 
 }
@@ -30,6 +50,12 @@ export default {
 </script>
 <template>
     <div v-if="loots.length != 0">
+        <div v-if="isDisplayingLoot">
+            <div @click="closeLootDisplay" class="veil" id="displaylootveil"></div>
+            <div v-if="displayedLoot!.lootType == LootType.Equipment">
+                <ItemComponent :is-for-equiping="false" :item="displayedLoot!.item!"></ItemComponent>
+            </div>
+        </div>
         <div @click="removeLoot" class="veil" id="lootveil"></div>
         <div id="loots">
             <div v-for="loot in loots[0]">
@@ -37,7 +63,7 @@ export default {
                     <img src="../assets/waifu_xp.svg">
                     <div>{{ loot.amount }}</div>
                 </div>
-                <div v-else-if="loot.lootType == LootType.Equipment" class="loot">
+                <div @click="displayLoot(loot)" v-else-if="loot.lootType == LootType.Equipment" class="loot">
                     <img :src="`${publicPath}/item-image/${loot.item!.imgPATH}`">
                 </div>
                 <div v-else-if="loot.lootType == LootType.Item" class="loot">
@@ -57,7 +83,12 @@ export default {
 
 #lootveil
 {
+    z-index: 20;
+}
 
+#displaylootveil
+{
+    z-index: 40;
 }
 
 img
@@ -67,6 +98,7 @@ img
 }
 
 #loots {
+    z-index: 30;
     padding:10px 20px;
     position:fixed;
     display: flex;
@@ -83,6 +115,7 @@ img
 {
     margin-right:20px;
     text-align: center;
+    cursor: pointer;
 }
 
 

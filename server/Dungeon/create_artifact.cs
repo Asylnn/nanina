@@ -42,8 +42,7 @@ namespace Nanina.Dungeon
                 }
             }
         }
-        public List<Equipment> GetLoot(UserData.User user){
-            var (spent_energy, _) = user.SpendEnergy();
+        public List<Equipment> GetLoot(double spent_energy){
             var numberOfRewards = spent_energy/dungeonTemplate.numberOfRewardsPerEnergy;
             var fraction = numberOfRewards - Math.Floor(numberOfRewards);
             numberOfRewards = Math.Floor(numberOfRewards);
@@ -53,9 +52,7 @@ namespace Nanina.Dungeon
             for(int i = 0; i < numberOfRewards; i++)
             {
                 var setId = dungeonTemplate.setRewards.RandomElement();
-                Console.WriteLine(setId);
                 var equipments = DBUtils.GetEquipmentsFromSet(setId);
-                Console.WriteLine(JsonConvert.SerializeObject(equipments));
                 var equipment = equipments.RandomElement();
                 
 
