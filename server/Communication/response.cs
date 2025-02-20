@@ -51,7 +51,7 @@ namespace Nanina.Communication
                     db.GetCollection<Session>("sessiondb").Find(session => session.id == rawData.sessionId).First().UpdateLocale(rawData.data);
                     break;
                 case "get map to fight": 
-                    GetMapToFight(rawData);
+                    StartFight(rawData);
                     break;
 
                  case "claim fight":
