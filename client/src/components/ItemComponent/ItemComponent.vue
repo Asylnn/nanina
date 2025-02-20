@@ -62,9 +62,10 @@ export default {
     display: flex;
     flex-direction: row;
     padding: 2vh 2vh;
-    z-index: 727;
-    top: 25vh; 
-    left: 30vw;
+    z-index: 727;/*Make the display be at the center of the screen*/
+    top:50%;                                /*Make the display be at the center of the screen*/
+    left:50%;
+    transform: translate(-50%, -50%);
     background-color: rgb(6, 16, 26);
 }
 #focusedObject img {

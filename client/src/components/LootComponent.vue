@@ -71,9 +71,7 @@ img
     position:fixed;
     display: flex;
     top:20vh;
-    /*right:20vw;
-    left:20vw;*/
-    left:50%;
+    left:50%;                               /*Make the display be at the center of the screen*/
     transform: translateX(-50%);
     border-style: solid;
     border-color: grey;
