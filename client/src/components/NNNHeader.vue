@@ -79,7 +79,7 @@ export default {
                 <option value = "fr">🇫🇷</option>
             </select>
             <li v-if="!logged">
-                <a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url">Discord</a>
+                <a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url"><img id="discordLogin" src="../assets/discord.png"></a>
             </li>
             <li v-else>
                 <span @click="onClickChangePage(5)">
@@ -93,6 +93,12 @@ export default {
 </template>
 
 <style lang="css" scoped>
+
+#discordLogin
+{
+    width: 40px;
+    height: 40px;
+}
 
 #language{
     font-size : 30px;
