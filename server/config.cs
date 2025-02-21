@@ -17,5 +17,6 @@ public class Config {
         public string base_url;
         public bool dev;
         public string maitea_api_url;
-        public double spent_energy_to_gacha_currency_conversion_rate;
+        public string discord_avatar_url;
+        
 }

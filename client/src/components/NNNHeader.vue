@@ -73,22 +73,23 @@ export default {
             <li @click="onClickChangePage(6)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
             <li @click="onClickChangePage(16)" v-if="user.admin && dev"><span>InventoryManager</span></li>
         </ul>
-        <ul id="buttList">
-            <select id="language" v-model="$i18n.locale" @change="onChangeLocale()">
-                <option value = "en">🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
-                <option value = "fr">🇫🇷</option>
-            </select>
-            <li v-if="!logged">
+        <div id="buttList">
+            <div class="butitem halo" >
+                <select id="language" v-model="$i18n.locale" @change="onChangeLocale()">
+                    <option value = "en">🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                    <option value = "fr">🇫🇷</option>
+                </select>
+            </div>
+            <div class="butitem halo" v-if="!logged">
                 <a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url"><img id="discordLogin" src="../assets/discord.png"></a>
-            </li>
-            <li v-else>
-                <span @click="onClickChangePage(5)">
-                    <img height=25px width=25px src="../assets/option_gear_from_google_probably_not_free_of_use.png">
-                </span>
-                
-            </li>
-            <div v-if="logged">{{ Math.floor(user.energy) }} / {{Math.floor(user.max_energy) }}</div>
-        </ul>
+            </div>
+            <div class="butitem halo" @click="onClickChangePage(5)" v-else>
+                <img height=30px width=30px src="../assets/option_gear_from_google_probably_not_free_of_use.png">
+            </div>
+            <div id="user" class="butitem" v-if="logged"><img :src="`${user.avatarPATH}?size=40`"></div>
+            
+        </div>
+        <div id="energy" v-if="logged"><p>{{ Math.floor(user.energy) }} / {{Math.floor(user.max_energy) }}</p></div>
     </header>
 </template>
 
@@ -102,7 +103,11 @@ export default {
 
 #language{
     font-size : 30px;
-    align-content: center;
+    width:32px;
+    cursor:pointer;
+    /*display: flex;
+    justify-content: center;
+    align-content: center;*/
 }
 
 select {
@@ -111,6 +116,8 @@ select {
     -webkit-appearance: none;
     appearance: none;
 }
+
+
 
 header, #pages, #buttList {
     display: grid;
@@ -124,8 +131,8 @@ header {
     top:0;
     min-height: 60px;
     height:6vh;
-    grid-template-columns: 1fr 4fr 0.8fr;
-    padding: 0 12vw;
+    grid-template-columns: 1fr 4fr 0fr 0.2fr;
+    padding: 0 8vw;
     z-index: 9000;
 }
 #actiMenu {
@@ -135,7 +142,8 @@ header {
 #actiMenu li {
     padding: 0.727vh 0.5vw;
 }
-#logo, #pages, #buttList {
+#logo, #pages, .butitem
+{
     cursor: pointer;
 }
 
@@ -150,8 +158,62 @@ header {
 }
 
 #buttList {
-    grid-template-columns: 1fr 1fr 3fr ;
-    color: greenyellow;
+    width:15vw;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.butitem
+{
+    margin-right: 20px;
+    
+}
+
+.halo
+{
+    width:45px;
+    height:45px;
+    border-radius: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.halo:hover
+{
+    background-color: blueviolet;
+}
+
+#user
+{
+    width:40px;
+    height:40px;
+    border-radius: 40px;
+    border-style:hidden;
+    border-color: blueviolet;
+    overflow: hidden;
+}
+
+#user img
+{
+    width:40px;
+    height:40px;
+}
+
+#user:hover
+{
+    border-style:solid;
+    transform: translateX(-3px);
+}
+
+#energy
+{
+    width:5vw;
+    display: flex;
+    align-items: center;
 }
 
 li, #logo{

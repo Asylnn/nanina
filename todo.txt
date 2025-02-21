@@ -29,6 +29,7 @@ TODO : Namespacing and Folderising the c# code                      #Done
 TODO : Make a waifu selector for dungeons                           #Done
 TODO : Implement "World Level" mechanic
 TODO : Scoping classes (public / private /abstract)
+            Note that having a property as private will either make it unable to be stored in the db
 TODO : Implement logging
 
 STEP 4 : Release Version 0.3

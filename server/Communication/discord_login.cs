@@ -67,15 +67,16 @@ namespace Nanina.Communication
                     discord_access_token = discordTokenResponse.access_token,
                     discord_refresh_token = discordTokenResponse.refresh_token
                 };
+                user.avatarPATH = $"{Global.config.discord_api_url}/{discordUserInformationResponse.id}/{discordUserInformationResponse.avatar}.webp";
                 DBUtils.Insert(user);
             }
 
-            else { //if(list.Count() == 1){
+            else { 
                 user.tokens = new Tokens(){
                     discord_access_token = discordTokenResponse.access_token,
                     discord_refresh_token = discordTokenResponse.refresh_token
                 };
-                
+                user.avatarPATH = $"{Global.config.discord_avatar_url}/{discordUserInformationResponse.id}/{discordUserInformationResponse.avatar}.webp";
                 DBUtils.Update(user);
 
             }
