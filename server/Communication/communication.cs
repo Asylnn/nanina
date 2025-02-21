@@ -20,7 +20,7 @@ namespace Nanina.Communication
             It remove the userId from the session.
         */
         protected void Disconnect(ClientWebSocketResponse rawData){
-            var session = DBUtils.GetSession(rawData.sessionId);
+            var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
             if(session == null) 
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
             session.UpdateUserId(null);
@@ -32,7 +32,7 @@ namespace Nanina.Communication
         */
         protected void ProvideSessionToClient(ClientWebSocketResponse rawData)
         {
-            var session = DBUtils.GetSession(rawData.sessionId);
+            var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
             if(session == null)
                 session = Session.NewSession(ID);
             else
@@ -51,7 +51,7 @@ namespace Nanina.Communication
 
         protected void ProvideUserToClient(string userId)
         {
-            var user = DBUtils.GetUser(userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
                 type = "user",
                 data = JsonConvert.SerializeObject(user),

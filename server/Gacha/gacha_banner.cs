@@ -55,7 +55,7 @@ namespace Nanina.Gacha
                 
                 var waifuId = waifuPool.RandomElement();
                 user.pullBannerHistory[bannerId].pullHistory.Add(waifuId);
-                waifus.Add(DBUtils.GetWaifu(waifuId));
+                waifus.Add(DBUtils.Get<Waifu>(x => x.id == waifuId));
             }
             return waifus;
         }

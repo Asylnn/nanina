@@ -10,7 +10,7 @@ namespace Nanina.Communication
     {
         protected async void AddMapToDatabase(ClientWebSocketResponse rawData){
 
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if (!user.admin)

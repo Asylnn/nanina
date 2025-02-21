@@ -196,23 +196,6 @@ namespace Nanina.Database
             };
         }
 
-
-        public static UserData.User GetUser(string id)
-        {
-            var userCol = GetCollection<UserData.User>();
-            var user = userCol.FindOne(x => x.Id == id);
-            if (user != null){
-                return user;
-            }
-            else {
-                Console.Error.WriteLine($"Somehow got a userID ({id}) wrong with no associated account? Returning null");
-                return null;
-            }
-        }
-
-        public static void UpdateUser(UserData.User user){
-            GetCollection<UserData.User>().Update(user);
-        }
         public static List<Equipment> GetEquipmentsFromSet(ushort setId)
         {
             var itemCol = GetCollection<Equipment>();
@@ -227,28 +210,6 @@ namespace Nanina.Database
                 return [];
             }
         
-        }
-        public static Waifu GetWaifu(string id)
-        {
-            var waifuCol = GetCollection<Waifu>();
-            var waifu = waifuCol.FindOne(x => x.id == id);
-            if (waifu != null){
-                return waifu;
-            }
-            else {
-                Console.Error.WriteLine($"Somehow got a waifu ({id}) wrong with no associated waifu? Returning null");
-                return null;
-                
-            }
-        }
-        public static Session GetSession(string sessionId)
-        {
-            return GetCollection<Session>().FindOne(x => x.id == sessionId);
-        }
-
-        public static Beatmap GetMap(string id)
-        {
-            return GetCollection<Beatmap>().FindOne(x => x.id == Convert.ToInt64(id));
         }
 
         public static void ImportDB(){

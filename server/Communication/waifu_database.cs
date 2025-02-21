@@ -10,7 +10,7 @@ namespace Nanina.Communication
     {
         protected void ProvideWaifuDatabase(string userId)
         {
-            var user = DBUtils.GetUser(userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(!user.admin)
@@ -22,7 +22,7 @@ namespace Nanina.Communication
         }
         protected void UpdateWaifuDatabase(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(!user.admin)

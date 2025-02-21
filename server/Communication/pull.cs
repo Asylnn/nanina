@@ -11,7 +11,7 @@ namespace Nanina.Communication
     {
         protected void Pull(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
 
@@ -57,7 +57,7 @@ namespace Nanina.Communication
 
 
 
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "pull results",

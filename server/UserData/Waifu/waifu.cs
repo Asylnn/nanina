@@ -103,7 +103,7 @@ namespace Nanina.UserData.WaifuData
             b_luck += o_luck;
         }
         public void Update(){
-            var DBwaifu = DBUtils.GetWaifu(id);
+            var DBwaifu = DBUtils.Get<Waifu>(x => x.id == id);
             diffLvlUp = DBwaifu.diffLvlUp;
             imgPATH = DBwaifu.imgPATH;
             name = DBwaifu.name;

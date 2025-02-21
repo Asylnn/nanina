@@ -1,5 +1,6 @@
 using Nanina.Database;
 using Nanina.Dungeon;
+using Nanina.Osu;
 using Nanina.UserData.WaifuData;
 using Newtonsoft.Json;
 using WebSocketSharp.Server;
@@ -14,10 +15,10 @@ namespace Nanina.Communication
             public string[] waifuIds;
         }
         protected void StartDungeon(ClientWebSocketResponse rawData){
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
-            var session = DBUtils.GetSession(rawData.sessionId);
+            var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
             if(session == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
 
