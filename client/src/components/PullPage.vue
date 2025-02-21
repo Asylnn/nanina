@@ -88,9 +88,12 @@ export default {
             <select v-for="banner in banners" v-model="selected_banner">
                 <option :value="banner" >{{banner.bannerName}}</option>
             </select>
-            <button @click="pull(1)">Pull 1</button>
-            <button @click="pull(10)">Pull 10</button>
-            <span>Gacha Currency : {{ Math.floor(gacha_currency) }}</span>
+            <button @click="pull(1)">{{ $t("gacha.pull", {pullAmount:1}) }}</button>
+            <button @click="pull(10)">{{ $t("gacha.pull", {pullAmount:10}) }}</button>
+            <div>
+                <img src="../assets/gc.svg">
+                <div>{{ Math.floor(gacha_currency) }}</div>
+            </div>
         </div>
         <div v-if="pulled_waifus[0] != undefined">
             <div id="gachaPull" v-if=focusedView>
@@ -112,11 +115,13 @@ export default {
 #bannerInfo select {
     font-size: large;
     cursor: pointer;
+    height:40px;
 }
 #bannerInfo span {
     color: rgb(185, 83, 185);
 }
 #bannerInfo button {
+    height:40px;
     width: 20vw;
     margin-left: 10vw;
     font-size: larger;

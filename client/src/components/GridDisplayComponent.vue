@@ -47,7 +47,7 @@ export default {
                         <img @click="onShowElement(element as Waifu)" :src="`${publicPath}/waifu-image/${element.imgPATH}`">
                     </div>
                 </div>
-                <p>{{element.name}} Level {{ (element as Waifu).lvl }}</p>
+                <p>{{ $t("waifu.level") }} {{ (element as Waifu).lvl }}</p>
             </div>
             <div v-else>
                 <div class="slot">

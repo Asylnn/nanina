@@ -132,8 +132,7 @@ export default {
                 <div id="attackLines">
                     Attacks : 
                     <div v-for="log in active_dungeon.log">
-                        <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:log.waifuName, attack_type:log.attackType}) }}</p>
-                        <p class="attackLine">{{ log.waifuName }} with id {{ log.waifuId }} dealt {{ Math.floor(log.dmg) }} {{log.attackType}} damage to the boss!</p>
+                        <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
                     </div>
                 </div>
             </div>

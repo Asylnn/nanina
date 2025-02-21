@@ -20,9 +20,11 @@
         "welcome":"Bienvenue dans la section de combat !"
     },
     "dungeon":{
+        "boss_health":"Vie",
         "shit":{
-            "name":"Le Donjon de Merde"
-        }
+            "name":"The Shit Dungeon"
+        },
+        "attack":"{waifu_name} à fait {damage} @:attack.{attack_type} dégats au boss"
     },
     "waifulist": {
         "levelAscendant":"Niveau (Croissant)",
@@ -104,6 +106,7 @@
         }
     },
     "waifu":{
+        "level":"lvl",
         "stats":{
             "str":"STR",
             "int":"INT",
@@ -131,8 +134,38 @@
         }
     },
     "attack_type":{
-        "physical":"Physical",
-        "magical":"Magical",
-        "psychic":"Psychic"
+        "physical":"Physique",
+        "magical":"Magique",
+        "psychic":"Psychique"
+    },
+    "option":{
+        "change_theme":"Choisissez un thème qui vous plait!",
+        "dark_theme":"Thème sombre",
+        "white_theme":"Thème clair",
+        "cute_theme":"Thème cute",
+        "link_osu_id":"Donnez nous votre id osu pour qu'on puisse voler vos pps!",
+        "update":"Mettre à jour",
+        "got_code":"Vous venez de recevoir un code dans vos mp osu! dms, entrez le pour mettre à jour votre id osu",
+        "verify_code":"Code",
+        "link_maimai_token":"Donnez nous accès à votre token Maitea pour qu'on puisse voler votre rating!",
+        "disconnect":"Deconnection"
+    },
+    "stats":{
+        "nb_std_claim":"Nombre de claims en standard",
+        "nb_maimai_claim":"Nombre de claims sur maimai",
+        "nb_claim":"Nombre total de claims",
+        "nb_dungeon_clear":"Nombre total de donjons complétés"
+    },
+    "gacha":{
+        "pull":"Pull {pullAmount}",
+        "currency":"Gacha currency",
+        "pull_number":"Pull number"
+    },
+    "inventory":{
+        "all":"Tout",
+        "equipment":"Equipement",
+        "material":"Materiaux",
+        "waifu_consumable":"Consomable pour waifu",
+        "user_consumable":"Consomable pour utilisateur"
     }
 }

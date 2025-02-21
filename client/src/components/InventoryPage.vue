@@ -47,17 +47,14 @@ export default {
 </script>
 <template>
     <div id="inventory">
-        User : {{ user.username }}<br>
-        Categ choisie : {{ category }}
         <div class="InventoryHeader">
             <div id="filterCateg">
-                <label>Categ : </label>
                 <select value="a">
-                    <option @click="category = 'all'" value="a">All</option>
-                    <option @click="changeTab('equipment')" value="e">Equipement</option>
-                    <option @click="changeTab('user_consumable')" value="u">User Consumable</option>
-                    <option @click="changeTab('waifu_consumable')" value="w">Waifu Consumable</option>
-                    <option @click="changeTab('materials')" value="m">Materials</option>
+                    <option @click="category = 'all'" value="a">{{$t("inventory.all")}}</option>
+                    <option @click="changeTab('equipment')" value="e">{{$t("inventory.equipment")}}</option>
+                    <option @click="changeTab('user_consumable')" value="u">{{$t("inventory.user_consumable")}}</option>
+                    <option @click="changeTab('waifu_consumable')" value="w">{{$t("inventory.waifu_consumable")}}</option>
+                    <option @click="changeTab('material')" value="m">{{$t("inventory.material")}}</option>
                 </select>
             </div>
         </div>
@@ -70,7 +67,7 @@ export default {
                 </div>
                 
             </div>
-            <div v-if="category === 'user_consumable' || category === 'all'">
+            <!--<div v-if="category === 'user_consumable' || category === 'all'">
                 <span>User Consumable :</span><br>
                 <div v-for="item in user.inventory.userConsumable">
                     <div class="itemDisplay">
@@ -91,9 +88,8 @@ export default {
                         <p>{{item.name}} + nombre : + {{item.count}}</p>
                     </div>
                 </div>
-            </div>
-            <div v-if="category === 'materials' || category === 'all'">
-                <span>Materials :</span><br>
+            </div>-->
+            <div v-if="category === 'material' || category === 'all'">
                 <GridDisplayComponent :elements="user.inventory.material" @show-element="showItem" :columns=5></GridDisplayComponent>
                 <div v-if="focusedView">
                     <div @click="closeItemDisplay" id="veil" ></div>

@@ -77,33 +77,33 @@ export default {
 <template>
     <div class="grid" id="optionsGrid">
         <div id="optionTheme">
-            <p>Choose your favourite theme !</p>
+            <p>{{ $t("option.change_theme") }}</p>
             <select v-model="selected_theme" @change="onChangeTheme()">
-                <option value = "dark_theme">Dark Theme</option>
-                <option value = "white_theme">White Theme</option>
-                <option value = "cute_theme">Cute Theme</option>
+                <option value = "dark_theme">{{ $t("option.dark_theme") }}</option>
+                <option value = "white_theme">{{ $t("option.white_theme") }}</option>
+                <option value = "cute_theme">{{ $t("option.cute_theme") }}</option>
             </select>
         </div>
         <div id="optionOsuId">
-            <p>Link us your osu id so we can steal your pp !</p>
+            <p>{{ $t('option.link_osu_id')}}</p>
             <span>
                 <input type="number" v-model.number.lazy="entered_id">
                 <span id="userOsuId" v-if="user.verification.isOsuIdVerified"><img src="../assets/green_checkmark.png"></span>
             </span>
-            <button @click="updateSettings()">Update</button>
+            <button @click="updateSettings()">{{ $t('option.update') }}</button>
         </div>
         <div id="optionVerifOsuId" v-if=request>
-            <p>You just recieved a unique code in your osu! dms, enter it here to update your id =></p>
+            <p>{{ $t('option.got_code') }}</p>
             <input type="number" v-model.number.lazy="code">
-            <button @click="verifyOsuId()">Verify code</button>
+            <button @click="verifyOsuId()">{{ $t('option.verify_code') }}</button>
         </div>
-        <button @click="Disconect()">Disconect</button>
-        <p>Give us your access token so we can steal your rating!</p>
+        <button @click="Disconect()">{{ $t('option.disconnect') }}</button>
+        <p>{{ $t('option.link_maimai_token') }}</p>
         <div id="maimaitoken">
             <input type="text" v-model.lazy="entered_token">
             <span  v-if="user.verification.isMaimaiTokenVerified"><img src="../assets/green_checkmark.png"></span>
         </div>
-        <button @click="verifyMaimaiToken()">Update</button>
+        <button @click="verifyMaimaiToken()">{{ $t('option.update') }}</button>
     </div>
 </template>
 

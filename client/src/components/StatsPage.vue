@@ -22,16 +22,16 @@ export default {
 
 <template>
     <div class="stat">
-        <span>Number of STD claims</span> <span> {{ user.statCount.std_claim_count}} </span>  <br>
+        <span>{{ $t("stats.nb_std_claim") }}</span> <span> {{ user.statCount.std_claim_count}} </span>  <br>
     </div>
     <div class="stat">
-        <span>Number of Maimai claims</span> <span> {{ user.statCount.maimai_claim_count }} </span>  <br>
+        <span>{{ $t("stats.nb_maimai_claim") }}</span> <span> {{ user.statCount.maimai_claim_count }} </span>  <br>
     </div>
     <div class="stat">
-        <span>Total claims</span> <span> {{ user.totalClaims }} </span>  <br><br>
+        <span>{{ $t("stats.nb_claim") }}</span> <span> {{ user.totalClaims }} </span>  <br><br>
     </div>
     <div class="stat">
-        <span>Total number of dungeons cleared</span> <span> {{ user.statCount.total_cleared_dungeon }} </span>  <br>
+        <span>{{ $t("stats.nb_dungeon_clear") }}</span> <span> {{ user.statCount.total_cleared_dungeon }} </span>  <br>
     </div>
     
 </template>

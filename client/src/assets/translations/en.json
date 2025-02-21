@@ -20,10 +20,11 @@
         "welcome":"Welcome to the Fighting section !"
     },
     "dungeon":{
+        "boss_health":"Health",
         "shit":{
             "name":"The Shit Dungeon"
         },
-        "attack":"@:waifu.{waifu_id} dealt @:attack.{attack_type} {damage} to the boss"
+        "attack":"{waifu_name} dealt {damage} @:attack.{attack_type} damage to the boss"
     },
     "waifulist": {
         "levelAscendant":"Level (Ascendant)",
@@ -105,6 +106,7 @@
         }
     },
     "waifu":{
+        "level":"lvl",
         "stats":{
             "str":"STR",
             "int":"INT",
@@ -135,5 +137,35 @@
         "physical":"Physical",
         "magical":"Magical",
         "psychic":"Psychic"
+    },
+    "option":{
+        "change_theme":"Choose your favourite theme !",
+        "dark_theme":"Dark theme",
+        "white_theme":"White theme",
+        "cute_theme":"Cute theme",
+        "link_osu_id":"Link us your osu id so we can steal your pp !",
+        "update":"Update",
+        "got_code":"You just recieved a unique code in your osu! dms, enter it here to update your id =>",
+        "verify_code":"Verify code",
+        "link_maimai_token":"Give us your maitea access token so we can steal your rating!",
+        "disconnect":"Disconnect"
+    },
+    "stats":{
+        "nb_std_claim":"Number of STD claims",
+        "nb_maimai_claim":"Number of Maimai claims",
+        "nb_claim":"Total claims",
+        "nb_dungeon_clear":"Total number of dungeons cleared"
+    },
+    "gacha":{
+        "pull":"Pull {pullAmount}",
+        "currency":"Gacha currency",
+        "pull_number":"Pull number"
+    },
+    "inventory":{
+        "all":"All",
+        "equipment":"Equipment",
+        "material":"Material",
+        "waifu_consumable":"Waifu consumable",
+        "user_consumable":"User consumable"
     }
 }
