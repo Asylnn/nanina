@@ -13,7 +13,7 @@ namespace Nanina.Communication
     {
         protected void SendMapToClient(ClientWebSocketResponse rawData)
         {
-            var map = DBUtils.GetMap(rawData.data);
+            var map = DBUtils.Get<Beatmap>(x => x.id == Convert.ToInt64(rawData.data));
             if(map == null)
                 {Send(ClientNotification.NotificationData("Fighting", "Couldn't get the map??", 1)); return ;}
 
@@ -39,7 +39,7 @@ namespace Nanina.Communication
                 id = chart.songID.ToString(),
             };
 
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
         }
 
         protected async Task<uint> CheckForMaimaiScores(UserData.User user)
@@ -69,7 +69,7 @@ namespace Nanina.Communication
         
         protected void StartFight(ClientWebSocketResponse rawData){
 
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(user.fight.timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
@@ -84,7 +84,7 @@ namespace Nanina.Communication
         protected async void ClaimFight(ClientWebSocketResponse rawData){
 
             var claim = JsonConvert.DeserializeObject<ClaimClientResponse>(rawData.data);
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
 
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
@@ -142,7 +142,7 @@ namespace Nanina.Communication
             }));
             
 
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
             UserData.User.RegenEnergy(user);
         }
         

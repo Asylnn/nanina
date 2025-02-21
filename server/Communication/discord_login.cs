@@ -80,7 +80,7 @@ namespace Nanina.Communication
                 DBUtils.Update(user);
 
             }
-            var session = DBUtils.GetSession(rawData.sessionId);
+            var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
             if(session == null) //Should not happen.
                 session = Session.NewSession(this.ID);
 

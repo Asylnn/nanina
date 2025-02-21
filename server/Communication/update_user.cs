@@ -9,7 +9,7 @@ namespace Nanina.Communication
     {
         protected async void UpdateOsuId(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             var code = (new Random().Next(899_999) + 100_000).ToString();
@@ -25,12 +25,12 @@ namespace Nanina.Communication
             user.verification.osuVerificationCode = code;
             user.verification.osuVerificationCodeTimestamp = Utils.GetTimestamp();
             user.verification.isOsuIdVerified = false;
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
             
         }
         protected void VerifyOsuId(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(Utils.GetTimestamp() - user.verification.osuVerificationCodeTimestamp > Global.baseValues.time_limit_for_osu_code_verification_in_milliseconds)
@@ -42,7 +42,7 @@ namespace Nanina.Communication
             user.verification.osuVerificationCodeTimestamp = 0;
             user.verification.isOsuIdVerified = true;
 
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
             Send(ClientNotification.NotificationData("Update osu ID", "You successfully modified your osu id!", 1));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
@@ -52,10 +52,10 @@ namespace Nanina.Communication
         }
         protected void UpdateTheme(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user != null){
                 user.theme = rawData.data;
-                DBUtils.UpdateUser(user);
+                DBUtils.Update(user);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Nanina.Communication
         }
         protected void EquipItem(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             
@@ -94,7 +94,7 @@ namespace Nanina.Communication
             if(oldEquipment is not null)
                 user.inventory.AddEquipment(oldEquipment);
 
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "user",
@@ -104,7 +104,7 @@ namespace Nanina.Communication
 
         protected void UnequipItem(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             
@@ -141,7 +141,7 @@ namespace Nanina.Communication
             if(oldEquipment is not null)
                 user.inventory.AddEquipment(oldEquipment);
 
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "user",
@@ -151,7 +151,7 @@ namespace Nanina.Communication
 
         protected async void VerifyMaimaiToken(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
 
@@ -164,7 +164,7 @@ namespace Nanina.Communication
             
             user.tokens.maimai_token = rawData.data;
             user.verification.isMaimaiTokenVerified = true;
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
 
             Send(ClientNotification.NotificationData("Update Maimai token", "You successfully modified your maimai token!", 1));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse

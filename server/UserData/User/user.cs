@@ -14,7 +14,7 @@ namespace Nanina.UserData
         public double energy {get; set;} = Global.baseValues.base_max_energy;
         public bool isRegenerating {get; set;} = false;
         public string username { get; set; } = username;
-        public List<Waifu> waifus { get; set; } = [DBUtils.GetWaifu("0")];
+        public List<Waifu> waifus { get; set; } = [DBUtils.Get<Waifu>(x => x.id == "0")];
         public string Id { get; set; } = CreateId();
         public string theme { get; set; } = Global.baseValues.base_theme;
         public Ids ids { get; set; } = ids;
@@ -55,12 +55,12 @@ namespace Nanina.UserData
 
             var id = user.Id;
             user.isRegenerating = true;
-            DBUtils.UpdateUser(user);
+            DBUtils.Update(user);
 
             PeriodicTimer energyRegenTimer = new (new (Global.baseValues.energy_regen_tick_in_seconds*10_000_000)); //units are 100ns
             while (await energyRegenTimer.WaitForNextTickAsync())
             {
-                var u = DBUtils.GetUser(id);
+                var u = DBUtils.Get<UserData.User>(x => x.Id == id);
                 Console.WriteLine("Regen Tick");
                 
                 u.energy += Global.baseValues.energy_regen_tick_amount;
@@ -72,10 +72,10 @@ namespace Nanina.UserData
                 }
                     
 
-                DBUtils.UpdateUser(u);
+                DBUtils.Update(u);
 
 
-                var session = DBUtils.GetSession(u.activeSessionId);
+                var session = DBUtils.Get<Session>(x => x.id == u.activeSessionId);
                 Console.WriteLine(JsonConvert.SerializeObject(u.activeSessionId));
 
                 Console.WriteLine(JsonConvert.SerializeObject(session));

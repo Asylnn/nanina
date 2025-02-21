@@ -21,7 +21,7 @@ namespace Nanina.Dungeon
 
         public static void UpdateDungeonOfClient(ActiveDungeon activeDungeon){
 
-            var session = DBUtils.GetSession(activeDungeon.sessionId);
+            var session = DBUtils.Get<Session>(x => x.id == activeDungeon.sessionId);
             if(session == null) return;
             if(session.webSocketId != null)
             {
@@ -36,7 +36,7 @@ namespace Nanina.Dungeon
 
         public static void SendLootToClient(ActiveDungeon activeDungeon, List<Loot> loot)
         {
-            var session = DBUtils.GetSession(activeDungeon.sessionId);
+            var session = DBUtils.Get<Session>(x => x.id == activeDungeon.sessionId);
             if(session == null) return;
             if(session.webSocketId != null)
             {

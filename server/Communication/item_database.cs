@@ -24,7 +24,7 @@ namespace Nanina.Communication
         */
         protected void ProvideItemDatabase(string userId)
         {
-            var user = DBUtils.GetUser(userId);
+            var user = DBUtils.Get<User>(x => x.Id == userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
             if(!user.admin)
@@ -39,7 +39,7 @@ namespace Nanina.Communication
         protected void UpdateItemDatabase(ClientWebSocketResponse rawData)
         {
 
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
 
             if(user == null)
                 {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
@@ -75,7 +75,7 @@ namespace Nanina.Communication
 
         protected void ProvideSetDatabase(string userId)
         {
-            var user = DBUtils.GetUser(userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
             if(!user.admin)
@@ -87,7 +87,7 @@ namespace Nanina.Communication
         }
         protected void UpdateSetDatabase(ClientWebSocketResponse rawData)
         {
-            var user = DBUtils.GetUser(rawData.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(user.admin == false)

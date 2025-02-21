@@ -22,9 +22,9 @@ namespace Nanina.Database
         {
             locale = newLocale;
             if(userId == null){
-                var user = DBUtils.GetUser(userId);
+                var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
                 user.locale = locale;
-                DBUtils.UpdateUser(user);
+                DBUtils.Update(user);
             }
 
             UpdateDB();
@@ -40,9 +40,9 @@ namespace Nanina.Database
             if(id is not null)
             {
                 Console.WriteLine("updating user active session Id");
-                var user = DBUtils.GetUser(id);
+                var user = DBUtils.Get<UserData.User>(x => x.Id == id);
                 user.activeSessionId = this.id;
-                DBUtils.UpdateUser(user);
+                DBUtils.Update(user);
             }
             userId = id;
             UpdateDB();

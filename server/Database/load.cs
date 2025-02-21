@@ -149,7 +149,7 @@ namespace Nanina.Database
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
-                DBUtils.UpdateUser(user);
+                DBUtils.Update(user);
                 
                 /*if(user.waifus.id == null){
                     user.waifus.id = "0";
