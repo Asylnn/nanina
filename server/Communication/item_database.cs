@@ -24,7 +24,7 @@ namespace Nanina.Communication
         */
         protected void ProvideItemDatabase(string userId)
         {
-            var user = DBUtils.Get<User>(x => x.Id == userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
             if(!user.admin)

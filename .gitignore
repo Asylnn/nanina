@@ -45,7 +45,9 @@ client/public
 
 #Database
 
-/save
+/save/chatosutokens.json
+/save/osutokens.json
+/save/database.db
 .env
 itemdb.json
 osumapsdb.json

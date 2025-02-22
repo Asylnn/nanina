@@ -1,0 +1,17 @@
+[
+    {
+        "bannerName": "Re:Zero Lolies Unlimited",
+        "bannerDescription": "Pull for all the Re:Zero's adorable lolies!!",
+        "id": "rezerololies0",
+        "pityAmount": 10,
+        "pullCost": 10,
+        "twoStarsWeight": 100,
+        "threeStarsWeight": 10,
+        "rateUpTwoStarsWeight": 0,
+        "rateUpThreeStarsWeight": 0,
+        "twoStarsPoolId" : ["1", "2", "5"],
+        "threeStarsPoolId" : ["3"],
+        "rateUpTwoStarsPoolId" : [],
+        "rateUpThreeStarsPoolId" : []
+    }   
+]
