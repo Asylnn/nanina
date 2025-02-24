@@ -187,11 +187,9 @@ namespace Nanina.Communication
 
             if(!user.CheckRewardAvailability(lvl))
                 {Send(ClientNotification.NotificationData("User", "You already collected the rewards for this level", 1)); return ;}
-            
-            Console.WriteLine("aaaa");
-            Console.WriteLine(Math.Pow(2, lvl));
-            Console.WriteLine(Convert.ToUInt64(Math.Pow(2, lvl)));
-            user.lvlRewards += Convert.ToUInt64(Math.Pow(2, lvl));
+                
+            user.lvlRewards += Convert.ToInt64(Math.Pow(2, lvl));
+
         
             foreach(var reward in Global.userLevelRewards[lvl-2])
             {

@@ -16,7 +16,7 @@ namespace Nanina.UserData
         public uint XpToLvlUp {
             get => 40u + lvl*2u;
         }
-        public ulong lvlRewards {get; set;}
+        public long lvlRewards {get; set;}
         public string activeSessionId {get; set;} = null;
         public double max_energy {get; set;} = Global.baseValues.base_max_energy;
         public double energy {get; set;} = Global.baseValues.base_max_energy;
@@ -125,7 +125,7 @@ namespace Nanina.UserData
 
         public bool CheckRewardAvailability(byte level)
         {
-            return (this.lvlRewards&Convert.ToUInt64(Math.Pow(2ul, lvl))) == 0;
+            return (Convert.ToInt64(Math.Pow(2, level))&lvlRewards) == 0;
         }
     }
 }
