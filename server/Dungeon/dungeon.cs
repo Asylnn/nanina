@@ -106,7 +106,6 @@ namespace Nanina.Dungeon
             isCompleted = true;
             List<Loot> lootToServer = [];
             var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
-            
             var (spent_energy, gc) = user.SpendEnergy();
             loot = GetLoot(spent_energy);
             foreach(var equipment in loot)

@@ -48,7 +48,7 @@ namespace Nanina.Communication
             if(!user.verification.isMaimaiTokenVerified) 
                 { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return 0; }
 
-            var scores = await Maimai.Api.GetRecentScores(user.tokens.maimai_token, Convert.ToInt16(user.fight.id), 0);
+            var scores = await Maimai.Api.GetRecentScores(user.tokens.maimai_token, Convert.ToUInt32(user.fight.id), 0);
             user.claimTimestamp = Utils.GetTimestamp();
 
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
@@ -115,7 +115,7 @@ namespace Nanina.Communication
                 user.fightHistory.Add(user.fight.game, [user.fight.id]);
 
             user.statCount.std_claim_count++;
-            
+            user.GetXP(Global.baseValues.user_xp_for_fights);
 
             SendLoot([
                 new Loot {
@@ -125,6 +125,10 @@ namespace Nanina.Communication
                 new Loot {
                     lootType = LootType.GC,
                     amount = gc,
+                },
+                new Loot {
+                    lootType = LootType.UserXP,
+                    amount = Global.baseValues.user_xp_for_fights,
             }]);
             
             

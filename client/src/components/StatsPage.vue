@@ -21,6 +21,7 @@ export default {
 
 
 <template>
+    <h2>Stats</h2><br>
     <div class="stat">
         <span>{{ $t("stats.nb_std_claim") }}</span> <span> {{ user.statCount.std_claim_count}} </span>  <br>
     </div>

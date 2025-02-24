@@ -86,7 +86,7 @@ export default {
             <div class="butitem halo" @click="onClickChangePage(5)" v-else>
                 <img height=30px width=30px src="../assets/option_gear_from_google_probably_not_free_of_use.png">
             </div>
-            <div id="user" class="butitem" v-if="logged"><img :src="`${user.avatarPATH}?size=40`"></div>
+            <div id="user" class="butitem" v-if="logged" @click="onClickChangePage(4)"><img :src="`${user.avatarPATH}?size=40`"></div>
             
         </div>
         <div id="energy" v-if="logged"><p>{{ Math.floor(user.energy) }} / {{Math.floor(user.max_energy) }}</p></div>

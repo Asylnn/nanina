@@ -1,7 +1,9 @@
+using System.Xml.XPath;
 using Nanina.Communication;
 using Nanina.Database;
 using Nanina.UserData.WaifuData;
 using Newtonsoft.Json;
+using WebSocketSharp;
 
 namespace Nanina.UserData
 {
@@ -9,6 +11,12 @@ namespace Nanina.UserData
     public class User(string username, Ids ids)
     {
         public bool admin {get; set;} = false;
+        public byte lvl {get; set;} = 1;
+        public uint xp {get; set;} = 0;
+        public uint XpToLvlUp {
+            get => 40u + lvl*2u;
+        }
+        public ulong lvlRewards {get; set;}
         public string activeSessionId {get; set;} = null;
         public double max_energy {get; set;} = Global.baseValues.base_max_energy;
         public double energy {get; set;} = Global.baseValues.base_max_energy;
@@ -43,6 +51,18 @@ namespace Nanina.UserData
             var gc = (uint) Math.Ceiling(spent_energy*Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
             gacha_currency += gc;
             return (energy:spent_energy + Global.baseValues.free_energy_not_used_for_each_action, gc);
+        }
+
+        public void GetXP(uint _xp)
+        {
+            xp += _xp;
+            if(xp >= XpToLvlUp){
+                xp -= XpToLvlUp;
+                uint temp_xp = xp;
+                lvl++; 
+                xp = 0;
+                GetXP(temp_xp);
+            }
         }
 
         public static async void RegenEnergy(User user)
@@ -101,6 +121,11 @@ namespace Nanina.UserData
                     energyRegenTimer.Dispose();
                 }
             }
+        }
+
+        public bool CheckRewardAvailability(byte level)
+        {
+            return (this.lvlRewards&Convert.ToUInt64(Math.Pow(2ul, lvl))) == 0;
         }
     }
 }

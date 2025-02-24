@@ -23,5 +23,7 @@ namespace Nanina
         public double base_max_energy;
         public string base_theme;
         public double spent_energy_to_gacha_currency_conversion_rate;
+        public uint user_xp_for_fights;
+        public uint user_xp_for_dungeons;
     }
 }

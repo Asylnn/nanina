@@ -173,5 +173,44 @@ namespace Nanina.Communication
                 data = JsonConvert.SerializeObject(user) 
             }));
         }
+
+        protected void GetReward(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user == null) 
+                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+
+            var lvl = Convert.ToByte(rawData.data);
+
+            if(lvl > user.lvl)
+                {Send(ClientNotification.NotificationData("User", "You haven't unlocked this level!", 1)); return ;}
+
+            if(!user.CheckRewardAvailability(lvl))
+                {Send(ClientNotification.NotificationData("User", "You already collected the rewards for this level", 1)); return ;}
+            
+            Console.WriteLine("aaaa");
+            Console.WriteLine(Math.Pow(2, lvl));
+            Console.WriteLine(Convert.ToUInt64(Math.Pow(2, lvl)));
+            user.lvlRewards += Convert.ToUInt64(Math.Pow(2, lvl));
+        
+            foreach(var reward in Global.userLevelRewards[lvl-2])
+            {
+                switch(reward.lootType){
+                    case LootType.GC:
+                        user.gacha_currency += reward.amount;
+                        break;
+                    case LootType.Item:
+                        user.inventory.AddItem(reward.item);
+                        break;
+                }
+            }
+            SendLoot([.. Global.userLevelRewards[lvl-2]]);
+            DBUtils.Update(user);
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "user",
+                data = JsonConvert.SerializeObject(user) 
+            }));
+        }
     }
 }

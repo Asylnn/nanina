@@ -100,6 +100,19 @@ namespace Nanina.Communication
             DBUtils.Rebuild(sets);
             
             Send(ClientNotification.NotificationData("admin", "updated the set database!", 0));
+        }
+
+        protected void GetLevelRewards(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user == null) 
+                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+            
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "user level rewards",
+                data = JsonConvert.SerializeObject(Global.userLevelRewards) 
+            }));
             
         }
 

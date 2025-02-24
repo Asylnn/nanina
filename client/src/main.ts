@@ -21,7 +21,7 @@ let messages = {
 declare module "@vue/runtime-core" {
 	export interface ComponentCustomProperties {
 		$t: (key: string, ...args: any[]) => string;
-		//ws: WebSocket
+		ws: WebSocket
 		$i18n : any
 		SendToServer : (type : string, data: string, userId: string | null) => void;
 	}

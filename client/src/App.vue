@@ -12,7 +12,7 @@ import NotificationMenu from './components/NotificationMenu.vue'
 import Notification from './classes/notif'
 import PullPage from './components/PullPage.vue'
 import WaifuListPage from './components/WaifuListPage.vue'
-import LootComponent from './components/LootComponent.vue'
+import LootDisplayComponent from './loot/LootDisplayComponent.vue'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -66,7 +66,7 @@ export default {
 			active_dungeon : new ActiveDungeon,
 			localeSetByUser : false,
 			maimai_chart : null as Chart | null,
-			loots : [] as Array<Loot[]>
+			loots : [] as Array<Loot[]>,
 		}
 	},
 	components: {
@@ -86,7 +86,7 @@ export default {
 		InventoryManagerPage,
 		DungeonPage,
 		StatsPage,
-		LootComponent,
+		LootDisplayComponent,
 	},	
 	methods : {
 		updateTheme(theme : string) {
@@ -280,8 +280,7 @@ export default {
 			How tf did you even up here?
 		</div>
 		<div v-else-if="loadingPage === 70">
-			<p>Hello User!</p>
-			<UserPage></UserPage>
+			<UserPage :user="user"></UserPage>
 		</div>
 		<div v-else-if="loadingPage === 80">
 			<UserOptionPage :user=user :theme=user.theme @theme-change="updateTheme"></UserOptionPage>
@@ -311,7 +310,7 @@ export default {
 			<StatsPage :user="user"></StatsPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
-		<LootComponent :loots=loots></LootComponent>
+		<LootDisplayComponent  :is-new-loot="true"  :loots=loots></LootDisplayComponent>
 	</div>
 </template>
 

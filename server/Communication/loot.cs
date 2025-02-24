@@ -16,4 +16,11 @@ namespace Nanina.Communication
         public uint amount;
         public Item? item;
     }
+
+    public class LiteLoot
+    {
+        public LootType lootType;
+        public uint amount;
+        public ushort? itemId;
+    }
 }

@@ -51,6 +51,8 @@
     "time_for_allowing_another_claim_in_milliseconds": 1,
     "base_gacha_currency_amount":10000,
     "base_theme":"dark_theme",
-    "spent_energy_to_gacha_currency_conversion_rate":5
+    "spent_energy_to_gacha_currency_conversion_rate":5,
+    "user_xp_for_fights":1000,
+    "user_xp_for_dungeons":25
     
 }

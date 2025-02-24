@@ -8,6 +8,9 @@ import type Inventory from './inventory'
 
 
 export default class User {
+    public xp! : number
+    public lvl! : number
+    public XpToLvlUp! : number
     public admin : boolean = false
     public username : string = "Pro Osu Player"
     public theme : string = "dark_theme"
@@ -26,6 +29,7 @@ export default class User {
     public fightHistory : Dictionary<string[]> = {}
     public fight! : Fight
     public inventory! : Inventory
+    public lvlRewards! : number
 
     public get totalClaims() : number{
         return this.statCount.maimai_claim_count + this.statCount.std_claim_count

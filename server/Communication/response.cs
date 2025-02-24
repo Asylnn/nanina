@@ -94,6 +94,13 @@ namespace Nanina.Communication
                 case "verify maimai token":
                     VerifyMaimaiToken(rawData);
                     break;
+
+                case "get possible user level up loot":
+                    GetLevelRewards(rawData);
+                    break;
+                case "get level reward":
+                    GetReward(rawData);
+                    break;
             }
         }
         protected override void OnClose(CloseEventArgs e)

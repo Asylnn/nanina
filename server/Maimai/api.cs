@@ -32,7 +32,7 @@ namespace Maimai
             return response.IsSuccessStatusCode;
         }
 
-        public static async Task<Score[]> GetRecentScores(string key, short songID, byte level)
+        public static async Task<Score[]> GetRecentScores(string key, uint songID, byte level)
         {
             Console.WriteLine("getting tracks...");
 
