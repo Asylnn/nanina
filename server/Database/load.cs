@@ -20,7 +20,6 @@ namespace Nanina.Database
             if(Global.config.first_time_running) 
                 FirstLoad();
             UpdateUserDB(); //Update Database when updating game
-
             var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(Global.config.automatic_backup_interval_in_seconds));
             while (await periodicTimer.WaitForNextTickAsync())
             {
@@ -30,7 +29,6 @@ namespace Nanina.Database
                 File.Copy(databasePath, backUpPath, true);
                 Console.WriteLine ("Doing backup...");
             }
-            
         }
 
         /*public static void LoadConfig(){
@@ -149,6 +147,7 @@ namespace Nanina.Database
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
+                //user.admin = true;
                 DBUtils.Update(user);
                 
                 /*if(user.waifus.id == null){

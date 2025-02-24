@@ -66,6 +66,9 @@ namespace Nanina.Database
                 case "itemdb":
                     prop = "item db";
                     break;
+                case "equipmentdb":
+                    prop = "equipment db";
+                    break;
             }
             if(prop != "") {
                 var data = JsonConvert.SerializeObject(theEnum);
@@ -98,10 +101,8 @@ namespace Nanina.Database
                     break;
                 case Equipment:
                     var equipCol = (ILiteCollection<Equipment>) col;
-                    equipCol.EnsureIndex(x => x.setId, false);
-                    var eItemCol = (ILiteCollection<Item>) col;
-                    eItemCol.EnsureIndex(x => x.id, true);
-                    eItemCol.EnsureIndex(x => x.type, false);
+                    equipCol.EnsureIndex(x => x.id, true);
+                    equipCol.EnsureIndex(x => x.type, false);
                     Console.WriteLine("ensure index done");
                     break;
                 case Item:
@@ -149,8 +150,9 @@ namespace Nanina.Database
                 Type type when type == typeof(Session) => "sessiondb",
                 Type type when type == typeof(Waifu) => "waifudb",
                 Type type when type == typeof(Beatmap) => "osumapsdb",
-                Type type when type == typeof(Item) || type == typeof(Equipment) => "itemdb",
+                Type type when type == typeof(Item) => "itemdb",
                 Type type when type == typeof(Set) => "setdb",
+                Type type when type == typeof(Equipment) => "equipmentdb",
                 _ => null
             };
         }
@@ -184,10 +186,16 @@ namespace Nanina.Database
                     Console.WriteLine("Rebuilt Waifu db");
                     break;
                 case Equipment[]:
-                    //Later
+                    foreach (var equipment in data) {
+                        Insert(equipment);
+                    }
+                    Console.WriteLine("Rebuilt Equipment db");
                     break;
                 case Item[]:
-                    //Later
+                    foreach (var item in data) {
+                        Insert(item);
+                    }
+                    Console.WriteLine("Rebuilt Item db");
                     break;
                 case null:
                     throw new ArgumentNullException(nameof(data));
@@ -219,16 +227,19 @@ namespace Nanina.Database
             var itemCol = db.GetCollection<Item>("itemdb");
             var setCol = db.GetCollection<Set>("setdb");
             var osuCol = db.GetCollection<Beatmap>("osumapsdb");
+            var equipmentCol = db.GetCollection<Beatmap>("equipmentdb");
             var userdb = JsonConvert.DeserializeObject<UserData.User[]>(File.ReadAllText("../userdb.json"));
             var waifudb = JsonConvert.DeserializeObject<Waifu[]>(File.ReadAllText("../waifudb.json"));
             var itemdb = JsonConvert.DeserializeObject<Item[]>(File.ReadAllText("../itemdb.json"));
             var setdb = JsonConvert.DeserializeObject<Set[]>(File.ReadAllText("../setdb.json"));
             var osudb = JsonConvert.DeserializeObject<Beatmap[]>(File.ReadAllText("../osumapsdb.json"));
+            var equipmentdb = JsonConvert.DeserializeObject<Beatmap[]>(File.ReadAllText("../equipmentdb.json"));
             userCol.InsertBulk(userdb);
             waifuCol.InsertBulk(waifudb);
             itemCol.InsertBulk(itemdb);
             setCol.InsertBulk(setdb);
             osuCol.InsertBulk(osudb);
+            equipmentCol.InsertBulk(equipmentdb);
         }
 
         public static void ExportDB()
@@ -239,11 +250,13 @@ namespace Nanina.Database
             var itemCol = db.GetCollection<Item>("itemdb");
             var setCol = db.GetCollection<Set>("setdb");
             var osuCol = db.GetCollection<Beatmap>("osumapsdb");
+            var equipmentCol = db.GetCollection<Beatmap>("equipmentdb");
             File.WriteAllText("../userdb.json", JsonConvert.SerializeObject(userCol.FindAll()));
             File.WriteAllText("../waifudb.json", JsonConvert.SerializeObject(waifuCol.FindAll()));
             File.WriteAllText("../itemdb.json", JsonConvert.SerializeObject(itemCol.FindAll()));
             File.WriteAllText("../setdb.json", JsonConvert.SerializeObject(setCol.FindAll()));
             File.WriteAllText("../osumapsdb.json", JsonConvert.SerializeObject(osuCol.FindAll()));
+            File.WriteAllText("../equipmentdb.json", JsonConvert.SerializeObject(equipmentCol.FindAll()));
         }
     }
 }

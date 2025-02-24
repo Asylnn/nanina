@@ -43,6 +43,7 @@ import ActiveDungeon from './classes/dungeons/active_dungeon'
 import Chart from './classes/maimai/chart'
 import StatsPage from './components/StatsPage.vue'
 import type Loot from './classes/loot/loot'
+import type Equipment from './classes/item/equipment'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -59,6 +60,7 @@ export default {
 			dev : true, //Is this dev or prod? IMPORTANT!!
 			all_waifus : [] as Waifu[],
 			item_db : [] as Item[],
+			equipment_db : [] as Equipment[],
 			set_db : [] as Set[],
 			pulled_waifus : [] as Waifu[],
 			banners : [] as Banner[],
@@ -213,6 +215,11 @@ export default {
 					console.log("ITEM DATABASE")
 					console.log(this.item_db)
 					break
+				case "equipment db" :
+					this.equipment_db = JSON.parse(res.data)
+					console.log("EQUIPMENT DATABASE")
+					console.log(this.equipment_db)
+					break
 				case "set db" :
 					this.set_db = JSON.parse(res.data)
 					console.log("SET DATABASE")
@@ -298,7 +305,7 @@ export default {
 			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"></PullPage>
 		</div>
 		<div v-else-if="loadingPage === 130">
-			<ItemManagerPage :id="user.Id" :item_db="item_db" :set_db="set_db"></ItemManagerPage>
+			<ItemManagerPage :id="user.Id" :item_db="item_db" :equipment_db="equipment_db" :set_db="set_db"></ItemManagerPage>
 		</div>
 		<div v-else-if="loadingPage === 140">
 			<InventoryManagerPage :user="user" :items="item_db"></InventoryManagerPage>

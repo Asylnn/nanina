@@ -43,6 +43,7 @@ namespace Nanina.Communication
                     break;
                 case "update item db": 
                     UpdateItemDatabase(rawData);
+                    UpdateEquipmentDatabase(rawData);
                     break;
                 case "update set db":
                     UpdateSetDatabase(rawData);

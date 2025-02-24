@@ -69,6 +69,7 @@ namespace Nanina.Communication
             if(user.admin)
             {
                 ProvideItemDatabase(userId);
+                ProvideEquipmentDatabase(userId);
                 ProvideSetDatabase(userId);
                 ProvideWaifuDatabase(userId);
             }
