@@ -54,7 +54,7 @@ export default {
 #notifMenu {
     border-radius: 35px;
     background-color: crimson;
-    position: absolute;
+    position: fixed;
     left: 5vw;
     top: 7.5vh;
     width: 90vw;
