@@ -81,6 +81,7 @@ TODO : Modify break property in Maimai
 TODO : Crash when schwartzchild (re:mast?)
 TODO : Make stop dungeon safe
 TODO : Add regen tick clock on client
+TODO : Clean up where you recieve websockets in client
 
     
 
@@ -89,9 +90,11 @@ TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca
 
 
 
-TODO BEFORE PUTING IT ONLINE : 
-TODO : TRY CATCH RESPONSE
-TODO : Implement banner
+TODO Before putting it online for testing : 
+TODO : try catch onMessage                                                          #Done
+TODO : Implement new banner
 TODO : Have reasonable values
 TODO : Have multiple dungeons of increasing difficulty
-TODO : UPDATE OSU KEYS EACH DAYS
+TODO : update osu tokens each day                                                   #Done
+TODO : Make so you don't need to remove the code part of the url to connect
+TODO : Make fight page not so ugly 

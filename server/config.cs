@@ -19,5 +19,6 @@ public class Config {
         public string maitea_api_url;
         public string discord_avatar_url;
         public string osu_oauth_url;
+        public string chat_osu_oauth_url;
         
 }

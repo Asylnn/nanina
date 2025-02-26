@@ -18,6 +18,26 @@ namespace Nanina.Osu
                 .AddHeader("Accept", "application/json")
                 .AddHeader("Authorization", $"Bearer {tokens.access_token}");
         }
+
+        public static async void RefreshChatTokens()
+        {
+            var request = new RestRequest(Global.config.chat_osu_oauth_url, Method.Post);
+            //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.AddHeader("Accept", "application/json")
+                .AddHeader("Content-Type", "application/x-www-form-urlencoded")
+                .AddParameter("grant_type", "refresh_token")
+                .AddParameter("client_id", Environment.GetEnvironmentVariable("OSU_CLIENT_ID"))
+                .AddParameter("client_secret", Environment.GetEnvironmentVariable("OSU_CLIENT_SECRET"))
+                .AddParameter("refresh_token", chat_tokens.refresh_token);
+                //.AddParameter("scope","public");
+            var response = await new RestClient().ExecutePostAsync(request);
+
+            Console.WriteLine("updated osu chat tokens");
+            Console.WriteLine("osu api chat refresh response status code " + response.StatusCode);
+
+            chat_tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
+            File.WriteAllText(Global.config.osu_chat_tokens_storage_path, response.Content);
+        }
         public static async void GetTokens()
         {
             var request = new RestRequest(Global.config.osu_oauth_url, Method.Post);
@@ -55,7 +75,7 @@ namespace Nanina.Osu
             }
             else 
             {
-                Console.WriteLine("osu api response error content" + response.Content);
+                Console.WriteLine("osu api GetUserRecentScores response error content" + response.Content);
                 Console.WriteLine("Couldn't get scores!");
                 return [];
             }
@@ -76,7 +96,7 @@ namespace Nanina.Osu
 
             
             if(!response.IsSuccessStatusCode)
-                {Console.WriteLine("osu api response error content" + response.Content); return null;}
+                {Console.WriteLine("osu api GetBeatmapById response error content" + response.Content); return null;}
             
             var content = response.Content
                 .Replace("cover@2x", "cover2x")
@@ -146,6 +166,7 @@ namespace Nanina.Osu
                 return null;
             }
         }*/
+        
         public static async Task<bool> SendMessageToUser(string osuUserId, string message)
         {
             var request = new RestRequest($"chat/new", Method.Post)
@@ -162,10 +183,10 @@ namespace Nanina.Osu
             
             
             var response = await client.ExecutePostAsync(request);
-            Console.WriteLine("osu api response status code " + response.StatusCode);
+            Console.WriteLine("osu api sendMessageToUser response status code " + response.StatusCode);
 
             if(!response.IsSuccessStatusCode)
-                Console.WriteLine("osu api response error content" + response.Content);
+                Console.WriteLine("osu api sendMessageToUser response error content" + response.Content);
             
             return response.IsSuccessStatusCode;
         }
@@ -177,7 +198,7 @@ namespace Nanina.Osu
             //https://osu.ppy.sh/oauth/authorize?client_id=422727&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=chat.write
             //replace client_id with your osu client id, same with the redicted_uri
             
-            var request = new RestRequest("https://osu.ppy.sh/oauth/token", Method.Post);
+            var request = new RestRequest(Global.config.chat_osu_oauth_url, Method.Post);
             var redirect_uri = Global.config.dev ? Environment.GetEnvironmentVariable("DEV_OSU_REDIRECT_URI") : Environment.GetEnvironmentVariable("PROD_OSU_REDIRECT_URI") ;
 
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -194,7 +215,7 @@ namespace Nanina.Osu
             var response = await new RestClient().ExecutePostAsync(request);
 
             Console.WriteLine("updated osu chat tokens");
-            Console.WriteLine("osu api response status code " + response.StatusCode);
+            Console.WriteLine("osu api AuthorizeSelf response status code " + response.StatusCode);
 
             chat_tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
             File.WriteAllText(Global.config.osu_chat_tokens_storage_path, response.Content);
