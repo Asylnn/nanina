@@ -130,7 +130,7 @@ export default {
 
 <template>
     
-        <div id="windowFight">
+        <div class="flex" id="windowFight">
             <div class="grid" id="gameSelector">
                 <span >{{ $t("fight.game_select") }}</span>
                 <select v-model="game">
@@ -138,70 +138,53 @@ export default {
                     <option :value="Game.MaimaiFinale">{{ $t("games.maimai_finale") }}</option>
                 </select>
             </div>
-            <div v-if="game == Game.OsuStandard">
-                <p id="welcomeText">
-                    {{ $t("fight.welcome") }}<br>
-                    In this section you can gain some juicy xp for your favourite waifus !<br>
-                    Do you think you have what it takes to succeed ?<br>
-                    It's time to find out !
-                </p>
-                <span class="button" id="timerFight" v-if="fight_timing_out">
-                    Wait {{ Math.round((user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - date_milli)/60000*60)  }} seconds
-                </span>
-                <span class="button" id="fightButton" v-else @click="fight">Fight !</span>
-                <div id="inFight" v-if="fighting">
+            <p id="welcomeText">
+                {{ $t("fight.welcome") }}<br>
+                In this section you can gain some juicy xp for your favourite waifus !<br>
+                Do you think you have what it takes to succeed ?<br>
+                It's time to find out !
+            </p>
+            <span class="button timer" v-if="fight_timing_out">
+                Wait {{ Math.round((user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - date_milli)/60000*60)  }} seconds
+            </span>
+            <span class="button" v-else @click="fight">Fight !</span>
+            <div class="flex" v-if="game == Game.OsuStandard">
+                <div class="flex" v-if="fighting">
                     <a :href="mapURL"> <img id="bgMap" :src="beatmap.beatmapset.covers.cover2x"></a>
-                    Mouhahahahhaha !<br>
-                    I am the spirit of the map, prove me your worth by :<br>
-                    <p>Downloading me</p> <br>
-                    <span class="button" id="download">
+                    <p>
+                        Mouhahahahhaha !<br>
+                        I am the spirit of the map, prove me your worth by :<br>
+                        <span class="inRed">Downloading me</span> <br>
+                    </p>
+                    
+                    <span class="button">
                         <a :href="mapURL" target="_blank">
-                            Download on the osu! website !<br>(not a virus)
+                            Download on the osu! website !
                         </a>
                     </span><br>
-                    and<br>
-                    <p>Playing me by submitting a score</p><br>
-                    If you manage to submit a score, I will gift you XP !<br>
-                    Select which waifu would recieve rewards if you are worthy !
-                    <GridDisplayComponent v-if="chosen_waifu == null" @show-element="selectWaifu" :elements="user.waifus" :columns="3"></GridDisplayComponent>
-                    <div id="afterSelect" v-if="chosen_waifu != null">
-                        <GridDisplayComponent @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
-                        <span class="button" id="timerClaim" v-if="claim_timing_out">
-                        Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
-                        </span>
-                        <span class="button" v-else id="claim" @click="getXP">Prove that you are worth getting XP!</span><br>
-                    </div>
-                </div>
-                <div v-else-if="xp != 0 && chosen_waifu != null">
-                    <p> You earned {{ xp }}XP on {{chosen_waifu.name}}! </p>
+                    <p class="inRed" id="claimText">And playing me by submitting a score</p><br>
                 </div>
             </div>
             <div v-else-if="game == Game.MaimaiFinale">
-                <p id="welcomeText">
-                    {{ $t("fight.welcome") }}<br>
-                    In this section you can gain some juicy xp for your favourite waifus !<br>
-                    Do you think you have what it takes to succeed ?<br>
-                    It's time to find out !
-                </p>
-                <span class="button" id="timerFight" v-if="fight_timing_out">
-                    Wait {{ Math.round((user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - date_milli)/60000*60)  }} seconds
-                </span>
-                <span class="button" id="fightButton" v-else @click="fight">Fight ! </span>
-                <div id="inFight" v-if="fighting">
+                <div v-if="fighting">
                     <p>Play {{ maimai_chart?.title }} / {{ maimai_chart?.difficulty }}</p>
-                    <GridDisplayComponent v-if="chosen_waifu == null" @show-element="selectWaifu" :elements="user.waifus" :columns="3"></GridDisplayComponent>
-                    <div id="afterSelect" v-if="chosen_waifu != null">
-                        <GridDisplayComponent @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
-                        <span class="button" id="timerClaim" v-if="claim_timing_out">
-                        Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
-                        </span>
-                        <span class="button" v-else id="claim" @click="getXP">Prove that you are worth getting XP!</span><br>
-                    </div>
-                </div>
-                <div v-else-if="xp != 0 && chosen_waifu != null">
-                    <p> You earned {{ xp }}XP on {{chosen_waifu.name}}! </p>
                 </div>
             </div>
+            <div v-if="fighting">
+                <p>If you manage to submit a score, I will gift you XP !<br>
+                    Select which waifu are worthy of earning XP</p>
+                <GridDisplayComponent class="waifuFightSelector" :no-margin="true" v-if="chosen_waifu == null" @show-element="selectWaifu" :elements="user.waifus" :columns="3"></GridDisplayComponent>
+                <div class="flex" v-if="chosen_waifu != null">
+                    <div id="selectedWaifu">
+                        <GridDisplayComponent :no-margin="true" @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
+                    </div>
+                    <span class="button timer" v-if="claim_timing_out">
+                        Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
+                    </span>
+                    <span class="button" v-else @click="getXP">Prove that you are worth getting XP !</span><br>
+                </div>
+            </div>
+            
         </div>
     
 </template>
@@ -213,45 +196,58 @@ export default {
     display:grid;
 }
 
-/*#gameSelector, #windowFight, #inFight, #afterSelect{
-    display: grid;
-}*/
-
 #gameSelector
 {
     grid-template-columns: 1fr 0.5fr; 
     margin-bottom: 20px;
 }
 
-#windowFight {
-    margin: 0 25vw;
-    text-align: left;
-    font-size: larger;
-}
-.button, .button a {
-    color: rgb(0, 78, 33);
-    font-size: xx-large;
-    border-radius: 25px;
-    background-color: palevioletred;
-    cursor: pointer;
+.flex
+{
+    display:flex;
+    flex-direction: column;
+
 }
 
-#fightButton, #timerFight, #timerClaim{
-    margin: 1vh 15vw;
+#windowFight {
+    
+    margin: 0 25vw;
+    font-size: larger;
+}
+
+.button{
+    margin: 20px 0;
+    color: rgb(203, 165, 221);
+    font-size: xx-large;
+    border-radius: 25px;
+    background-color: rgb(39, 11, 65);
+    cursor: pointer;
+    padding: 2px 40px;
+    text-align: center;
+    align-self: center;
+}
+
+.button a 
+{
+    color: rgb(203, 165, 221);
+}
+
+
+/*#fightButton, #timerFight, #timerClaim{
     text-align: center;
     max-width: 20vw;
-}
-#download, #claim {
-    margin: 1vh 10vw;
-    text-align: center;
-}
-#timerFight, #timerClaim {
+}*/
+
+.timer {
     cursor:not-allowed;
 }
-#welcomeText {
+                    
+                    
+* {
     line-height: 1.5;
 }
-#inFight p {
+
+.inRed {
     color: red;
 }
 #bgMap {
@@ -259,7 +255,16 @@ export default {
     cursor:pointer;
 }
 
-#waifuIcons {
-    padding: 0;
+.waifuFightSelector
+{
+    margin: 10px 2vw;
 }
+
+#selectedWaifu
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
 </style>

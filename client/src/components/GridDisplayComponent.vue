@@ -19,13 +19,22 @@ export default {
             type : Number,
             required : true
         },
+        noMargin: {
+            type: Boolean,
+            default:false,
+            required : false
+        }
+        
     },
     mounted() {
         console.log("typeof" + typeof this.elements[0])
     },
     computed: { //omg a computed that actually works??????????
         generateGridTemplateColumns() {
-            return `grid-template-columns:${"1fr ".repeat(this.columns)};`
+            var style = `grid-template-columns:${"1fr ".repeat(this.columns)};`
+            if(!this.noMargin)
+                style += "margin: 0 17.27vw;"
+            return style
         },
     },
     emits: ["show-element"],
@@ -65,7 +74,6 @@ export default {
 
 #grid {
     display:none;
-    margin: 0 17.27vw;
     position:relative;
     display: grid;
 }

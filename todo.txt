@@ -97,5 +97,4 @@ TODO : Make so you don't need to remove the code part of the url to connect     
 TODO : Implement new banner
 TODO : Have reasonable values
 TODO : Have multiple dungeons of increasing difficulty
-
 TODO : Make fight page not so ugly 

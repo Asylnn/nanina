@@ -315,7 +315,7 @@ export default {
 </template>
 
 <style lang="css" scoped>
-#main {
+#main { /*for veils*/ 
 	min-height: 100vh;
 	position: relative;
 }
