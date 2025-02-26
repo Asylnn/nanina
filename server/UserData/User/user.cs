@@ -31,7 +31,7 @@ namespace Nanina.UserData
         public string locale { get; set; } = Global.config.default_locale;  
         public string avatarPATH { get; set; } = ""; //Unused
         public StatCount statCount { get; set; } = new();
-        public Dictionary<string, string[]> fightHistory = [];
+        public Dictionary<Game, string[]> fightHistory { get; set; } = new();
         public Fight fight { get; set; } = new Fight();
         public uint gacha_currency { get; set; } = Global.baseValues.base_gacha_currency_amount;
         public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; } = [];

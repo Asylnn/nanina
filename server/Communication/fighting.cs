@@ -35,7 +35,7 @@ namespace Nanina.Communication
             }));
             user.fight = new Fight 
             {
-                game = "maimai",
+                game = Game.MaimaiFinale,
                 id = chart.songID.ToString(),
             };
 
@@ -169,7 +169,7 @@ namespace Nanina.Communication
             }));
             user.fight = new Fight 
             {
-                game = map.mode,
+                game = Game.OsuStandard,
                 id = map.id.ToString(),
             };
 
@@ -187,7 +187,7 @@ namespace Nanina.Communication
                 { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return 0; }
             
             user.claimTimestamp = Utils.GetTimestamp();
-            var scores = await Osu.Api.GetUserRecentScores(user.ids.osuId, user.fight.game);
+            var scores = await Osu.Api.GetUserRecentScores(user.ids.osuId, "osu");
 
             
 

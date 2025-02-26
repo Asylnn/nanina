@@ -144,6 +144,7 @@ namespace Nanina.Database
                     ids.Append(waifu.id);
                     user.waifus.Append(waifu);
                 }*/
+                //user.fightHistory = new();
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
