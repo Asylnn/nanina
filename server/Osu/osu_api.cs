@@ -20,7 +20,7 @@ namespace Nanina.Osu
         }
         public static async void GetTokens()
         {
-            var request = new RestRequest(Environment.GetEnvironmentVariable("OSU_OAUTH_URL"), Method.Post);
+            var request = new RestRequest(Global.config.osu_oauth_url, Method.Post);
             //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddHeader("Accept", "application/json")
                 .AddParameter("grant_type", "client_credentials")

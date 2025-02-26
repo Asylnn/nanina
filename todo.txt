@@ -94,3 +94,4 @@ TODO : TRY CATCH RESPONSE
 TODO : Implement banner
 TODO : Have reasonable values
 TODO : Have multiple dungeons of increasing difficulty
+TODO : UPDATE OSU KEYS EACH DAYS

@@ -20,6 +20,7 @@
     "note":"It is expected to have a reverse proxy redirecting to your ws_port",
     "dev_discord_oauth_url":"https://discord.com/oauth2/authorize?client_id=1292571843848568932&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173&scope=identify",
     "prod_discord_oauth_url":"https://discord.com/oauth2/authorize?client_id=328524418911567873&response_type=code&redirect_uri=https%3A%2F%2Fasyln.moe%2Fnanina&scope=identify",
+    "osu_oauth_url":"https://osu.ppy.sh/oauth/token/",
     "dev": true,
     "discord_avatar_url":"https://cdn.discordapp.com/avatars/"
 }
