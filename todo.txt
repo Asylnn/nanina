@@ -86,3 +86,11 @@ TODO : Add regen tick clock on client
 
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca
+
+
+
+TODO BEFORE PUTING IT ONLINE : 
+TODO : TRY CATCH RESPONSE
+TODO : Implement banner
+TODO : Have reasonable values
+TODO : Have multiple dungeons of increasing difficulty
