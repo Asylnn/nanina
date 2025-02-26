@@ -16,8 +16,9 @@
     "message": {
         "hello": "bonjour"
     },
-    "fighting": {
-        "welcome":"Bienvenue dans la section de combat !"
+    "fight": {
+        "welcome":"Bienvenue dans la section de combat !",
+        "game_select":"Choisissez un jeu"
     },
     "dungeon":{
         "boss_health":"Vie",
@@ -33,14 +34,6 @@
         "nameDescendant":"Nom (Décroissant)",
         "nbPerRow":"Nombre par ligne : ",
         "filter":"Filtre : "
-    },
-    "useroption": {
-        "chooseTheme":"",
-        "darkTheme":"",
-        "whiteTheme":"",
-        "cuteTheme":"",
-        "linkOsuId":"",
-        "verifOsuId":""
     },
     "set":{
         "set":"Set",
@@ -148,7 +141,8 @@
         "got_code":"Vous venez de recevoir un code dans vos mp osu! dms, entrez le pour mettre à jour votre id osu",
         "verify_code":"Code",
         "link_maimai_token":"Donnez nous accès à votre token Maitea pour qu'on puisse voler votre rating!",
-        "disconnect":"Deconnection"
+        "disconnect":"Deconnection",
+        "prefered_game":"Jeu préféré"
     },
     "stats":{
         "nb_std_claim":"Nombre de claims en standard",
@@ -167,5 +161,9 @@
         "material":"Materiaux",
         "waifu_consumable":"Consomable pour waifu",
         "user_consumable":"Consomable pour utilisateur"
+    },
+    "games":{
+        "maimai_finale":"Maimai Finale",
+        "osu_standard":"Osu Standard"
     }
 }

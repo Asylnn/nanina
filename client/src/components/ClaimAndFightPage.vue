@@ -8,6 +8,7 @@ import User from '@/classes/user/user';
 import Waifu from '@/classes/waifu/waifu';
 import GridDisplayComponent from './GridDisplayComponent.vue';
 import Chart from '@/classes/maimai/chart';
+import Game from '@/classes/user/game';
 
 
 
@@ -29,7 +30,8 @@ export default {
             claim_timing_out: false,
             config: config, //You have to do this to access config inside html code
             chosen_waifu : null as Waifu | null,
-            game : "osu",
+            game : this.user.preferedGame,
+            Game: Game,
             
         }
     },
@@ -95,7 +97,7 @@ export default {
             this.user.localFightTimestamp = Date.now() 
             this.fight_timing_out = true
             this.updateTimer()
-            this.SendToServer("get map to fight", this.game, this.user.Id)
+            this.SendToServer("get map to fight", this.game.toString(), this.user.Id)
         },
         getXP(){
             if(this.chosen_waifu != null){ //This shouldn't happen?
@@ -127,14 +129,18 @@ export default {
 
 
 <template>
-    <select v-model="game">
-        <option value="osu">Osu standard</option>
-        <option value="maimai">Maimai Finale</option>
-    </select>
+    
         <div id="windowFight">
-            <div v-if="game == 'osu'">
+            <div class="grid" id="gameSelector">
+                <span >{{ $t("fight.game_select") }}</span>
+                <select v-model="game">
+                    <option :value="Game.OsuStandard">{{ $t("games.osu_standard") }}</option>
+                    <option :value="Game.MaimaiFinale">{{ $t("games.maimai_finale") }}</option>
+                </select>
+            </div>
+            <div v-if="game == Game.OsuStandard">
                 <p id="welcomeText">
-                    {{ $t("fighting.welcome") }}<br>
+                    {{ $t("fight.welcome") }}<br>
                     In this section you can gain some juicy xp for your favourite waifus !<br>
                     Do you think you have what it takes to succeed ?<br>
                     It's time to find out !
@@ -170,9 +176,9 @@ export default {
                     <p> You earned {{ xp }}XP on {{chosen_waifu.name}}! </p>
                 </div>
             </div>
-            <div v-else-if="game == 'maimai'">
+            <div v-else-if="game == Game.MaimaiFinale">
                 <p id="welcomeText">
-                    {{ $t("fighting.welcome") }}<br>
+                    {{ $t("fight.welcome") }}<br>
                     In this section you can gain some juicy xp for your favourite waifus !<br>
                     Do you think you have what it takes to succeed ?<br>
                     It's time to find out !
@@ -201,9 +207,22 @@ export default {
 </template>
 
 <style lang="css" scoped>
-#windowFight, #inFight, #afterSelect{
-    display: grid;
+
+.grid
+{
+    display:grid;
 }
+
+/*#gameSelector, #windowFight, #inFight, #afterSelect{
+    display: grid;
+}*/
+
+#gameSelector
+{
+    grid-template-columns: 1fr 0.5fr; 
+    margin-bottom: 20px;
+}
+
 #windowFight {
     margin: 0 25vw;
     text-align: left;

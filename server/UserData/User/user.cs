@@ -16,6 +16,7 @@ namespace Nanina.UserData
         public uint XpToLvlUp {
             get => 40u + lvl*2u;
         }
+        public Game preferedGame {get; set;} = Game.OsuStandard;
         public long lvlRewards {get; set;}
         public string activeSessionId {get; set;} = null;
         public double max_energy {get; set;} = Global.baseValues.base_max_energy;

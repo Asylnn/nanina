@@ -4,6 +4,7 @@ import type Dictionary from '../dictionary'
 import PullBannerHistory from './pull_history'
 import type Fight from './fight'
 import type Inventory from './inventory'
+import type Game from './game'
 
 
 
@@ -30,6 +31,7 @@ export default class User {
     public fight! : Fight
     public inventory! : Inventory
     public lvlRewards! : number
+    public preferedGame! : Game
 
     public get totalClaims() : number{
         return this.statCount.maimai_claim_count + this.statCount.std_claim_count

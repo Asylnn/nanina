@@ -27,9 +27,9 @@ STEP 3 : Release Version 0.2
 TODO : Implement Inventory System (page/component/database)         #Done
 TODO : Namespacing and Folderising the c# code                      #Done
 TODO : Make a waifu selector for dungeons                           #Done
-TODO : Implement "World Level" mechanic
+TODO : Implement "World Level" mechanic                             #Done
 TODO : Scoping classes (public / private /abstract)
-            Note that having a property as private will make it unable to be stored in the db
+            Note that having a property as private will make it unable to be stored in the db (so you can't have much private properties, does we need to return to poco objects?)
 TODO : Implement logging
 
 STEP 4 : Release Version 0.3
@@ -68,9 +68,9 @@ TODO : Remove discord link from button in client side                           
 TODO : Implement File Serving                                                                                                   #Done
 TODO : Make in sort to thrust NOTHING coming from client and test EVERYTHING                                                    #Done
 TODO : Implement Setting page/component (Notifications)                                                                         #Done
+TODO : Implement Avatar for users                                                                                               #Done
+TODO : left:50%; transform: translateX(-50%); everywhere                                                                        #Done
 
-
-TODO : Implement Avatar for user
 TODO : Is not deleting old unused sessions ids not secure? To think about.
 TODO : any objects in ts should be properly be typed
 TODO : not sending the user object everytime to save bandwidth
@@ -81,7 +81,7 @@ TODO : Modify break property in Maimai
 TODO : Crash when schwartzchild (re:mast?)
 TODO : Make stop dungeon safe
 TODO : Add regen tick clock on client
-TODO : left:50%; transform: translateX(-50%); everywhere
+
     
 
 

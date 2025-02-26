@@ -1,5 +1,6 @@
 <script lang="ts">
 
+import Game from '@/classes/user/game';
 import User from '@/classes/user/user';
 
 
@@ -31,10 +32,12 @@ export default {
     data() {
         return {
             selected_theme :this.theme,
+            selected_prefered_game: this.user.preferedGame,
             entered_id :this.user.ids.osuId,
             request : false,
             code: 0,
             entered_token: "",
+            Game:Game
         }
     },
     props:{
@@ -51,6 +54,10 @@ export default {
     methods : {
         onChangeTheme(){
             this.$emit("theme-change", this.selected_theme)
+        },
+        onChangePreferedGame(){
+            this.user.preferedGame = this.selected_prefered_game
+            this.SendToServer("update prefered game", (+this.selected_prefered_game).toString(), this.user.Id)
         },
         updateSettings(){
             this.request = true
@@ -84,6 +91,13 @@ export default {
                 <option value = "cute_theme">{{ $t("option.cute_theme") }}</option>
             </select>
         </div>
+        <div class="grid" id="optionGame">
+            <p>{{ $t("option.prefered_game") }}</p>
+            <select v-model="selected_prefered_game" @change="onChangePreferedGame()">
+                <option :value="Game.OsuStandard" >{{ $t("games.osu_standard") }}</option>
+                <option :value="Game.MaimaiFinale">{{ $t("games.maimai_finale") }}</option>
+            </select>
+        </div>
         <div id="optionOsuId">
             <p>{{ $t('option.link_osu_id')}}</p>
             <span>
@@ -97,13 +111,15 @@ export default {
             <input type="number" v-model.number.lazy="code">
             <button @click="verifyOsuId()">{{ $t('option.verify_code') }}</button>
         </div>
-        <button @click="Disconect()">{{ $t('option.disconnect') }}</button>
+        
         <p>{{ $t('option.link_maimai_token') }}</p>
-        <div id="maimaitoken">
+        <div class="grid" id="maimaitoken">
             <input type="text" v-model.lazy="entered_token">
             <span  v-if="user.verification.isMaimaiTokenVerified"><img src="../assets/green_checkmark.png"></span>
+            <button @click="verifyMaimaiToken()">{{ $t('option.update') }}</button>
         </div>
-        <button @click="verifyMaimaiToken()">{{ $t('option.update') }}</button>
+        
+        <button @click="Disconect()">{{ $t('option.disconnect') }}</button>
     </div>
 </template>
 
@@ -112,30 +128,43 @@ export default {
 .grid, #optionOsuId, #optionTheme, #optionVerifOsuId {
     display: grid;
 }
+
 #optionsGrid {
     padding: 0 20vw;
 }
+
 #optionTheme, #optionOsuId, #optionVerifOsuId {
     padding-top: 1vh;
 }
-#optionTheme {
+
+#optionGame, #optionTheme {
     grid-template-columns: 1fr 1fr; 
 }
+
 #optionOsuId {
     grid-template-columns: 2fr 0.6fr 1.4fr;   
 }
+
+#maimaitoken {
+    grid-template-columns: 0fr 0.2fr 2fr;   
+}
+
 #optionVerifOsuId {
     grid-template-columns: 1.3fr 0.25fr 0.45fr;
 }
+
 #optionTheme select, #optionOsuId button, #optionOsuId input {
     border-radius: 5px;
 }
+
 #optionTheme select, #optionOsuId button {
     cursor: pointer;
 }
-#optionTheme select {
-    width: 20%;
+
+#optionTheme select, #optionGame select {
+    width: 30%;
 }
+
 #optionOsuId button {
     width: 20%;
 }
@@ -143,9 +172,11 @@ export default {
 button {
     width: 10%;
 }
+
 #userOsuId {
     color: rgb(0, 211, 0);
 }
+
 #optionOsuId input {
     width: 5.8vw;
 }
@@ -153,14 +184,17 @@ button {
 #maimaitoken input {
     width: 20vw;
 }
+
 #userOsuId img, #maimaitoken img {
     padding-left: 0.3vw;
     align-self: center;
     width: 1.25vw;
 }
+
 #optionVerifOsuId input{
     width: 5.8vw;
 }
+
 #optionVerifOsuId button {
     width: 5.8vw;
 }

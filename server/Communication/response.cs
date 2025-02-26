@@ -38,6 +38,9 @@ namespace Nanina.Communication
                 case "change locale":
                     DBUtils.Get<Session>(session => session.id == rawData.sessionId).UpdateLocale(rawData.data);
                     break;
+                case "update prefered game":
+                    UpdatePreferedGame(rawData);
+                    break;
                 case "update waifu db": 
                     UpdateWaifuDatabase(rawData);
                     break;

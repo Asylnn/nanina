@@ -75,7 +75,7 @@ namespace Nanina.Communication
             if(user.fight.timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You have a too much recent fight", 1)); return; }
             
-            if(rawData.data == "maimai")                
+            if((Game) Convert.ToInt16(rawData.data) == Game.MaimaiFinale)                
                 GetMaimaiChartToFight(user);
             else
                 GetMapToFight(user);

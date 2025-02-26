@@ -16,8 +16,9 @@
     "message": {
         "hello": "hello"
     },
-    "fighting": {
-        "welcome":"Welcome to the Fighting section !"
+    "fight": {
+        "welcome":"Welcome to the Fighting section !",
+        "game_select":"Select a game"
     },
     "dungeon":{
         "boss_health":"Health",
@@ -148,7 +149,8 @@
         "got_code":"You just recieved a unique code in your osu! dms, enter it here to update your id =>",
         "verify_code":"Verify code",
         "link_maimai_token":"Give us your maitea access token so we can steal your rating!",
-        "disconnect":"Disconnect"
+        "disconnect":"Disconnect",
+        "prefered_game":"Prefered Game"
     },
     "stats":{
         "nb_std_claim":"Number of STD claims",
@@ -167,5 +169,9 @@
         "material":"Material",
         "waifu_consumable":"Waifu consumable",
         "user_consumable":"User consumable"
+    },
+    "games":{
+        "maimai_finale":"Maimai Finale",
+        "osu_standard":"Osu Standard"
     }
 }
