@@ -92,9 +92,10 @@ TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca
 
 TODO Before putting it online for testing : 
 TODO : try catch onMessage                                                          #Done
+TODO : update osu tokens each day                                                   #Done
+TODO : Make so you don't need to remove the code part of the url to connect         #Done
 TODO : Implement new banner
 TODO : Have reasonable values
 TODO : Have multiple dungeons of increasing difficulty
-TODO : update osu tokens each day                                                   #Done
-TODO : Make so you don't need to remove the code part of the url to connect
+
 TODO : Make fight page not so ugly 

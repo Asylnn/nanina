@@ -15,6 +15,16 @@ namespace Nanina.Communication
         protected async void DiscordLogin(ClientWebSocketResponse rawData)
         {
             
+            var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
+            if(session?.userId is not null)
+            {
+                var _user = DBUtils.Get<User>(x => x.Id == session.userId);
+                if(_user is not null)
+                {
+                    ProvideSessionToClient(rawData); return;
+                }
+            }
+
             Console.WriteLine("code : " + rawData.data);
             var base64code = $"{Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID")}:{Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET")}";
 
@@ -80,8 +90,7 @@ namespace Nanina.Communication
                 DBUtils.Update(user);
 
             }
-            var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
-            if(session == null) //Should not happen.
+            if(session is null) //Should not happen.
                 session = Session.NewSession(this.ID);
 
             rawData.userId = user.Id;

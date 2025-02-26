@@ -153,7 +153,7 @@ export default {
 		const queryParams = new URLSearchParams(url.search);
 		if(queryParams.has("code")){
 			var code = queryParams.get("code") + ""
-			this.SendToServer("connect with discord", queryParams.get("code")!, this.user.Id)
+			this.SendToServer("connect with discord", queryParams.get("code")!, null)
 		}
 		else 
 			this.SendToServer("get session id", "", null)
