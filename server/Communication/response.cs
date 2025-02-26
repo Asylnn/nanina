@@ -112,7 +112,7 @@ namespace Nanina.Communication
             catch(Exception err)
             {
                 Console.Error.WriteLine(err.Message);
-                using var stream = File.AppendText("../errors");
+                using var stream = File.AppendText("../errors.log");
                 stream.WriteLine(err.Message);
             }
             
