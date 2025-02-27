@@ -65,30 +65,21 @@ export default {
                     <div @click="closeItemDisplay" class="veil" ></div>
                     <ItemComponent :is-for-equiping="false" :item="item_to_display"></ItemComponent>
                 </div>
-                
             </div>
-            <!--<div v-if="category === 'user_consumable' || category === 'all'">
-                <span>User Consumable :</span><br>
-                <div v-for="item in user.inventory.userConsumable">
-                    <div class="itemDisplay">
-                        <div class="waifuIcon">
-                        <img :src="'src/assets/item-image/' + item.imgPATH">
-                        </div>
-                        <p>{{item.name}} + nombre : + {{item.count}}</p>
-                    </div>
+            <div v-if="category === 'user_consumable' || category === 'all'">
+                <GridDisplayComponent :elements="user.inventory.userConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=6></GridDisplayComponent>
+                <div v-if="focusedView">
+                    <div @click="closeItemDisplay" class="veil" ></div>
+                    <ItemComponent :is-for-equiping="false" :item="item_to_display"></ItemComponent>
                 </div>
             </div>
             <div v-if="category === 'waifu_consumable' || category === 'all'">
-                <span>Waifu Consumable :</span><br>
-                <div v-for="item in user.inventory.waifuConsumable">
-                    <div class="itemDisplay">
-                        <div class="waifuIcon">
-                        <img :src="'src/assets/item-image/' + item.imgPATH">
-                        </div>
-                        <p>{{item.name}} + nombre : + {{item.count}}</p>
-                    </div>
+                <GridDisplayComponent :elements="user.inventory.waifuConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=6></GridDisplayComponent>
+                <div v-if="focusedView">
+                    <div @click="closeItemDisplay" class="veil" ></div>
+                    <ItemComponent :is-for-equiping="false" :item="item_to_display"></ItemComponent>
                 </div>
-            </div>-->
+            </div>
             <div v-if="category === 'material' || category === 'all'">
                 <GridDisplayComponent :elements="user.inventory.material" @show-element="showItem" :columns=5></GridDisplayComponent>
                 <div v-if="focusedView">
