@@ -95,9 +95,9 @@ TODO : try catch onMessage                                                      
 TODO : update osu tokens each day                                                   #Done
 TODO : Make so you don't need to remove the code part of the url to connect         #Done
 TODO : Make fight page not so ugly                                                  #Done
-TODO : Implement new banner
+TODO : Fix Crit damage increase not working (does other poperties not work?)        #Done
+TODO : Implement new banner                                                         
 TODO : Have reasonable values
 TODO : Have multiple dungeons of increasing difficulty
-TODO : Fix Crit damage increase not working (does other poperties not work?)
 TODO : Fix inventory in equipment selection
 TODO : Check the timestamp before claiming for maimai

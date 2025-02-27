@@ -61,8 +61,7 @@ namespace Nanina.Communication
             if(validscore == null){
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
                 Send(ClientNotification.NotificationData("Fighting", "Did you do the chart?", 0)); return 0;
-            }
-            
+            }            
             return Maimai.Api.GetXP(validscore);
         }
               
@@ -93,12 +92,12 @@ namespace Nanina.Communication
             if(user.claimTimestamp + Global.baseValues.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
             
-            var waifu = user.waifus.Find(waifus => waifus.id == claim.id);
+            var waifu = user.waifus.Find(waifus => waifus.id == claim.waifuId);
             if(waifu == null)
                 { Send(ClientNotification.NotificationData("Fighting", "You didn't choose a waifu to XP!", 0)); return; }
                 
             var baseXP = 0u;
-            if(claim.game == "maimai")                
+            if(claim.game == Game.MaimaiFinale)                
                 baseXP = await CheckForMaimaiScores(user);
             else
                 baseXP = await CheckForOsuStandardScores(user);
@@ -178,8 +177,8 @@ namespace Nanina.Communication
 
         protected class ClaimClientResponse
         {
-            public string id;
-            public string game;
+            public string waifuId;
+            public Game game;
         }
         protected async Task<uint> CheckForOsuStandardScores(UserData.User user){
 

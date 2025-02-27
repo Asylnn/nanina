@@ -104,7 +104,7 @@ export default {
                 this.user.claimTimestamp = Date.now()
                 this.claim_timing_out = true
                 this.updateTimer()
-                this.SendToServer("claim fight", JSON.stringify({id:this.chosen_waifu.id, game:this.game}), this.user.Id)
+                this.SendToServer("claim fight", JSON.stringify({waifuId:this.chosen_waifu.id, game:this.game}), this.user.Id)
             }
         },
         selectWaifu(waifu : Waifu) {
