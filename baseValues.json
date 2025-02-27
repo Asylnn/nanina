@@ -53,6 +53,7 @@
     "base_theme":"dark_theme",
     "spent_energy_to_gacha_currency_conversion_rate":5,
     "user_xp_for_fights":10,
-    "user_xp_for_dungeons":25
+    "user_xp_for_dungeons":25,
+    "maimai_score_expiration_in_milliseconds":1800000
     
 }

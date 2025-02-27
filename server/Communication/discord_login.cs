@@ -83,8 +83,8 @@ namespace Nanina.Communication
 
             else 
             { 
-                user.tokens.discord_access_token = discordTokenResponse.access_token,
-                user.tokens.discord_refresh_token = discordTokenResponse.refresh_token
+                user.tokens.discord_access_token = discordTokenResponse.access_token;
+                user.tokens.discord_refresh_token = discordTokenResponse.refresh_token;
                 user.avatarPATH = $"{Global.config.discord_avatar_url}/{discordUserInformationResponse.id}/{discordUserInformationResponse.avatar}.webp";
                 DBUtils.Update(user);
             }
