@@ -31,11 +31,6 @@ namespace Nanina.Database
             }
         }
 
-        /*public static void LoadConfig(){
-            Console.WriteLine("loading config : ..." + File.ReadAllText("../config.json"));
-            Global.config = 
-        }*/
-
         public static async void LoadOsuApi(){
             if(!Global.config.dev || true){ //put to true for refreshing osu tokens
                 Console.Error.WriteLine("Creating new osu tokens ...");

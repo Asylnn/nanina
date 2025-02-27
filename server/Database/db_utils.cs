@@ -86,47 +86,39 @@ namespace Nanina.Database
             var collectionName = GetCollectionName<T>();
             var col = db.GetCollection<T>(collectionName);
             col.Insert(thing);
-            Console.WriteLine("insert done");
             switch(thing){
                 case UserData.User:
                     var userCol = (ILiteCollection<UserData.User>) col;
                     userCol.EnsureIndex(x => x.ids.discordId, true);
                     userCol.EnsureIndex(x => x.Id, true);
-                    Console.WriteLine("ensure index done");
                     break;
                 case Set:
                     var setCol = (ILiteCollection<Set>) col;
                     setCol.EnsureIndex(x => x.id, true);
-                    Console.WriteLine("ensure index done");
                     break;
                 case Equipment:
                     var equipCol = (ILiteCollection<Equipment>) col;
                     equipCol.EnsureIndex(x => x.id, true);
                     equipCol.EnsureIndex(x => x.type, false);
-                    Console.WriteLine("ensure index done");
                     break;
                 case Item:
                     var itemCol = (ILiteCollection<Item>) col;
                     itemCol.EnsureIndex(x => x.id, true);
                     itemCol.EnsureIndex(x => x.type, false);
-                    Console.WriteLine("ensure index done");
                     break;
                 case Beatmap:
                     var mapsCol = (ILiteCollection<Beatmap>) col;
                     mapsCol.EnsureIndex(x => x.id, true);
                     mapsCol.EnsureIndex(x => x.difficulty_rating);
-                    Console.WriteLine("ensure index done");
                     break;
                 case Waifu:
                     var waifuCol = (ILiteCollection<Waifu>) col;
                     waifuCol.EnsureIndex(x => x.id, true);
-                    Console.WriteLine("ensure index done");
                     break;
                 case Session:
                     var sessionCol = (ILiteCollection<Session>) col;
                     sessionCol.EnsureIndex(x => x.id, true);
                     sessionCol.EnsureIndex(x => x.webSocketId, false);
-                    Console.WriteLine("ensure index done");
                     break;
                 case null:
                     throw new ArgumentNullException(nameof(thing));
@@ -162,8 +154,6 @@ namespace Nanina.Database
             var collectionName = GetCollectionName<T>();
             var col = db.GetCollection<T>(collectionName);
             col.Update(thing);
-            Console.WriteLine("insert done");
-
         }
 
         public static void Rebuild<T>(T[] data) {
@@ -176,26 +166,21 @@ namespace Nanina.Database
                     foreach (var set in data) {
                         Insert(set);
                     }
-                    Console.WriteLine("Rebuilt Set db");
                     break;
                 case Waifu[]:
-                    Console.WriteLine("Entered rebuild waifu db");
                     foreach (var waifu in data){
                         Insert(waifu);
                     }
-                    Console.WriteLine("Rebuilt Waifu db");
                     break;
                 case Equipment[]:
                     foreach (var equipment in data) {
                         Insert(equipment);
                     }
-                    Console.WriteLine("Rebuilt Equipment db");
                     break;
                 case Item[]:
                     foreach (var item in data) {
                         Insert(item);
                     }
-                    Console.WriteLine("Rebuilt Item db");
                     break;
                 case null:
                     throw new ArgumentNullException(nameof(data));

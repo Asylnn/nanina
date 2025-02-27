@@ -30,7 +30,6 @@ namespace Nanina.Dungeon
                         :   Global.baseValues.baseStatsAdd[modifierWeight.modifier.stat.ToString()]; // <- Cooking (fair enough!)
                     var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.baseValues.dungeon_stat_randomness;
                     var amount = baseValue*Global.baseValues.equipment_stat_base_amount_multiplier[dungeonTemplate.difficulty-1]*statRandomness;
-                    Console.WriteLine(amount);
                     equipment.modifiers.Add( new ()
                     {
                         operationType = modifierWeight.modifier.operationType,

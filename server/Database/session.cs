@@ -39,7 +39,6 @@ namespace Nanina.Database
         {
             if(id is not null)
             {
-                Console.WriteLine("updating user active session Id");
                 var user = DBUtils.Get<UserData.User>(x => x.Id == id);
                 user.activeSessionId = this.id;
                 DBUtils.Update(user);

@@ -39,7 +39,6 @@ namespace Nanina.Dungeon
             userId = user.Id;
             waifus = EquippedWaifus;
             health = dungeonTemplate.maxHealth;
-            Console.WriteLine("Dungeon Created!");
             StartDungeon();
         }
 
@@ -110,13 +109,11 @@ namespace Nanina.Dungeon
             loot = GetLoot(spent_energy);
             foreach(var equipment in loot)
             {
-                Console.WriteLine("new loot");
                 user.inventory.AddEquipment(equipment);
                 lootToServer.Add(new Loot{
                     lootType = LootType.Equipment,
                     item = equipment,
                 });
-                Console.WriteLine("loot : " + JsonConvert.SerializeObject(lootToServer));
             }
             lootToServer.Add(new Loot{
                 lootType = LootType.GC,

@@ -54,7 +54,7 @@ namespace Nanina.Communication
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
             if(scores.Count() == 0) 
                 { Send(ClientNotification.NotificationData("Fighting", "Did you do the chart?", 3)); return 0; }                    
-            //Console.WriteLine(JsonConvert.SerializeObject(scores));
+
             var validscore = Array.Find(scores, score => user.fight.id == score.song.id.ToString());
 
 
@@ -64,12 +64,6 @@ namespace Nanina.Communication
             }
             else if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
                 { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return 0;}
-
-            
-
-            
-            Console.WriteLine(validscore.play_date_unix);
-            Console.WriteLine(Utils.GetTimestamp());
             
             return Maimai.Api.GetXP(validscore);
         }
@@ -202,7 +196,7 @@ namespace Nanina.Communication
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
             if(scores.Count() == 0) 
                 { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores! (OR osu api keys are expired)", 3)); return 0; }                    
-            //Console.WriteLine(JsonConvert.SerializeObject(scores));
+                
             var validscore = Array.Find(scores, score => user.fight.id == score.beatmap.id.ToString());
 
 

@@ -68,12 +68,7 @@ namespace Nanina.UserData
 
         public static async void RegenEnergy(User user)
         {
-            Console.WriteLine("Regen Energy");
             if(user.isRegenerating) return;
-
-            
-            Console.WriteLine("Effectively Regen Energy");
-
             var id = user.Id;
             user.isRegenerating = true;
             DBUtils.Update(user);
@@ -82,12 +77,10 @@ namespace Nanina.UserData
             while (await energyRegenTimer.WaitForNextTickAsync())
             {
                 var u = DBUtils.Get<UserData.User>(x => x.Id == id);
-                Console.WriteLine("Regen Tick");
                 
                 u.energy += Global.baseValues.energy_regen_tick_amount;
                 if(u.energy >= u.max_energy)
                 {
-                    Console.WriteLine("Max Energy reached");
                     u.isRegenerating = false;
                     u.energy = u.max_energy;
                 }
@@ -97,14 +90,9 @@ namespace Nanina.UserData
 
 
                 var session = DBUtils.Get<Session>(x => x.id == u.activeSessionId);
-                Console.WriteLine(JsonConvert.SerializeObject(u.activeSessionId));
-
-                Console.WriteLine(JsonConvert.SerializeObject(session));
                 if(session is not null){
-                    Console.WriteLine("step 1 reached");
                     if(session.webSocketId is not null)
                     {
-                        Console.WriteLine("Updating User");
                         Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                         {
                             type = "user",
@@ -117,8 +105,6 @@ namespace Nanina.UserData
                 
                 
                 if(u.energy >= u.max_energy){
-                    Console.WriteLine("Disposing Timer");
-                    
                     energyRegenTimer.Dispose();
                 }
             }

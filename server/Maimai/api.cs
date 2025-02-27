@@ -43,8 +43,8 @@ namespace Maimai
             /*if(level != 0) DOESN'T WORK ???
                 request.AddQueryParameter("level", level);*/
             var response = await client.ExecuteGetAsync(request);
-            Console.WriteLine("response status code "+ response.StatusCode);
-            Console.WriteLine("response content " + response.Content);
+            Console.WriteLine("response maimai GetRecentScores status code "+ response.StatusCode);
+            Console.WriteLine("response maimai GetRecentScores content " + response.Content);
             if(response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ScoreResponse>(response.Content).data;
             else

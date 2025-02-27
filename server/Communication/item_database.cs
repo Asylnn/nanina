@@ -33,7 +33,6 @@ namespace Nanina.Communication
 
             /* Get item col to find all and send a websocket containing the item database
             */
-            Console.WriteLine("je rentre dans send db client item");
             DBUtils.SendDatabaseToClient<Item>(ID);
         }
 
@@ -47,7 +46,6 @@ namespace Nanina.Communication
 
             /* Get item col to find all and send a websocket containing the item database
             */
-            Console.WriteLine("je rentre dans send db client equipment");
             DBUtils.SendDatabaseToClient<Equipment>(ID);
         }
         protected void UpdateItemDatabase(ClientWebSocketResponse rawData)

@@ -23,7 +23,6 @@ namespace Nanina
                 userLevelRewards.Add(new List<Loot>());
                 foreach(var reward in userLevelRewardsJson[i])
                 {
-                    Console.WriteLine("uwu");
                     var loot = new Loot
                     {
                         lootType = reward.lootType,

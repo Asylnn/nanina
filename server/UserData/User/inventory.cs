@@ -40,7 +40,6 @@ namespace Nanina.UserData
             
             obtainedEquipment.inventoryId = inventoryIdCounter;
             inventoryIdCounter++;
-            //Console.WriteLine(inventoryIdCounter);
             equipment.Add(obtainedEquipment);
         }
         public void AddMaterial(Item obtainedMaterial)
