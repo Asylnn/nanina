@@ -83,7 +83,16 @@ namespace Nanina.Osu
 
         public static uint GetXP(ScoreExtended score)
         {
-            return (uint) Math.Ceiling(score.accuracy*score.beatmap.hit_length*score.beatmap.difficulty_rating);
+            /*star rating multiplicator   : (2 + e**(0.45*x))/3.57
+            acc multiplicator           : (x^2)
+            drain time multplicator     : ((x^0.4)/1.18)
+            combo multiplicator         : (x^0.15)
+            */
+            var star_rating_multiplicator = (2+Math.Pow(Math.E, score.beatmap.difficulty_rating))/3.57;
+            var acc_multiplicator = score.accuracy*score.accuracy;
+            var drain_time_multiplicator = Math.Pow(score.beatmap.hit_length, 1.4)/1.18;
+            var combo_multiplicator = Math.Pow(score.max_combo/score.beatmap.max_combo, 0.15);
+            return (uint) Math.Ceiling(acc_multiplicator*drain_time_multiplicator*star_rating_multiplicator*combo_multiplicator*10);
         }
 
         public static async Task<Beatmap> GetBeatmapById(string beatmapId)

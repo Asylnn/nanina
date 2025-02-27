@@ -196,9 +196,9 @@ namespace Nanina.Communication
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
             if(scores.Count() == 0) 
                 { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores! (OR osu api keys are expired)", 3)); return 0; }                    
-                
-            var validscore = Array.Find(scores, score => user.fight.id == score.beatmap.id.ToString());
 
+            //var validscore = Array.Find(scores, score => user.fight.id == score.beatmap.id.ToString());
+            var validscore = scores.First();
 
             if(validscore == null){
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
