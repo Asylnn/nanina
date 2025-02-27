@@ -92,7 +92,6 @@ export default {
 }
 
 .itemIcon {
-    padding-bottom: 6vh;
     display: table;
     margin: 0 auto;
 }
@@ -105,6 +104,13 @@ export default {
 }
 
 .slot p {
+    position:relative;
+    left:35px;
+    bottom: 15px;
     text-align: center;
+}
+
+.slot {
+    padding-bottom: 6vh;
 }
 </style>
