@@ -212,7 +212,7 @@ export default {
                 </div>
             </div>
             <div v-else>
-                <span v-if="count != undefined">Pull number {{ count+1 }}</span><br>
+                <span v-if="count != undefined">{{ $t("gacha.pull_number") }} {{ count+1 }}</span><br>
                 {{ $t("waifu.stats.str") }} : {{ waifu.b_str }}<br>
                 {{ $t("waifu.stats.kaw") }} : {{ waifu.b_kaw }}<br>
                 {{ $t("waifu.stats.int") }} : {{ waifu.b_int }}<br>
@@ -263,7 +263,7 @@ export default {
 #grid {
     z-index: 780;
     position: sticky;
-    top : 10px;
+    top : 120px;
     right: 0px;
     left : 0px;
     padding:0px;
