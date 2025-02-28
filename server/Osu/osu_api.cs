@@ -84,15 +84,29 @@ namespace Nanina.Osu
         public static uint GetXP(ScoreExtended score)
         {
             /*star rating multiplicator   : (2 + e**(0.45*x))/3.57
-            acc multiplicator           : (x^2)
+            acc multiplicator           : (x^2) // (x/0.95)^1.2*(1/(1 + e^(-20*(x-0.65))))
             drain time multplicator     : ((x^0.4)/1.18)
             combo multiplicator         : (x^0.15)
             */
-            var star_rating_multiplicator = (2+Math.Pow(Math.E, score.beatmap.difficulty_rating))/3.57;
+            /*
+                To add : OD, CS buff, low AR buff
+                HD : +10%?
+            */
+            Console.WriteLine(JsonConvert.SerializeObject(score.beatmapset.title));
+            var star_rating_multiplicator = (2+Math.Pow(Math.E, 0.5*score.beatmap.difficulty_rating))/3.65;
             var acc_multiplicator = score.accuracy*score.accuracy;
-            var drain_time_multiplicator = Math.Pow(score.beatmap.hit_length, 1.4)/1.18;
-            var combo_multiplicator = Math.Pow(score.max_combo/score.beatmap.max_combo, 0.15);
-            return (uint) Math.Ceiling(acc_multiplicator*drain_time_multiplicator*star_rating_multiplicator*combo_multiplicator*10);
+            var drain_time_multiplicator = Math.Pow(score.beatmap.hit_length/60f, 0.4)/1.18f;
+            var combo_multiplicator = Math.Pow(score.max_combo/(score.beatmap.count_circles + score.beatmap.count_sliders*2f + score.beatmap.count_spinners), 0.15);
+            Console.WriteLine("star_rating_multiplicator : " + star_rating_multiplicator);
+            Console.WriteLine("acc_multiplicator : " + acc_multiplicator);
+            Console.WriteLine("drain_time_multiplicator : " + drain_time_multiplicator);
+            Console.WriteLine("drain_time : " + score.beatmap.hit_length);
+            Console.WriteLine("combo_multiplicator : " + combo_multiplicator);
+            
+            var xp =  (uint) Math.Ceiling(score.beatmap.hit_length*acc_multiplicator*drain_time_multiplicator*star_rating_multiplicator*combo_multiplicator*10);
+            Console.WriteLine("xp : " + xp);
+            Console.WriteLine("xp per minute : " + xp/(score.beatmap.hit_length/60f));
+            return xp;
         }
 
         public static async Task<Beatmap> GetBeatmapById(string beatmapId)

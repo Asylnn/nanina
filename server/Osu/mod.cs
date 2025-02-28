@@ -10,5 +10,6 @@ namespace Nanina.Osu
         RX,
         AP,
         HT,
+        NF,
     }
 }
