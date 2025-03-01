@@ -167,8 +167,11 @@ Pas de système de quêtes ?
 star rating multiplicator   : (2 + e**(0.45*x))/3.57
 acc multiplicator           : (x^2)
 drain time multplicator     : ((x^0.4)/1.18)
-combo multiplicator         : (x⁰0.15)
+combo multiplicator         : (x^0.15)
 
+
+Spent energy scale with fight drain time
+Ask for energy when fighting
 
 Login reward ? 
 1 -> 5
@@ -178,16 +181,40 @@ Login reward ?
 1k => 2600h (8*)        x1.5
 10k => 1500h (7*)       x2
 100k => 500h (6*)       x3
-1m => 60h (4*)
-
-4 fights par jour 
 
 
+5 fights par jour de 4m ? => 20m de jeu par jour
+average player's fight
+5.5 *
+90% acc         => 20m de fight = 500XP
+20% max combo
 
 
-Système
+les 20m suivants => 20m = 125XP
+
+1 mois => 10h => 500*3*10 = 20 000XP (+bonus divers...)
+
+1-40 => 20kXP
+lvl => 50 + 10*lvl + 0.5*lvl^2
+
+T1      Lv. 20
+low T2
+high T2 Lv. 40
 
 
+user lvl 15 après un mois
+
+10XP par fight, 150 fights
+1500XP
+
+
+Stats : 
+
+10lvl base.
+
+AGI DEX x2 stat weight
+Luck x4 stat weight
+max base stats for lvl 100 : 2000
 
 
 

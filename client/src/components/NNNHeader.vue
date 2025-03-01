@@ -39,6 +39,11 @@ export default {
         },
         onChangeLocale(){
             this.SendToServer("change locale", this.$i18n.locale, null)
+        },
+        getEnergyColor(){
+            if(this.user.energy >= this.user.max_energy)
+                return `color: lightgoldenrodyellow`
+            return ""
         }
     },
 }
@@ -88,7 +93,11 @@ export default {
             <div id="user" class="butitem" v-if="logged" @click="onClickChangePage(4)"><img :src="`${user.avatarPATH}?size=40`"></div>
             
         </div>
-        <div id="energy" v-if="logged"><p>{{ Math.floor(user.energy) }} / {{Math.floor(user.max_energy) }}</p></div>
+        <div id="energy">
+            <div><img height=30px width=30px src="../assets/heart.svg"></div>
+            <div id="energyAmount" v-if="logged" :style="getEnergyColor()" ><p >{{ Math.floor(user.energy) }}</p></div>
+            <div><img height=26px width=26px src="../assets/plus.svg"></div>
+        </div>
     </header>
 </template>
 
@@ -130,7 +139,7 @@ header {
     top:0;
     min-height: 60px;
     height:6vh;
-    grid-template-columns: 1fr 4fr 0fr 0.2fr;
+    grid-template-columns: 1fr 4fr 0fr 0.2fr 0.2fr 0.2fr;
     padding: 0 8vw;
     z-index: 9000;
 }
@@ -218,4 +227,15 @@ header {
 li, #logo{
     align-content: center;
 }
+
+#energy div img
+{
+    margin-top: 5px;
+}
+
+#energyAmount
+{
+    margin-right: 20px;
+}
+
 </style>

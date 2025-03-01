@@ -198,7 +198,9 @@ namespace Nanina.Communication
                 { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores! (OR osu api keys are expired)", 3)); return 0; }                    
 
             //var validscore = Array.Find(scores, score => user.fight.id == score.beatmap.id.ToString());
-            var validscore = scores.First();
+            
+            var validscore = scores[0];
+
 
             if(validscore == null){
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
