@@ -150,7 +150,7 @@ export default {
 #grid {
     z-index: 150;
     position: sticky;
-    top : 10px;
+    top : 10vh;
     right: 0px;
     left : 0px;
     padding:0px;
