@@ -52,6 +52,10 @@ export default class Waifu {
         return Math.floor(this.diffLvlUp*(10*this.lvl + 20))
     }
 
+    public get points() : number {
+        return this.o_str + this.o_kaw + this.o_int + 99*(this.u_kaw + this.u_str + this.u_int) + 2*(this.o_agi + this.o_dex + 99*(this.u_agi + this.u_dex)) + 4*(this.o_luck + 99*this.u_luck)
+    }
+
     constructor(obj: any){
         Object.assign(this, obj)
     }

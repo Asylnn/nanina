@@ -68,6 +68,15 @@
         "3":{
             "name":"Absolutely real diamond ring",
             "description":"Does NOT actively spy on your waifu and send data to GlouGlouCorp™"
+        },
+        "6":{
+            "name":"Hatsune Miku"
+        },
+        "7":{
+            "name":"Kasane Teto"
+        },
+        "8":{
+            "name":"Kagamine Rin"
         }
     },
     "modifiers":{

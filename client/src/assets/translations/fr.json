@@ -124,6 +124,15 @@
         },
         "3":{
             "name":"Beatrice"
+        },
+        "6":{
+            "name":"Hatsune Miku"
+        },
+        "7":{
+            "name":"Kasane Teto"
+        },
+        "8":{
+            "name":"Kagamine Rin"
         }
     },
     "attack_type":{

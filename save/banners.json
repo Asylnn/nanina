@@ -1,17 +1,17 @@
 [
     {
-        "bannerName": "Re:Zero Lolies Unlimited",
-        "bannerDescription": "Pull for all the Re:Zero's adorable lolies!!",
-        "id": "rezerololies0",
+        "bannerName": "Vocaloid ~~~",
+        "bannerDescription": "Vocaloid",
+        "id": "vocaloid",
         "pityAmount": 10,
         "pullCost": 10,
-        "twoStarsWeight": 100,
+        "twoStarsWeight": 0,
         "threeStarsWeight": 10,
         "rateUpTwoStarsWeight": 0,
         "rateUpThreeStarsWeight": 0,
-        "twoStarsPoolId" : ["1", "2", "5"],
-        "threeStarsPoolId" : ["3"],
+        "twoStarsPoolId" : [],
+        "threeStarsPoolId" : ["6", "7", "8"],
         "rateUpTwoStarsPoolId" : [],
         "rateUpThreeStarsPoolId" : []
-    }   
+    }
 ]
