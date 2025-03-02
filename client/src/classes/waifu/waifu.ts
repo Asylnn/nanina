@@ -49,7 +49,7 @@ export default class Waifu {
     //public XpToLvlUp! : number
 
     public get XpToLvlUp() : number {
-        return Math.floor(this.diffLvlUp*(10*this.lvl + 20))
+        return Math.ceil(50 + 10*this.lvl + 0.5*Math.pow(this.lvl, 2));
     }
 
     public get points() : number {
