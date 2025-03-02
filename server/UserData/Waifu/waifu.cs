@@ -78,7 +78,7 @@ namespace Nanina.UserData.WaifuData
         public byte stars { get; set; }
         private uint XpToLvlUp
         {
-            get => (uint) Math.Floor(diffLvlUp * (10 * lvl + 20));
+            get => (uint) Math.Ceiling(50d + 10d*lvl + 0.5d*Math.Pow(lvl, 2));
         }
 
         public void GiveXP(uint _xp)
