@@ -40,8 +40,8 @@ namespace Maimai
             AddDefaultHeader(request, key);
             if(songID != 0)
                 request.AddQueryParameter("song", songID);
-            /*if(level != 0) DOESN'T WORK ???
-                request.AddQueryParameter("level", level);*/
+            if(level != 0)
+                request.AddQueryParameter("level", level);
             var response = await client.ExecuteGetAsync(request);
             Console.WriteLine("response maimai GetRecentScores status code "+ response.StatusCode);
             Console.WriteLine("response maimai GetRecentScores content " + response.Content);
@@ -56,7 +56,7 @@ namespace Maimai
         public static uint GetXP(Score score)
         {
             var chart = Global.charts.Where(chart => chart.difficulty.ToLower() == score.difficulty_level.value.ToLower() && chart.songID == score.song.id).First();
-            return (uint) Math.Floor(score.achievement/100/chart.data.maxPercent*chart.levelNum)*10;
+            return (uint) Math.Floor(score.achievement/chart.data.maxPercent*chart.levelNum)*10;
         }
     }
 }

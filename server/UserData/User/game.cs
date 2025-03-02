@@ -5,4 +5,5 @@ public enum Game
     MaimaiFinale,
     osu, /*Nanina wouldn't run without this line somehow lmfao*/
     maimai,
+    NoGame,
 }

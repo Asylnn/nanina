@@ -33,13 +33,20 @@ namespace Nanina.Communication
                 type = "maimai link",
                 data = JsonConvert.SerializeObject(chart)
             }));
-            user.fight = new Fight 
+            user.fight = new Fight
             {
                 game = Game.MaimaiFinale,
                 id = chart.songID.ToString(),
+                secondaryId = chart.difficultyNum.ToString(),
             };
 
+            /*Console.WriteLine(user.fight.id);
+            Console.WriteLine(chart.songID);
+            Console.WriteLine(chart.songID.ToString());*/
             DBUtils.Update(user);
+
+            /*var user2 = DBUtils.Get<UserData.User>(x => x.Id == user.Id);
+            Console.WriteLine(user2.fight.id);*/
         }
 
         protected async Task<uint> CheckForMaimaiScores(UserData.User user)
@@ -48,7 +55,9 @@ namespace Nanina.Communication
             if(!user.verification.isMaimaiTokenVerified) 
                 { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return 0; }
 
-            var scores = await Maimai.Api.GetRecentScores(user.tokens.maimai_token, Convert.ToUInt32(user.fight.id), 0);
+
+            Console.WriteLine(user.fight.id);
+            var scores = await Maimai.Api.GetRecentScores(user.tokens.maimai_token, Convert.ToUInt32(user.fight.id), Convert.ToByte(user.fight.secondaryId));
             user.claimTimestamp = Utils.GetTimestamp();
 
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
@@ -62,6 +71,7 @@ namespace Nanina.Communication
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
                 return 0;
             }
+
             else if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
                 { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return 0;}
             

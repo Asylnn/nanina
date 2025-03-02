@@ -1,7 +1,8 @@
 enum Game
 {
     OsuStandard,
-    MaimaiFinale
+    MaimaiFinale,
+    NoGame
 }
 
 export default Game;
