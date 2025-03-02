@@ -4,6 +4,7 @@ namespace Maimai
     {
         public string chartID;
         public string difficulty;
+        public byte difficultyNum;
         public bool isPrimary;
         public string level;
         public float levelNum;
@@ -16,6 +17,7 @@ namespace Maimai
         public string[] searchTerms;
         public string title;
         public Data data;
+        public SongData songData;
     }
 
     public class Data
@@ -24,4 +26,12 @@ namespace Maimai
         public string inGameStrID;
         public float maxPercent;
     }
+
+    public class SongData
+    {
+        public string artistJP;
+        public string displayVersion;
+        public string titleJP;
+    }
 }
+
