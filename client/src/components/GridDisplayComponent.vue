@@ -55,8 +55,8 @@ export default {
                     <div class="waifuIcon">
                         <img @click="onShowElement(element as Waifu)" :src="`${publicPath}/waifu-image/${element.imgPATH}`">
                     </div>
+                    <p>{{ $t("waifu.level") }} {{ (element as Waifu).lvl }}</p>
                 </div>
-                <p>{{ $t("waifu.level") }} {{ (element as Waifu).lvl }}</p>
             </div>
             <div v-else>
                 <div class="slot">
@@ -107,6 +107,7 @@ export default {
     position:relative;
     left:35px;
     bottom: 15px;
+    color:blueviolet;
     text-align: center;
 }
 
