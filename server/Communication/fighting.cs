@@ -60,7 +60,7 @@ namespace Nanina.Communication
 
             if(validscore == null){
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
-                
+                return 0;
             }
             else if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
                 { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return 0;}
