@@ -53,7 +53,7 @@ export default {
                     <div v-for="modifier in item.modifiers">
                         <div class="modifier" v-if="modifier.stat == StatModifier.MaxEnergy">
                             <span>{{ $t(`modifiers.${StatModifier.MaxEnergy}.name`) }}</span>
-                            <span>{{ user.max_energy }} ➔ {{ user.max_energy + modifier.amount }}</span>
+                            <span>{{ user.max_energy }} ➔ <span class="upgrade">{{ user.max_energy + modifier.amount }}</span></span>
                         </div>
                     </div>
                 </div>
@@ -96,5 +96,10 @@ export default {
 .modifier {
     display: grid;
     grid-template-columns: 4fr 1fr;
+}
+
+.upgrade
+{
+    color:green
 }
 </style>
