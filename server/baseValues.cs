@@ -16,7 +16,7 @@ namespace Nanina
         public float proportion_of_energy_used_for_each_action;
         public double free_energy_not_used_for_each_action;
         public uint energy_regen_tick_in_seconds;
-        public uint energy_regen_tick_amount;
+        public double energy_regen_tick_amount_in_percent;
         public double base_max_energy;
         public string base_theme;
         public double spent_energy_to_gacha_currency_conversion_rate;

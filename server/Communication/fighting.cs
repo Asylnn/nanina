@@ -49,11 +49,11 @@ namespace Nanina.Communication
             Console.WriteLine(user2.fight.id);*/
         }
 
-        protected async Task<uint> CheckForMaimaiScores(UserData.User user)
+        protected async Task<(uint xp, double ratio)> CheckForMaimaiScores(UserData.User user)
         {
 
             if(!user.verification.isMaimaiTokenVerified) 
-                { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return 0; }
+                { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return (0,1); }
 
 
             Console.WriteLine(user.fight.id);
@@ -62,20 +62,20 @@ namespace Nanina.Communication
 
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
             if(scores.Count() == 0) 
-                { Send(ClientNotification.NotificationData("Fighting", "Did you do the chart?", 3)); return 0; }                    
+                { Send(ClientNotification.NotificationData("Fighting", "Did you do the chart?", 3)); return (0,1); }                    
 
             var validscore = Array.Find(scores, score => user.fight.id == score.song.id.ToString());
 
 
             if(validscore == null){
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
-                return 0;
+                return (0,1);
             }
 
             else if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
-                { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return 0;}
+                { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0,1);}
             
-            return Maimai.Api.GetXP(validscore);
+            return (Maimai.Api.GetXP(validscore), 1);
         }
               
         
@@ -110,15 +110,16 @@ namespace Nanina.Communication
                 { Send(ClientNotification.NotificationData("Fighting", "You didn't choose a waifu to XP!", 0)); return; }
                 
             var baseXP = 0u;
+            var ratio = 1d;
             if(claim.game == Game.MaimaiFinale)                
-                baseXP = await CheckForMaimaiScores(user);
+                (baseXP, ratio) = await CheckForMaimaiScores(user);
             else
-                baseXP = await CheckForOsuStandardScores(user);
+                (baseXP, ratio) = await CheckForOsuStandardScores(user);
 
             if(baseXP == 0) return;
 
-            var (spent_energy, gc) = user.SpendEnergy();
-            var xp = (uint) Math.Ceiling(baseXP*spent_energy);
+            var (spent_energy, gc) = user.SpendEnergy(ratio);
+            var xp = (uint) Math.Ceiling(baseXP*spent_energy/25);
             waifu.GiveXP(xp);
             user.fight.completed = true;
             if(user.fightHistory.ContainsKey(user.fight.game))
@@ -193,10 +194,10 @@ namespace Nanina.Communication
             public string waifuId;
             public Game game;
         }
-        protected async Task<uint> CheckForOsuStandardScores(UserData.User user){
+        protected async Task<(uint xp, double ratio)> CheckForOsuStandardScores(UserData.User user){
 
             if(!user.verification.isOsuIdVerified) 
-                { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return 0; }
+                { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return (0,1); }
             
             user.claimTimestamp = Utils.GetTimestamp();
             var scores = await Osu.Api.GetUserRecentScores(user.ids.osuId, "osu");
@@ -205,7 +206,7 @@ namespace Nanina.Communication
 
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
             if(scores.Count() == 0) 
-                { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores! (OR osu api keys are expired)", 3)); return 0; }                    
+                { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores! (OR osu api keys are expired)", 3)); return (0,1); }                    
 
             //var validscore = Array.Find(scores, score => user.fight.id == score.beatmap.id.ToString());
             
@@ -214,10 +215,10 @@ namespace Nanina.Communication
 
             if(validscore == null){
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
-                Send(ClientNotification.NotificationData("Fighting", "You didn't do the beatmap (must be a pass)", 0)); return 0;
+                Send(ClientNotification.NotificationData("Fighting", "You didn't do the beatmap (must be a pass)", 0)); return (0,1);
             }
             
-            return Osu.Api.GetXP(validscore);
+            return (Osu.Api.GetXP(validscore), validscore.beatmap.hit_length/240f);
         }
     }
 }

@@ -45,13 +45,13 @@ namespace Nanina.UserData
             return Utils.GetTimestamp().ToString() + (rng.Next(89_999_999) + 10_000_000).ToString();
         }
 
-        public (double energy, uint gc) SpendEnergy()
+        public (double energy, uint gc) SpendEnergy(double ratio)
         {
-            var spent_energy = energy*Global.baseValues.proportion_of_energy_used_for_each_action;
+            var spent_energy = energy*Global.baseValues.proportion_of_energy_used_for_each_action*ratio;
             energy -= spent_energy;
             var gc = (uint) Math.Ceiling(spent_energy*Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
-            gacha_currency += gc;
-            return (energy:spent_energy + Global.baseValues.free_energy_not_used_for_each_action, gc);
+            gacha_currency += (uint) Math.Floor(gc*ratio);
+            return (energy:spent_energy + Global.baseValues.free_energy_not_used_for_each_action*ratio, gc);
         }
 
         public void GetXP(uint _xp)
@@ -78,7 +78,7 @@ namespace Nanina.UserData
             {
                 var u = DBUtils.Get<UserData.User>(x => x.Id == id);
                 
-                u.energy += Global.baseValues.energy_regen_tick_amount;
+                u.energy += Global.baseValues.energy_regen_tick_amount_in_percent/100d*u.max_energy;
                 if(u.energy >= u.max_energy)
                 {
                     u.isRegenerating = false;
