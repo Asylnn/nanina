@@ -16,7 +16,7 @@ namespace Nanina.UserData
         public byte lvl {get; set;} = 1;
         public uint xp {get; set;} = 0;
         public uint XpToLvlUp {
-            get => 40u + lvl*2u;
+            get => 40u + lvl*10u;
         }
         public Game preferedGame {get; set;} = Game.OsuStandard;
         public long lvlRewards {get; set;}
