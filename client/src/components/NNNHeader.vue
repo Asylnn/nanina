@@ -5,13 +5,15 @@ import type { PropType } from 'vue';
 import Page from '../classes/page';
 import config from '../../../config.json'
 import User from '@/classes/user/user';
+import ItemUse from './ItemUse.vue';
 
 export default {
     name : "NNNHeader",
     data() {
         return {
             actiMenu : false,
-            config: config
+            config: config,
+            showEnergyItems: false,
         }
     },
     props: {
@@ -46,6 +48,9 @@ export default {
             return ""
         }
     },
+    components:{
+        ItemUse
+    }
 }
 
 </script>
@@ -96,9 +101,12 @@ export default {
         <div id="energy">
             <div><img height=30px width=30px src="../assets/heart.svg"></div>
             <div id="energyAmount" v-if="logged" :style="getEnergyColor()" ><p >{{ Math.floor(user.energy) }}</p></div>
-            <div><img height=26px width=26px src="../assets/plus.svg"></div>
+            <div @click="showEnergyItems = true"><img height=26px width=26px src="../assets/plus.svg"></div>
+            <ItemUse v-if="showEnergyItems" :user="user" :item-ids=[4]></ItemUse>
         </div>
+        
     </header>
+    
 </template>
 
 <style lang="css" scoped>
@@ -109,7 +117,8 @@ export default {
     height: 40px;
 }
 
-#language{
+#language
+{
     font-size : 30px;
     width:32px;
     cursor:pointer;

@@ -1,6 +1,8 @@
 using System.Xml.XPath;
 using Nanina.Communication;
 using Nanina.Database;
+using Nanina.UserData.ItemData;
+using Nanina.UserData.ModifierData;
 using Nanina.UserData.WaifuData;
 using Newtonsoft.Json;
 using WebSocketSharp;
@@ -113,6 +115,20 @@ namespace Nanina.UserData
         public bool CheckRewardAvailability(byte level)
         {
             return (Convert.ToInt64(Math.Pow(2, level))&lvlRewards) == 0;
+        }
+
+        public void UseItem(Item item)
+        {
+            foreach(var modifier in item.modifiers)
+            {
+                switch(modifier.stat)
+                {
+                    case StatModifier.MaxEnergy:
+                        this.max_energy += modifier.amount;
+                        this.energy += modifier.amount;
+                        break;
+                }
+            }
         }
     }
 }

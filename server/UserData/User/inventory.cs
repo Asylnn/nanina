@@ -35,6 +35,19 @@ namespace Nanina.UserData
             }
         }
 
+        public void RemoveItem(Item item)
+        {
+            switch(item.type)
+            {
+                case ItemType.UserConsumable:
+                    if(item.count == 1)
+                        userConsumable.Remove(item);
+                    else 
+                        item.count--;
+                    break;
+            }
+        }
+
         public void AddEquipment(Equipment obtainedEquipment) 
         {
             

@@ -16,6 +16,13 @@ enum StatModifier
     BuffLength,
     DebuffLength,
     DebuffResist,
+
+
+    // User Stat Modifier
+
+    
+    EnergyRegen,
+    MaxEnergy,
 }
 
 export default StatModifier

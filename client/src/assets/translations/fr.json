@@ -43,6 +43,7 @@
         }
     },
     "item":{
+        "use":"utiliser",
         "type": {
             "type":"Type",
             "0":"Arme",
@@ -60,6 +61,10 @@
         "3":{
             "name":"Absolutely real diamond ring",
             "description":"Does NOT actively spy on your waifu and send data to GlouGlouCorp™"
+        },
+        "4":{
+            "name":"Cherish battery",
+            "description":"Increase the maximum cherish you can handle"
         }
     },
     "modifiers":{
@@ -96,6 +101,9 @@
         },
         "10":{
             "name":"Augmentation de la chance d'un coup critique"
+        },
+        "17":{
+            "name":"Augmentation de Cherish maximum"
         }
     },
     "waifu":{

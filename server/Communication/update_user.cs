@@ -220,5 +220,29 @@ namespace Nanina.Communication
             user.preferedGame = (Game) Convert.ToInt16(rawData.data);
             DBUtils.Update(user);
         }
+
+        protected void UseUserConsumable(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user == null) 
+                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+
+            var itemIndex = user.inventory.userConsumable.FindIndex(uc => uc.inventoryId == Convert.ToUInt32(rawData.data));
+            if(itemIndex == -1)
+                {Send(ClientNotification.NotificationData("Equip", "You don't have the item you tried to use", 1)); return;}
+
+            var item = user.inventory.userConsumable[itemIndex];
+
+            user.UseItem(item);
+            user.inventory.RemoveItem(item);
+
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "user",
+                data = JsonConvert.SerializeObject(user) 
+            }));
+
+            DBUtils.Update(user);
+        }
     }
 }

@@ -68,6 +68,7 @@ export default {
     transform: translate(-50%, -50%);
     background-color: rgb(6, 16, 26);
 }
+
 #focusedObject img {
     /*max-width: 25vw;
     max-height: 60vh;*/
@@ -79,9 +80,6 @@ export default {
 #itemImage {
     display: flex;
     flex-direction: row;
-}
-#waifuInfos {
-    padding: 0 1vw;
 }
 
 .isForEquiping {

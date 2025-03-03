@@ -107,6 +107,10 @@ namespace Nanina.Communication
                     case "get level reward":
                         GetReward(rawData);
                         break;
+
+                    case "use user consumable":
+                        UseUserConsumable(rawData);
+                        break;
                 }
             }
             catch(Exception err)

@@ -50,6 +50,7 @@
         }
     },
     "item":{
+        "use":"use",
         "type": {
             "type":"Type",
             "0":"Weapon",
@@ -69,14 +70,9 @@
             "name":"Absolutely real diamond ring",
             "description":"Does NOT actively spy on your waifu and send data to GlouGlouCorp™"
         },
-        "6":{
-            "name":"Hatsune Miku"
-        },
-        "7":{
-            "name":"Kasane Teto"
-        },
-        "8":{
-            "name":"Kagamine Rin"
+        "4":{
+            "name":"Cherish battery",
+            "description":"Increase the maximum cherish you can handle"
         }
     },
     "modifiers":{
@@ -113,6 +109,9 @@
         },
         "10":{
             "name":"Critical chance increase"
+        },
+        "17":{
+            "name":"Maximum Cherish increase"
         }
     },
     "waifu":{
@@ -141,6 +140,15 @@
         },
         "3":{
             "name":"Beatrice"
+        },
+        "6":{
+            "name":"Hatsune Miku"
+        },
+        "7":{
+            "name":"Kasane Teto"
+        },
+        "8":{
+            "name":"Kagamine Rin"
         }
     },
     "attack_type":{

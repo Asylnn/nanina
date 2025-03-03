@@ -156,6 +156,13 @@ namespace Nanina.Database
                     user.waifus.Append(waifu);
                 }*/
                 //user.fightHistory = new();
+                foreach(var item in user.inventory.userConsumable)
+                {
+                    var itemDB = DBUtils.Get<Item>(x => x.id == item.id);
+                    item.rarity = itemDB.rarity;
+                    item.modifiers = itemDB.modifiers;
+                    item.imgPATH = itemDB.imgPATH;
+                }
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();

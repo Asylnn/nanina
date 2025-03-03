@@ -18,6 +18,15 @@ namespace Nanina.UserData.ModifierData
         DebuffPotency,
         DebuffLength,
         DebuffResist,
+
+
+
+
+        // User Stat Modifier
+
+        
+        EnergyRegen,
+        MaxEnergy,
         
     }
 }
