@@ -101,7 +101,7 @@ export default {
         <div id="energy">
             <div><img height=30px width=30px src="../assets/heart.svg"></div>
             <div id="energyAmount" v-if="logged" :style="getEnergyColor()" ><p >{{ Math.floor(user.energy) }}</p></div>
-            <div @click="showEnergyItems = true"><img height=26px width=26px src="../assets/plus.svg"></div>
+            <div @click="showEnergyItems = !showEnergyItems"><img id="addEnergy" height=26px width=26px src="../assets/plus.svg"></div>
             <ItemUse v-if="showEnergyItems" :user="user" :item-ids=[4]></ItemUse>
         </div>
         
@@ -245,6 +245,11 @@ li, #logo{
 #energyAmount
 {
     margin-right: 20px;
+}
+
+#addEnergy
+{
+    cursor:pointer;
 }
 
 </style>
