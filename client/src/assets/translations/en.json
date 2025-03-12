@@ -21,9 +21,21 @@
         "game_select":"Select a game"
     },
     "dungeon":{
+        "dungeon":"Dungeon",
+        "floor":"Dungeon floor",
+        "name":"Dungeons",
         "boss_health":"Health",
         "shit":{
             "name":"The Shit Dungeon"
+        },
+        "house":{
+            "name":"Totally normal house"
+        },
+        "refrigerator":{
+            "name":"The Giant Refrigerator"
+        },
+        "magic_tower":{
+            "name":"The Magic Tower"
         },
         "attack":"{waifu_name} dealt {damage} @:attack.{attack_type} damage to the boss"
     },

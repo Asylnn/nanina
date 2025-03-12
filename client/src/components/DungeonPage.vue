@@ -10,7 +10,7 @@ export default {
     name : "DungeonPage",
     data() {
         return {
-            selected_dungeon : this.dungeons[0],
+            selected_dungeon : null as string | null,
             is_fighting_a_dungeon : false,
             waifuSelectorVisible : false,
             waifuVisible : false,
@@ -19,6 +19,7 @@ export default {
             availableWaifus : [] as Waifu[],
             selectedWaifu : null as Waifu | null,
             select: 0,
+            selected_floor : null as number | null
         }
 
     },
@@ -76,14 +77,25 @@ export default {
             this.availableWaifus = this.availableWaifus.filter(waifu => waifu.id != this.selectedWaifu!.id)
             this.closeWaifuDisplay()
             this.waifuSelectorVisible = false
+        },
+        getfloorListClass(i: number)
+        {
+            if(i == this.selected_floor)
+                return "selected"
+        },
+        getDungeonListClass(id:string)
+        {
+            if(id == this.selected_dungeon)
+                return "selected"
+        },
+        validSelection()
+        {
+            return this.selected_dungeon != null && this.selected_floor != null && this.waifuSelection.every(waifu => waifu != null)  
         }
-        
     },
     computed:
     {
-        selectedValidWaifus() {
-            return this.waifuSelection.every(waifu => waifu != null)
-        }
+        
     },
     components :{
         WaifuDisplayComponent,
@@ -94,7 +106,7 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div >
         <div v-if="waifuSelectorVisible">
             <div @click="waifuSelectorVisible = false" class="veil" id="waifuSelectorVeil"></div>
             <GridDisplayComponent id="grid" @show-element="openWaifuDisplay" :elements="availableWaifus" :columns=5></GridDisplayComponent>
@@ -105,24 +117,39 @@ export default {
 
         
         
-        <div v-if="!is_fighting_a_dungeon">
-            <div v-if="selectedValidWaifus">
+        <div v-if="!is_fighting_a_dungeon" id="dungeonSelectionDisplay">
+            <!--<div v-if="selectedValidWaifus">
                 <select v-for="dungeon in dungeons" v-model="selected_dungeon">
                     <option :value="dungeon" >{{$t(`dungeon.${dungeon.id}.name`)}}</option>
                 </select>
                 <button @click="EnterDungeon()">Enter Dungeon</button>
-            </div>
+            </div>-->
             
             <div id="waifuSelection">
-                <div @click.right="unequip(0, $event)" @click="openWaifuSelectorDisplay(0)" class="itemSlot">
+                <div @click.right="unequip(0, $event)" @click="openWaifuSelectorDisplay(0)" class="waifuSlot clickable">
                     <img  :src="`${publicPath}waifu-image/${waifuSelection[0]?.imgPATH ?? 'unknown.svg'}`">
                 </div>
-                <div @click.right="unequip(1, $event)" @click="openWaifuSelectorDisplay(1)" class="itemSlot">
+                <div @click.right="unequip(1, $event)" @click="openWaifuSelectorDisplay(1)" class="waifuSlot clickable">
                     <img :src="`${publicPath}waifu-image/${waifuSelection[1]?.imgPATH ?? 'unknown.svg'}`">
                 </div>
-                <div @click.right="unequip(2, $event)" @click="openWaifuSelectorDisplay(2)" class="itemSlot">
+                <div @click.right="unequip(2, $event)" @click="openWaifuSelectorDisplay(2)" class="waifuSlot clickable">
                     <img :src="`${publicPath}waifu-image/${waifuSelection[2]?.imgPATH ?? 'unknown.svg'}`">
                 </div>
+            </div>
+            <div>{{$t(`dungeon.floor`)}}</div>
+            <div>
+                <ul id="floorList">
+                    <li v-for="i in [1,2,3,4,5]" :class="getfloorListClass(i)" class="clickable" @click="selected_floor = i">{{i}}</li>
+                </ul>
+            </div>
+            <div style="margin-top: 30px;">{{$t(`dungeon.name`)}}</div>
+            <div>
+                <ul id="dungeonsList" >
+                    <li v-for="dungeon in dungeons" :class="getDungeonListClass(dungeon.id)" class="clickable" style="margin-top: 10px;" @click="selected_dungeon = dungeon.id">{{$t(`dungeon.${dungeon.id}.name`)}}</li>
+                </ul>
+            </div>
+            <div v-if="validSelection()" style="margin-top: 50px;">
+                <button id="enterDungeonButton" @click="EnterDungeon()">Enter Dungeon</button>
             </div>
         </div>
         <div v-else>
@@ -141,6 +168,17 @@ export default {
 </template>
 
 <style lang="css" scoped>
+
+#dungeonSelectionDisplay
+{
+    font-size:larger;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+}
 
 #selectedWaifu
 {
@@ -179,20 +217,41 @@ export default {
     display: flex;
 }
 
-.itemSlot{
+#floorSelect
+{
+}
+
+#floorList
+{
+    display:flex;
+}
+
+#floorList li
+{
+    margin-right: 15px;
+}
+
+#dungeonsList
+{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.waifuSlot{
     margin :10px;
     border: 10px;
     border-style: solid;
     border-radius: 20px;
     border-color:rgb(20,20,20);
-    width: 20vw;
-    height: 20vw;
-    cursor: pointer;
+    width: 15vw;
+    height: 15vw;
     overflow: hidden;
 }
 
-.itemSlot img {
-    width: 20vw;
+.waifuSlot img {
+    width: 15vw;
     overflow: hidden;
 }
 
@@ -213,4 +272,35 @@ export default {
     overflow: scroll;
 }
 
+.clickable
+{
+    cursor: pointer;
+    color: rgb(203, 165, 221);
+}
+
+.clickable:hover
+{
+    color:purple;
+}
+
+.selected
+{
+    color:rgb(178, 77, 224);
+    text-decoration:underline;
+}
+
+#enterDungeonButton
+{
+    padding:10px 20px;
+    border-color:rgb(178, 77, 224);
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 40px;
+    
+}
+
+#enterDungeonButton:hover
+{
+    color:purple;
+}
 </style>
