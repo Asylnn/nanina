@@ -106,5 +106,329 @@
                 "weight": 100
             }
         ]
+    },
+    {
+        "id": "magic_tower",
+        "numberOfRewardsPerEnergy": 5,
+        "bossResistances": {
+            "physicalResistance": 0,
+            "magicalResistance": 0.8,
+            "psychicResistance": 0.4
+        },
+        "maxHealth": 1000,
+        "difficulty": 1,
+        "setRewards": [
+            1
+        ],
+        "modifierWeightsWeapon": [
+            {
+                "modifier": {
+                    "stat": 0,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 1,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 2,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 9,
+                    "amount": 0.15,
+                    "operationType": 1
+                },
+                "weight": 60
+            },
+            {
+                "modifier": {
+                    "stat": 10,
+                    "amount": 0.15,
+                    "operationType": 1
+                },
+                "weight": 60
+            }
+        ],
+        "modifierWeightsDress": [
+            {
+                "modifier": {
+                    "stat": 3,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 4,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 5,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            }
+        ],
+        "modifierWeightsAccessory": [
+            {
+                "modifier": {
+                    "stat": 6,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 7,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 8,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            }
+        ]
+    },
+    {
+        "id": "house",
+        "numberOfRewardsPerEnergy": 5,
+        "bossResistances": {
+            "physicalResistance": 0.8,
+            "magicalResistance": 0.4,
+            "psychicResistance": 0
+        },
+        "maxHealth": 1000,
+        "difficulty": 1,
+        "setRewards": [
+            0
+        ],
+        "modifierWeightsWeapon": [
+            {
+                "modifier": {
+                    "stat": 0,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 1,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 2,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 9,
+                    "amount": 0.15,
+                    "operationType": 1
+                },
+                "weight": 60
+            },
+            {
+                "modifier": {
+                    "stat": 10,
+                    "amount": 0.15,
+                    "operationType": 1
+                },
+                "weight": 60
+            }
+        ],
+        "modifierWeightsDress": [
+            {
+                "modifier": {
+                    "stat": 3,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 4,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 5,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            }
+        ],
+        "modifierWeightsAccessory": [
+            {
+                "modifier": {
+                    "stat": 6,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 7,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 8,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            }
+        ]
+    },
+    {
+        "id": "refrigerator",
+        "numberOfRewardsPerEnergy": 5,
+        "bossResistances": {
+            "physicalResistance": 0.4,
+            "magicalResistance": 0,
+            "psychicResistance": 0.8
+        },
+        "maxHealth": 1000,
+        "difficulty": 1,
+        "setRewards": [
+            2
+        ],
+        "modifierWeightsWeapon": [
+            {
+                "modifier": {
+                    "stat": 0,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 1,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 2,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 9,
+                    "amount": 0.15,
+                    "operationType": 1
+                },
+                "weight": 60
+            },
+            {
+                "modifier": {
+                    "stat": 10,
+                    "amount": 0.15,
+                    "operationType": 1
+                },
+                "weight": 60
+            }
+        ],
+        "modifierWeightsDress": [
+            {
+                "modifier": {
+                    "stat": 3,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 4,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 5,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            }
+        ],
+        "modifierWeightsAccessory": [
+            {
+                "modifier": {
+                    "stat": 6,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 7,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            },
+            {
+                "modifier": {
+                    "stat": 8,
+                    "amount": 0.1,
+                    "operationType": 1
+                },
+                "weight": 100
+            }
+        ]
     }
 ]
