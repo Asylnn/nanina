@@ -42,6 +42,20 @@ export default {
         onShowElement(waifu : Waifu | Item) {
             this.$emit("show-element", waifu)
         },
+        getRarityStyle(rarity: number)
+        {
+            let style = ""
+            let color = "yellow;"
+            if(rarity == 0)
+                color = "black;"
+            else if(rarity == 1)
+                color = "blue;"
+            else if(rarity == 2)
+                color = "green;"
+            else if(rarity == 3)
+                color = "purple;"
+            return style + "border-color:" + color
+        }
     },
 }
 
@@ -59,11 +73,13 @@ export default {
                 </div>
             </div>
             <div v-else>
-                <div class="slot">
-                    <div class="itemIcon">
-                        <img @click="onShowElement(element as Item)" :src="`${publicPath}/item-image/${element.imgPATH}`">
+                <div class="slot itemSlot">
+                    <div class="rarityBorder" :style="getRarityStyle((element as Item).rarity)">
+                        <div class="itemIcon">
+                            <img @click="onShowElement(element as Item)" :src="`${publicPath}/item-image/${element.imgPATH}`">
+                        </div>
+                        <p v-if="(element as Item).count != 1">{{ (element as Item).count }}</p>
                     </div>
-                    <p v-if="(element as Item).count != 1">{{ (element as Item).count }}</p>
                 </div>
             </div>
         </div>
@@ -112,6 +128,33 @@ export default {
 }
 
 .slot {
-    padding-bottom: 6vh;
+    margin-bottom: 6vh;
+}
+
+.itemSlot
+{
+    display:flex;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    border-style: solid;
+    border-width: 0px;
+    border-radius: 10px;
+    border-color: gray;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+
+.rarityBorder
+{
+    border-width:5px;
+    padding: 8px;
+    border-radius:10px;
+    border-style:outset;
+    width:64px;
+    height:64px;
 }
 </style>
