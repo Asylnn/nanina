@@ -12,22 +12,10 @@ namespace Nanina.Database
         /*
             This static class is for managing the database
         */
-        private static string GetDatabaseString<T>()
-        {
-            return typeof(T) switch {
-                Type type when type == typeof(UserData.User) => "userdb",
-                Type type when type == typeof(Session) => "sessiondb",
-                Type type when type == typeof(Waifu) => "waifudb",
-                Type type when type == typeof(Beatmap) => "osumapsdb",
-                Type type when type == typeof(Item) || type == typeof(Equipment) => "itemdb",
-                Type type when type == typeof(Set) => "setdb",
-                _ => null
-            };
-        }
         public static ILiteCollection<T> GetCollection<T>()
         {
             var db = new LiteDatabase($@"{Global.config.database_path}");
-            var collection = GetDatabaseString<T>();
+            var collection = GetCollectionName<T>();
             return db.GetCollection<T>(collection);
         }
 
@@ -191,7 +179,9 @@ namespace Nanina.Database
 
         public static List<Equipment> GetEquipmentsFromSet(ushort setId)
         {
+            Console.WriteLine(setId);
             var itemCol = GetCollection<Equipment>();
+            Console.WriteLine(JsonConvert.SerializeObject(itemCol.FindAll()));
             var items = itemCol.Find(x => x.setId == setId);
             if (items.Count() >= 1)
             {

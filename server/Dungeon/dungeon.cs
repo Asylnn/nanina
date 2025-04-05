@@ -29,16 +29,21 @@ namespace Nanina.Dungeon
         public float health; 
         public bool isCompleted = false;
         public List<Equipment> loot = [];
+        public byte floor;
         public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
 
-        public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId)
+        public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId, byte floor)
         {
             instanceId = _instanceId;
             sessionId = _sessionId;
             dungeonTemplate = dungeon;
+            dungeonTemplate.difficulty = floor;
+            dungeonTemplate.bossResistances.magicalResistance += 0.8f *(1f - floor);
+            dungeonTemplate.bossResistances.physicalResistance += 0.8f *(1f - floor);
+            dungeonTemplate.bossResistances.psychicResistance += 0.8f *(1f - floor);
             userId = user.Id;
             waifus = EquippedWaifus;
-            health = dungeonTemplate.maxHealth;
+            health = dungeonTemplate.maxHealth*floor; // Health formula
             StartDungeon();
         }
 

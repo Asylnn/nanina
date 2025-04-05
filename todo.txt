@@ -28,6 +28,8 @@ TODO : Implement Inventory System (page/component/database)         #Done
 TODO : Namespacing and Folderising the c# code                      #Done
 TODO : Make a waifu selector for dungeons                           #Done
 TODO : Implement "World Level" mechanic                             #Done
+TODO : Make health boss formula                                     
+TODO : Make resistance boss formula                                     
 TODO : Scoping classes (public / private /abstract)
             Note that having a property as private will make it unable to be stored in the db (so you can't have much private properties, does we need to return to poco objects?)
 TODO : Implement logging
@@ -82,12 +84,9 @@ TODO : Crash when schwartzchild (re:mast?)
 TODO : Make stop dungeon safe
 TODO : Add regen tick clock on client
 TODO : Clean up where you recieve websockets in client
-
-    
-
-
-TODO : BUY AN 9070XT IF IT'S AFFORDABLE <- Marrant ca
-
+TODO : Cherish battery use, item count doesn't decrease
+TODO : Simple remove cherish battery use interface (cross, escape or outside click?)
+TODO : Add cross to menus to close them.
 
 
 TODO Before putting it online for testing : 
@@ -101,3 +100,8 @@ TODO : Check the timestamp before claiming for maimai                           
 TODO : Implement new banner                                                         
 TODO : Have reasonable values
 TODO : Have multiple dungeons of increasing difficulty
+
+
+
+
+TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

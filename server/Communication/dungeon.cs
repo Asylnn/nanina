@@ -13,6 +13,7 @@ namespace Nanina.Communication
         {
             public string id;
             public string[] waifuIds;
+            public byte floor;
         }
         protected void StartDungeon(ClientWebSocketResponse rawData){
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
@@ -25,8 +26,8 @@ namespace Nanina.Communication
             var clientData = JsonConvert.DeserializeObject<StartDungeonFormat>(rawData.data);
             if(clientData == null)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (cliendData is null)", 1)); return ;}
-            if(clientData.id == null || clientData.waifuIds == null)
-                {Send(ClientNotification.NotificationData("User", "Invalid data (clientData.id or clientData.waifuIds are null)", 1)); return ;}
+            if(clientData.id == null || clientData.waifuIds == null || clientData.floor <= 0 || clientData.floor > 5)
+                {Send(ClientNotification.NotificationData("User", "Invalid data (clientData.id or clientData.waifuIds are null, or clientData.floor is not between 1 and 5)", 1)); return ;}
 
             var dungeonList = DungeonManager.dungeons.Where(dungeon => dungeon.id == clientData.id);
             if(dungeonList.Count() == 0)
@@ -37,7 +38,7 @@ namespace Nanina.Communication
             if(waifus.Count() != 3)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (at least one invalid waifu)", 1)); return ;}
 
-            DungeonManager.InstantiateDungeon(dungeon, user, waifus, session.id);
+            DungeonManager.InstantiateDungeon(dungeon, user, waifus, session.id, clientData.floor);
         }
 
         protected void StopDungeon(ClientWebSocketResponse rawData){

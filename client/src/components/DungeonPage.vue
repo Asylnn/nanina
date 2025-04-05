@@ -44,7 +44,7 @@ export default {
         EnterDungeon(){
             this.is_fighting_a_dungeon = true
             let waifuIds = this.waifuSelection.map(waifu => waifu!.id)
-            this.SendToServer("start dungeon", JSON.stringify({id:this.selected_dungeon.id, waifuIds:waifuIds}), this.user.Id)
+            this.SendToServer("start dungeon", JSON.stringify({id:this.selected_dungeon, waifuIds:waifuIds, floor:this.selected_floor}), this.user.Id)
         },
         LeaveDungeon(){
             this.is_fighting_a_dungeon = false

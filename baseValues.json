@@ -37,12 +37,19 @@
         "LUCK":42
     },
 
-    "equipment_stat_base_amount_multiplier":[1,1.2,1.5,1.9,2.5],
-
+    "equipment_stat_base_amount_multiplier":[1,1.25,1.56,1.95,2.6],
+    "equipment_rarity_probability":[
+        [50, 10, 0 , 0 , 0 ],
+        [10, 30, 10, 0 , 0 ],
+        [0 , 10, 30, 10, 0 ],
+        [0 , 0 , 45, 45, 10],
+        [0 , 0 , 0 , 40, 10]
+    ],
     "dungeon_stat_randomness":0.20,
     "proportion_of_energy_used_for_each_action":0.25,
     "free_energy_not_used_for_each_action":5,
-    "energy_regen_tick_in_seconds":216,
+    "energy_regen_tick_in_seconds":1,
+    "energy_regen_tick_in_seconds_pord_comment":216,
     "energy_regen_tick_amount_in_percent":1,
     "base_max_energy":100,
     "dungeon_attack_timer_in_milliseconds":3000,

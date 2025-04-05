@@ -23,5 +23,6 @@ namespace Nanina
         public uint user_xp_for_fights;
         public uint user_xp_for_dungeons;
         public uint maimai_score_expiration_in_milliseconds;
+        public List<List<float>> equipment_rarity_probability;
     }
 }

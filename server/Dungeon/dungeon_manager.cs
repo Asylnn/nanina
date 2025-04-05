@@ -12,9 +12,9 @@ namespace Nanina.Dungeon
         public static readonly Dictionary<ulong, ActiveDungeon> activeDungeons = [];
         private static ulong counter = 0;
         //Should be mutexed before release
-        public static void InstantiateDungeon(Template dungeon, User user, List<Waifu> waifus, string sessionId)
+        public static void InstantiateDungeon(Template dungeon, User user, List<Waifu> waifus, string sessionId, byte floor)
         {
-            var activeDungeon = new ActiveDungeon(dungeon, user, waifus, sessionId, counter);
+            var activeDungeon = new ActiveDungeon(dungeon, user, waifus, sessionId, counter, floor);
             activeDungeons.Add(counter, activeDungeon);
             UpdateDungeonOfClient(activeDungeon);
         }
