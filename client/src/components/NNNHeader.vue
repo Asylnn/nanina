@@ -98,7 +98,7 @@ export default {
             <div id="user" class="butitem" v-if="logged" @click="onClickChangePage(4)"><img :src="`${user.avatarPATH}?size=40`"></div>
             
         </div>
-        <div id="energy">
+        <div v-if="logged" id="energy">
             <div><img height=30px width=30px src="../assets/heart.svg"></div>
             <div id="energyAmount" v-if="logged" :style="getEnergyColor()" ><p >{{ Math.floor(user.energy) }}</p></div>
             <div @click="showEnergyItems = !showEnergyItems"><img id="addEnergy" height=26px width=26px src="../assets/plus.svg"></div>
