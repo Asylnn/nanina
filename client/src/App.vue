@@ -204,7 +204,11 @@ export default {
 					this.xp = res.data
 					break
 				case "waifu db" :
-					this.all_waifus = JSON.parse(res.data)
+					let waifus = JSON.parse(res.data)
+					waifus.forEach((waifu:Waifu) => {
+						this.all_waifus.push(new Waifu(waifu))
+					});
+
 					break
 				case "item db" :
 					this.item_db = JSON.parse(res.data)
