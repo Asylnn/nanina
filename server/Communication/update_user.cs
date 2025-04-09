@@ -2,6 +2,7 @@ using WebSocketSharp.Server;
 using Newtonsoft.Json;
 using Nanina.Database;
 using Nanina.UserData.ItemData;
+using Nanina.UserData.WaifuData;
 
 namespace Nanina.Communication
 {
@@ -243,6 +244,20 @@ namespace Nanina.Communication
             }));
 
             DBUtils.Update(user);
+        }
+
+        protected void UpdateUserWaifus(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user == null) 
+            {
+                Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); 
+                return;
+            }
+            if(!user.admin)
+                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+
+            user.waifus = JsonConvert.DeserializeObject<List<Waifu>>(rawData.data);
         }
     }
 }

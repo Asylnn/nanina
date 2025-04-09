@@ -56,19 +56,15 @@ namespace Nanina.Communication
                     case "get map to fight": 
                         StartFight(rawData);
                         break;
-
                     case "claim fight":
                         ClaimFight(rawData);
                         break;
-
                     case "get session id":
                         ProvideSessionToClient(rawData);
                         break;
-                        
                     case "add beatmap with id": 
                         AddMapToDatabase(rawData);
                         break;
-
                     case "connect with discord":
                         DiscordLogin(rawData);
                         break;
@@ -90,7 +86,6 @@ namespace Nanina.Communication
                     case "unequip item":
                         UnequipItem(rawData);
                         break;
-                    
                     case "disconect":
                         Disconnect(rawData);
                         break;
@@ -100,16 +95,17 @@ namespace Nanina.Communication
                     case "verify maimai token":
                         VerifyMaimaiToken(rawData);
                         break;
-
                     case "get possible user level up loot":
                         GetLevelRewards(rawData);
                         break;
                     case "get level reward":
                         GetReward(rawData);
                         break;
-
                     case "use user consumable":
                         UseUserConsumable(rawData);
+                        break;
+                    case "update user waifus":
+                        UpdateUserWaifus(rawData);
                         break;
                 }
             }

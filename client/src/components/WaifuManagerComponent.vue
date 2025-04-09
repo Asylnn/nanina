@@ -9,10 +9,23 @@ export default {
             type: Waifu,
             required : true,
         },
+        editingExistingWaifu : {
+            type:Boolean,
+            default:true
+        }
     },
     methods:{
         Delete(){
             this.$emit("delete", this.waifu.id)
+        },
+        Reset()
+        {
+            this.waifu.b_str = this.waifu.o_str + (this.waifu.lvl-1)*this.waifu.u_str
+            this.waifu.b_kaw = this.waifu.o_kaw + (this.waifu.lvl-1)*this.waifu.u_kaw
+            this.waifu.b_dex = this.waifu.o_dex + (this.waifu.lvl-1)*this.waifu.u_dex
+            this.waifu.b_agi = this.waifu.o_agi + (this.waifu.lvl-1)*this.waifu.u_agi
+            this.waifu.b_int = this.waifu.o_int + (this.waifu.lvl-1)*this.waifu.u_int
+            this.waifu.b_luck = this.waifu.o_luck + (this.waifu.lvl-1)*this.waifu.u_luck
         }
     },
 }
@@ -22,6 +35,7 @@ export default {
 <template>
     <div class="WaifuManagerComponent">
         <button @click="Delete">delete</button>
+        <button v-if="editingExistingWaifu" @click="Reset">snap stats to level</button>
         <span class="attribute">Id  <input class="numberInput" v-model="waifu.id" type="text"></span>
         <span class="attribute">★  <input class="numberInput" v-model="waifu.stars" type="number"></span>
         
@@ -37,6 +51,10 @@ export default {
         <span class="attribute">+DEX  <input class="numberInput" v-model="waifu.u_dex" type="number"></span>
         <span class="attribute">_LUCK  <input class="numberInput" v-model="waifu.o_luck" type="number"></span>
         <span class="attribute">+LUCK  <input class="numberInput" v-model="waifu.u_luck" type="number"></span>
+
+        <span v-if="editingExistingWaifu" class="attribute">LVL  <input class="numberInput" v-model="waifu.lvl" type="number"></span>
+        <span v-if="editingExistingWaifu" class="attribute">XP  <input class="numberInput" v-model="waifu.xp" type="number"></span>
+
         <span class="attribute">{{ waifu.points }}p</span>
         <span class="attribute">Img  <input class="imgImput"v-model="waifu.imgPATH" type="text"></span>
     </div>
