@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   sodipodi:docname="staff.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="16.03125"
+     inkscape:cx="8.0779727"
+     inkscape:cy="15.126706"
+     inkscape:window-width="2516"
+     inkscape:window-height="1366"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#d38d5f;fill-opacity:0;stroke:#784421;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 5.8145475,30.456598 17.571752,10.092522"
+       id="path33"
+       sodipodi:nodetypes="cc" />
+    <circle
+       style="fill:#c30047;fill-opacity:1;stroke:#aa0039;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path34"
+       cx="18.14983"
+       cy="9.0127268"
+       r="3.4932914" />
+    <path
+       id="path38"
+       style="fill:none;fill-opacity:0;stroke:#784421;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 17.811095,15.575499 a 6.5715079,6.5715079 0 0 1 -6.232772,-6.5627718 6.5715079,6.5715079 0 0 1 6.571508,-6.571508 6.5715079,6.5715079 0 0 1 5.008852,2.3175551" />
+  </g>
+</svg>

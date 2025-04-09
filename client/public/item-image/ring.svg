@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   sodipodi:docname="ring.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     inkscape:zoom="19.234375"
+     inkscape:cx="17.312754"
+     inkscape:cy="11.30788"
+     inkscape:window-width="2516"
+     inkscape:window-height="1366"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect4"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,1,1,0,0.91308192,0,1 @ F,0,0,1,0,8.4459398,0,1 @ F,0,0,1,0,0.58241452,0,1 @ F,0,0,1,0,6.2649041,0,1 @ F,0,0,1,0,0.58241452,0,1 @ F,0,0,1,0,8.4459398,0,1 @ F,0,0,1,0,0.91308192,0,1 @ F,0,0,1,0,2.0890801,0,1"
+       radius="0"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect3"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0.86971839,0,1 @ F,0,0,1,0,0,0,1 @ F,0,1,1,0,0.86971839,0,1"
+       radius="0"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,1.330159,0,1 @ F,0,0,1,0,1.6242602,0,1 @ F,0,0,1,0,0,0,1"
+       radius="0"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path5"
+       style="fill:#ececec;fill-opacity:1;stroke-width:0.946807"
+       d="M 22.756502,7.2310968 A 12.687223,12.687223 0 0 0 5.0833797,10.325396 12.687223,12.687223 0 0 0 8.179211,27.999594 12.687223,12.687223 0 0 0 25.851877,24.902687 12.687223,12.687223 0 0 0 22.756502,7.2310968 Z M 21.662101,8.7903076 A 10.781493,10.781493 0 0 1 24.292667,23.808286 10.781493,10.781493 0 0 1 9.2736119,26.440384 10.781493,10.781493 0 0 1 6.64259,11.419797 10.781493,10.781493 0 0 1 21.662101,8.7903076 Z" />
+    <path
+       sodipodi:type="star"
+       style="fill:#00ffff;fill-opacity:1"
+       id="path6"
+       inkscape:flatsided="false"
+       sodipodi:sides="3"
+       sodipodi:cx="15.182978"
+       sodipodi:cy="8.2348356"
+       sodipodi:r1="6.8990498"
+       sodipodi:r2="3.4495251"
+       sodipodi:arg1="-2.6231075"
+       sodipodi:arg2="-1.5759099"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 9.190664,4.8159083 15.165338,4.7853556 21.140012,4.7548034 18.179135,9.9442995 15.218257,15.133795 12.20446,9.9748517 Z"
+       inkscape:transform-center-x="-1.3349077"
+       inkscape:transform-center-y="-0.38320666"
+       transform="matrix(0.68873135,0.48341666,-0.42623868,0.60726898,16.386589,-5.2431766)" />
+  </g>
+</svg>

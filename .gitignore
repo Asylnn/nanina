@@ -41,7 +41,6 @@ client/.vscode/*
 
 #Static assets (waifu and item images...)
 
-client/public
 errors.log
 
 #Database
