@@ -35,6 +35,12 @@ export default {
         },
         onEscape(){
 
+        },
+        applyTextColor(categoryName : string){
+            var style = "";
+            if(categoryName == this.category)
+                style = "color: blueviolet;";
+            return style
         }
     },
     components:{
@@ -47,18 +53,14 @@ export default {
 </script>
 <template>
     <div id="inventory">
-        <div class="InventoryHeader">
-            <div id="filterCateg">
-                <select value="a">
-                    <option @click="category = 'all'" value="a">{{$t("inventory.all")}}</option>
-                    <option @click="changeTab('equipment')" value="e">{{$t("inventory.equipment")}}</option>
-                    <option @click="changeTab('user_consumable')" value="u">{{$t("inventory.user_consumable")}}</option>
-                    <option @click="changeTab('waifu_consumable')" value="w">{{$t("inventory.waifu_consumable")}}</option>
-                    <option @click="changeTab('material')" value="m">{{$t("inventory.material")}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="InventoryBody">
+        <ul id="inventoryHeader">
+            <li :style="applyTextColor('all')" @click="changeTab('all')">{{$t("inventory.all")}}</li>
+            <li :style="applyTextColor('equipment')" @click="changeTab('equipment')">{{$t("inventory.equipment")}}</li>
+            <li :style="applyTextColor('user_consumable')" @click="changeTab('user_consumable')">{{$t("inventory.user_consumable")}}</li>
+            <li :style="applyTextColor('waifu_consumable')" @click="changeTab('waifu_consumable')">{{$t("inventory.waifu_consumable")}}</li>
+            <li :style="applyTextColor('material')" @click="changeTab('material')" >{{$t("inventory.material")}}</li>
+        </ul>
+        <div id="inventoryBody">
             <div v-if="category === 'equipment' || category === 'all'">
                 <GridDisplayComponent :elements="user.inventory.equipment" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
                 <div v-if="focusedView">
@@ -81,10 +83,10 @@ export default {
                 </div>
             </div>
             <div v-if="category === 'material' || category === 'all'">
-                <GridDisplayComponent :elements="user.inventory.material" @show-element="showItem" :columns=8></GridDisplayComponent>
+                <GridDisplayComponent :elements="user.inventory.material" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
                 <div v-if="focusedView">
-                    <div @click="closeItemDisplay" id="veil" ></div>
-                    <ItemComponent  :is-for-equiping="false" @input="onEscape" :item="item_to_display" tabindex="0" @keydown.esc="closeItemDisplay"></ItemComponent>
+                    <div @click="closeItemDisplay" class="veil" ></div>
+                    <ItemComponent :is-for-equiping="false" @input="onEscape" :item="item_to_display" tabindex="0" @keydown.esc="closeItemDisplay"></ItemComponent>
                 </div>
             </div>
         </div>
@@ -94,9 +96,13 @@ export default {
 
 <style lang="css" scoped>
 
-span {
-    color: blueviolet;
-    font-size: x-large;
+#inventoryHeader {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    height: 5vh;
+    margin: 0 20vw;
+    text-align: center;
+    cursor: pointer;
 }
 
 </style>
