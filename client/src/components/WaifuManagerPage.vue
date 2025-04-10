@@ -48,7 +48,7 @@ export default {
 <template>
     <div>
         <li v-for="waifu in all_waifus">
-            <WaifuManagerComponent :waifu="waifu" @delete="DeleteWaifu"></WaifuManagerComponent>
+            <WaifuManagerComponent :editing-existing-waifu="false" :waifu="waifu" @delete="DeleteWaifu"></WaifuManagerComponent>
         </li>
         <button @click="AddNewWaifu">Add new waifu</button><br>
         <button @click="UpdateWaifus">Update</button>

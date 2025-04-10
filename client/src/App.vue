@@ -43,6 +43,7 @@ import ActiveDungeon from './classes/dungeons/active_dungeon'
 import Chart from './classes/maimai/chart'
 import type Loot from './classes/loot/loot'
 import type Equipment from './classes/item/equipment'
+import UserWaifuManagerPage from './components/UserWaifuManagerPage.vue'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -87,6 +88,7 @@ export default {
 		InventoryManagerPage,
 		DungeonPage,
 		LootDisplayComponent,
+		UserWaifuManagerPage,
 	},	
 	methods : {
 		updateTheme(theme : string) {
@@ -106,6 +108,8 @@ export default {
 		loadingPage() {
 		this.page;
 		this.logged;
+		console.log("page", this.page)
+		console.log("page name", Page.UserWaifuManagerPage)
 		switch (this.page) {
 			case Page.Homepage :
 				return 10
@@ -126,6 +130,9 @@ export default {
 				return 100
 			case Page.DungeonPage:
 				return 150
+			case Page.UserWaifuManagerPage:
+				console.log("baseball, huh?")
+				return 160
 			case Page.AddMap :
 				if (this.user.admin == true)	return 90
 				else 					return 50
@@ -243,7 +250,6 @@ export default {
 					this.dungeons = JSON.parse(res.data)
 					console.log("Dungeon data : ")
 					console.log(this.dungeons)
-					
 					break
 				case "get active dungeon":
 					this.active_dungeon = JSON.parse(res.data)
@@ -312,6 +318,9 @@ export default {
 		</div>
 		<div v-else-if="loadingPage === 150">
 			<DungeonPage :dungeons="dungeons" :user="user" :active_dungeon="active_dungeon"></DungeonPage>
+		</div>
+		<div v-else-if="loadingPage === 160">
+			<UserWaifuManagerPage  :user="user"></UserWaifuManagerPage>
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 		<LootDisplayComponent  :is-new-loot="true"  :loots=loots></LootDisplayComponent>

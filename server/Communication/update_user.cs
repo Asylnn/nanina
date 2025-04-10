@@ -258,6 +258,8 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
 
             user.waifus = JsonConvert.DeserializeObject<List<Waifu>>(rawData.data);
+
+            DBUtils.Update(user);
         }
     }
 }

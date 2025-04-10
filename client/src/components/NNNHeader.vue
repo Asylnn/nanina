@@ -81,6 +81,7 @@ export default {
             <li @click="onClickChangePage(8)" v-if="user.admin"><span>Waifu DB</span></li>
             <li @click="onClickChangePage(6)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
             <li @click="onClickChangePage(16)" v-if="user.admin && dev"><span>InventoryManager</span></li>
+            <li @click="onClickChangePage(17)" v-if="user.admin && dev"><span>WaifuManager</span></li>
         </ul>
         <div id="buttList">
             <div class="butitem halo" >
