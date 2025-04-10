@@ -44,7 +44,7 @@ export default {
             <div id="focusedObject">
                 <div id="itemImage">
                     <div><img class="itemImage" :src="`${publicPath}/item-image/${item.imgPATH}`"></div>
-                    <div><button @click="useItem(item)"> {{ $t("item.use") }}</button></div>
+                    <div><button class="smallbutton" @click="useItem(item)"> {{ $t("item.use") }}</button></div>
                 </div>
                 <div id="ItemInfo">
                     {{ $t(`item.${item.id}.name`) }} ({{ item.count }})<br>
@@ -88,7 +88,7 @@ export default {
     flex-direction: row;
     max-width: 25vw;
     max-height: 60vh;*/
-    padding-right: 5vw;
+    padding-right: 1vw;
     height: 100px;
     width: 100px;
 }
@@ -101,5 +101,11 @@ export default {
 .upgrade
 {
     color:green
+}
+
+button
+{
+    margin-top: 10px;
+    margin-left: 1vw;
 }
 </style>

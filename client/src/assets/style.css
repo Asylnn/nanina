@@ -95,3 +95,18 @@ button, input[type="submit"], input[type="reset"] {
 	cursor: pointer;
 	outline: inherit;
 }
+
+.smallbutton
+{
+    padding:0px 6px;
+    border-color:rgb(178, 77, 224);
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 20px;
+    
+}
+
+.smallbutton:hover
+{
+    color:purple;
+}
