@@ -1,5 +1,5 @@
 <script lang="ts">
-import type Item from '@/classes/item/item';
+import Item from '@/classes/item/item';
 import Waifu from '@/classes/waifu/waifu';
 
 
@@ -39,8 +39,8 @@ export default {
     },
     emits: ["show-element"],
     methods: {
-        onShowElement(waifu : Waifu | Item) {
-            this.$emit("show-element", waifu)
+        onShowElement(element : Waifu | Item) {
+            this.$emit("show-element", element)
         },
         getRarityStyle(rarity: number)
         {
