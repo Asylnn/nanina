@@ -95,12 +95,12 @@ namespace Nanina.UserData.WaifuData
         public void LevelUp()
         {
             lvl++;
-            b_str += o_str;
-            b_agi += o_agi;
-            b_kaw += o_kaw;
-            b_int += o_int;
-            b_dex += o_dex;
-            b_luck += o_luck;
+            b_str += u_str;
+            b_agi += u_agi;
+            b_kaw += u_kaw;
+            b_int += u_int;
+            b_dex += u_dex;
+            b_luck += u_luck;
         }
         public void Update(){
             var DBwaifu = DBUtils.Get<Waifu>(x => x.id == id);
