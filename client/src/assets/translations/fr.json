@@ -21,6 +21,7 @@
         "game_select":"Choisissez un jeu"
     },
     "dungeon":{
+        "leave":"partir du donjon",
         "dungeon":"Donjon",
         "floor":"Etage du donjon",
         "name":"Donjons",

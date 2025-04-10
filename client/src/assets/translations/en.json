@@ -21,6 +21,7 @@
         "game_select":"Select a game"
     },
     "dungeon":{
+        "leave":"leave dungeon",
         "dungeon":"Dungeon",
         "floor":"Dungeon floor",
         "name":"Dungeons",

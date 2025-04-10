@@ -28,7 +28,7 @@ export default {
             type : Array<DungeonTemplate>,
             required : true
         },
-        active_dungeon: { //= -1 for single pull in gacha or for a display in WaifuListPage
+        active_dungeon: {
             type : ActiveDungeon,
             required : true
         },
@@ -153,6 +153,7 @@ export default {
             </div>
         </div>
         <div v-else>
+            <h1>{{$t(`dungeon.${active_dungeon.dungeonTemplate.id}.name`)}} </h1>
             <button @click="LeaveDungeon">{{ $t("dungeon.leave") }}</button>
             <div id="playingField">
                 <p> {{$t("dungeon.boss_health")}} : {{ active_dungeon.health }}/{{ Math.floor(active_dungeon.dungeonTemplate.maxHealth) }}</p>
