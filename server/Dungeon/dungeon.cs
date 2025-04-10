@@ -38,9 +38,9 @@ namespace Nanina.Dungeon
             sessionId = _sessionId;
             dungeonTemplate = dungeon;
             dungeonTemplate.difficulty = floor;
-            dungeonTemplate.bossResistances.magicalResistance += 0.8f *(1f - floor);
-            dungeonTemplate.bossResistances.physicalResistance += 0.8f *(1f - floor);
-            dungeonTemplate.bossResistances.psychicResistance += 0.8f *(1f - floor);
+            dungeonTemplate.bossResistances.magicalResistance += 0.05f *(1f - floor);
+            dungeonTemplate.bossResistances.physicalResistance += 0.05f *(1f - floor);
+            dungeonTemplate.bossResistances.psychicResistance += 0.05f *(1f - floor);
             userId = user.Id;
             waifus = EquippedWaifus;
             health = dungeonTemplate.maxHealth*floor; // Health formula
