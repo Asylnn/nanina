@@ -121,7 +121,7 @@ export default {
 #language
 {
     font-size : 30px;
-    width:32px;
+    width:38px;
     cursor:pointer;
     /*display: flex;
     justify-content: center;
@@ -137,7 +137,7 @@ select {
 
 
 
-header, #pages, #buttList {
+header, #pages {
     display: grid;
 }
 header, #actiMenu li {
