@@ -7,7 +7,7 @@
             "magicalResistance": 0.3,
             "psychicResistance": 0
         },
-        "maxHealth": 1000,
+        "maxHealth": 500000,
         "difficulty": 1,
         "setRewards": [
             0
@@ -115,7 +115,7 @@
             "magicalResistance": 0.8,
             "psychicResistance": 0.4
         },
-        "maxHealth": 1000,
+        "maxHealth": 630000,
         "difficulty": 1,
         "setRewards": [
             1
@@ -223,7 +223,7 @@
             "magicalResistance": 0.4,
             "psychicResistance": 0
         },
-        "maxHealth": 1000,
+        "maxHealth": 630000,
         "difficulty": 1,
         "setRewards": [
             0
@@ -331,7 +331,7 @@
             "magicalResistance": 0,
             "psychicResistance": 0.8
         },
-        "maxHealth": 1000,
+        "maxHealth": 630000,
         "difficulty": 1,
         "setRewards": [
             2

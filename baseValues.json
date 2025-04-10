@@ -61,6 +61,7 @@
     "spent_energy_to_gacha_currency_conversion_rate":5,
     "user_xp_for_fights":10,
     "user_xp_for_dungeons":25,
+    "fight_damage_multiplier":3000,
     "maimai_score_expiration_in_milliseconds":1800000
     
 }

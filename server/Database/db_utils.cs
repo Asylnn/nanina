@@ -18,17 +18,6 @@ namespace Nanina.Database
             var collection = GetCollectionName<T>();
             return db.GetCollection<T>(collection);
         }
-
-        /*Different use cases :
-        - access to a col to find one #Done
-        - access to a col to insert one (no test) #Done
-        - access to a col to insert one (after testing for duplicate) #Done
-        - access to a col to update one #Done
-        - access to a col to delete all into insert all back #Done
-        - access to a col to pick a random one #Done
-        - access to a col to find all and send the whole table via a websocket #Done
-        - access to a col to find all (without websocket) #Done
-        */
         public static T Get<T>(System.Linq.Expressions.Expression<Func<T, bool>> func, bool randomized = false)
         {
             using var db = new LiteDatabase($@"{Global.config.database_path}");
