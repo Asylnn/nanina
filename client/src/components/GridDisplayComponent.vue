@@ -4,7 +4,7 @@ import Waifu from '@/classes/waifu/waifu';
 
 
 export default {
-    name : "WaifuGridDisplayComponent",
+    name : "GridDisplayComponent",
     data() {
         return {
             publicPath : import.meta.env.BASE_URL,
@@ -69,11 +69,11 @@ export default {
                     <div class="waifuIcon">
                         <img @click="onShowElement(element as Waifu)" :src="`${publicPath}/waifu-image/${element.imgPATH}`">
                     </div>
-                    <p>{{ $t("waifu.level") }} {{ (element as Waifu).lvl }}</p>
+                    <p>{{ $t(`waifu.${(element as Waifu).id}.name`) }} {{ $t("waifu.level") }} {{ (element as Waifu).lvl }}</p>
                 </div>
             </div>
             <div v-else>
-                <div class="slot itemSlot">
+                <div class="itemSlot">
                     <div class="rarityBorder" :style="getRarityStyle((element as Item).rarity)">
                         <div class="itemIcon">
                             <img @click="onShowElement(element as Item)" :src="`${publicPath}/item-image/${element.imgPATH}`">
@@ -121,10 +121,10 @@ export default {
 
 .slot p {
     position:relative;
-    left:35px;
-    bottom: 15px;
+    left:0px;
+    bottom: 0px;
     color:blueviolet;
-    text-align: center;
+    text-align: left;
 }
 
 .slot {
@@ -138,14 +138,18 @@ export default {
     justify-items: center;
     align-content: center;
     justify-content: center;
-    border-style: solid;
-    border-width: 0px;
-    border-radius: 10px;
-    border-color: gray;
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 15px;
     margin-left: 15px;
+}
+
+.itemSlot p {
+    position:relative;
+    left:5px;
+    bottom: 18px;
+    color:blueviolet;
+    text-align: right;
 }
 
 .rarityBorder
