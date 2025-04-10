@@ -59,7 +59,7 @@ export default {
         </div>
         <ul id="pages" v-if="logged">
             <li id="acti_li">
-                <span>{{ $t("header.activities") }}</span><img width=30px src="../assets/fleche-vers-le-bas.png">
+                <span>{{ $t("header.activities") }}</span>
                 <ul id="actiMenu">
                     <li>{{ $t("header.maidCafé") }}</li>
                     <li>{{ $t("header.mineralMining") }}</li>
@@ -74,15 +74,20 @@ export default {
             <li @click="onClickChangePage(9)"><span>{{ $t("header.pull") }}</span></li>
             <li @click="onClickChangePage(10)"><span>{{ $t("header.dungeon") }}</span></li>
             <li id="db_li" v-if="user.admin">
-                <span>Databases</span><img width=30px src="../assets/fleche-vers-le-bas.png">
+                <span>Databases</span>
                 <ul id="dbMenu">
-                    <li @click="onClickChangePage(15)" v-if="user.admin"><span>Item</span></li>   
-                    <li @click="onClickChangePage(8)" v-if="user.admin"><span>Waifu</span></li>
+                    <li @click="onClickChangePage(15)"><span>Item</span></li>   
+                    <li @click="onClickChangePage(8)"><span>Waifu</span></li>
+                </ul>
+            </li>
+            <li id="manager_li" v-if="user.admin && dev">
+                <span>Let me speak to your manager !</span>
+                <ul id="managerMenu">
+                    <li @click="onClickChangePage(16)"><span>Inventory</span></li>
+                    <li @click="onClickChangePage(17)"><span>Waifu</span></li>
                 </ul>
             </li>
             <li @click="onClickChangePage(6)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
-            <li @click="onClickChangePage(16)" v-if="user.admin && dev"><span>InventoryManager</span></li>
-            <li @click="onClickChangePage(17)" v-if="user.admin && dev"><span>WaifuManager</span></li>
         </ul>
         <div id="buttList">
             <div class="butitem halo" >
@@ -142,7 +147,7 @@ header, #pages {
     display: grid;
 }
 
-header, #actiMenu li, #dbMenu li {
+header, #actiMenu li, #dbMenu li, #managerMenu li {
     text-align: center;
     background-color: rgb(39, 11, 65);
 }
@@ -155,12 +160,11 @@ header {
     padding: 0 8vw;
     z-index: 9000;
 }
-#actiMenu, #dbMenu {
+#actiMenu, #dbMenu, #managerMenu {
     position: absolute;
     z-index: 9999;
     display: none;
 }
-
 
 #acti_li:hover #actiMenu{
     display: block;
@@ -170,8 +174,16 @@ header {
     display: block;
 }
 
-#actiMenu li, #dbMenu li {
+#manager_li:hover #managerMenu{
+    display: block;
+}
+
+#actiMenu li, #dbMenu li, #managerMenu li {
     padding: 0.727vh 0.5vw;
+}
+
+#manager_li {
+    font-size: small;
 }
 
 #logo, #pages, .butitem
