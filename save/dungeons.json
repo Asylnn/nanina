@@ -7,7 +7,7 @@
             "magicalResistance": 0.3,
             "psychicResistance": 0
         },
-        "maxHealth": 500000,
+        "maxHealth": 1000,
         "difficulty": 1,
         "setRewards": [
             0

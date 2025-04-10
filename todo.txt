@@ -33,6 +33,10 @@ TODO : Make resistance boss formula
 TODO : Scoping classes (public / private /abstract)
             Note that having a property as private will make it unable to be stored in the db (so you can't have much private properties, does we need to return to poco objects?)
 TODO : Implement logging
+TODO : Check why the hell login via discord sometimes doesn't work
+TODO : Code sometimes expires after 0.1s 
+TODO : Put list for database tables (like activities list)
+
 
 STEP 4 : Release Version 0.3
 

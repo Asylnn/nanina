@@ -94,7 +94,7 @@ export default {
 		updateTheme(theme : string) {
 			this.user.theme = theme
 			if (this.logged) {
-				this.SendToServer("update theme", "", this.user.Id)
+				this.SendToServer("update theme", theme, this.user.Id)
 
 				
 			}

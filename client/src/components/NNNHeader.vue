@@ -94,7 +94,7 @@ export default {
                 <a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url"><img id="discordLogin" src="../assets/discord.png"></a>
             </div>
             <div class="butitem halo" @click="onClickChangePage(5)" v-else>
-                <img height=30px width=30px src="../assets/option_gear_from_google_probably_not_free_of_use.png">
+                <img height=38px width=38px src="../assets/settings.png">
             </div>
             <div id="user" class="butitem" v-if="logged" @click="onClickChangePage(4)"><img :src="`${user.avatarPATH}?size=40`"></div>
             
