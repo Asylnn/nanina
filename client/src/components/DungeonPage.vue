@@ -156,7 +156,7 @@ export default {
             <h1>{{$t(`dungeon.${active_dungeon.dungeonTemplate.id}.name`)}} </h1>
             <button @click="LeaveDungeon">{{ $t("dungeon.leave") }}</button>
             <div id="playingField">
-                <p> {{$t("dungeon.boss_health")}} : {{ active_dungeon.health }}/{{ Math.floor(active_dungeon.dungeonTemplate.maxHealth) }}</p>
+                <p> {{$t("dungeon.boss_health")}} : {{ active_dungeon.health }}/{{ Math.floor(active_dungeon.maxHealth) }}</p>
                 <div id="attackLines">
                     Attacks : 
                     <div v-for="log in active_dungeon.log">

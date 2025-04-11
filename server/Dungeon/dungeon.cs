@@ -27,6 +27,7 @@ namespace Nanina.Dungeon
         public ulong timestamp = Utils.GetTimestamp();
         public List<DungeonLog> log = [];
         public float health; 
+        public float maxHealth;
         public bool isCompleted = false;
         public List<Equipment> loot = [];
         public byte floor;
@@ -43,7 +44,8 @@ namespace Nanina.Dungeon
             dungeonTemplate.bossResistances.psychicResistance += 0.05f *(1f - floor);
             userId = user.Id;
             waifus = EquippedWaifus;
-            health = dungeonTemplate.maxHealth*floor; // Health formula
+            maxHealth = dungeonTemplate.maxHealthByFloor[floor-1];
+            health = maxHealth;
             StartDungeon();
         }
 

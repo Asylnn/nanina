@@ -8,7 +8,7 @@ namespace Nanina.Dungeon
         public byte numberOfRewardsPerEnergy;
         public BossResistances bossResistances;
         public ushort[] setRewards; 
-        public float maxHealth;
+        public float[] maxHealthByFloor;
         public byte difficulty;
         public ModifierWeights[] modifierWeightsWeapon;
         public ModifierWeights[] modifierWeightsDress;

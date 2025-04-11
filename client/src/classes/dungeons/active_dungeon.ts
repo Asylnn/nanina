@@ -11,6 +11,7 @@ export default class ActiveDungeon {
     public timestamp = 0;
     public log : DungeonLog[] = [];
     public health = 0; 
+    public maxHealth = 0;
     public isCompleted = true;
     public loot : Equipment[] = [];
 }

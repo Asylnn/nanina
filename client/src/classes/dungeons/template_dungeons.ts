@@ -5,6 +5,6 @@ export default class DungeonTemplate {
     public numberOfRewards = 0;
     public bossResistances = new BossResistances;
     public setRewards : number[] = []; 
-    public maxHealth = Infinity
+    public maxHealthByFloor = [Infinity, Infinity, Infinity, Infinity, Infinity]
     public difficulty = 0
 }

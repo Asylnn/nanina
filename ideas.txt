@@ -199,12 +199,15 @@ lvl => 50 + 10*lvl + 0.5*lvl^2
 
 
 donjon, 10min?
+donjon without fighting, 8h
 
 "T0" Lv. 5 (inneficient)
 T1      Lv. 20
 low T2
 high T2 Lv. 40
 
+first floor 165 degats par tick, 165*6*60*8 => 475200 (500 000?)
+second floor 600 damage per tick => 1728000
 
 user lvl 15 après un mois
 
