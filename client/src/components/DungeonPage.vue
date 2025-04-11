@@ -82,11 +82,21 @@ export default {
         {
             if(i == this.selected_floor)
                 return "selected"
+            if(i == 3 || i == 4 || i == 5)
+                    return "locked"
+            else
+                return "clickable"
+        },
+        onFloorClick(i: number)
+        {
+            if(i != 3 && i != 4 && i != 5)
+                this.selected_floor = i
         },
         getDungeonListClass(id:string)
         {
             if(id == this.selected_dungeon)
                 return "selected"
+            
         },
         validSelection()
         {
@@ -139,7 +149,7 @@ export default {
             <div>{{$t(`dungeon.floor`)}}</div>
             <div>
                 <ul id="floorList">
-                    <li v-for="i in [1,2,3,4,5]" :class="getfloorListClass(i)" class="clickable" @click="selected_floor = i">{{i}}</li>
+                    <li v-for="i in [1,2,3,4,5]" :class="getfloorListClass(i)" class="" @click="onFloorClick(i)">{{i}}</li>
                 </ul>
             </div>
             <div style="margin-top: 30px;">{{$t(`dungeon.name`)}}</div>

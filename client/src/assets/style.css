@@ -110,3 +110,9 @@ button, input[type="submit"], input[type="reset"] {
 {
     color:purple;
 }
+
+.locked
+{
+    color:gray;
+    cursor:not-allowed
+}
