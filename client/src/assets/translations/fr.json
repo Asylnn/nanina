@@ -21,6 +21,7 @@
         "game_select":"Choisissez un jeu"
     },
     "dungeon":{
+        "challenge":"Le boss vous challenge à jouer cette map!",
         "leave":"partir du donjon",
         "dungeon":"Donjon",
         "floor":"Etage du donjon",

@@ -21,6 +21,8 @@
         "game_select":"Select a game"
     },
     "dungeon":{
+        "fight":"Fight !",
+        "challenge":"The boss challenges you to do this map!",
         "leave":"leave dungeon",
         "dungeon":"Dungeon",
         "floor":"Dungeon floor",
