@@ -109,7 +109,9 @@ export default {
     },
     computed:
     {
-        
+        mapURL(){
+            return `${this.active_dungeon.beatmap.url}#${this.active_dungeon.beatmap.mode}/${this.active_dungeon.beatmap.id}`
+        }
     },
     components :{
         WaifuDisplayComponent,
@@ -167,7 +169,7 @@ export default {
             </div>
         </div>
         <div v-else>
-            <h1>{{$t(`dungeon.${active_dungeon.dungeonTemplate.id}.name`)}} </h1>
+            <h1>{{$t(`dungeon.${active_dungeon.template.id}.name`)}} </h1>
             <div id="healthBarBox">
                 <div id="healthBar" :style="getHealthBarStyle()"></div>
              </div>
@@ -175,6 +177,7 @@ export default {
             <span>
                 {{ $t("dungeon.challenge") }}
             </span><br>
+            <a :href="mapURL"> <img id="bgMap" :src="active_dungeon.beatmap.beatmapset.covers.slimcover2x"></a>
             <button class="smallbutton" @click="LeaveDungeon">{{ $t("dungeon.fight") }}</button><br>
             <div id="waifuSelection">
                 <div class="waifuSlot">

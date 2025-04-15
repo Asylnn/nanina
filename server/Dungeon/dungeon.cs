@@ -10,17 +10,21 @@ Stats offensives pour les waifus :
 
 using Nanina.Communication;
 using Nanina.Database;
+using Nanina.Osu;
 using Nanina.UserData;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.WaifuData;
 using Newtonsoft.Json;
-using WebSocketSharp.Server;
 
 namespace Nanina.Dungeon
 {
     public partial class ActiveDungeon {
+        public Osu.Beatmap beatmap;
+        /*
+            The code should allow for any game in the future
+        */
         public ulong instanceId;
-        public Template dungeonTemplate;
+        public Template template;
         public string userId;
         public string sessionId;
         public List<Waifu> waifus;
@@ -33,18 +37,18 @@ namespace Nanina.Dungeon
         public byte floor;
         public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
 
-        public ActiveDungeon(Template dungeon, User user, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId, byte floor)
+        public ActiveDungeon(Template dungeon, UserData.User user, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId, byte floor)
         {
             instanceId = _instanceId;
             sessionId = _sessionId;
-            dungeonTemplate = dungeon;
-            dungeonTemplate.difficulty = floor;
-            dungeonTemplate.bossResistances.magicalResistance += 0.05f *(1f - floor);
-            dungeonTemplate.bossResistances.physicalResistance += 0.05f *(1f - floor);
-            dungeonTemplate.bossResistances.psychicResistance += 0.05f *(1f - floor);
+            template = dungeon;
+            template.difficulty = floor;
+            template.bossResistances.magicalResistance += 0.05f *(1f - floor);
+            template.bossResistances.physicalResistance += 0.05f *(1f - floor);
+            template.bossResistances.psychicResistance += 0.05f *(1f - floor);
             userId = user.Id;
             waifus = EquippedWaifus;
-            maxHealth = dungeonTemplate.maxHealthByFloor[floor-1];
+            maxHealth = template.maxHealthByFloor[floor-1];
             health = maxHealth;
             StartDungeon();
         }
@@ -55,6 +59,10 @@ namespace Nanina.Dungeon
             DungeonManager.UpdateDungeonOfClient(this);
         }
         public async void StartDungeon(){
+
+            beatmap = DBUtils.Get<Beatmap>(x => x.nanina_tag == template.game_playstyle, randomized:true);
+
+
             while (await damageTimer.WaitForNextTickAsync())
             {   
                 DealDamage();
@@ -74,16 +82,16 @@ namespace Nanina.Dungeon
                 string attackType;
 
                 if(waifu.Str >= waifu.Int && waifu.Str >= waifu.Kaw){
-                    dmg = waifu.Physical*(1 - dungeonTemplate.bossResistances.physicalResistance);
+                    dmg = waifu.Physical*(1 - template.bossResistances.physicalResistance);
                     attackType = "physical";
                 }
                     
                 else if(waifu.Int >= waifu.Str && waifu.Int >= waifu.Kaw){
-                    dmg = waifu.Magical*(1 - dungeonTemplate.bossResistances.magicalResistance);
+                    dmg = waifu.Magical*(1 - template.bossResistances.magicalResistance);
                     attackType = "magical";
                 }
                 else{
-                    dmg = waifu.Psychic*(1 - dungeonTemplate.bossResistances.psychicResistance);
+                    dmg = waifu.Psychic*(1 - template.bossResistances.psychicResistance);
                     attackType = "psychic";
                 }
                 var critDmgMult = (float)(Math.Truncate(waifu.CritChance)*waifu.CritDamage); //Super crit
@@ -92,7 +100,7 @@ namespace Nanina.Dungeon
                 
                 if(randCrit <= critChance)
                     critDmgMult += waifu.CritDamage;
-                dmg *= (1 + critDmgMult);
+                dmg *= 1 + critDmgMult;
                 health -= dmg;
                 log.Add(new () {
                     waifuId = waifu.id,
@@ -128,7 +136,7 @@ namespace Nanina.Dungeon
             });
             user.statCount.total_cleared_dungeon++;
             
-            User.RegenEnergy(user);
+            UserData.User.RegenEnergy(user);
             DBUtils.Update(user);
             DungeonManager.UpdateDungeonOfClient(this);
             

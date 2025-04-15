@@ -92,7 +92,7 @@ TODO : Modify break property in Maimai
 TODO : [BUG] Crash when schwartzchild (re:mast?)
 TODO : Add cross to menus to close them.
 TODO : Create an extention which add beatmaps to Nanina
-
+TODO : ActiveDungeon code should be compatible with any rhythm game
 
 
 

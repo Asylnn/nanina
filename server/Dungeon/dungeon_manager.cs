@@ -8,7 +8,7 @@ using WebSocketSharp.Server;
 namespace Nanina.Dungeon
 {
     public static class DungeonManager {
-        public static readonly Template[] dungeons = JsonConvert.DeserializeObject<Template[]>(File.ReadAllText(Global.config.dungeon_storage_path.ToString())); //Doesn't work with ToString ???
+        public static readonly Template[] dungeons = JsonConvert.DeserializeObject<Template[]>(File.ReadAllText(Global.config.dungeon_storage_path.ToString()));
         public static readonly Dictionary<ulong, ActiveDungeon> activeDungeons = [];
         private static ulong counter = 0;
         //Should be mutexed before release

@@ -87,6 +87,7 @@ namespace Nanina.Database
                     var mapsCol = (ILiteCollection<Beatmap>) col;
                     mapsCol.EnsureIndex(x => x.id, true);
                     mapsCol.EnsureIndex(x => x.difficulty_rating);
+                    mapsCol.EnsureIndex(x => x.nanina_tag);
                     break;
                 case Waifu:
                     var waifuCol = (ILiteCollection<Waifu>) col;

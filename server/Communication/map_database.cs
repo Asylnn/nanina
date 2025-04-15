@@ -1,6 +1,5 @@
 using WebSocketSharp.Server;
 using Newtonsoft.Json;
-using LiteDB;
 using Nanina.Database;
 using Nanina.Osu;
 
@@ -8,6 +7,11 @@ namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
     {
+        protected class AddMapRequest
+        {
+            public string id;
+            public NaninaStdTag tag;
+        }
         protected async void AddMapToDatabase(ClientWebSocketResponse rawData){
 
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
@@ -16,16 +20,19 @@ namespace Nanina.Communication
             if (!user.admin)
                 {Send(ClientNotification.NotificationData("Admin", "You don't have the permissions for this action!", 0)); return;}
 
-            var map = await Osu.Api.GetBeatmapById(rawData.data);
+            var request = JsonConvert.DeserializeObject<AddMapRequest>(rawData.data);
+
+            var map = await Osu.Api.GetBeatmapById(request.id);
             if(map == null) 
                 {Send(ClientNotification.NotificationData("Admin", "This beatmap doesn't exist!", 1)); return;}
 
 
-            /*Get maps col
-            If maps col not empty, test if it's already inside
-            if it's not inside, insert it in the db
+            /*
+                Get maps collection, test if the map is already inside. if it's not, insert it.
             */
+
             if(DBUtils.isMapADuplicate(map)){Send(ClientNotification.NotificationData("Admin", "The beatmap is already in the database!", 1)); return ;} //If the map is already on the data base, don't add it again.
+            map.nanina_tag = request.tag;
             DBUtils.Insert(map);
             Console.WriteLine("Adding map : " + map.id);
             Send(ClientNotification.NotificationData("Admin", "Added the beatmap into the database!", 3));

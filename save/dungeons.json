@@ -9,6 +9,7 @@
         },
         "maxHealthByFloor": [1001, 1002, 1003, 1004, 1005],
         "difficulty": 1,
+        "game_playstyle":-1,
         "setRewards": [
             0
         ],
@@ -117,6 +118,7 @@
         },
         "maxHealthByFloor": [630000, 1728000, 1000, 1000, 1000],
         "difficulty": 1,
+        "game_playstyle":0,
         "setRewards": [
             1
         ],
@@ -225,6 +227,7 @@
         },
         "maxHealthByFloor": [630000, 1728000, 1000, 1000, 1000],
         "difficulty": 1,
+        "game_playstyle":1,
         "setRewards": [
             0
         ],
@@ -333,6 +336,7 @@
         },
         "maxHealthByFloor": [630000, 1728000, 1000, 1000, 1000],
         "difficulty": 1,
+        "game_playstyle":2,
         "setRewards": [
             2
         ],

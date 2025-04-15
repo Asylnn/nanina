@@ -24,12 +24,12 @@ namespace Nanina.UserData.ItemData
         {
             for(int i = 0; i < numberOfEquipments; i++)
             {
-                Console.WriteLine(JsonConvert.SerializeObject(dungeon.dungeonTemplate.setRewards));
-                var setId = dungeon.dungeonTemplate.setRewards.RandomElement();
+                Console.WriteLine(JsonConvert.SerializeObject(dungeon.template.setRewards));
+                var setId = dungeon.template.setRewards.RandomElement();
                 var equipments = DBUtils.GetEquipmentsFromSet(setId);
                 var equipment = equipments.RandomElement();
 
-                var rarityWeights = Global.baseValues.equipment_rarity_probability[dungeon.dungeonTemplate.difficulty-1];
+                var rarityWeights = Global.baseValues.equipment_rarity_probability[dungeon.template.difficulty-1];
                 var totalWeight = rarityWeights.Sum();
                 var rand = new Random().NextDouble()*totalWeight;
                 //Make switch here
@@ -43,7 +43,7 @@ namespace Nanina.UserData.ItemData
                     equipment.rarity = 3;
                 else
                     equipment.rarity = 4;
-                equipment.Initialize(dungeon.dungeonTemplate);
+                equipment.Initialize(dungeon.template);
                 yield return equipment;
             }
         }

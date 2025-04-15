@@ -8,7 +8,7 @@ namespace Nanina.Dungeon
 {
     public partial class ActiveDungeon {
         public List<Equipment> GetLoot(double spent_energy){
-            var numberOfRewards = spent_energy/dungeonTemplate.numberOfRewardsPerEnergy;
+            var numberOfRewards = spent_energy/template.numberOfRewardsPerEnergy;
             var fraction = numberOfRewards - Math.Floor(numberOfRewards);
             numberOfRewards = Math.Floor(numberOfRewards);
             if(fraction >= new Random().NextDouble())

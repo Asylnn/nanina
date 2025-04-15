@@ -2,6 +2,12 @@ namespace Nanina.Osu
 {
     public class Beatmap : LookUpBeatmap
     {
+        /*
+            Those properties are Nanina specific and not from osu's api.
+        */
+        public NaninaStdTag nanina_tag { get; set; }
+        //For now let's use our own database for tags, I checked as of 15 march 2025 and you can't get tags from the api.
+
         public Beatmapset beatmapset { get; set; }
         public object failtimes { get; set; }
     }

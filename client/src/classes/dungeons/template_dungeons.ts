@@ -7,4 +7,5 @@ export default class DungeonTemplate {
     public setRewards : number[] = []; 
     public maxHealthByFloor = [Infinity, Infinity, Infinity, Infinity, Infinity]
     public difficulty = 0
+    public game_playstyle = 0
 }
