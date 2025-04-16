@@ -50,8 +50,7 @@ export default class User {
     constructor(obj : any){
 
         Object.assign(this, obj)
-        this.waifus.forEach(waifu => Object.assign(new Waifu({}), waifu))
-        //this.user.waifus = this.user.waifus.map(waifu => new Waifu(waifu))
+        this.waifus = this.waifus.map(waifu => new Waifu(waifu))
         if(this.fight?.timestamp != undefined)
             this.localFightTimestamp = this.fight.timestamp
             
