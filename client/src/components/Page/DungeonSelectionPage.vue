@@ -1,5 +1,4 @@
 <script lang="ts">
-import ActiveDungeon from '@/classes/dungeons/active_dungeon';
 import DungeonTemplate from '@/classes/dungeons/template_dungeons';
 import User from '@/classes/user/user';
 import type Waifu from '@/classes/waifu/waifu';
@@ -7,7 +6,7 @@ import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 
 export default {
-    name : "DungeonPage",
+    name : "DungeonSelectionPage",
     data() {
         return {
             selected_dungeon : null as string | null,
@@ -28,27 +27,25 @@ export default {
             type : Array<DungeonTemplate>,
             required : true
         },
-        active_dungeon: {
-            type : ActiveDungeon,
-            required : true
-        },
         user : {
             type : User,
             required: true
         }
     },
+    emits : ["enter-dungeon"],
     mounted(){
         this.availableWaifus = this.user.waifus
     },
+    components :{
+        WaifuDisplayComponent,
+        GridDisplayComponent,
+    },
     methods:{
         EnterDungeon(){
+            this.$emit("enter-dungeon")
             this.is_fighting_a_dungeon = true
             let waifuIds = this.waifuSelection.map(waifu => waifu!.id)
             this.SendToServer("start dungeon", JSON.stringify({id:this.selected_dungeon, waifuIds:waifuIds, floor:this.selected_floor}), this.user.Id)
-        },
-        LeaveDungeon(){
-            this.is_fighting_a_dungeon = false
-            this.SendToServer("stop dungeon", this.active_dungeon.instanceId, this.user.Id)
         },
         unequip(selectNumber : number, e : Event)
         {
@@ -98,25 +95,11 @@ export default {
                 return "selected"
             
         },
-        getHealthBarStyle()
-        {
-            return " width:" + 60*(this.active_dungeon.health/this.active_dungeon.maxHealth) + "vw";
-        },
         validSelection()
         {
             return this.selected_dungeon != null && this.selected_floor != null && this.waifuSelection.every(waifu => waifu != null)  
         }
     },
-    computed:
-    {
-        mapURL(){
-            return `${this.active_dungeon.beatmap.url}#${this.active_dungeon.beatmap.mode}/${this.active_dungeon.beatmap.id}`
-        }
-    },
-    components :{
-        WaifuDisplayComponent,
-        GridDisplayComponent
-    }
 }
 
 </script>
@@ -133,13 +116,7 @@ export default {
 
         
         
-        <div v-if="!is_fighting_a_dungeon" id="dungeonSelectionDisplay">
-            <!--<div v-if="selectedValidWaifus">
-                <select v-for="dungeon in dungeons" v-model="selected_dungeon">
-                    <option :value="dungeon" >{{$t(`dungeon.${dungeon.id}.name`)}}</option>
-                </select>
-                <button @click="EnterDungeon()">Enter Dungeon</button>
-            </div>-->
+        <div id="dungeonSelectionDisplay">
             
             <div id="waifuSelection">
                 <div @click.right="unequip(0, $event)" @click="openWaifuSelectorDisplay(0)" class="waifuSlot clickable">
@@ -166,38 +143,6 @@ export default {
             </div>
             <div v-if="validSelection()" style="margin-top: 50px;">
                 <button id="enterDungeonButton" @click="EnterDungeon()">Enter Dungeon</button>
-            </div>
-        </div>
-        <div v-else>
-            <h1>{{$t(`dungeon.${active_dungeon.template.id}.name`)}} </h1>
-            <div id="healthBarBox">
-                <div id="healthBar" :style="getHealthBarStyle()"></div>
-             </div>
-            <button class="smallbutton" @click="LeaveDungeon">{{ $t("dungeon.leave") }}</button><br>
-            <span>
-                {{ $t("dungeon.challenge") }}
-            </span><br>
-            <a :href="mapURL"> <img id="bgMap" :src="active_dungeon.beatmap.beatmapset.covers.slimcover2x"></a>
-            <button class="smallbutton" @click="LeaveDungeon">{{ $t("dungeon.fight") }}</button><br>
-            <div id="waifuSelection">
-                <div class="waifuSlot">
-                    <img :src="`${publicPath}waifu-image/${waifuSelection[0]?.imgPATH}`">
-                </div>
-                <div class="waifuSlot">
-                    <img :src="`${publicPath}waifu-image/${waifuSelection[1]?.imgPATH}`">
-                </div>
-                <div class="waifuSlot">
-                    <img :src="`${publicPath}waifu-image/${waifuSelection[2]?.imgPATH}`">
-                </div>
-            </div>
-            <div id="playingField">
-                <p> {{$t("dungeon.boss_health")}} : {{ active_dungeon.health }}/{{ Math.floor(active_dungeon.maxHealth) }}</p>
-                <div id="attackLines">
-                    Attacks : 
-                    <div v-for="log in active_dungeon.log">
-                        <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -253,11 +198,6 @@ export default {
     display: flex;
 }
 
-h1
-{
-    text-align: center;
-}
-
 #floorList
 {
     display:flex;
@@ -292,23 +232,6 @@ h1
     overflow: hidden;
 }
 
-#playingField {
-    height: 50vh;
-    width: 100vw;
-    background-image: url("src/assets/playingField.jpg");
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-#attackLines {
-    margin-top:37vh;
-    margin-left: 5vw;
-    height: 10vh;
-    width: 35vw;
-    font-size: small;
-    color:bisque;
-    overflow: scroll;
-}
-
 .clickable
 {
     cursor: pointer;
@@ -339,27 +262,6 @@ h1
 #enterDungeonButton:hover
 {
     color:purple;
-}
-
-#healthBarBox
-{
-    height: 40px;
-    width: 60vw;
-    border-radius: 100px;
-    border-style: solid;
-    border-color: blueviolet;
-    border-width: 10px;
-}
-
-#healthBar
-{
-    height: 40px;
-   
-
-    border-radius: 100px;
-    border-style: none;
-    border-width: 10px;
-    background-color: red;
 }
 
 </style>

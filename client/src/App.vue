@@ -34,7 +34,8 @@ import ItemManagerPage from './components/Admin/Manager/ItemManagerPage.vue'
 import WaifuDisplayComponent from './components/Component/WaifuDisplayComponent.vue'
 import InventoryManagerPage from './components/Admin/Manager/InventoryManagerPage.vue'
 import InventoryPage from './components/Page/InventoryPage.vue'
-import DungeonPage from './components/Page/DungeonPage.vue'
+import DungeonSelectionPage from './components/Page/DungeonSelectionPage.vue'
+import ActiveDungeonPage from './components/Page/ActiveDungeonPage.vue'
 import type DungeonTemplate from './classes/dungeons/template_dungeons'
 import type Banner from './classes/banner'
 import type Item from './classes/item/item'
@@ -69,6 +70,7 @@ export default {
 			localeSetByUser : false,
 			maimai_chart : null as Chart | null,
 			loots : [] as Array<Loot[]>,
+			inside_dungeon : false,
 		}
 	},
 	components: {
@@ -86,7 +88,8 @@ export default {
 		ItemManagerPage,
 		WaifuDisplayComponent,
 		InventoryManagerPage,
-		DungeonPage,
+		DungeonSelectionPage,
+		ActiveDungeonPage,
 		LootDisplayComponent,
 		UserWaifuManagerPage,
 	},	
@@ -313,7 +316,13 @@ export default {
 			<InventoryManagerPage :user="user" :items="item_db"></InventoryManagerPage>
 		</div>
 		<div v-else-if="loadingPage === 150">
-			<DungeonPage :dungeons="dungeons" :user="user" :active_dungeon="active_dungeon"></DungeonPage>
+			<div v-if="inside_dungeon">
+				<ActiveDungeonPage :user="user" :active_dungeon="active_dungeon" @leave-dungeon="inside_dungeon = false"></ActiveDungeonPage>
+			</div>
+			<div v-else>
+				<DungeonSelectionPage :dungeons="dungeons" :user="user" @enter-dungeon="inside_dungeon = true"></DungeonSelectionPage>
+			</div>
+			
 		</div>
 		<div v-else-if="loadingPage === 160">
 			<UserWaifuManagerPage  :user="user"></UserWaifuManagerPage>
