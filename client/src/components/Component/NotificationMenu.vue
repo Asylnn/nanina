@@ -87,4 +87,10 @@ img {
 #cross {
     width: 23px;
 }
+
+#cross, #arrow 
+{
+    cursor: pointer;
+}
+
 </style>
