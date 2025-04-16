@@ -102,7 +102,7 @@ export default {
             <p>{{ $t('option.link_osu_id')}}</p>
             <span>
                 <input type="number" v-model.number.lazy="entered_id">
-                <span id="userOsuId" v-if="user.verification.isOsuIdVerified"><img src="../assets/green_checkmark.png"></span>
+                <span id="userOsuId" v-if="user.verification.isOsuIdVerified"><img src="@/assets/green_checkmark.png"></span>
             </span>
             <button @click="updateSettings()">{{ $t('option.update') }}</button>
         </div>
@@ -115,7 +115,7 @@ export default {
         <p>{{ $t('option.link_maimai_token') }}</p>
         <div class="grid" id="maimaitoken">
             <input type="text" v-model.lazy="entered_token">
-            <span  v-if="user.verification.isMaimaiTokenVerified"><img src="../assets/green_checkmark.png"></span>
+            <span  v-if="user.verification.isMaimaiTokenVerified"><img src="@/assets/green_checkmark.png"></span>
             <button @click="verifyMaimaiToken()">{{ $t('option.update') }}</button>
         </div>
         
