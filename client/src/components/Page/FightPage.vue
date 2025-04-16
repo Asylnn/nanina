@@ -26,8 +26,6 @@ export default {
     data() {
         return {
             date_milli: Date.now(),
-            fight_timing_out: false,
-            claim_timing_out: false,
             config: config, //You have to do this to access config inside html code
             chosen_waifu : null as Waifu | null,
             game : this.user.preferedGame,
@@ -61,49 +59,24 @@ export default {
         
         if(this.user.fight.id != null){
             if(!this.user.fight.completed){
-                //this.fighting = true
-                this.SendToServer("get map back", this.user.fight.id, this.user.Id)
-            }
-            if(this.user.fight.timestamp + config.time_for_allowing_another_fight_in_milliseconds >= this.date_milli ){
-                this.fight_timing_out = true
-                this.user.localFightTimestamp = this.user.fight.timestamp 
+                if(this.beatmap?.id == undefined)
+                    this.SendToServer("get map back", this.user.fight.id, this.user.Id)
             }
         }
-        if(this.user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds >= this.date_milli){
-            this.fight_timing_out = true
-        }
-
-        if( this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds >= this.date_milli ){
-            this.claim_timing_out = true
-        }
-        setInterval(this.updateTimer, 1000)
+        setInterval(() => this.date_milli = Date.now(), 1000)
+        //This is necessary for the value of date_milli to be updated so the computed value can also be updated
     },
     
     methods: {
-        updateTimer() {
-
-            this.date_milli = Date.now()
-            console.log("local timestamp " + this.user.localFightTimestamp)
-            console.log("local config " + config.time_for_allowing_another_fight_in_milliseconds)
-            console.log("local date " + this.date_milli)
-            if(this.user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds < this.date_milli){
-                this.fight_timing_out = false
-            }
-            if(this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds < this.date_milli){
-                this.claim_timing_out = false
-            }
-        },
         fight(){
             this.user.localFightTimestamp = Date.now() 
-            this.fight_timing_out = true
-            this.updateTimer()
+            User.updateTimer(this.user)
             this.SendToServer("get map to fight", this.game.toString(), this.user.Id)
         },
         getXP(){
             if(this.chosen_waifu != null){ //This shouldn't happen?
                 this.user.claimTimestamp = Date.now()
-                this.claim_timing_out = true
-                this.updateTimer()
+                User.updateTimer(this.user)
                 this.SendToServer("claim fight", JSON.stringify({waifuId:this.chosen_waifu.id, game:this.game}), this.user.Id)
             }
         },
@@ -120,8 +93,17 @@ export default {
     computed:{
         mapURL(){
             return `${this.beatmap.url}#${this.beatmap.mode}/${this.beatmap.id}`
-        }
-    }
+        },
+        fightWaitTime()
+        {
+            console.log("date milli", this.date_milli)
+            return Math.ceil((this.user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - this.date_milli)/60000*60)
+        },
+        claimWaitTime()
+        {
+            return Math.ceil((this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - this.date_milli)/60000*60)
+        },
+    },
 }
 
 
@@ -144,8 +126,8 @@ export default {
                 Do you think you have what it takes to succeed ?<br>
                 It's time to find out !
             </p>
-            <span class="button timer" v-if="fight_timing_out">
-                Wait {{ Math.round((user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - date_milli)/60000*60)  }} seconds
+            <span class="button timer" v-if="user.fight_timing_out">
+                Wait {{ fightWaitTime  }} seconds
             </span>
             <span class="button" v-else @click="fight">Fight !</span>
             <div class="flex" v-if="game == Game.OsuStandard">
@@ -178,8 +160,8 @@ export default {
                     <div id="selectedWaifu">
                         <GridDisplayComponent :no-margin="true" @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
                     </div>
-                    <span class="button timer" v-if="claim_timing_out">
-                        Wait {{ Math.round((user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - date_milli)/60000*60)  }} seconds
+                    <span class="button timer" v-if="user.claim_timing_out">
+                        Wait {{ claimWaitTime  }} seconds
                     </span>
                     <span class="button" v-else @click="getXP">Prove that you are worth getting XP !</span><br>
                 </div>

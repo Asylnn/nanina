@@ -181,13 +181,9 @@ export default {
 					break
 				case "user" :
 					this.logged = true
-					console.log("user : ")
-					console.log(new User(JSON.parse(res.data)))
-					let localFightTimestamp = this.user.localFightTimestamp
 					this.user = new User(JSON.parse(res.data))
-					this.user.waifus = this.user.waifus.map(waifu => new Waifu(waifu))
-					this.user.localFightTimestamp = localFightTimestamp
-
+					console.log("user : ")
+					console.log(this.user)
 					this.$i18n.locale = this.user.locale
 					this.localeSetByUser = true
 					/*if(this.user.admin){

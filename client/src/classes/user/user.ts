@@ -5,6 +5,7 @@ import PullBannerHistory from './pull_history'
 import type Fight from './fight'
 import type Inventory from './inventory'
 import type Game from './game'
+import config from '../../../../baseValues.json'
 
 
 
@@ -25,7 +26,7 @@ export default class User {
     public avatarPATH : string = ""
     public gacha_currency : number = 0
     public pullBannerHistory: Dictionary<PullBannerHistory> = {}//?
-    public localFightTimestamp : number = 0
+    
     public claimTimestamp : number = 0
     public fightHistory : Dictionary<string[]> = {}
     public fight! : Fight
@@ -33,14 +34,39 @@ export default class User {
     public lvlRewards! : number
     public preferedGame! : Game
 
+    /*
+        Local only properties
+    */
+
+    public localFightTimestamp = 0
+    public fight_timing_out = false
+    public claim_timing_out = false
+
     public get totalClaims() : number{
         return this.statCount.maimai_claim_count + this.statCount.std_claim_count
     }
     
     public verification : any = {} //One day any objects should be properly be typed
     constructor(obj : any){
+
         Object.assign(this, obj)
         this.waifus.forEach(waifu => Object.assign(new Waifu({}), waifu))
+        //this.user.waifus = this.user.waifus.map(waifu => new Waifu(waifu))
+        if(this.fight?.timestamp != undefined)
+            this.localFightTimestamp = this.fight.timestamp
+            
+        if(this.Id != "772277")
+            User.updateTimer(this)
+            setInterval(User.updateTimer, 1000, this)
+
+        
+
+    }
+
+    static updateTimer(user: User) {
+        let date_milli = Date.now()
+        user.fight_timing_out = user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds >= date_milli
+        user.claim_timing_out = user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds >= date_milli
     }
 }
 
