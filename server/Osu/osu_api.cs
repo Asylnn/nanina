@@ -164,7 +164,7 @@ namespace Nanina.Osu
             beatmap.beatmapset.covers.cover2x ??= beatmap.beatmapset.covers.cover2x.Replace("cover2x", "cover@2x");
             if(beatmap.beatmapset.covers.card2x != null) beatmap.beatmapset.covers.card2x = beatmap.beatmapset.covers.card2x.Replace("card2x", "card@2x");
             if(beatmap.beatmapset.covers.list2x != null) beatmap.beatmapset.covers.list2x = beatmap.beatmapset.covers.list2x.Replace("list2x", "list@2x");
-            if(beatmap.beatmapset.covers.slimcover2x != null) beatmap.beatmapset.covers.slimcover2x = beatmap.beatmapset.covers.slimcover2x.Replace("slimcover", "slimcover@2x");
+            if(beatmap.beatmapset.covers.slimcover2x != null) beatmap.beatmapset.covers.slimcover2x = beatmap.beatmapset.covers.slimcover2x.Replace("slimcover2x", "slimcover@2x");
             return beatmap;
         }
 
