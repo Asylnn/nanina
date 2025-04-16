@@ -36,6 +36,8 @@ TODO : Add regen tick clock on client
 TODO : Simple remove cherish battery use interface
             (cross, escape or outside click?)
 TODO : [BUG] Cherish battery use, item count doesn't decrease
+TODO : [BUG] First dungeon never works (blank page)
+TODO : [BUG] Dungeon page is very laggy?
 
 Release Version 0.2 (Public release?)
 
@@ -93,7 +95,7 @@ TODO : [BUG] Crash when schwartzchild (re:mast?)
 TODO : Add cross to menus to close them.
 TODO : Create an extention which add beatmaps to Nanina
 TODO : ActiveDungeon code should be compatible with any rhythm game
-
+TODO : Create a search bar for items
 
 
 
