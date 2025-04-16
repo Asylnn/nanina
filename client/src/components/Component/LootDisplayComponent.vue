@@ -1,7 +1,7 @@
 <script lang="ts">
 import type Loot from '@/classes/loot/loot';
 import LootType from '@/classes/loot/loot_type';
-import ItemComponent from '@/components/ItemComponent/ItemComponent.vue';
+import ItemComponent from './ItemComponent.vue';
 import LootComponent from './LootComponent.vue';
 
 export default {

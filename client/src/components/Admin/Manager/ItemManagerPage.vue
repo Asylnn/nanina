@@ -2,8 +2,8 @@
 import Item from '@/classes/item/item';
 import Equipment from '@/classes/item/equipment';
 import ItemType from '@/classes/item/item_type';
-import ItemManagerComponent from './ItemManagerComponent/ItemManagerComponent.vue';
-import SetManagerComponent from './ItemManagerComponent/SetManagerComponent.vue';
+import ItemManagerComponent from './ItemManagerComponent.vue';
+import SetManagerComponent from './SetManagerComponent.vue';
 import Set from '@/classes/item/set'
 
 export default {
@@ -16,10 +16,6 @@ export default {
     props:{ 
         item_db :{
             type: Array<Item>,
-            required : true,
-        },
-        equipment_db :{
-            type: Array<Equipment>,
             required : true,
         },
         set_db: {
@@ -51,17 +47,11 @@ export default {
         DeleteItem(id: number){
             this.item_db.splice(this.item_db.findIndex(item => item.id == id), 1)
         },
-        DeleteEquipment(id: number){
-            this.equipment_db.splice(this.equipment_db.findIndex(equipment => equipment.id == id), 1)
-        },
         AddSet(){
             this.set_db.push(new Set())
         },
         AddItem(){
             this.item_db.push(new Item())
-        },
-        AddEquipment(){
-            this.equipment_db.push(new Equipment())
         },
         UpdateDatabase(){
             //this.equipment = this.item_db.filter(item => item.type == ItemType.Equipment) as Equipment[]
@@ -69,7 +59,7 @@ export default {
             this.waifu_consumable = this.item_db.filter(item => item.type == ItemType.WaifuConsumable) as Item[]
             this.user_consumable = this.item_db.filter(item => item.type == ItemType.UserConsumable) as Item[]*/
             var new_item_db = {
-                equipment:this.equipment_db,
+                equipment:this.item_db.filter(item => item.type == ItemType.Equipment),
                 material:this.item_db.filter(item => item.type == ItemType.Material),
                 waifu_consumable:this.item_db.filter(item => item.type == ItemType.WaifuConsumable),
                 user_consumable:this.item_db.filter(item => item.type == ItemType.UserConsumable),
@@ -86,8 +76,7 @@ export default {
     <div class="InventoryHeader">
         <ul id="InventoryPages">
             <li @click="onClickChangePage(1)"><span>Item</span></li>
-            <li @click="onClickChangePage(2)"><span>Equipment</span></li>
-            <li @click="onClickChangePage(3)"><span>Set</span></li>
+            <li @click="onClickChangePage(2)"><span>Set</span></li>
         </ul>
     </div>
     <div class="InventoryBody">
@@ -98,14 +87,6 @@ export default {
             <button @click="AddItem">Add Item</button>
             <div v-for="item in item_db">
                 <ItemManagerComponent :item="item" @delete-item="DeleteItem"></ItemManagerComponent>
-            </div>
-        </div>
-        <div v-else-if="page == 2">
-            <div>Equipment</div>
-            
-            <button @click="AddEquipment">Add Equipment</button>
-            <div v-for="equipment in equipment_db">
-                <ItemManagerComponent :item="equipment" @delete-item="DeleteEquipment"></ItemManagerComponent>
             </div>
         </div>
         <div v-else>
@@ -131,6 +112,7 @@ export default {
     text-align: center;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
 }
+
 .img{
     max-width: 32px;
 }

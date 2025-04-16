@@ -1,7 +1,7 @@
 <script lang="ts">
 
 import WaifuManagerComponent from './WaifuManagerComponent.vue'
-import Waifu from '../classes/waifu/waifu';
+import Waifu from '../../../classes/waifu/waifu';
 import User from '@/classes/user/user';
 
 export default {

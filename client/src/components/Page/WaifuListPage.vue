@@ -1,8 +1,8 @@
 <script lang="ts">
 
 import Waifu from '@/classes/waifu/waifu';
-import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
-import GridDisplayComponent from './GridDisplayComponent.vue';
+import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
+import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import User from '@/classes/user/user';
 
 export default {

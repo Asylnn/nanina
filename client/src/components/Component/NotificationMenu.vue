@@ -33,8 +33,8 @@ export default {
         <div v-if="notifs[0] != null">
             <div id="firstLine">
                 <div @click="updateShowAll()"></div>
-                <img id="arrow" src="../assets/fleche-vers-le-bas.png" alt="" @click="updateShowAll()">
-                <img id="cross" src="../assets/x.png" alt="" @click="deleteMenu()">
+                <img id="arrow" src="@/assets/fleche-vers-le-bas.png" alt="" @click="updateShowAll()">
+                <img id="cross" src="@/assets/x.png" alt="" @click="deleteMenu()">
             </div>
                 
             <div v-if="showAll">

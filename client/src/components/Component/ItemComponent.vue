@@ -2,7 +2,7 @@
 import Equipment from '@/classes/item/equipment';
 import Item from '@/classes/item/item';
 import ItemType from '@/classes/item/item_type';
-import ModifierComponent from '../ModifierComponent.vue';
+import ModifierComponent from './ModifierComponent.vue';
 
 export default {
     name : "ItemComponent",

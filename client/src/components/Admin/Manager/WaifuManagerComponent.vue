@@ -1,7 +1,7 @@
 <script lang="ts">
 
 
-import Waifu from '../classes/waifu/waifu';
+import Waifu from '../../../classes/waifu/waifu';
 export default {
     name : "WaifuManagerComponent",
     props:{

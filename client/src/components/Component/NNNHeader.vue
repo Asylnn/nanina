@@ -2,8 +2,8 @@
 <script lang="ts">
 
 import type { PropType } from 'vue';
-import Page from '../classes/page';
-import config from '../../../config.json'
+import Page from '../../classes/page';
+import config from '../../../../config.json'
 import User from '@/classes/user/user';
 import ItemUse from './ItemUse.vue';
 
@@ -97,18 +97,18 @@ export default {
                 </select>
             </div>
             <div class="butitem halo" v-if="!logged">
-                <a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url"><img id="discordLogin" src="../assets/discord.png"></a>
+                <a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url"><img id="discordLogin" src="@/assets/discord.png"></a>
             </div>
             <div class="butitem halo" @click="onClickChangePage(5)" v-else>
-                <img height=38px width=38px src="../assets/settings.png">
+                <img height=38px width=38px src="@/assets/settings.png">
             </div>
             <div id="user" class="butitem" v-if="logged" @click="onClickChangePage(4)"><img :src="`${user.avatarPATH}?size=40`"></div>
             
         </div>
         <div v-if="logged" id="energy">
-            <div><img height=30px width=30px src="../assets/heart.svg"></div>
+            <div><img height=30px width=30px src="@/assets/heart.svg"></div>
             <div id="energyAmount" v-if="logged" :style="getEnergyColor()" ><p >{{ Math.floor(user.energy) }}</p></div>
-            <div @click="showEnergyItems = !showEnergyItems"><img id="addEnergy" height=26px width=26px src="../assets/plus.svg"></div>
+            <div @click="showEnergyItems = !showEnergyItems"><img id="addEnergy" height=26px width=26px src="@/assets/plus.svg"></div>
             <ItemUse v-if="showEnergyItems" :user="user" :item-ids=[4]></ItemUse>
         </div>
         

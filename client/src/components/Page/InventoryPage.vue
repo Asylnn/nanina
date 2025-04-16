@@ -1,8 +1,8 @@
 <script lang="ts">
 import type Equipment from '@/classes/item/equipment';
 import User from '@/classes/user/user';
-import ItemComponent from './ItemComponent/ItemComponent.vue';
-import GridDisplayComponent from './GridDisplayComponent.vue';
+import ItemComponent from '../Component/ItemComponent.vue';
+import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import Item from '@/classes/item/item';
 
 export default {

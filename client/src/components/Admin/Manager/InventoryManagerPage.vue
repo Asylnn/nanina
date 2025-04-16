@@ -1,10 +1,10 @@
 <script lang="ts">
 import type Equipment from '@/classes/item/equipment';
-import InventoryPage from './InventoryPage.vue';
+import InventoryPage from '../../Page/InventoryPage.vue';
 import User from '@/classes/user/user';
 import Item from '@/classes/item/item';
 import ItemType from '@/classes/item/item_type';
-import ItemManagerComponent from './ItemManagerComponent/ItemManagerComponent.vue';
+import ItemManagerComponent from './ItemManagerComponent.vue';
 
 /*Selectionner un user pour regarder son inventaire et pouvoir le modifier ##PLUS TARD
 * Ajouter un item -> 

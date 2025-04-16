@@ -1,4 +1,7 @@
 2025 week 15 :
 Continue dungeon page : Asyln
-Put some paint on asyln frontend (CSS) : Glou Glou
+Put some paint on frontend (CSS) : Glou Glou
 Put every tab database related into a list (like activities) : Glou Glou #Done
+
+2025 week 16 :
+Continue dungeon page : Asyln

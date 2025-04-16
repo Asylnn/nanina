@@ -3,8 +3,8 @@ import ActiveDungeon from '@/classes/dungeons/active_dungeon';
 import DungeonTemplate from '@/classes/dungeons/template_dungeons';
 import User from '@/classes/user/user';
 import type Waifu from '@/classes/waifu/waifu';
-import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
-import GridDisplayComponent from './GridDisplayComponent.vue';
+import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
+import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 
 export default {
     name : "DungeonPage",

@@ -1,12 +1,12 @@
 <script lang="ts">
 
 import OsuBeatmapset from '@/classes/beatmapset';
-import config from '../../../baseValues.json'
+import config from '../../../../baseValues.json'
 
 import OsuBeatmap from '@/classes/beatmap';
 import User from '@/classes/user/user';
 import Waifu from '@/classes/waifu/waifu';
-import GridDisplayComponent from './GridDisplayComponent.vue';
+import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import Chart from '@/classes/maimai/chart';
 import Game from '@/classes/user/game';
 

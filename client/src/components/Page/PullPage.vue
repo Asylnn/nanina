@@ -2,11 +2,11 @@
 
 import Waifu from '@/classes/waifu/waifu';
 import Banner from '@/classes/banner';
-import WaifuDisplayComponent from './WaifuDisplayComponent.vue';
+import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
 import PullBannerHistory from '@/classes/user/pull_history';
 import type Dictionary from '@/classes/dictionary';
 import User from '@/classes/user/user';
-import GridDisplayComponent from './GridDisplayComponent.vue';
+import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 
 export default {
     name : "PullPage",

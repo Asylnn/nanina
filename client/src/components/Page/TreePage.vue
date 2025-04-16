@@ -3,7 +3,7 @@ import User from '@/classes/user/user';
 import { WebsocketEvent, type Websocket } from 'websocket-ts';
 import type WebSocketReponse from '@/classes/web_socket_response'
 import type Loot from '@/classes/loot/loot';
-import LootComponent from '@/loot/LootComponent.vue';
+import LootComponent from '@/components/Component/LootComponent.vue';
 
 export default {
     name : "TreePage",

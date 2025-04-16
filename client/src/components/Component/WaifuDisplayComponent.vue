@@ -4,7 +4,7 @@ import GridDisplayComponent from './GridDisplayComponent.vue';
 import User from '@/classes/user/user';
 import EquipmentPiece from '@/classes/item/piece';
 import Equipment from '@/classes/item/equipment';
-import ItemComponent from './ItemComponent/ItemComponent.vue';
+import ItemComponent from './ItemComponent.vue';
 import StatModifier from '@/classes/modifiers/stat_modifier';
 
 export default {
