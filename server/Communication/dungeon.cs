@@ -45,5 +45,25 @@ namespace Nanina.Communication
             var dungeon = DungeonManager.activeDungeons[Convert.ToUInt64(rawData.data)];
             dungeon.StopDungeon();
         }
+
+
+        protected async void ClaimDungeonFight(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user == null)
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
+            var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
+            if(session == null)
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
+            if(user.claimTimestamp + Global.baseValues.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) 
+                { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
+
+            var score = await CheckForOsuStandardScores(user);
+            var mult = Osu.Api.GetDungeonMult(score);
+
+            var dungeon = DungeonManager.activeDungeons[Convert.ToUInt64(rawData.data)];
+            dungeon.DealDamage(mult);
+            DungeonManager.UpdateDungeonOfClient(dungeon);
+        }
     }
 }

@@ -75,32 +75,40 @@ namespace Nanina.Dungeon
             }
         }
 
-        public void DealDamage(){
+        public (float, string) GetDamage(Waifu waifu)
+        {
+            float dmg;
+            string attackType;
+
+            if(waifu.Str >= waifu.Int && waifu.Str >= waifu.Kaw){
+                dmg = waifu.Physical*(1 - template.bossResistances.physicalResistance);
+                attackType = "physical";
+            }
+                
+            else if(waifu.Int >= waifu.Str && waifu.Int >= waifu.Kaw){
+                dmg = waifu.Magical*(1 - template.bossResistances.magicalResistance);
+                attackType = "magical";
+            }
+            else{
+                dmg = waifu.Psychic*(1 - template.bossResistances.psychicResistance);
+                attackType = "psychic";
+            }
+            var critDmgMult = (float)(Math.Truncate(waifu.CritChance)*waifu.CritDamage); //Super crit
+            var critChance = waifu.CritChance - Math.Truncate(waifu.CritChance);
+            var randCrit = new Random().NextDouble();
+            
+            if(randCrit <= critChance)
+                critDmgMult += waifu.CritDamage;
+            dmg *= 1 + critDmgMult;
+            return (dmg, attackType);
+        }
+        public void DealDamage(float mult = 1f){
             foreach (var waifu in waifus) 
             {
-                float dmg;
-                string attackType;
-
-                if(waifu.Str >= waifu.Int && waifu.Str >= waifu.Kaw){
-                    dmg = waifu.Physical*(1 - template.bossResistances.physicalResistance);
-                    attackType = "physical";
-                }
-                    
-                else if(waifu.Int >= waifu.Str && waifu.Int >= waifu.Kaw){
-                    dmg = waifu.Magical*(1 - template.bossResistances.magicalResistance);
-                    attackType = "magical";
-                }
-                else{
-                    dmg = waifu.Psychic*(1 - template.bossResistances.psychicResistance);
-                    attackType = "psychic";
-                }
-                var critDmgMult = (float)(Math.Truncate(waifu.CritChance)*waifu.CritDamage); //Super crit
-                var critChance = waifu.CritChance - Math.Truncate(waifu.CritChance);
-                var randCrit = new Random().NextDouble();
                 
-                if(randCrit <= critChance)
-                    critDmgMult += waifu.CritDamage;
-                dmg *= 1 + critDmgMult;
+                var (dmg, attackType) = GetDamage(waifu);
+                dmg *= mult;
+
                 health -= dmg;
                 log.Add(new () {
                     waifuId = waifu.id,

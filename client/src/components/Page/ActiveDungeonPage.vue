@@ -1,12 +1,16 @@
 <script lang="ts">
 import ActiveDungeon from '@/classes/dungeons/active_dungeon';
 import User from '@/classes/user/user';
+import config from '../../../../baseValues.json'
+import { WebsocketEvent, type Websocket } from 'websocket-ts';
+import type WebSocketReponse from '@/classes/web_socket_response'
 
 export default {
     name : "ActiveDungeonPage",
     data() {
         return {
             publicPath : import.meta.env.BASE_URL,
+            date_milli: Date.now(),
         }
 
     },
@@ -30,12 +34,28 @@ export default {
         {
             return " width:" + 60*(this.active_dungeon.health/this.active_dungeon.maxHealth) + "vw";
         },
+        claimDungeon()
+        {
+            this.user.claimTimestamp = Date.now()
+            User.updateTimer(this.user)
+            this.SendToServer("claim dungeon fight", this.active_dungeon.instanceId, this.user.Id)
+            
+        }
+    },
+    mounted(){
+        
+        setInterval(() => this.date_milli = Date.now(), 1000)
+        //This is necessary for the value of date_milli to be updated so the computed value can also be updated
     },
     computed:
     {
         mapURL(){
             return `${this.active_dungeon.beatmap.url}#${this.active_dungeon.beatmap.mode}/${this.active_dungeon.beatmap.id}`
-        }
+        },
+        claimWaitTime()
+        {
+            return Math.ceil((this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - this.date_milli)/60000*60)
+        },
     },
 }
 
@@ -53,7 +73,7 @@ export default {
                 {{ $t("dungeon.challenge") }}
             </span><br>
             <a :href="mapURL"> <img id="bgMap" :src="active_dungeon.beatmap.beatmapset.covers.slimcover2x"></a>
-            <button class="smallbutton" @click="LeaveDungeon">{{ $t("dungeon.fight") }}</button><br>
+            <button class="smallbutton" @click="claimDungeon">{{ $t("dungeon.fight") }}</button><br>
             <div id="waifuSelection">
                 <div class="waifuSlot">
                     <img :src="`${publicPath}waifu-image/${active_dungeon.waifus[0].imgPATH}`">

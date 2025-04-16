@@ -109,6 +109,36 @@ namespace Nanina.Osu
             return xp;
         }
 
+        public static float GetDungeonMult(ScoreExtended score)
+        {
+            /*star rating multiplicator   : (2 + e**(0.45*x))/3.57
+            acc multiplicator           : (x^2) // (x/0.95)^1.2*(1/(1 + e^(-20*(x-0.65))))
+            drain time multplicator     : ((x^0.4)/1.18)
+            combo multiplicator         : (x^0.15)
+            */
+            /*
+                To add : OD, CS buff, low AR buff
+                HD : +10%?
+            */
+            Console.WriteLine(JsonConvert.SerializeObject(score.beatmapset.title));
+            var star_rating_multiplicator = 1 + Math.Log10(1 + score.beatmap.difficulty_rating);
+            var acc_multiplicator = Math.Min(Math.Pow(score.accuracy/0.95f, 1.2)*(1f/(1f + Math.Pow(Math.E, -20f*(score.accuracy - 0.65f)))), 1);
+            var drain_time_multiplicator = 0.1 + Math.Pow(score.beatmap.hit_length/60f, 0.4)/1.18f;
+            var combo_multiplicator = Math.Pow(score.max_combo/(score.beatmap.count_circles + score.beatmap.count_sliders*2f + score.beatmap.count_spinners), 0.15);
+            Console.WriteLine("star_rating_multiplicator : " + star_rating_multiplicator);
+            Console.WriteLine("acc_multiplicator : " + acc_multiplicator);
+            Console.WriteLine("drain_time_multiplicator : " + drain_time_multiplicator);
+            Console.WriteLine("drain_time : " + score.beatmap.hit_length);
+            Console.WriteLine("combo_multiplicator : " + combo_multiplicator);
+            
+            var xp =  (uint) Math.Ceiling(acc_multiplicator*drain_time_multiplicator*star_rating_multiplicator*combo_multiplicator/12);
+            Console.WriteLine("xp: " + xp);
+            
+            var mult = 1f + xp/1000f;
+            Console.WriteLine("mult: " + mult);
+            return (float)(mult *Global.baseValues.fight_damage_multiplier);
+        }
+
         public static async Task<Beatmap> GetBeatmapById(string beatmapId)
         {
             var request = new RestRequest($"/beatmaps/{beatmapId}", Method.Get);

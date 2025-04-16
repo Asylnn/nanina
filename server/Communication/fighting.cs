@@ -114,7 +114,13 @@ namespace Nanina.Communication
             if(claim.game == Game.MaimaiFinale)                
                 (baseXP, ratio) = await CheckForMaimaiScores(user);
             else
-                (baseXP, ratio) = await CheckForOsuStandardScores(user);
+            {
+                var score = await CheckForOsuStandardScores(user);
+                if(score == null)
+                    (baseXP, ratio) = (0,1);
+                else
+                    (baseXP, ratio) = (Osu.Api.GetXP(score), score.beatmap.hit_length/240f);
+            }
 
             if(baseXP == 0) return;
 
@@ -194,10 +200,10 @@ namespace Nanina.Communication
             public string waifuId;
             public Game game;
         }
-        protected async Task<(uint xp, double ratio)> CheckForOsuStandardScores(UserData.User user){
+        protected async Task<ScoreExtended> CheckForOsuStandardScores(UserData.User user){
 
             if(!user.verification.isOsuIdVerified) 
-                { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return (0,1); }
+                { Send(ClientNotification.NotificationData("Fighting", "You didn't verify your osu account! Go to the settings and enter your osu id!", 0)); return null; }
             
             user.claimTimestamp = Utils.GetTimestamp();
             var scores = await Osu.Api.GetUserRecentScores(user.ids.osuId, "osu");
@@ -206,7 +212,7 @@ namespace Nanina.Communication
 
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
             if(scores.Count() == 0) 
-                { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores! (OR osu api keys are expired)", 3)); return (0,1); }                    
+                { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores! (OR osu api keys are expired)", 3)); return null; }                    
 
             //var validscore = Array.Find(scores, score => user.fight.id == score.beatmap.id.ToString());
             
@@ -215,10 +221,10 @@ namespace Nanina.Communication
 
             if(validscore == null){
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
-                Send(ClientNotification.NotificationData("Fighting", "You didn't do the beatmap (must be a pass)", 0)); return (0,1);
+                Send(ClientNotification.NotificationData("Fighting", "You didn't do the beatmap (must be a pass)", 0)); return null;
             }
             
-            return (Osu.Api.GetXP(validscore), validscore.beatmap.hit_length/240f);
+            return validscore;
         }
     }
 }

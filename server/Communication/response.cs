@@ -107,6 +107,9 @@ namespace Nanina.Communication
                     case "update user waifus":
                         UpdateUserWaifus(rawData);
                         break;
+                    case "claim dungeon fight":
+                        ClaimDungeonFight(rawData);
+                        break;
                 }
             }
             catch(Exception err)
