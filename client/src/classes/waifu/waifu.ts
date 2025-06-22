@@ -4,7 +4,6 @@ import type WaifuEquipmentManager from "./equipment"
 import OperationType from "../modifiers/operation_type"
 
 export default class Waifu {
-    public name : string = "Rem"
     public id : string = "42"
     public xp : number = 0
     public lvl : number = 1

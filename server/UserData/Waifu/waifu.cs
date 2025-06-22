@@ -17,7 +17,6 @@ namespace Nanina.UserData.WaifuData
 {
     public class Waifu
     {
-        public string name { get; set; }
         public uint xp { get; set; } = 0;
         public byte lvl { get; set; } = 1;
         public float diffLvlUp { get; set; }
@@ -106,7 +105,6 @@ namespace Nanina.UserData.WaifuData
             var DBwaifu = DBUtils.Get<Waifu>(x => x.id == id);
             diffLvlUp = DBwaifu.diffLvlUp;
             imgPATH = DBwaifu.imgPATH;
-            name = DBwaifu.name;
             o_str = DBwaifu.o_str;
             u_str = DBwaifu.u_str;
             b_str = o_str + (lvl-1u)*u_str;
