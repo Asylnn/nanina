@@ -20,7 +20,7 @@ export default class User {
     public max_energy!: number
     public ids : any = {}
     public statCount : StatCount = new StatCount()
-    public waifus : Waifu[] = [new Waifu({})]
+    public waifus : Waifu[] = []
     public Id : string = "772277"
     public locale : string = "en"
     public avatarPATH : string = ""
