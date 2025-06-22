@@ -95,7 +95,6 @@ namespace Nanina.Database
             Console.WriteLine("Launching first time configuration ...");
             var waifu = new Waifu()
             {
-                name = "Rem",
                 imgPATH = "GYrXGACboAACxp7.jpg",
                 diffLvlUp = 3,
                 id = "0",

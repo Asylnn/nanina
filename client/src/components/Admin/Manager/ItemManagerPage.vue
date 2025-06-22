@@ -11,11 +11,16 @@ export default {
     data() {
         return {
             page: 1,
+            db : [] as Array<Item>
         }
     },
     props:{ 
         item_db :{
             type: Array<Item>,
+            required : true,
+        },
+        equipment_db:{
+            type: Array<Equipment>,
             required : true,
         },
         set_db: {
@@ -33,7 +38,7 @@ export default {
         SetManagerComponent,
     },
     mounted() {
-        
+        this.db = this.item_db.concat(this.equipment_db)
         
         
     },
@@ -45,13 +50,13 @@ export default {
             this.set_db.splice(this.set_db.findIndex(set => set.id == id), 1)
         },
         DeleteItem(id: number){
-            this.item_db.splice(this.item_db.findIndex(item => item.id == id), 1)
+            this.db.splice(this.db.findIndex(item => item.id == id), 1)
         },
         AddSet(){
             this.set_db.push(new Set())
         },
         AddItem(){
-            this.item_db.push(new Item())
+            this.db.push(new Item())
         },
         UpdateDatabase(){
             //this.equipment = this.item_db.filter(item => item.type == ItemType.Equipment) as Equipment[]
@@ -59,10 +64,10 @@ export default {
             this.waifu_consumable = this.item_db.filter(item => item.type == ItemType.WaifuConsumable) as Item[]
             this.user_consumable = this.item_db.filter(item => item.type == ItemType.UserConsumable) as Item[]*/
             var new_item_db = {
-                equipment:this.item_db.filter(item => item.type == ItemType.Equipment),
-                material:this.item_db.filter(item => item.type == ItemType.Material),
-                waifu_consumable:this.item_db.filter(item => item.type == ItemType.WaifuConsumable),
-                user_consumable:this.item_db.filter(item => item.type == ItemType.UserConsumable),
+                equipment:this.db.filter(item => item.type == ItemType.Equipment),
+                material:this.db.filter(item => item.type == ItemType.Material),
+                waifu_consumable:this.db.filter(item => item.type == ItemType.WaifuConsumable),
+                user_consumable:this.db.filter(item => item.type == ItemType.UserConsumable),
             }
             this.SendToServer("update item db", JSON.stringify(new_item_db), this.id)
             this.SendToServer("update set db", JSON.stringify(this.set_db), this.id)
@@ -85,7 +90,7 @@ export default {
             <div>Item</div>
             
             <button @click="AddItem">Add Item</button>
-            <div v-for="item in item_db">
+            <div v-for="item in db">
                 <ItemManagerComponent :item="item" @delete-item="DeleteItem"></ItemManagerComponent>
             </div>
         </div>
