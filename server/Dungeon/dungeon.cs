@@ -112,7 +112,6 @@ namespace Nanina.Dungeon
                 health -= dmg;
                 log.Add(new () {
                     waifuId = waifu.id,
-                    waifuName = waifu.name,
                     attackType = attackType,
                     dmg = dmg,
                 });
