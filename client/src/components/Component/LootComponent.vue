@@ -32,11 +32,11 @@ export default {
     <div id="loots">
         <div v-for="loot in loots">
             <div v-if="loot.lootType == LootType.WaifuXP" class="loot">
-                <img src="../assets/waifu_xp.svg">
+                <img src="@/assets/waifu_xp.svg">
                 <div>{{ loot.amount }}</div>
             </div>
             <div v-if="loot.lootType == LootType.UserXP" class="loot">
-                <img src="../assets/user_xp.svg">
+                <img src="@/assets/user_xp.svg">
                 <div>{{ loot.amount }}</div>
             </div>
             <div @click="$emit('display-loot', loot)" v-else-if="loot.lootType == LootType.Equipment" class="loot">
@@ -47,7 +47,7 @@ export default {
                 <div class="amount">{{ loot.item!.count }}</div>
             </div>
             <div v-else-if="loot.lootType == LootType.GC" class="loot">
-                <img src="../assets/gc.svg">
+                <img src="@/assets/gc.svg">
                 <div class="amount">{{ loot.amount }}</div>
             </div>
         </div>

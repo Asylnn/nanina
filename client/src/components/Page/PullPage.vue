@@ -91,7 +91,7 @@ export default {
             <button @click="pull(1)">{{ $t("gacha.pull", {pullAmount:1}) }}</button>
             <button @click="pull(10)">{{ $t("gacha.pull", {pullAmount:10}) }}</button>
             <div>
-                <img src="../assets/gc.svg">
+                <img src="@/assets/gc.svg">
                 <div>{{ Math.floor(gacha_currency) }}</div>
             </div>
         </div>
