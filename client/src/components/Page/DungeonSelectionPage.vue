@@ -142,7 +142,7 @@ export default {
                 </ul>
             </div>
             <div v-if="validSelection()" style="margin-top: 50px;">
-                <button id="enterDungeonButton" @click="EnterDungeon()">Enter Dungeon</button>
+                <button id="enterDungeonButton" class="nnnbutton" @click="EnterDungeon()">Enter Dungeon</button>
             </div>
         </div>
     </div>
@@ -232,36 +232,14 @@ export default {
     overflow: hidden;
 }
 
-.clickable
-{
-    cursor: pointer;
-    color: rgb(203, 165, 221);
-}
-
-.clickable:hover
-{
-    color:purple;
-}
-
-.selected
-{
-    color:rgb(178, 77, 224);
-    text-decoration:underline;
-}
-
 #enterDungeonButton
 {
     padding:10px 20px;
-    border-color:rgb(178, 77, 224);
-    border-width: 4px;
-    border-style: solid;
-    border-radius: 40px;
-    
 }
 
 #enterDungeonButton:hover
 {
-    color:purple;
+    border-color:rgb(203, 165, 221);
 }
 
 </style>

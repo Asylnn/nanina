@@ -126,10 +126,10 @@ export default {
                 Do you think you have what it takes to succeed ?<br>
                 It's time to find out !
             </p>
-            <span class="button timer" v-if="user.fight_timing_out">
+            <span class="button nnnbutton timer" v-if="user.fight_timing_out">
                 Wait {{ fightWaitTime  }} seconds
             </span>
-            <span class="button" v-else @click="fight">Fight !</span>
+            <span class="button nnnbutton" v-else @click="fight">Fight !</span>
             <div class="flex" v-if="game == Game.OsuStandard">
                 <div class="flex" v-if="fighting">
                     <a :href="mapURL"> <img id="bgMap" :src="beatmap.beatmapset.covers.cover2x"></a>
@@ -139,7 +139,7 @@ export default {
                         <span class="inRed">Downloading me</span> <br>
                     </p>
                     
-                    <span class="button">
+                    <span class="button nnnbutton">
                         <a :href="mapURL" target="_blank">
                             Download on the osu! website !
                         </a>
@@ -160,10 +160,10 @@ export default {
                     <div id="selectedWaifu">
                         <GridDisplayComponent :no-margin="true" @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
                     </div>
-                    <span class="button timer" v-if="user.claim_timing_out">
+                    <span class="button nnnbutton timer" v-if="user.claim_timing_out">
                         Wait {{ claimWaitTime  }} seconds
                     </span>
-                    <span class="button" v-else @click="getXP">Prove that you are worth getting XP !</span><br>
+                    <span class="button nnnbutton" v-else @click="getXP">Prove that you are worth getting XP !</span><br>
                 </div>
             </div>
             
@@ -199,19 +199,12 @@ export default {
 
 .button{
     margin: 20px 0;
-    color: rgb(203, 165, 221);
     font-size: xx-large;
     border-radius: 25px;
-    background-color: rgb(39, 11, 65);
     cursor: pointer;
     padding: 2px 40px;
     text-align: center;
     align-self: center;
-}
-
-.button a 
-{
-    color: rgb(203, 165, 221);
 }
 
 

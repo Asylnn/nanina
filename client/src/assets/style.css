@@ -116,3 +116,38 @@ button, input[type="submit"], input[type="reset"] {
     color:gray;
     cursor:not-allowed
 }
+
+.clickable
+{
+    cursor: pointer;
+    color: rgb(208, 123, 247);
+}
+
+.clickable:hover
+{
+    color:rgb(240, 209, 255);
+}
+
+.selected
+{
+    color:rgb(177, 77, 238);
+    text-decoration:underline;
+}
+
+
+.nnnbutton
+{
+    border-color:rgb(200, 41, 200);
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 40px;
+}
+
+.nnnbutton:hover
+{
+    border-color:rgb(203, 165, 221);
+}
+
+a {
+    color:white;
+}

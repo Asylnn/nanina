@@ -59,35 +59,35 @@ export default {
         </div>
         <ul id="pages" v-if="logged">
             <li id="acti_li">
-                <span>{{ $t("header.activities") }}</span>
+                <span class="clickable" >{{ $t("header.activities") }}</span>
                 <ul id="actiMenu">
-                    <li>{{ $t("header.maidCafé") }}</li>
-                    <li>{{ $t("header.mineralMining") }}</li>
-                    <li>{{ $t("header.technoTree") }}</li>
-                    <li>{{ $t("header.gadgetAnalyse") }}</li>
-                    <li>{{ $t("header.exploration") }}</li>
+                    <li class="clickable">{{ $t("header.maidCafé") }}</li>
+                    <li class="clickable">{{ $t("header.mineralMining") }}</li>
+                    <li class="clickable">{{ $t("header.technoTree") }}</li>
+                    <li class="clickable">{{ $t("header.gadgetAnalyse") }}</li>
+                    <li class="clickable">{{ $t("header.exploration") }}</li>
                 </ul>
             </li>
-            <li @click="onClickChangePage(1)"><span>{{ $t("header.inventory") }}</span></li>
-            <li @click="onClickChangePage(14)"><span>{{ $t("header.waifus") }}</span></li>
-            <li @click="onClickChangePage(7)"><span>{{ $t("header.fighting") }}</span></li>
-            <li @click="onClickChangePage(9)"><span>{{ $t("header.pull") }}</span></li>
-            <li @click="onClickChangePage(10)"><span>{{ $t("header.dungeon") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(1)"><span>{{ $t("header.inventory") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(14)"><span>{{ $t("header.waifus") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(7)"><span>{{ $t("header.fighting") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(9)"><span>{{ $t("header.pull") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(10)"><span>{{ $t("header.dungeon") }}</span></li>
             <li id="db_li" v-if="user.admin">
-                <span>Databases</span>
+                <span class="clickable" >Databases</span>
                 <ul id="dbMenu">
-                    <li @click="onClickChangePage(15)"><span>Item</span></li>   
-                    <li @click="onClickChangePage(8)"><span>Waifu</span></li>
+                    <li class="clickable" @click="onClickChangePage(15)"><span>Item</span></li>   
+                    <li class="clickable" @click="onClickChangePage(8)"><span>Waifu</span></li>
                 </ul>
             </li>
             <li id="manager_li" v-if="user.admin && dev">
-                <span>Let me speak to your manager !</span>
+                <span class="clickable" >Let me speak to your manager !</span>
                 <ul id="managerMenu">
-                    <li @click="onClickChangePage(16)"><span>Inventory</span></li>
-                    <li @click="onClickChangePage(17)"><span>Waifu</span></li>
+                    <li class="clickable" @click="onClickChangePage(16)"><span>Inventory</span></li>
+                    <li class="clickable" @click="onClickChangePage(17)"><span>Waifu</span></li>
                 </ul>
             </li>
-            <li @click="onClickChangePage(6)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
+            <li class="clickable" @click="onClickChangePage(6)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
         </ul>
         <div id="buttList">
             <div class="butitem halo" >
