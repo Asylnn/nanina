@@ -1,5 +1,4 @@
 {
-    "first_time_running": false,
     "default_locale": "en",
     "dungeon_storage_path": "../save/dungeons.json",
     "database_path": "../save/database.db",

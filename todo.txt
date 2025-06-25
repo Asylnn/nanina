@@ -87,6 +87,8 @@ TODO : make cursor be style locked when claim or fight is timeout               
 TODO : Make a writeline to the console when a status code is different from 200/OK  #Done
 TODO : Make the code in repsonse.cs follow camelCase convention                     #Done 
 
+TODO : Make becoming an admin and giving yourself gacha currency less convoluted
+TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
 TODO : Is not deleting old unused sessions ids not secure? To think about.
 TODO : any objects in ts should be properly be typed
 TODO : MUTEX Counter in DungeonManager

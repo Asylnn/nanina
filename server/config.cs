@@ -1,5 +1,4 @@
 public class Config {
-        public bool first_time_running;
         public string default_locale;
         public string dungeon_storage_path;
         public string database_path;

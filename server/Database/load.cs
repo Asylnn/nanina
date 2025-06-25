@@ -17,8 +17,6 @@ namespace Nanina.Database
             DotEnv.Load("../.env");
             LoadOsuApi();
             LoadWebSocketServer();
-            if(Global.config.first_time_running) 
-                FirstLoad();
             UpdateUserDB(); //Update Database when updating game
             var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(Global.config.automatic_backup_interval_in_seconds));
             while (await periodicTimer.WaitForNextTickAsync())
@@ -91,35 +89,6 @@ namespace Nanina.Database
             }
         }
 
-        public static void FirstLoad(){
-            Console.WriteLine("Launching first time configuration ...");
-            var waifu = new Waifu()
-            {
-                imgPATH = "GYrXGACboAACxp7.jpg",
-                diffLvlUp = 3,
-                id = "0",
-                o_str = 10,
-                u_str = 2,
-                o_kaw = 10,
-                u_kaw = 2,
-                o_int = 10,
-                u_int = 2,
-                o_dex = 10,
-                u_dex = 2,
-                o_agi = 10,
-                u_agi = 2,
-                o_luck = 10,
-                u_luck = 2,
-            };
-
-            /*get waifu col to insert a waifu*/
-
-            DBUtils.Insert(waifu);
-            
-            Global.config.first_time_running = false;
-            File.WriteAllText("../config.json", JsonConvert.SerializeObject(Global.config));
-        }
-
         public static void UpdateUserDB()
         {
             Console.WriteLine("Updating user database...");
@@ -154,13 +123,13 @@ namespace Nanina.Database
                     user.waifus.Append(waifu);
                 }*/
                 //user.fightHistory = new();
-                foreach(var item in user.inventory.userConsumable)
+                /*foreach(var item in user.inventory.userConsumable)
                 {
-                    var itemDB = DBUtils.Get<Item>(x => x.id == item.id);
+                    var itemDB = BUtils.Get<Item>(x => x.id == item.id);
                     item.rarity = itemDB.rarity;
                     item.modifiers = itemDB.modifiers;
                     item.imgPATH = itemDB.imgPATH;
-                }
+                }*/
                 user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();

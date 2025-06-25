@@ -18,7 +18,7 @@ namespace Nanina.Communication
             
 
             /*get waifu col to findall and send a websocket containing the whole waifu database*/
-            DBUtils.SendDatabaseToClient<Waifu>(ID);
+            DBUtils.SendDatabaseToClient(ID, "waifu");
         }
         protected void UpdateWaifuDatabase(ClientWebSocketResponse rawData)
         {
@@ -30,10 +30,11 @@ namespace Nanina.Communication
             if(!Global.config.dev) 
                 {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
-            var waifus = JsonConvert.DeserializeObject<Waifu[]>(rawData.data);
-            Console.WriteLine("waifus: " + waifus);
+            //var waifus = JsonConvert.DeserializeObject<Waifu[]>(rawData.data);
+            //Console.WriteLine("waifus: " + waifus);
             /*get waifu col to delete all and insert them back*/
-            DBUtils.Rebuild<Waifu>(waifus);
+            //BUtils.Rebuild<Waifu>(waifus);
+            File.WriteAllText("../save/waifu.json", rawData.data);
             Send(ClientNotification.NotificationData("admin", "updated the waifu database!", 0));
             
         }

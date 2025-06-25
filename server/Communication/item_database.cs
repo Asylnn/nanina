@@ -33,7 +33,7 @@ namespace Nanina.Communication
 
             /* Get item col to find all and send a websocket containing the item database
             */
-            DBUtils.SendDatabaseToClient<Item>(ID);
+            DBUtils.SendDatabaseToClient(ID, "item");
         }
 
         protected void ProvideEquipmentDatabase(string userId)
@@ -46,7 +46,7 @@ namespace Nanina.Communication
 
             /* Get item col to find all and send a websocket containing the item database
             */
-            DBUtils.SendDatabaseToClient<Equipment>(ID);
+            DBUtils.SendDatabaseToClient(ID, "equipment");
         }
         protected void UpdateItemDatabase(ClientWebSocketResponse rawData)
         {
@@ -60,9 +60,8 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
             var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
-
             IEnumerable<Item> items = itemDBResponse.user_consumable.Concat(itemDBResponse.material).Concat(itemDBResponse.waifu_consumable);
-            DBUtils.Rebuild( items.ToArray());
+            File.WriteAllText("../save/item.json", JsonConvert.SerializeObject(items));
             Send(ClientNotification.NotificationData("admin", "updated the item database!", 0));
         }
 
@@ -79,7 +78,7 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
             var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
-            DBUtils.Rebuild( itemDBResponse.equipment.ToArray());
+            File.WriteAllText("../save/equipment.json", JsonConvert.SerializeObject(itemDBResponse.equipment));
             Send(ClientNotification.NotificationData("admin", "updated the equipment database!", 0));
         }
 
@@ -93,7 +92,7 @@ namespace Nanina.Communication
 
             /* Get set col to find all and send a websocket containing the set database
             */
-            DBUtils.SendDatabaseToClient<Set>(ID);
+            DBUtils.SendDatabaseToClient(ID, "set");
         }
         protected void UpdateSetDatabase(ClientWebSocketResponse rawData)
         {
@@ -106,9 +105,7 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
             
             /* Get set col to delete all then add all back*/
-            var sets = JsonConvert.DeserializeObject<Set[]>(rawData.data); 
-            DBUtils.Rebuild(sets);
-            
+            File.WriteAllText("../save/set.json", rawData.data);
             Send(ClientNotification.NotificationData("admin", "updated the set database!", 0));
         }
 

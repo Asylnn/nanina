@@ -26,7 +26,7 @@ namespace Nanina.UserData.ItemData
             {
                 Console.WriteLine(JsonConvert.SerializeObject(dungeon.template.setRewards));
                 var setId = dungeon.template.setRewards.RandomElement();
-                var equipments = DBUtils.GetEquipmentsFromSet(setId);
+                var equipments = Global.equipments.FindAll(x => x.setId == setId);
                 var equipment = equipments.RandomElement();
 
                 var rarityWeights = Global.baseValues.equipment_rarity_probability[dungeon.template.difficulty-1];
