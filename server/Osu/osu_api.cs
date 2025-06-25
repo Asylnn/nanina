@@ -50,8 +50,8 @@ namespace Nanina.Osu
             var response = await new RestClient().ExecutePostAsync(request);
             
             tokens = JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
-
-            File.WriteAllText(Global.config.osu_tokens_storage_path, response.Content);
+            tokens.expiration_timestamp = Utils.GetTimestamp() + (ulong) (tokens.expires_in - 3600)*1000;
+            File.WriteAllText(Global.config.osu_tokens_storage_path, JsonConvert.SerializeObject(tokens));
             Console.WriteLine("updated osu tokens");
         }
 
@@ -269,11 +269,12 @@ namespace Nanina.Osu
 
             Console.WriteLine("updated osu chat tokens");
             Console.WriteLine("osu api AuthorizeSelf response status code " + response.StatusCode);
-
-            chat_tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
-            File.WriteAllText(Global.config.osu_chat_tokens_storage_path, response.Content);
-
-
+            if(response.IsSuccessful)
+            {
+                chat_tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
+                chat_tokens.expiration_timestamp = Utils.GetTimestamp() + (ulong) (tokens.expires_in - 3600)*1000;
+                File.WriteAllText(Global.config.osu_chat_tokens_storage_path, JsonConvert.SerializeObject(chat_tokens));
+            }
         }
     }
 }
