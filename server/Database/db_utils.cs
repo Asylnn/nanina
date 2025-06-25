@@ -23,6 +23,7 @@ namespace Nanina.Database
             using var db = new LiteDatabase($@"{Global.config.database_path}");
             var collectionName = GetCollectionName<T>();
             var col = db.GetCollection<T>(collectionName);
+            if(col.Count() == 0) return default;
             return randomized ? col.Find(func).RandomElement() : col.FindOne(func);
         }
 
