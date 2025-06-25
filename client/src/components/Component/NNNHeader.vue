@@ -186,7 +186,7 @@ header {
     font-size: small;
 }
 
-#logo, #pages, .butitem
+#logo, .butitem
 {
     cursor: pointer;
 }
