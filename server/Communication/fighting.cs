@@ -180,7 +180,11 @@ namespace Nanina.Communication
             */
             var map = DBUtils.Get<Beatmap>(x => x.difficulty_rating <= 7.27*2.7,true);
             if(map is null)
-                {Console.WriteLine("There isn't any map in the database!!!"); return;}
+            {
+                Console.WriteLine("There isn't any map in the database!!!");
+                Send(ClientNotification.NotificationData("User", "There isn't any map in the database!!", 1)); 
+                return ;
+            }
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "map link",
