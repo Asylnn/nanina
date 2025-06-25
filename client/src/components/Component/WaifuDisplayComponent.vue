@@ -146,7 +146,7 @@ export default {
 <template>
     <div v-if="!forDungeon && !forPull" class="equipment">
         <div v-if="inventoryVisible" @click="inventoryVisible = false" class="veil" id="inventoryveil"></div>
-        <GridDisplayComponent v-if="inventoryVisible" id="grid" @show-element="openWeaponDisplay" :elements="equipment_to_show" :columns=5></GridDisplayComponent>
+        <GridDisplayComponent v-if="inventoryVisible" id="grid" @show-element="openWeaponDisplay" :elements="equipment_to_show" :columns=5 :show-border="true"></GridDisplayComponent>
         <div v-if="weaponVisible" @click="closeWeaponDisplay" class="veil" id="itemveil"></div>
         <ItemComponent @click="selectItem()" :is-for-equiping="true" v-if="selected_item != null" @input="" :item="selected_item"></ItemComponent>
     </div>

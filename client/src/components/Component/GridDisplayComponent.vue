@@ -23,6 +23,11 @@ export default {
             type: Boolean,
             default:false,
             required : false
+        },
+        showBorder: {
+            type: Boolean,
+            default:false,
+            required : false
         }
         
     },
@@ -62,7 +67,7 @@ export default {
 </script>
 
 <template>
-    <div id="grid" :style="generateGridTemplateColumns">
+    <div id="grid" :class="showBorder ? 'border' : ''" :style="generateGridTemplateColumns">
         <div v-for="element in elements">
             <div v-if="(element as Waifu).b_dex != null"> <!-- Pretty bad way to test if it's a waifu Object, but it works-->
                 <div class="slot">
@@ -92,6 +97,14 @@ export default {
     display:none;
     position:relative;
     display: grid;
+}
+
+
+.border {  /*same border as lootcomponent*/ 
+    border-style: solid; 
+    border-color: grey;
+    border-radius: 10px;
+    border-width: 4px;
 }
 
 .waifuIcon {
