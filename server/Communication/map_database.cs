@@ -24,7 +24,7 @@ namespace Nanina.Communication
 
             var map = await Osu.Api.GetBeatmapById(request.id);
             if(map == null) 
-                {Send(ClientNotification.NotificationData("Admin", "This beatmap doesn't exist!", 1)); return;}
+                {Send(ClientNotification.NotificationData("Admin", "either this beatmap doesn't exist, or the osu api keys are wrong/expired", 1)); return;}
 
 
             /*
