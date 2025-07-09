@@ -37,13 +37,39 @@ namespace Nanina.Communication
             var waifus = user.waifus.Where(waifu => clientData.waifuIds.Contains(waifu.id)).ToList();
             if(waifus.Count() != 3)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (at least one invalid waifu)", 1)); return ;}
+            
+            //In case any dungeon is still in progress somehow?
+            var activeDungeons = DungeonManager.activeDungeons.Values.ToList().Where(dungeon => dungeon.userId == user.Id);
+            foreach(ActiveDungeon activeDungeon in activeDungeons)
+                activeDungeon.StopDungeon();
 
             DungeonManager.InstantiateDungeon(dungeon, user, waifus, session.id, clientData.floor);
+            
+            /*
+                The data of the new dungeon is sent to the client inside the InstantiateDungeon method
+            */
+
+            
         }
 
         protected void StopDungeon(ClientWebSocketResponse rawData){
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user == null)
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
+            var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
+            if(session == null)
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
+
             var dungeon = DungeonManager.activeDungeons[Convert.ToUInt64(rawData.data)];
+            if(dungeon == null)
+                {Send(ClientNotification.NotificationData("Dungeon", "You are not in a dungeon", 1)); return ;}
+            // I don't know if this is trully necessary but It's just costing me a few minutes anyways
+            if(user.dungeonInstanceId != dungeon.instanceId)
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't stop someone's else dungeon", 1)); return ;}
+
+            user.isInDungeon = false;
             dungeon.StopDungeon();
+            DBUtils.Update(user);
         }
 
 

@@ -64,6 +64,12 @@ namespace Nanina.Communication
                 type = "get dungeons",
                 data = JsonConvert.SerializeObject(DungeonManager.dungeons),
             }));
+            if(user.isInDungeon)
+            {
+                var activeDungeon = DungeonManager.activeDungeons.Values.ToList().Find(dungeon => user.dungeonInstanceId == dungeon.instanceId);
+                activeDungeon.sessionId = user.activeSessionId;
+                DungeonManager.UpdateDungeonOfClient(activeDungeon);
+            }
             if(user.admin)
             {
                 ProvideItemDatabase(userId);

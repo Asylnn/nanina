@@ -37,7 +37,7 @@ namespace Nanina.Dungeon
         public byte floor;
         public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
 
-        public ActiveDungeon(Template dungeon, UserData.User user, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId, byte floor)
+        public ActiveDungeon(Template dungeon, string _userId, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId, byte floor)
         {
             instanceId = _instanceId;
             sessionId = _sessionId;
@@ -46,22 +46,19 @@ namespace Nanina.Dungeon
             template.bossResistances.magicalResistance += 0.05f *(1f - floor);
             template.bossResistances.physicalResistance += 0.05f *(1f - floor);
             template.bossResistances.psychicResistance += 0.05f *(1f - floor);
-            userId = user.Id;
+            userId = _userId;
             waifus = EquippedWaifus;
             maxHealth = template.maxHealthByFloor[floor-1];
             health = maxHealth;
+            beatmap = DBUtils.Get<Beatmap>(x => x.nanina_tag == template.game_playstyle, randomized:true);
             StartDungeon();
         }
 
         public void StopDungeon(){
             damageTimer.Dispose();
             isCompleted = true;
-            DungeonManager.UpdateDungeonOfClient(this);
         }
         public async void StartDungeon(){
-
-            beatmap = DBUtils.Get<Beatmap>(x => x.nanina_tag == template.game_playstyle, randomized:true);
-
 
             while (await damageTimer.WaitForNextTickAsync())
             {   
@@ -124,7 +121,6 @@ namespace Nanina.Dungeon
 
         public void ConcludeDungeon(){
             health = 0;
-            isCompleted = true;
             List<Loot> lootToServer = [];
             var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
             var (spent_energy, gc) = user.SpendEnergy(1);
@@ -142,11 +138,12 @@ namespace Nanina.Dungeon
                 amount = gc,
             });
             user.statCount.total_cleared_dungeon++;
-            
+            user.isInDungeon = false;
             UserData.User.RegenEnergy(user);
             DBUtils.Update(user);
+
+            StopDungeon();
             DungeonManager.UpdateDungeonOfClient(this);
-            
             DungeonManager.SendLootToClient(this, lootToServer);
             
         }

@@ -9,7 +9,7 @@
         },
         "maxHealthByFloor": [1001, 1002, 1003, 1004, 1005],
         "difficulty": 1,
-        "game_playstyle":-1,
+        "game_playstyle":0,
         "setRewards": [
             0
         ],

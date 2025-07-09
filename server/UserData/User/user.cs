@@ -18,6 +18,8 @@ namespace Nanina.UserData
         public uint XpToLvlUp {
             get => 40u + lvl*10u;
         }
+        public bool isInDungeon {get; set;}
+        public ulong dungeonInstanceId {get; set;}
         public Game preferedGame {get; set;} = Game.OsuStandard;
         public long lvlRewards {get; set;}
         public string activeSessionId {get; set;} = null;

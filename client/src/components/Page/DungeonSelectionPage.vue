@@ -32,7 +32,6 @@ export default {
             required: true
         }
     },
-    emits : ["enter-dungeon"],
     mounted(){
         this.availableWaifus = this.user.waifus
     },
@@ -42,7 +41,6 @@ export default {
     },
     methods:{
         EnterDungeon(){
-            this.$emit("enter-dungeon")
             this.is_fighting_a_dungeon = true
             let waifuIds = this.waifuSelection.map(waifu => waifu!.id)
             this.SendToServer("start dungeon", JSON.stringify({id:this.selected_dungeon, waifuIds:waifuIds, floor:this.selected_floor}), this.user.Id)

@@ -10,12 +10,14 @@ namespace Nanina.Dungeon
     public static class DungeonManager {
         public static readonly Template[] dungeons = JsonConvert.DeserializeObject<Template[]>(File.ReadAllText(Global.config.dungeon_storage_path.ToString()));
         public static readonly Dictionary<ulong, ActiveDungeon> activeDungeons = [];
-        private static ulong counter = 0;
-        //Should be mutexed before release
         public static void InstantiateDungeon(Template dungeon, User user, List<Waifu> waifus, string sessionId, byte floor)
         {
-            var activeDungeon = new ActiveDungeon(dungeon, user, waifus, sessionId, counter, floor);
-            activeDungeons.Add(counter, activeDungeon);
+            var instanceId = Utils.GetTimestamp();
+            var activeDungeon = new ActiveDungeon(dungeon, user.Id, waifus, sessionId, instanceId, floor);
+            activeDungeons.Add(instanceId, activeDungeon);
+            user.isInDungeon = true;
+            user.dungeonInstanceId = activeDungeon.instanceId;
+            DBUtils.Update(user);
             UpdateDungeonOfClient(activeDungeon);
         }
 
@@ -40,6 +42,7 @@ namespace Nanina.Dungeon
             if(session == null) return;
             if(session.webSocketId != null)
             {
+                
                 Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                 {
                     type = "loot",

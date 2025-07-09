@@ -251,6 +251,9 @@ export default {
 					console.log(this.dungeons)
 					break
 				case "get active dungeon":
+					this.inside_dungeon = true;
+					console.log("ACTIVE DUNGEON")
+					console.log(this.active_dungeon)
 					this.active_dungeon = JSON.parse(res.data)
 					break
 				case "loot":
@@ -320,7 +323,7 @@ export default {
 				<ActiveDungeonPage :user="user" :active_dungeon="active_dungeon" @leave-dungeon="inside_dungeon = false"></ActiveDungeonPage>
 			</div>
 			<div v-else>
-				<DungeonSelectionPage :dungeons="dungeons" :user="user" @enter-dungeon="inside_dungeon = true"></DungeonSelectionPage>
+				<DungeonSelectionPage :dungeons="dungeons" :user="user"></DungeonSelectionPage>
 			</div>
 			
 		</div>
