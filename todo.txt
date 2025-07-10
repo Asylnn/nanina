@@ -99,6 +99,7 @@ TODO : Create an extention which add beatmaps to Nanina
 TODO : ActiveDungeon code should be compatible with any rhythm game
 TODO : Create a search bar for items
 TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.
+TODO : Display the set bonus on the waifu stat card
 
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

@@ -19,7 +19,13 @@ export default {
     <div>
         <div class="modifier">
             <span>{{ $t(`modifiers.${modifier.stat}.name`) }}</span>
-            <span class="stat">+{{ Math.trunc(((modifier.amount)*100)*10)/10}}%</span>
+            <span v-if="modifier.operationType==1">
+                <span class="stat">+{{ Math.trunc(((modifier.amount)*100)*10)/10}}%</span>
+            </span>
+            <span v-else>
+                <span class="stat">+{{ Math.trunc(modifier.amount)}}</span>
+            </span>
+            
         </div>
     </div>
 </template>

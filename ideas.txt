@@ -106,11 +106,10 @@ Obtenir money :
     login rewards
     daily quests
     Bonus de level up
-    💳
 Utiliser money : 
     Skins
     Upgrade Equipement (level 1 à 2 etc)
-    Acheter items dans le Shop <------------------
+    Acheter items dans le Shop 
     Acheter des couleurs pour le site 
     Dons aux autres gens
 
@@ -173,11 +172,6 @@ combo multiplicator         : (x^0.15)
 Spent energy scale with fight drain time
 Ask for energy when fighting
 
-Login reward ? 
-1 -> 5
-2 -> 5
-3 -> 5
-
 1k => 2600h (8*)        x1.5
 10k => 1500h (7*)       x2
 100k => 500h (6*)       x3
@@ -237,13 +231,5 @@ activitées
     //agi => exploration (mat pour gadget)
 
 
-
-
-lambda
-
-
-T1
-T2
-T3
-T4
-T5
+How should equipment work?
+    Max

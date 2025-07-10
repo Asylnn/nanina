@@ -156,7 +156,16 @@ export default {
 	mounted() {
 		console.log("mounted app!")
 		const $cookies = inject<VueCookies>('$cookies')!; 
-		$cookies.config("30m") //ATENTION !!!!!
+		$cookies.config("30d")
+		/*set expire times , input string type
+			Unit 	full name
+			y 	year
+			m 	month
+			d 	day
+			h 	hour
+			min 	minute
+			s 	second
+		*/
 		var has_session_id = $cookies.isKey("session_id")
 		
 		const url = new URL(window.location.href);

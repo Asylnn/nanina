@@ -25,5 +25,8 @@ namespace Nanina
         public uint maimai_score_expiration_in_milliseconds;
         public List<List<float>> equipment_rarity_probability;
         public double fight_damage_multiplier;
+        public List<Modifier> modifiersWeapon;
+        public List<Modifier> modifiersDress;
+        public List<Modifier> modifiersAccessory;
     }
 }

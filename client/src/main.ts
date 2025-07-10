@@ -52,12 +52,6 @@ app.config.globalProperties.ws = new WebsocketBuilder(url)
     .withBackoff(new ConstantBackoff(1000)) // retry every 1s
     .build();
 
-
-const ws = app.config.globalProperties.ws
-	// Add event listeners
-	ws.addEventListener(WebsocketEvent.open, () => console.log("ws opened!"));
-	ws.addEventListener(WebsocketEvent.close, () => console.log("ws closed!"));
-
 app.config.globalProperties.SendToServer = (type : string, data: string, userId: string) => {
 	ws.send(JSON.stringify({
 		type: type,
@@ -66,6 +60,16 @@ app.config.globalProperties.SendToServer = (type : string, data: string, userId:
 		sessionId : app.config.globalProperties.$cookies.get("session_id")
 	}))
 }
+
+const ws = app.config.globalProperties.ws
+	// Add event listeners
+	ws.addEventListener(WebsocketEvent.open, () => {
+		console.log("ws opened!")
+		/*app.config.globalProperties.SendToServer("get session id", "", null);*/
+	});
+	ws.addEventListener(WebsocketEvent.close, () => console.log("ws closed!"));
+
+
 
 //app.use(router)
 app.mount('#app')

@@ -107,6 +107,8 @@ namespace Nanina.Database
 
                 user.energy = user.max_energy;
                 user.isRegenerating = false;
+                //user.inventory.equipment = [];
+
                 /*var equipments = user.inventory.equipment;
                 user.inventory.equipment = [];
                 foreach(var equipment in equipments)

@@ -62,5 +62,46 @@
     "user_xp_for_fights":10,
     "user_xp_for_dungeons":25,
     "fight_damage_multiplier":3000,
-    "maimai_score_expiration_in_milliseconds":1800000
+    "maimai_score_expiration_in_milliseconds":1800000,
+    "modifiersWeapon": [
+                {
+                    "stat": 3,
+                    "amount": 10,
+                    "operationType": 0
+                },
+                {
+                    "stat": 4,
+                    "amount": 10,
+                    "operationType": 0
+                },
+                {
+                    "stat": 5,
+                    "amount": 10,
+                    "operationType": 0
+                }
+            ],
+    "modifiersDress": [
+                {
+                    "stat": 6,
+                    "amount": 5,
+                    "operationType": 0
+                },
+                {
+                    "stat": 7,
+                    "amount": 5,
+                    "operationType": 0
+                }
+            ],
+    "modifiersAccessory": [
+                {
+                    "stat": 8,
+                    "amount": 3,
+                    "operationType": 0
+                },
+                {
+                    "stat": 10,
+                    "amount": 5,
+                    "operationType": 0
+                }
+            ]
 }

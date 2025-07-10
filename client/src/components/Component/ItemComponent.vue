@@ -41,6 +41,8 @@ export default {
             <p v-if="item.type == ItemType.Equipment">
                 {{ $t(`item.type.type`) }} : {{ $t(`item.type.${(item as Equipment).piece}`) }}<br>
                 {{ $t(`set.set`) }} : {{ $t(`set.${(item as Equipment).setId}.name`) }}<br><br>
+                {{ $t(`item.stat`) }}
+                <ModifierComponent :modifier="(item as Equipment).stat"></ModifierComponent><br>
             </p>
             <p>{{$t("modifiers.modifier")}} </p><br>
             <div v-for="modifier in item.modifiers">
