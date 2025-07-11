@@ -33,7 +33,7 @@ namespace Nanina.Dungeon
                     data = activeDungeon.ToString()
                 }), session.webSocketId);
             }
-            
+
         }
 
         public static void SendLootToClient(ActiveDungeon activeDungeon, List<Loot> loot)

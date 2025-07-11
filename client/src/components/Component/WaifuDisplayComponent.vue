@@ -178,37 +178,6 @@ export default {
                 <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.magical" :statAmount="waifu.Magical" :statModifier="StatModifier.Magical"></WaifuStatDisplayComponent>
                 <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.crit_chance" :statAmount="waifu.CritChance" :statModifier="StatModifier.CritChance"></WaifuStatDisplayComponent>
                 <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.crit_damage" :statAmount="waifu.CritDamage" :statModifier="StatModifier.CritDamage"></WaifuStatDisplayComponent>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.kaw") }}</span> <span>{{ Math.floor(waifu.Kaw) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.KAW)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.int") }}</span> <span>{{ Math.floor(waifu.Int) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.INT)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.agi") }}</span> <span>{{ Math.floor(waifu.Agi) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.AGI)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.dex") }}</span> <span>{{ Math.floor(waifu.Dex) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.DEX)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.luck") }}</span> <span>{{ Math.floor(waifu.Luck) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.LUCK)}})</span>
-                </div>
-                <br>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.physical") }}</span> <span>{{ Math.floor(waifu.Physical) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.Physical)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.psychic") }}</span> <span>{{ Math.floor(waifu.Psychic) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.Psychic)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.magical") }}</span> <span>{{ Math.floor(waifu.Magical) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.Magical)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.crit_chance") }}</span> <span>{{ Math.floor(waifu.CritChance*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.CritChance)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.crit_damage") }}</span> <span>{{ Math.floor(waifu.CritDamage*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.CritDamage)}})</span>
-                </div>
                 <div v-if="!forDungeon" class="equipment">
                     <div @click.right="unequip(EquipmentPiece.Weapon, $event)" @click="openDisplay(EquipmentPiece.Weapon)" class="itemSlot">
                         <img  :src="`${publicPath}item-image/${waifu.equipment.weapon?.imgPATH ?? 'unknown.svg'}`">

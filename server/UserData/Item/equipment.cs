@@ -23,13 +23,14 @@ namespace Nanina.UserData.ItemData
 
         public static IEnumerable<Equipment> CreateEquipmentsForDungeon(ActiveDungeon dungeon, ushort numberOfEquipments)
         {
+            var setId = dungeon.template.setRewards.RandomElement();
+            var equipments = Global.equipments.FindAll(x => x.setId == setId);
+            Console.WriteLine(JsonConvert.SerializeObject(dungeon.template.setRewards));
+
             for(int i = 0; i < numberOfEquipments; i++)
             {
-                Console.WriteLine(JsonConvert.SerializeObject(dungeon.template.setRewards));
-                var setId = dungeon.template.setRewards.RandomElement();
-                var equipments = Global.equipments.FindAll(x => x.setId == setId);
-                var equipment = equipments.RandomElement();
-                
+                var equipment = Utils.DeepCopyReflection(equipments.RandomElement());
+
                 var rarityWeights = Global.baseValues.equipment_rarity_probability[dungeon.template.difficulty-1];
                 var totalWeight = rarityWeights.Sum();
                 var rand = new Random().NextDouble()*totalWeight;
@@ -51,14 +52,13 @@ namespace Nanina.UserData.ItemData
 
         public void Initialize()
         {
-            //Honestly this system should go away... modifiers shouldn't be dependent on dungeon 
-            stat = piece switch
+            stat = Utils.DeepCopyReflection(piece switch
             {
                 EquipmentPiece.Weapon => Global.baseValues.modifiersWeapon.RandomElement(),
                 EquipmentPiece.Dress => Global.baseValues.modifiersDress.RandomElement(),
                 EquipmentPiece.Accessory => Global.baseValues.modifiersAccessory.RandomElement(),
                 _ => throw new NotImplementedException(),
-            };
+            });
             Random rng = new ();
 
             /*uint totalWeight = modifierWeights.Aggregate(0u, (accum, current) => accum + current.weight); //Add all the weights
@@ -74,12 +74,14 @@ namespace Nanina.UserData.ItemData
                         :   Global.baseValues.baseStatsAdd[modifierWeight.modifier.stat.ToString()];*/
                 
             var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.baseValues.dungeon_stat_randomness;
-            stat.amount *= statRandomness;
-            Console.WriteLine(id);
-            Console.WriteLine(rarity);
-            Console.WriteLine(Global.baseValues.equipment_stat_base_amount_multiplier[rarity]);
-            Console.WriteLine(statRandomness);
-            
+            Console.WriteLine("id " + id);
+            Console.WriteLine("rarity " + rarity);
+            Console.WriteLine("initial stat " + stat.amount);
+            Console.WriteLine("rarity multiplier " + Global.baseValues.equipment_stat_base_amount_multiplier[rarity]);
+            Console.WriteLine("randomness " + statRandomness);
+            stat.amount *= statRandomness*Global.baseValues.equipment_stat_base_amount_multiplier[rarity];
+            Console.WriteLine("final stat " + stat.amount);
+
             
             /*var amount = baseValue*Global.baseValues.equipment_stat_base_amount_multiplier[rarity]*statRandomness;
             Console.WriteLine(baseValue);

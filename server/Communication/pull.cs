@@ -46,7 +46,7 @@ namespace Nanina.Communication
             /*get item db to find one item?*/
             var baseItem = Global.items.Find(item => item.id == 50_000); //Item id for waifu essence
             foreach(var waifu in alreadyOwnedWaifus){
-                var item = baseItem.Clone() as Item;
+                var item = Utils.DeepCopyReflection(baseItem); 
                 item.id += Convert.ToUInt16(waifu.id);
                 user.inventory.AddMaterial(item);
             }

@@ -55,7 +55,9 @@ namespace Nanina.Gacha
                 
                 var waifuId = waifuPool.RandomElement();
                 user.pullBannerHistory[bannerId].pullHistory.Add(waifuId);
-                waifus.Add(Global.waifus.Find(x => x.id == waifuId));
+                /*A deep copy should not be required since it will no longer exist in memory after it goes into the DB, 
+                but in case any properties need to be modified sometime in the future, then there won't be some difficult to find bug*/
+                waifus.Add(Utils.DeepCopyReflection(Global.waifus.Find(x => x.id == waifuId)));
             }
             return waifus;
         }
