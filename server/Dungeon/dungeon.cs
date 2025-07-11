@@ -30,8 +30,8 @@ namespace Nanina.Dungeon
         public List<Waifu> waifus;
         public ulong timestamp = Utils.GetTimestamp();
         public List<DungeonLog> log = [];
-        public float health; 
-        public float maxHealth;
+        public double health; 
+        public double maxHealth;
         public bool isCompleted = false;
         public List<Equipment> loot = [];
         public byte floor;
@@ -72,9 +72,9 @@ namespace Nanina.Dungeon
             }
         }
 
-        public (float, string) GetDamage(Waifu waifu)
+        public (double, string) GetDamage(Waifu waifu)
         {
-            float dmg;
+            double dmg;
             string attackType;
 
             if(waifu.Str >= waifu.Int && waifu.Str >= waifu.Kaw){
@@ -90,7 +90,7 @@ namespace Nanina.Dungeon
                 dmg = waifu.Psychic*(1 - template.bossResistances.psychicResistance);
                 attackType = "psychic";
             }
-            var critDmgMult = (float)(Math.Truncate(waifu.CritChance)*waifu.CritDamage); //Super crit
+            var critDmgMult = Math.Truncate(waifu.CritChance)*waifu.CritDamage; //Super crit
             var critChance = waifu.CritChance - Math.Truncate(waifu.CritChance);
             var randCrit = new Random().NextDouble();
             

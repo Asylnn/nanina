@@ -100,7 +100,7 @@
                 },
                 {
                     "stat": 10,
-                    "amount": 5,
+                    "amount": 0.05,
                     "operationType": 0
                 }
             ]

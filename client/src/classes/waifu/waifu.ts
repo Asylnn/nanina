@@ -60,17 +60,29 @@ export default class Waifu {
     }
 
     public GetMultModificators(statModifier : StatModifier){
-        let modificators = ([] as Array<Modifier>).concat(this.equipment.weapon?.modifiers || []).concat(this.equipment.dress?.modifiers ?? []).concat(this.equipment.accessory?.modifiers ?? []).concat(this.equipment.set?.modifiers ?? []);
-        modificators = modificators.filter(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier);
-        return modificators?.reduce((amount, modificator) => amount += modificator?.amount || 0, 1) || 1;
+        return ([] as Array<Modifier | undefined>).concat(this.equipment.weapon?.modifiers || []).concat(this.equipment.dress?.modifiers || []).concat(this.equipment.accessory?.modifiers || []).concat(this.equipment.set?.modifiers || [])
+            .concat([this.equipment.weapon?.stat, this.equipment.dress?.stat , this.equipment.accessory?.stat])
+            .filter(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier)
+            .reduce((amount, modificator) => amount += modificator?.amount || 0, 1) || 1;
     }
 
-    public DisplayModificator(statModifier : StatModifier) : string
+    public GetAdditiveModificators(statModifier: StatModifier){
+        return ([] as Array<Modifier | undefined>).concat(this.equipment.weapon?.modifiers || []).concat(this.equipment.dress?.modifiers || []).concat(this.equipment.accessory?.modifiers || []).concat(this.equipment.set?.modifiers || [])
+            .concat([this.equipment.weapon?.stat, this.equipment.dress?.stat , this.equipment.accessory?.stat])
+            .filter(modif => modif?.operationType == OperationType.Additive && modif?.stat == statModifier)  
+            .reduce((amount, modificator) => amount += modificator?.amount || 0, 0) || 0;
+    }
+
+    public DisplayMultModificator(statModifier : StatModifier) : string
     {
         let modificatorAmount = this.GetMultModificators(statModifier) - 1
         modificatorAmount = Math.floor(modificatorAmount*1000)/10
         return `+${modificatorAmount}%`
+    }
 
+    public DisplayAdditiveModificator(statModifier : StatModifier) : string
+    {
+        return `+${Math.floor(this.GetAdditiveModificators(statModifier))}`
     }
 
     /*constructor(name :string ,xp : number,lvl:number,diffLvlUp : number,imgPATH : string) {

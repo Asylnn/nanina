@@ -1,6 +1,8 @@
 <script lang="ts">
 import Waifu from '@/classes/waifu/waifu';
 import GridDisplayComponent from './GridDisplayComponent.vue';
+import WaifuStatDisplayComponent from './WaifuStatDisplayComponent.vue';
+
 import User from '@/classes/user/user';
 import EquipmentPiece from '@/classes/item/piece';
 import Equipment from '@/classes/item/equipment';
@@ -131,7 +133,8 @@ export default {
     },
     components:{
         GridDisplayComponent,
-        ItemComponent
+        ItemComponent,
+        WaifuStatDisplayComponent,
     },
     emits:["click"],
     computed : {
@@ -164,40 +167,47 @@ export default {
                 <div class="shortStat">
                     <span>XP</span> <span>{{ waifu.xp }}/{{ waifu.XpToLvlUp }} </span>   <br>
                 </div><br>
-                
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.str" :statAmount="waifu.Str" :statModifier="StatModifier.STR"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.kaw" :statAmount="waifu.Kaw" :statModifier="StatModifier.KAW"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.int" :statAmount="waifu.Int" :statModifier="StatModifier.INT"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.agi" :statAmount="waifu.Agi" :statModifier="StatModifier.AGI"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.dex" :statAmount="waifu.Dex" :statModifier="StatModifier.DEX"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.luck" :statAmount="waifu.Luck" :statModifier="StatModifier.LUCK"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.physical" :statAmount="waifu.Physical" :statModifier="StatModifier.Physical"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.psychic" :statAmount="waifu.Psychic" :statModifier="StatModifier.Psychic"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.magical" :statAmount="waifu.Magical" :statModifier="StatModifier.Magical"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.crit_chance" :statAmount="waifu.CritChance" :statModifier="StatModifier.CritChance"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.crit_damage" :statAmount="waifu.CritDamage" :statModifier="StatModifier.CritDamage"></WaifuStatDisplayComponent>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.str") }}</span> <span>{{ Math.floor(waifu.Str) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.STR)}})</span>
+                    <span>{{ $t("waifu.stats.kaw") }}</span> <span>{{ Math.floor(waifu.Kaw) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.KAW)}})</span>
                 </div>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.kaw") }}</span> <span>{{ Math.floor(waifu.Kaw) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.KAW)}})</span>
+                    <span>{{ $t("waifu.stats.int") }}</span> <span>{{ Math.floor(waifu.Int) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.INT)}})</span>
                 </div>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.int") }}</span> <span>{{ Math.floor(waifu.Int) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.INT)}})</span>
+                    <span>{{ $t("waifu.stats.agi") }}</span> <span>{{ Math.floor(waifu.Agi) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.AGI)}})</span>
                 </div>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.agi") }}</span> <span>{{ Math.floor(waifu.Agi) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.AGI)}})</span>
+                    <span>{{ $t("waifu.stats.dex") }}</span> <span>{{ Math.floor(waifu.Dex) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.DEX)}})</span>
                 </div>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.dex") }}</span> <span>{{ Math.floor(waifu.Dex) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.DEX)}})</span>
-                </div>
-                <div class="stat">
-                    <span>{{ $t("waifu.stats.luck") }}</span> <span>{{ Math.floor(waifu.Luck) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.LUCK)}})</span>
+                    <span>{{ $t("waifu.stats.luck") }}</span> <span>{{ Math.floor(waifu.Luck) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.LUCK)}})</span>
                 </div>
                 <br>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.physical") }}</span> <span>{{ Math.floor(waifu.Physical) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Physical)}})</span>
+                    <span>{{ $t("waifu.stats.physical") }}</span> <span>{{ Math.floor(waifu.Physical) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.Physical)}})</span>
                 </div>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.psychic") }}</span> <span>{{ Math.floor(waifu.Psychic) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Psychic)}})</span>
+                    <span>{{ $t("waifu.stats.psychic") }}</span> <span>{{ Math.floor(waifu.Psychic) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.Psychic)}})</span>
                 </div>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.magical") }}</span> <span>{{ Math.floor(waifu.Magical) }}</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.Magical)}})</span>
+                    <span>{{ $t("waifu.stats.magical") }}</span> <span>{{ Math.floor(waifu.Magical) }}</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.Magical)}})</span>
                 </div>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.crit_chance") }}</span> <span>{{ Math.floor(waifu.CritChance*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.CritChance)}})</span>
+                    <span>{{ $t("waifu.stats.crit_chance") }}</span> <span>{{ Math.floor(waifu.CritChance*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.CritChance)}})</span>
                 </div>
                 <div class="stat">
-                    <span>{{ $t("waifu.stats.crit_damage") }}</span> <span>{{ Math.floor(waifu.CritDamage*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayModificator(StatModifier.CritDamage)}})</span>
+                    <span>{{ $t("waifu.stats.crit_damage") }}</span> <span>{{ Math.floor(waifu.CritDamage*1000)/10 }}%</span>  <span class="modifier">({{waifu.DisplayMultModificator(StatModifier.CritDamage)}})</span>
                 </div>
                 <div v-if="!forDungeon" class="equipment">
                     <div @click.right="unequip(EquipmentPiece.Weapon, $event)" @click="openDisplay(EquipmentPiece.Weapon)" class="itemSlot">
@@ -225,14 +235,8 @@ export default {
 </template>
 
 <style lang="css" scoped>
-
-.shortStat, .stat {
+.shortStat {
     display: grid;
-    grid-template-columns: 3fr 1.5fr 2fr;
-}
-
-.shortStat
-{
     grid-template-columns: 1fr 1fr;
 }
 

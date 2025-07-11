@@ -4,6 +4,6 @@ namespace Nanina.Dungeon
     {
         public string waifuId;
         public string attackType;
-        public float dmg;
+        public double dmg;
     }
 }

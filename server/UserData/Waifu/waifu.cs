@@ -41,38 +41,38 @@ namespace Nanina.UserData.WaifuData
         public uint b_dex { get; set; }
         public ushort o_dex { get; set; }
         public ushort u_dex { get; set; }
-        public float Dex {
-            get => b_dex*GetMultModificators(StatModifier.DEX); 
+        public double Dex {
+            get => ApplyModificators(b_dex, StatModifier.DEX);
         }
-        public float Int {
-            get => b_int*GetMultModificators(StatModifier.INT); 
+        public double Int {
+            get => ApplyModificators(b_int, StatModifier.INT);
         }
-        public float Agi {
-            get => b_agi*GetMultModificators(StatModifier.AGI); 
+        public double Agi {
+            get => ApplyModificators(b_agi, StatModifier.AGI); 
         }
-        public float Str {
-            get => b_str*GetMultModificators(StatModifier.STR); 
+        public double Str {
+            get => ApplyModificators(b_str, StatModifier.STR); 
         }
-        public float Kaw {
-            get => b_kaw*GetMultModificators(StatModifier.KAW); 
+        public double Kaw {
+            get => ApplyModificators(b_kaw, StatModifier.KAW); 
         }
-        public float Luck {
-            get => b_luck*GetMultModificators(StatModifier.LUCK); 
+        public double Luck {
+            get => ApplyModificators(b_luck, StatModifier.LUCK); 
         }
-        public float Psychic {
-            get => 2*Kaw*GetMultModificators(StatModifier.Psychic); 
+        public double Psychic {
+            get => ApplyModificators(2*Kaw, StatModifier.Psychic); 
         }
-        public float Magical {
-            get => 2*Int*GetMultModificators(StatModifier.Magical); 
+        public double Magical {
+            get => ApplyModificators(2*Int, StatModifier.Magical); 
         }
-        public float Physical {
-            get => 2*Str*GetMultModificators(StatModifier.Physical); 
+        public double Physical {
+            get => ApplyModificators(2*Str, StatModifier.Physical); 
         }
-        public float CritChance {
-            get => (0.05f + Luck/200)*GetMultModificators(StatModifier.CritChance); 
+        public double CritChance {
+            get => ApplyModificators(0.05f + Luck/200, StatModifier.CritChance); 
         }
-        public float CritDamage {
-            get => (0.50f + Dex/400)*GetMultModificators(StatModifier.CritDamage); 
+        public double CritDamage {
+            get => ApplyModificators(0.50f + Dex/400, StatModifier.CritDamage); 
         }
         public byte stars { get; set; }
         private uint XpToLvlUp
@@ -157,12 +157,22 @@ namespace Nanina.UserData.WaifuData
             return oldEquipment;
         }
 
-        public float GetMultModificators(StatModifier statModifier){
-            //The following line probably doesn't work?
-            var modificators = new List<Modifier>().Concat(equipment.weapon?.modifiers ?? []).Concat(equipment.dress?.modifiers ?? []).Concat(equipment.accessory?.modifiers ?? []).Concat(equipment.set?.modifiers ?? []);
-            modificators = modificators.Where(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier);
-            
-            return modificators?.Aggregate(1.0f, (amount, modificator) => amount += modificator?.amount ?? 0) ?? 1.0f;
+        public double GetMultModificators(StatModifier statModifier){
+            return new List<Modifier>().Concat(equipment.weapon?.modifiers ?? []).Concat(equipment.dress?.modifiers ?? []).Concat(equipment.accessory?.modifiers ?? []).Concat(equipment.set?.modifiers ?? [])
+                .Concat([equipment.weapon?.stat, equipment.dress?.stat, equipment.accessory?.stat])
+                .Where(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier)
+                ?.Aggregate(1.0d, (amount, modificator) => amount += modificator?.amount ?? 0d) ?? 1.0d;
         }
+
+        public double GetAdditiveModificators(StatModifier statModifier){
+            return new List<Modifier>().Concat(equipment.weapon?.modifiers ?? []).Concat(equipment.dress?.modifiers ?? []).Concat(equipment.accessory?.modifiers ?? []).Concat(equipment.set?.modifiers ?? [])
+                .Concat([equipment.weapon?.stat, equipment.dress?.stat, equipment.accessory?.stat])
+                .Where(modif => modif?.operationType == OperationType.Additive && modif?.stat == statModifier)
+                ?.Aggregate(0d, (amount, modificator) => amount += modificator?.amount ?? 0d) ?? 0d;
+        }
+
+        public double ApplyModificators(double stat, StatModifier statModifier) => 
+            (stat + GetAdditiveModificators(statModifier))*GetMultModificators(statModifier);
+
     }
 }
