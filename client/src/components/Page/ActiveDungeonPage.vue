@@ -65,34 +65,68 @@ export default {
     <div >
         <div>
             <h1>{{$t(`dungeon.${active_dungeon.template.id}.name`)}} </h1>
-            <div id="healthBarBox">
-                <div id="healthBar" :style="getHealthBarStyle()"></div>
-             </div>
-            <button class="smallbutton" @click="LeaveDungeon">{{ $t("dungeon.leave") }}</button><br>
-            <span>
-                {{ $t("dungeon.challenge") }}
-            </span><br>
-            <a :href="mapURL"> <img id="bgMap" :src="active_dungeon.beatmap.beatmapset.covers.slimcover2x"></a>
-            <button class="smallbutton" @click="claimDungeon">{{ $t("dungeon.fight") }}</button><br>
-            <div id="waifuSelection">
-                <div class="waifuSlot">
-                    <img :src="`${publicPath}waifu-image/${active_dungeon.waifus[0].imgPATH}`">
-                </div>
-                <div class="waifuSlot">
-                    <img :src="`${publicPath}waifu-image/${active_dungeon.waifus[1].imgPATH}`">
-                </div>
-                <div class="waifuSlot">
-                    <img :src="`${publicPath}waifu-image/${active_dungeon.waifus[2].imgPATH}`">
+            <div id="healthBarContainer">
+                <div id="healthBarBorder">
+                    <div id="healthBar" :style="getHealthBarStyle()">
+                    </div>
+                    <span>{{ Math.floor(active_dungeon.health) }}/{{ Math.floor(active_dungeon.maxHealth) }}</span>
                 </div>
             </div>
-            <div id="playingField">
-                <p> {{$t("dungeon.boss_health")}} : {{ active_dungeon.health }}/{{ Math.floor(active_dungeon.maxHealth) }}</p>
-                <div id="attackLines">
-                    Attacks : 
-                    <div v-for="log in active_dungeon.log">
-                        <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
+            <div class="flex margins">
+                <span>
+                    {{ $t("dungeon.challenge") }}
+                </span>
+                <span style="align-self: center;">
+                    <a :href="mapURL">{{ `${active_dungeon.beatmap.beatmapset.artist} - ${active_dungeon.beatmap.beatmapset.title} [${active_dungeon.beatmap.version}] (${active_dungeon.beatmap.beatmapset.creator}, ${active_dungeon.beatmap.difficulty_rating}★)` }}</a>
+                </span>
+                <!---->
+                <div class="buttonHolder">
+                    <button class="smallbutton nnnbutton" @click="claimDungeon">{{ $t("fight.download") }}</button>
+                    <button class="smallbutton nnnbutton" @click="claimDungeon">{{ $t("dungeon.fight") }}</button>
+                </div>
+                <div class="waifuInfo">
+                    <div class="waifuSlot">
+                        <img :src="`${publicPath}waifu-image/${active_dungeon.waifus[0].imgPATH}`">
+                    </div>
+                    <div class="log">
+                        <div v-for="log in active_dungeon.log.slice(-30).filter(log => log.waifuId == active_dungeon.waifus[0].id ).reverse()">
+                            <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
+                        </div>
                     </div>
                 </div>
+                <div class="waifuInfo">
+                    <div class="waifuSlot">
+                        <img :src="`${publicPath}waifu-image/${active_dungeon.waifus[1].imgPATH}`">
+                    </div>
+                    <div class="log">
+                        <div v-for="log in active_dungeon.log.slice(-30).filter(log => log.waifuId == active_dungeon.waifus[1].id ).reverse()">
+                            <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="waifuInfo">
+                    <div class="waifuSlot">
+                        <img :src="`${publicPath}waifu-image/${active_dungeon.waifus[2].imgPATH}`">
+                    </div>
+                    <div class="log">
+                        <div v-for="log in active_dungeon.log.slice(-30).filter(log => log.waifuId == active_dungeon.waifus[2].id ).reverse()">
+                            <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="waifuInfo boss">
+                    
+                    
+                    <div class="waifuSlot">
+                        <img :src="`${publicPath}waifu-image/unknown.svg`">
+                    </div>
+                    <!--<div class="log">
+                        <div v-for="log in active_dungeon.log.slice(-30).filter(log => log.waifuId == active_dungeon.waifus[0].id ).reverse()">
+                            <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
+                        </div>
+                    </div>-->
+                </div>
+                <button class="leavebutton smallbutton nnnbutton" @click="LeaveDungeon">{{ $t("dungeon.leave") }}</button>
             </div>
         </div>
     </div>
@@ -108,6 +142,23 @@ export default {
 h1
 {
     text-align: center;
+    margin-bottom: 20px;
+}
+
+.waifuInfo
+{
+    margin: 25px 0px;
+    height: 15vw;
+    display:flex;
+}
+.waifuInfo .log
+{
+    margin-top: 20px;
+}
+
+.boss
+{
+   flex-direction: row-reverse;
 }
 
 .waifuSlot{
@@ -126,43 +177,91 @@ h1
     overflow: hidden;
 }
 
-#playingField {
-    height: 50vh;
-    width: 100vw;
-    background-image: url("src/assets/playingField.jpg");
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
 #attackLines {
-    margin-top:37vh;
-    margin-left: 5vw;
+
     height: 10vh;
     width: 35vw;
-    font-size: small;
+    font-size: large;
     color:bisque;
     overflow: scroll;
 }
+#healthBarContainer
+{
+    display:flex;
+    height: 60px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
 
-#healthBarBox
+#healthBarBorder
 {
     height: 40px;
     width: 60vw;
     border-radius: 100px;
     border-style: solid;
-    border-color: blueviolet;
-    border-width: 10px;
+    border-color: rgb(200, 41, 200);
+    border-width: 8px;                         
+    display:flex;
+    align-items: center;
+}
+
+#healthBarBorder span
+{
+    position:absolute;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: larger;
 }
 
 #healthBar
 {
     height: 40px;
    
-
+    justify-self: end;
     border-radius: 100px;
     border-style: none;
     border-width: 10px;
     background-color: red;
 }
+
+#bgMap
+{
+    max-width: 80vw;
+}
+
+
+
+.flex span
+{
+    margin-bottom: 15px;
+}
+
+.buttonHolder
+{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr; 
+}
+
+.buttonHolder button
+{
+    margin: 0px 100px;
+}
+
+.leavebutton
+{
+    margin: 50px 0px;
+    width: 300px;
+    place-self: center;
+}
+
+/*#playingField {
+    height: 50vh;
+    width: 100vw;
+    background-image: url("src/assets/playingField.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+}*/
+
 
 </style>

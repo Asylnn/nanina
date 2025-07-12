@@ -279,4 +279,9 @@ li, #logo{
     cursor:pointer;
 }
 
+header
+{
+    margin-bottom: 20px;
+}
+
 </style>

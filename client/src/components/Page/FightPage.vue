@@ -112,7 +112,7 @@ export default {
 
 <template>
     
-        <div class="flex" id="windowFight">
+        <div class="flex margins">
             <div class="grid" id="gameSelector">
                 <span >{{ $t("fight.game_select") }}</span>
                 <select v-model="game">
@@ -182,19 +182,6 @@ export default {
 {
     grid-template-columns: 1fr 0.5fr; 
     margin-bottom: 20px;
-}
-
-.flex
-{
-    display:flex;
-    flex-direction: column;
-
-}
-
-#windowFight {
-    
-    margin: 0 25vw;
-    font-size: larger;
 }
 
 .button{

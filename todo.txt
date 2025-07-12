@@ -66,6 +66,8 @@ TODO : Implement Achievements
 
 Future tasks not linked to a version
 
+TODO : MUTEX Counter in DungeonManager                                              #NoLongerRequired
+
 TODO : Make dungeon not linked with websocket session                                                                           #Done
 TODO : Remove discord link from button in client side                                                                           #Done
 TODO : Implement File Serving                                                                                                   #Done
@@ -89,9 +91,8 @@ TODO : Make the code in repsonse.cs follow camelCase convention                 
 
 TODO : Make becoming an admin and giving yourself gacha currency less convoluted
 TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
-TODO : Is not deleting old unused sessions ids not secure? To think about.
-TODO : any objects in ts should be properly be typed
-TODO : MUTEX Counter in DungeonManager
+TODO : Is not deleting old unused sessions ids not secure? To think about.²
+
 TODO : Modify break property in Maimai 
 TODO : [BUG] Crash when schwartzchild (re:mast?)
 TODO : Add cross to menus to close them.
@@ -100,6 +101,9 @@ TODO : ActiveDungeon code should be compatible with any rhythm game
 TODO : Create a search bar for items
 TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.
 TODO : Display the set bonus on the waifu stat card
+TODO : Have the "plus" change color when hovered
+TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)
+TODO : Show loot rarity in loot component
 
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

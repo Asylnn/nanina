@@ -98,17 +98,12 @@ button, input[type="submit"], input[type="reset"] {
 
 .smallbutton
 {
-    padding:0px 6px;
-    border-color:rgb(178, 77, 224);
+    padding:2px 6px;
     border-width: 3px;
     border-style: solid;
     border-radius: 20px;
+    height:45px;
     
-}
-
-.smallbutton:hover
-{
-    color:purple;
 }
 
 .locked
@@ -149,5 +144,21 @@ button, input[type="submit"], input[type="reset"] {
 }
 
 a {
+    color:lightblue;
+}
+
+a:hover {
     color:white;
+}
+
+.margins {
+    
+    margin: 0 25vw;
+    font-size: larger;
+}
+
+.flex
+{
+    display:flex;
+    flex-direction: column;
 }
