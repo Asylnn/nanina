@@ -40,6 +40,10 @@ export default {
             User.updateTimer(this.user)
             this.SendToServer("claim dungeon fight", this.active_dungeon.instanceId, this.user.Id)
             
+        },
+        damageColor(critical_amount: number)
+        {
+            return critical_amount >= 1 ? "critical" : ""
         }
     },
     mounted(){
@@ -90,7 +94,20 @@ export default {
                     </div>
                     <div class="log">
                         <div v-for="log in active_dungeon.log.slice(-30).filter(log => log.waifuId == active_dungeon.waifus[0].id ).reverse()">
-                            <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
+                            <i18n-t keypath="dungeon.attack" tag="p">
+                                <template v-slot:damage>
+                                    <span :class="damageColor(log.critical_amount)">{{ Math.floor(log.dmg)}}</span>
+                                </template>
+                                <template v-slot:waifu_name>
+                                    <span >{{ $t(`waifu.${log.waifuId}.name`)}}</span>
+                                </template>
+                                <template v-slot:attack_type>
+                                    <span>{{ log.attackType}}</span>
+                                </template>
+                            </i18n-t>
+                            <!--<span place="damage">{{ Math.floor(log.dmg)}}</span>
+                            <span place="waifu_name">{{ $t(`waifu.${log.waifuId}.name`)}}</span>
+                            <span place="attack_type">{{ log.attackType }}</span>-->
                         </div>
                     </div>
                 </div>
@@ -100,7 +117,17 @@ export default {
                     </div>
                     <div class="log">
                         <div v-for="log in active_dungeon.log.slice(-30).filter(log => log.waifuId == active_dungeon.waifus[1].id ).reverse()">
-                            <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
+                            <i18n-t keypath="dungeon.attack" tag="p">
+                                <template v-slot:damage>
+                                    <span :class="damageColor(log.critical_amount)">{{ Math.floor(log.dmg)}}, {{ log.critical_amount }}</span>
+                                </template>
+                                <template v-slot:waifu_name>
+                                    <span >{{ $t(`waifu.${log.waifuId}.name`)}}</span>
+                                </template>
+                                <template v-slot:attack_type>
+                                    <span>{{ log.attackType}}</span>
+                                </template>
+                            </i18n-t>
                         </div>
                     </div>
                 </div>
@@ -110,7 +137,17 @@ export default {
                     </div>
                     <div class="log">
                         <div v-for="log in active_dungeon.log.slice(-30).filter(log => log.waifuId == active_dungeon.waifus[2].id ).reverse()">
-                            <p class="attackLine">{{ $t("dungeon.attack", {waifu_name:$t(`waifu.${log.waifuId}.name`), attack_type:log.attackType, damage:Math.floor(log.dmg)}) }}</p>
+                            <i18n-t keypath="dungeon.attack" tag="p">
+                                <template v-slot:damage>
+                                    <span :class="damageColor(log.critical_amount)">{{ Math.floor(log.dmg)}}</span>
+                                </template>
+                                <template v-slot:waifu_name>
+                                    <span >{{ $t(`waifu.${log.waifuId}.name`)}}</span>
+                                </template>
+                                <template v-slot:attack_type>
+                                    <span>{{ log.attackType}}</span>
+                                </template>
+                            </i18n-t>
                         </div>
                     </div>
                 </div>
@@ -255,6 +292,10 @@ h1
     place-self: center;
 }
 
+.critical
+{
+    color:rgb(252, 255, 45);
+}
 /*#playingField {
     height: 50vh;
     width: 100vw;

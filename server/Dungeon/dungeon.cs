@@ -72,7 +72,7 @@ namespace Nanina.Dungeon
             }
         }
 
-        public (double, string) GetDamage(Waifu waifu)
+        public (double, string, byte) GetDamage(Waifu waifu)
         {
             double dmg;
             string attackType;
@@ -90,20 +90,23 @@ namespace Nanina.Dungeon
                 dmg = waifu.Psychic*(1 - template.bossResistances.psychicResistance);
                 attackType = "psychic";
             }
-            var critDmgMult = Math.Truncate(waifu.CritChance)*waifu.CritDamage; //Super crit
-            var critChance = waifu.CritChance - Math.Truncate(waifu.CritChance);
-            var randCrit = new Random().NextDouble();
+
+            byte critical_amount = (byte) Math.Truncate(waifu.CritChance);
+            var critChance = waifu.CritChance - critical_amount;  //Super crit
+            if(new Random().NextDouble() <= critChance)
+                critical_amount++;
+            var critDmgMult = critical_amount*waifu.CritDamage;
+
             
-            if(randCrit <= critChance)
-                critDmgMult += waifu.CritDamage;
+            
             dmg *= 1 + critDmgMult;
-            return (dmg, attackType);
+            return (dmg, attackType, critical_amount);
         }
         public void DealDamage(float mult = 1f){
             foreach (var waifu in waifus) 
             {
                 
-                var (dmg, attackType) = GetDamage(waifu);
+                var (dmg, attackType, critical_amount) = GetDamage(waifu);
                 dmg *= mult;
 
                 health -= dmg;
@@ -111,6 +114,8 @@ namespace Nanina.Dungeon
                     waifuId = waifu.id,
                     attackType = attackType,
                     dmg = dmg,
+                    critical_amount = critical_amount,
+                    claim_attack = mult != 1f,
                 });
             }
         }

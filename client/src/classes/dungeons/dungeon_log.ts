@@ -1,5 +1,7 @@
 export default class DungeonLog {
-    public waifuId = "";
-    public attackType = "";
-    public dmg = 0;
+    public waifuId !: string
+    public attackType !: string
+    public dmg !: number
+    public critical_amount !: number
+    public claim_attack !: boolean
 }
