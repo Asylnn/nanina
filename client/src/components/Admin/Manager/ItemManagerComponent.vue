@@ -4,6 +4,7 @@ import Modifier from '@/classes/modifiers/modifiers';
 import ModifierManagerComponent from './ModifierManagerComponent.vue'
 import Equipment from '@/classes/item/equipment';
 import ItemType from '@/classes/item/item_type';
+import InventoryManagerPage from './InventoryManagerPage.vue';
 
 
 export default {
@@ -18,6 +19,10 @@ export default {
         item: {
             type: [Item, Equipment],
             required: true
+        },
+        forInventoryManager:{
+            type: Boolean,
+            required: false,
         }
     },
     methods:{
@@ -42,20 +47,21 @@ export default {
 <template>
     <div>
         <div class="row">
-            <button @click="Delete">delete</button>
-            <span class="attribute">Id  <input class="numberInput" v-model="item.id" type="number"></span>
+            <button class="smallbutton nnnbutton" @click="Delete">delete</button>
+            <span class="attribute">id  <input class="numberInput" v-model="item.id" type="number"></span>
+            <span class="attribute">count  <input class="numberInput" v-model="item.count" type="number"></span>
             <select class="attribute" v-model="item.type">
-                <option :value = ItemType.Equipment>Equipment</option>
-                <option :value = ItemType.UserConsumable>User Consumable</option>
-                <option :value = ItemType.WaifuConsumable>Waifu Consumable</option>
-                <option :value = ItemType.Material>Material</option>
+                <option :value = ItemType.Equipment>equipment</option>
+                <option :value = ItemType.UserConsumable>user consumable</option>
+                <option :value = ItemType.WaifuConsumable>waifu consumable</option>
+                <option :value = ItemType.Material>material</option>
             </select>
-            <span class="attribute">Rarity  <input class="numberInput"v-model="item.rarity" type="number"></span>
-            <span v-if="item.type == ItemType.Equipment" class="attribute">Set Id<input class="numberInput" v-model="(item as Equipment).setId" type="number"></span>
+            <span class="attribute">rarity  <input class="numberInput"v-model="item.rarity" type="number"></span>
+            <span v-if="item.type == ItemType.Equipment" class="attribute">set id<input class="numberInput" v-model="(item as Equipment).setId" type="number"></span>
             <select v-if="item.type == ItemType.Equipment" class="attribute" v-model="(item as Equipment).piece">
-                <option :value = 0>Weapon</option>
-                <option :value = 1>Dress</option>
-                <option :value = 2>Accessory</option>
+                <option :value = 0>weapon</option>
+                <option :value = 1>dress</option>
+                <option :value = 2>accessory</option>
             </select>
             <span class="attribute">Img  <input class="imgImput"v-model="item.imgPATH" type="text"></span>
             <img  class="img" :src="`${publicPath}/item-image/${item.imgPATH}`">
@@ -64,7 +70,7 @@ export default {
         
         
         <div class="modifiers">
-            <div class="row">Modifiers: <button @click="AddModifier">Add Modifier</button></div>
+            <div class="row">Modifiers: <button class="smallbutton nnnbutton" @click="AddModifier">Add Modifier</button></div>
             <div v-for="modifier in item.modifiers">
                 <ModifierManagerComponent class="row" :modifier="modifier" @delete-modifier="DeleteModifier"></ModifierManagerComponent>
             </div>

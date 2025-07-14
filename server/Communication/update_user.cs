@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Nanina.Database;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.WaifuData;
+using Nanina.UserData;
 
 namespace Nanina.Communication
 {
@@ -258,7 +259,24 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
 
             user.waifus = JsonConvert.DeserializeObject<List<Waifu>>(rawData.data);
+            Send(ClientNotification.NotificationData("admin", "modified waifus", 1));
+            DBUtils.Update(user);
+        }
 
+        protected void UpdateUserInventory(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user == null) 
+            {
+                Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); 
+                return;
+            }
+            if(!user.admin)
+                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
+
+            var inventory = JsonConvert.DeserializeObject<Inventory>(rawData.data);
+            user.inventory = inventory;
+            Send(ClientNotification.NotificationData("admin", "modified inventory", 1));
             DBUtils.Update(user);
         }
     }

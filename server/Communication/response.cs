@@ -110,6 +110,9 @@ namespace Nanina.Communication
                     case "claim dungeon fight":
                         ClaimDungeonFight(rawData);
                         break;
+                    case "update user inventory":
+                        UpdateUserInventory(rawData);
+                        break;
                 }
             }
             catch(Exception err)
