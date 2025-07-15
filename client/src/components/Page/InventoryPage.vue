@@ -21,9 +21,6 @@ export default {
         }
     },
     methods:{
-        changeTab(categ : string){
-            this.category = categ
-        },
         closeItemDisplay(){
             this.focusedView = false
             this.item_to_display = new Item()
@@ -54,40 +51,20 @@ export default {
 <template>
     <div id="inventory">
         <ul id="inventoryHeader">
-            <li :style="applyTextColor('all')" @click="changeTab('all')">{{$t("inventory.all")}}</li>
-            <li :style="applyTextColor('equipment')" @click="changeTab('equipment')">{{$t("inventory.equipment")}}</li>
-            <li :style="applyTextColor('user_consumable')" @click="changeTab('user_consumable')">{{$t("inventory.user_consumable")}}</li>
-            <li :style="applyTextColor('waifu_consumable')" @click="changeTab('waifu_consumable')">{{$t("inventory.waifu_consumable")}}</li>
-            <li :style="applyTextColor('material')" @click="changeTab('material')" >{{$t("inventory.material")}}</li>
+            <li :style="applyTextColor('all')" @click="category = 'all'">{{$t("inventory.all")}}</li>
+            <li :style="applyTextColor('equipment')" @click="category = 'equipment'">{{$t("inventory.equipment")}}</li>
+            <li :style="applyTextColor('user_consumable')" @click="category = 'user_consumable'">{{$t("inventory.user_consumable")}}</li>
+            <li :style="applyTextColor('waifu_consumable')" @click="category = 'waifu_consumable'">{{$t("inventory.waifu_consumable")}}</li>
+            <li :style="applyTextColor('material')" @click="category = 'material'" >{{$t("inventory.material")}}</li>
         </ul>
         <div id="inventoryBody">
-            <div v-if="category === 'equipment' || category === 'all'">
-                <GridDisplayComponent :elements="user.inventory.equipment" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
-                <div v-if="focusedView">
-                    <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :userID="user.Id" :is-for-equiping="false" :item="item_to_display"></ItemComponent>
-                </div>
-            </div>
-            <div v-if="category === 'user_consumable' || category === 'all'">
-                <GridDisplayComponent :elements="user.inventory.userConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
-                <div v-if="focusedView">
-                    <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :userID="user.Id" :is-for-equiping="false" :item="item_to_display"></ItemComponent>
-                </div>
-            </div>
-            <div v-if="category === 'waifu_consumable' || category === 'all'">
-                <GridDisplayComponent :elements="user.inventory.waifuConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
-                <div v-if="focusedView">
-                    <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :userID="user.Id" :is-for-equiping="false" :item="item_to_display"></ItemComponent>
-                </div>
-            </div>
-            <div v-if="category === 'material' || category === 'all'">
-                <GridDisplayComponent :elements="user.inventory.material" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
-                <div v-if="focusedView">
-                    <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :userID="user.Id" :is-for-equiping="false" @input="onEscape" :item="item_to_display" tabindex="0" @keydown.esc="closeItemDisplay"></ItemComponent>
-                </div>
+            <GridDisplayComponent v-if="category === 'equipment' || category === 'all'" :elements="user.inventory.equipment" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
+            <GridDisplayComponent v-if="category === 'user_consumable' || category === 'all'" :elements="user.inventory.userConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
+            <GridDisplayComponent v-if="category === 'waifu_consumable' || category === 'all'" :elements="user.inventory.waifuConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
+            <GridDisplayComponent v-if="category === 'material' || category === 'all'" :elements="user.inventory.material" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
+            <div v-if="focusedView">
+                <div @click="closeItemDisplay" class="veil" ></div>
+                <ItemComponent :userID="user.Id" :is-for-equiping="false" :item="item_to_display"></ItemComponent>
             </div>
         </div>
     </div>
