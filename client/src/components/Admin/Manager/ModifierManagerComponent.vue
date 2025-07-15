@@ -1,13 +1,19 @@
 <script lang="ts">
 import Modifier from '@/classes/modifiers/modifiers';
+import OperationType from '@/classes/modifiers/operation_type';
 
 
 export default {
     name : "ModifierManagerComponent",
+    data() {
+        return {
+            OperationType : OperationType,
+        }
+    },
     props: {
         modifier: {
             type: Modifier, 
-            required: true
+            required: true,
         },
     },
     methods:{
@@ -25,7 +31,11 @@ export default {
         <button @click="Delete">delete</button>
         <span class="attribute">Stat  <input class="numberInput" v-model="modifier.stat" type="number"></span>
         <span class="attribute">Timeout  <input class="numberInput" v-model="modifier.timeout" type="number"></span>
-        <span class="attribute ">Amount <input class="numberInput" v-model="modifier.amount" type="number"></span>
+        <span class="attribute">Amount <input class="numberInput" v-model="modifier.amount" type="number"></span>
+         <select class="attribute" v-model="modifier.operationType">
+            <option :value = OperationType.Additive>Additive</option>
+            <option :value = OperationType.Multiplicative>Multiplicative</option>
+        </select>
     </div>
 
 </template>
