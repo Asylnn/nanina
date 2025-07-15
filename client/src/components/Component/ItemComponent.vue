@@ -44,7 +44,12 @@ export default {
         {
             console.log(this.userID)
             this.SendToServer("upgrade equipment", this.item.inventoryId.toString(), this.userID!)
+        },
+        lvlStarsCSS(upgrade : boolean = false)
+        {
+            return this.item.rarity == (this.item as Equipment).lvl + +upgrade - 2 ? "lvlMax" : ""
         }
+
     },
     computed:{
         allModifiers()
@@ -66,6 +71,10 @@ export default {
     <div :class="isForEquiping ? 'isForEquiping' : ''" id="focusedObject" >
         <div id="itemImage">
             <div><img :src="`${publicPath}/item-image/${item.imgPATH}`"></div>
+            <div v-if="item.type == ItemType.Equipment"  id="lvl" >
+                <span v-if="!showingUpgradePanel" :class="lvlStarsCSS()">{{ "★".repeat((item as Equipment).lvl) }}</span>
+                <span v-else ><span>{{ "★".repeat((item as Equipment).lvl) }}</span> ➔ <span :class="lvlStarsCSS(true)">{{ "★".repeat((item as Equipment).lvl + 1) }}</span></span>
+            </div>
         </div>
         <div id="ItemInfo">
             {{ $t(`item.${item.id}.name`) }}<br>
@@ -116,7 +125,7 @@ export default {
     border-radius: 15px;
     display: flex;
     flex-direction: row;
-    padding: 2vh 2vh;
+    padding: 1vw 1vw;
     z-index: 727;
     top:50%;                                /*Make the display be at the center of the screen*/
     left:50%;
@@ -127,18 +136,30 @@ export default {
 #focusedObject img {
     /*max-width: 25vw;
     max-height: 60vh;*/
-    padding: 2.5vw 2.5vw;
+    padding: 2.5vw 2.5vw 0.5vw 2.5vw;
     height: 128px;
     width: 128px;
 }
 
 #itemImage {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    padding-right: 1vw;
+}
+
+.lvlMax
+{
+    color:gold;
+}
+
+#lvl {
+    font-size:25px;
+    text-align: center;
 }
 
 .isForEquiping {
     cursor:pointer;
 }
+
 
 </style>
