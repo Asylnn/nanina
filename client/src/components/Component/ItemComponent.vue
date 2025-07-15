@@ -4,6 +4,7 @@ import Item from '@/classes/item/item';
 import ItemType from '@/classes/item/item_type';
 import ModifierComponent from './ModifierComponent.vue';
 import GridDisplayComponent from './GridDisplayComponent.vue';
+import Modifier from '@/classes/modifiers/modifiers';
 
 export default {
     name : "ItemComponent",
@@ -48,8 +49,9 @@ export default {
     computed:{
         allModifiers()
         {
-            console.log([...this.item.modifiers, ...(this.item as Equipment)?.getAttributeModifiers()])
-            return [...this.item.modifiers, ...(this.item as Equipment)?.getAttributeModifiers()]
+            //Deepcopy of the poor!
+            let u = Modifier.compactModifiers(JSON.parse(JSON.stringify([...this.item.modifiers, ...(this.item as Equipment)?.getAttributeModifiers()])))
+            return u
         }
     }
     
