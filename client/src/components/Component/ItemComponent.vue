@@ -49,8 +49,11 @@ export default {
     computed:{
         allModifiers()
         {
+            let modifiers = this.item.modifiers
+            if(this.item.type == ItemType.Equipment) modifiers = modifiers.concat((this.item as Equipment).getAttributeModifiers())
+
             //Deepcopy of the poor!
-            let u = Modifier.compactModifiers(JSON.parse(JSON.stringify([...this.item.modifiers, ...(this.item as Equipment)?.getAttributeModifiers()])))
+            let u = Modifier.compactModifiers(JSON.parse(JSON.stringify(modifiers)))
             return u
         }
     }
