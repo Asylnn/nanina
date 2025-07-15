@@ -65,7 +65,9 @@
         }
     },
     "item":{
+        "stat":"Main statistic",
         "attributes":{
+            "attribute":"Attributes",
             "0":"Pointy",
             "1":"Complex",
             "2":"Cute",

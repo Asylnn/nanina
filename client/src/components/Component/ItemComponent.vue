@@ -74,7 +74,7 @@ export default {
                 <ModifierComponent v-if="showingUpgradePanel" :modifier="(item as Equipment).stat" :upgrade-quantity="10"></ModifierComponent>
                 <ModifierComponent v-else :modifier="(item as Equipment).stat" ></ModifierComponent><br>
                 <div v-if="(item as Equipment).attributes.length != 0">
-                    <p>{{$t("attributes.attribute")}} </p><br>
+                    <p>{{$t("item.attributes.attribute")}} </p><br>
                     <div v-for="attribute in (item as Equipment).attributes">
                         <span>{{ $t(`item.attributes.${attribute.id}`) }}</span>
                     </div><br>
