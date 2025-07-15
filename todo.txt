@@ -104,6 +104,6 @@ TODO : Display the set bonus on the waifu stat card
 TODO : Have the "plus" change color when hovered
 TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)
 TODO : Show loot rarity in loot component
-
+TODO : When you don't have the corresponding item in your inventory, the use item menu doesn't show up
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

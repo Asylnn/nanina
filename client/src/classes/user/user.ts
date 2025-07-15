@@ -6,6 +6,7 @@ import type Fight from './fight'
 import type Inventory from './inventory'
 import type Game from './game'
 import config from '../../../../baseValues.json'
+import Equipment from '../item/equipment'
 
 
 
@@ -48,15 +49,19 @@ export default class User {
     
     public verification : any = {} //One day any objects should be properly be typed
     constructor(obj : any){
-
+        console.log("user constructor")
+        console.log(obj)
         Object.assign(this, obj)
         this.waifus = this.waifus.map(waifu => new Waifu(waifu))
+        if(this.inventory) this.inventory.equipment = this.inventory?.equipment.map((equipment) => {
+            return Object.assign(new Equipment(), equipment)
+        })
+        
         if(this.fight?.timestamp != undefined)
             this.localFightTimestamp = this.fight.timestamp
             
-        if(this.Id != "772277")
-            User.updateTimer(this)
-            setInterval(User.updateTimer, 1000, this)
+        User.updateTimer(this)
+        setInterval(User.updateTimer, 1000, this)
 
         
 

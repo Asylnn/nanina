@@ -28,5 +28,7 @@ namespace Nanina
         public List<Modifier> modifiersWeapon;
         public List<Modifier> modifiersDress;
         public List<Modifier> modifiersAccessory;
+        public float equipment_main_stat_level_up_multiplicator;
+        public float attribute_stat_randomness;
     }
 }

@@ -53,8 +53,11 @@ export default {
     },
     computed:
     {
-        mapURL(){
+        mapLink(){
             return `${this.active_dungeon.beatmap.url}#${this.active_dungeon.beatmap.mode}/${this.active_dungeon.beatmap.id}`
+        },
+        mapDownload(){
+            return `https://osu.ppy.sh/beatmapsets/${this.active_dungeon.beatmap.beatmapset.id}/download`
         },
         claimWaitTime()
         {
@@ -81,11 +84,11 @@ export default {
                     {{ $t("dungeon.challenge") }}
                 </span>
                 <span style="align-self: center;">
-                    <a :href="mapURL">{{ `${active_dungeon.beatmap.beatmapset.artist} - ${active_dungeon.beatmap.beatmapset.title} [${active_dungeon.beatmap.version}] (${active_dungeon.beatmap.beatmapset.creator}, ${active_dungeon.beatmap.difficulty_rating}★)` }}</a>
+                    <a :href="mapLink" target="_blank">{{ `${active_dungeon.beatmap.beatmapset.artist} - ${active_dungeon.beatmap.beatmapset.title} [${active_dungeon.beatmap.version}] (${active_dungeon.beatmap.beatmapset.creator}, ${active_dungeon.beatmap.difficulty_rating}★)` }}</a>
                 </span>
                 <!---->
                 <div class="buttonHolder">
-                    <button class="smallbutton nnnbutton" @click="claimDungeon">{{ $t("fight.download") }}</button>
+                    <a class="smallbutton nnnbutton" :href="mapDownload" target="_blank">stuff</a>
                     <button class="smallbutton nnnbutton" @click="claimDungeon">{{ $t("dungeon.fight") }}</button>
                 </div>
                 <div class="waifuInfo">
@@ -119,7 +122,7 @@ export default {
                         <div v-for="log in active_dungeon.log.slice(-30).filter(log => log.waifuId == active_dungeon.waifus[1].id ).reverse()">
                             <i18n-t keypath="dungeon.attack" tag="p">
                                 <template v-slot:damage>
-                                    <span :class="damageColor(log.critical_amount)">{{ Math.floor(log.dmg)}}, {{ log.critical_amount }}</span>
+                                    <span :class="damageColor(log.critical_amount)">{{ Math.floor(log.dmg)}}</span>
                                 </template>
                                 <template v-slot:waifu_name>
                                     <span >{{ $t(`waifu.${log.waifuId}.name`)}}</span>
@@ -280,7 +283,7 @@ h1
     grid-template-columns: 1fr 1fr; 
 }
 
-.buttonHolder button
+.buttonHolder button,a
 {
     margin: 0px 100px;
 }

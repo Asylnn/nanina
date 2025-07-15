@@ -5,6 +5,7 @@ using Nanina.Communication;
 using Nanina.Database;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.WaifuData;
+using Nanina.UserData.ModifierData;
 
 namespace Nanina
 {
@@ -14,10 +15,10 @@ namespace Nanina
         public static readonly List<Item> items = JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText("../save/item.json"));
         public static readonly List<Equipment> equipments = JsonConvert.DeserializeObject<List<Equipment>>(File.ReadAllText("../save/equipment.json"));
         public static readonly List<Set> sets = JsonConvert.DeserializeObject<List<Set>>(File.ReadAllText("../save/set.json"));
-            
         public static readonly BaseValues baseValues = JsonConvert.DeserializeObject<BaseValues>(File.ReadAllText("../baseValues.json"));
         public static readonly Maimai.Chart[] charts = JsonConvert.DeserializeObject<Maimai.Chart[]>(File.ReadAllText("../charts.json"));
         public static readonly List<List<Loot>> userLevelRewards = LoadUserLevelRewards();
+        public static readonly List<EquipmentAttribute> baseAttributes = JsonConvert.DeserializeObject<List<EquipmentAttribute>>(File.ReadAllText("../save/attributes.json"));
         public static WebSocketServer ws;
 
         private static List<List<Loot>> LoadUserLevelRewards()

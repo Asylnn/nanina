@@ -113,6 +113,9 @@ namespace Nanina.Communication
                     case "update user inventory":
                         UpdateUserInventory(rawData);
                         break;
+                    case "upgrade equipment":
+                        UpgradeEquipment(rawData);
+                        break;
                 }
             }
             catch(Exception err)

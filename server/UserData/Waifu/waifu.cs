@@ -158,15 +158,13 @@ namespace Nanina.UserData.WaifuData
         }
 
         public double GetMultModificators(StatModifier statModifier){
-            return new List<Modifier>().Concat(equipment.weapon?.modifiers ?? []).Concat(equipment.dress?.modifiers ?? []).Concat(equipment.accessory?.modifiers ?? []).Concat(equipment.set?.modifiers ?? [])
-                .Concat([equipment.weapon?.stat, equipment.dress?.stat, equipment.accessory?.stat])
+            return new List<Modifier>().Concat(equipment.weapon?.GetAllModifiers() ?? []).Concat(equipment.dress?.GetAllModifiers() ?? []).Concat(equipment.accessory?.GetAllModifiers() ?? []).Concat(equipment.set?.modifiers ?? [])
                 .Where(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier)
                 ?.Aggregate(1.0d, (amount, modificator) => amount += modificator?.amount ?? 0d) ?? 1.0d;
         }
 
         public double GetAdditiveModificators(StatModifier statModifier){
-            return new List<Modifier>().Concat(equipment.weapon?.modifiers ?? []).Concat(equipment.dress?.modifiers ?? []).Concat(equipment.accessory?.modifiers ?? []).Concat(equipment.set?.modifiers ?? [])
-                .Concat([equipment.weapon?.stat, equipment.dress?.stat, equipment.accessory?.stat])
+            return new List<Modifier>().Concat(equipment.weapon?.GetAllModifiers() ?? []).Concat(equipment.dress?.GetAllModifiers() ?? []).Concat(equipment.accessory?.GetAllModifiers() ?? []).Concat(equipment.set?.modifiers ?? [])
                 .Where(modif => modif?.operationType == OperationType.Additive && modif?.stat == statModifier)
                 ?.Aggregate(0d, (amount, modificator) => amount += modificator?.amount ?? 0d) ?? 0d;
         }

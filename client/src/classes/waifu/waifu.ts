@@ -1,6 +1,6 @@
 import Modifier from "../modifiers/modifiers"
 import type StatModifier from "../modifiers/stat_modifier"
-import type WaifuEquipmentManager from "./equipment"
+import WaifuEquipmentManager from "./equipment"
 import OperationType from "../modifiers/operation_type"
 
 export default class Waifu {
@@ -56,19 +56,20 @@ export default class Waifu {
     }
 
     constructor(obj: any){
+        console.log(obj)
         Object.assign(this, obj)
+        this.equipment = new WaifuEquipmentManager(this.equipment);
     }
 
     public GetMultModificators(statModifier : StatModifier){
-        return ([] as Array<Modifier | undefined>).concat(this.equipment.weapon?.modifiers || []).concat(this.equipment.dress?.modifiers || []).concat(this.equipment.accessory?.modifiers || []).concat(this.equipment.set?.modifiers || [])
-            .concat([this.equipment.weapon?.stat, this.equipment.dress?.stat , this.equipment.accessory?.stat])
+        this.equipment.weapon?.GetAllModifiers()
+        return ([] as Array<Modifier | undefined>).concat(this.equipment.weapon?.GetAllModifiers() || []).concat(this.equipment.dress?.GetAllModifiers() || []).concat(this.equipment.accessory?.GetAllModifiers() || []).concat(this.equipment.set?.modifiers || [])
             .filter(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier)
             .reduce((amount, modificator) => amount += modificator?.amount || 0, 1) || 1;
     }
 
     public GetAdditiveModificators(statModifier: StatModifier){
-        return ([] as Array<Modifier | undefined>).concat(this.equipment.weapon?.modifiers || []).concat(this.equipment.dress?.modifiers || []).concat(this.equipment.accessory?.modifiers || []).concat(this.equipment.set?.modifiers || [])
-            .concat([this.equipment.weapon?.stat, this.equipment.dress?.stat , this.equipment.accessory?.stat])
+        return ([] as Array<Modifier | undefined>).concat(this.equipment.weapon?.GetAllModifiers() || []).concat(this.equipment.dress?.GetAllModifiers() || []).concat(this.equipment.accessory?.GetAllModifiers() || []).concat(this.equipment.set?.modifiers || [])
             .filter(modif => modif?.operationType == OperationType.Additive && modif?.stat == statModifier)  
             .reduce((amount, modificator) => amount += modificator?.amount || 0, 0) || 0;
     }

@@ -9,7 +9,7 @@ namespace Nanina.UserData.ItemData
         WaifuConsumable,
         Material,
     }
-    public class Item : ICloneable
+    public class Item
     {
         public ushort id {get; set;}
         public uint inventoryId {get; set;}
@@ -18,9 +18,5 @@ namespace Nanina.UserData.ItemData
         public string imgPATH {get; set;}
         public byte rarity {get; set;}
         public List<Modifier> modifiers {get; set;}
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
     }
 }

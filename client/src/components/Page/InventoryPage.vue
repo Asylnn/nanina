@@ -65,28 +65,28 @@ export default {
                 <GridDisplayComponent :elements="user.inventory.equipment" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
                 <div v-if="focusedView">
                     <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :is-for-equiping="false" :item="item_to_display"></ItemComponent>
+                    <ItemComponent :userID="user.Id" :is-for-equiping="false" :item="item_to_display"></ItemComponent>
                 </div>
             </div>
             <div v-if="category === 'user_consumable' || category === 'all'">
                 <GridDisplayComponent :elements="user.inventory.userConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
                 <div v-if="focusedView">
                     <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :is-for-equiping="false" :item="item_to_display"></ItemComponent>
+                    <ItemComponent :userID="user.Id" :is-for-equiping="false" :item="item_to_display"></ItemComponent>
                 </div>
             </div>
             <div v-if="category === 'waifu_consumable' || category === 'all'">
                 <GridDisplayComponent :elements="user.inventory.waifuConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
                 <div v-if="focusedView">
                     <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :is-for-equiping="false" :item="item_to_display"></ItemComponent>
+                    <ItemComponent :userID="user.Id" :is-for-equiping="false" :item="item_to_display"></ItemComponent>
                 </div>
             </div>
             <div v-if="category === 'material' || category === 'all'">
                 <GridDisplayComponent :elements="user.inventory.material" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
                 <div v-if="focusedView">
                     <div @click="closeItemDisplay" class="veil" ></div>
-                    <ItemComponent :is-for-equiping="false" @input="onEscape" :item="item_to_display" tabindex="0" @keydown.esc="closeItemDisplay"></ItemComponent>
+                    <ItemComponent :userID="user.Id" :is-for-equiping="false" @input="onEscape" :item="item_to_display" tabindex="0" @keydown.esc="closeItemDisplay"></ItemComponent>
                 </div>
             </div>
         </div>

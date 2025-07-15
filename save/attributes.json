@@ -1,0 +1,163 @@
+[
+    {
+        "id":0,
+        "tier":0,
+        "modifiers":[{
+            "stat": 3,
+            "amount": 20,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":1,
+        "tier":0,
+        "modifiers":[{
+            "stat": 4,
+            "amount": 20,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":2,
+        "tier":0,
+        "modifiers":[{
+            "stat": 5,
+            "amount": 20,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":3,
+        "tier":0,
+        "modifiers":[{
+            "stat": 6,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":4,
+        "tier":0,
+        "modifiers":[{
+            "stat": 7,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":5,
+        "tier":0,
+        "modifiers":[{
+            "stat": 8,
+            "amount": 5,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":6,
+        "tier":1,
+        "modifiers":[{
+            "stat": 5,
+            "amount": 20,
+            "operationType": 0
+        },
+        {
+            "stat": 6,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":7,
+        "tier":1,
+        "modifiers":[{
+            "stat": 3,
+            "amount": 20,
+            "operationType": 0
+        },
+        {
+            "stat": 7,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":8,
+        "tier":1,
+        "modifiers":[{
+            "stat": 4,
+            "amount": 20,
+            "operationType": 0
+        },
+        {
+            "stat": 7,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":9,
+        "tier":1,
+        "modifiers":[{
+            "stat": 6,
+            "amount": 10,
+            "operationType": 0
+        },
+        {
+            "stat": 7,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":10,
+        "tier":1,
+        "modifiers":[{
+            "stat": 3,
+            "amount": 20,
+            "operationType": 0
+        },
+        {
+            "stat": 6,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":11,
+        "tier":1,
+        "modifiers":[{
+            "stat": 8,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":12,
+        "tier":1,
+        "modifiers":[{
+            "stat": 4,
+            "amount": 20,
+            "operationType": 0
+        },
+        {
+            "stat": 6,
+            "amount": 10,
+            "operationType": 0
+        }]
+    },
+    {
+        "id":13,
+        "tier":1,
+        "modifiers":[{
+            "stat": 5,
+            "amount": 20,
+            "operationType": 0
+        },
+        {
+            "stat": 7,
+            "amount": 10,
+            "operationType": 0
+        }]
+    }
+]

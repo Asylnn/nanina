@@ -65,6 +65,22 @@
         }
     },
     "item":{
+        "attributes":{
+            "0":"Pointy",
+            "1":"Complex",
+            "2":"Cute",
+            "3":"Light",
+            "4":"Maniable",
+            "5":"Lucky",
+            "6":"Stylish",
+            "7":"Sharp",
+            "8":"Ancient",
+            "9":"Practical",
+            "10":"Curved",
+            "11":"Shiny",
+            "12":"New",
+            "13":"Innocent"
+        },
         "use":"use",
         "type": {
             "type":"Type",

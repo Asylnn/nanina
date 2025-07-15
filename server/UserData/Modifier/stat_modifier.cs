@@ -2,7 +2,7 @@ namespace Nanina.UserData.ModifierData
 {
     public enum StatModifier
     {
-        Physical,
+        Physical,  //0
         Magical,
         Psychic,
         STR,

@@ -3,29 +3,56 @@ import Equipment from '@/classes/item/equipment';
 import Item from '@/classes/item/item';
 import ItemType from '@/classes/item/item_type';
 import ModifierComponent from './ModifierComponent.vue';
+import GridDisplayComponent from './GridDisplayComponent.vue';
 
 export default {
     name : "ItemComponent",
     data() {
         return {
             ItemType : ItemType,
+            showingUpgradePanel: false,
             publicPath : import.meta.env.BASE_URL,
         }
     },
     props: {
         isForEquiping: {
             type : Boolean,
-            required : true,
+            default:true,
+            required : false,
+        },
+        isForLoot: {
+            type : Boolean,
+            default:false,
+            required : false,
         },
         item: {
             type : [Item, Equipment],
             required : true
-            
+        },
+        userID:{
+            type:String,
+            required: false,
         },
     },
     components:{
         ModifierComponent,
+        GridDisplayComponent,
+    },
+    methods:{
+        upgrade()
+        {
+            console.log(this.userID)
+            this.SendToServer("upgrade equipment", this.item.inventoryId.toString(), this.userID!)
+        }
+    },
+    computed:{
+        allModifiers()
+        {
+            console.log([...this.item.modifiers, ...(this.item as Equipment)?.getAttributeModifiers()])
+            return [...this.item.modifiers, ...(this.item as Equipment)?.getAttributeModifiers()]
+        }
     }
+    
 }
 
 </script>
@@ -42,12 +69,33 @@ export default {
                 {{ $t(`item.type.type`) }} : {{ $t(`item.type.${(item as Equipment).piece}`) }}<br>
                 {{ $t(`set.set`) }} : {{ $t(`set.${(item as Equipment).setId}.name`) }}<br><br>
                 {{ $t(`item.stat`) }}
-                <ModifierComponent :modifier="(item as Equipment).stat"></ModifierComponent><br>
+                <ModifierComponent v-if="showingUpgradePanel" :modifier="(item as Equipment).stat" :upgrade-quantity="10"></ModifierComponent>
+                <ModifierComponent v-else :modifier="(item as Equipment).stat" ></ModifierComponent><br>
+                <div v-if="(item as Equipment).attributes.length != 0">
+                    <p>{{$t("attributes.attribute")}} </p><br>
+                    <div v-for="attribute in (item as Equipment).attributes">
+                        <span>{{ $t(`item.attributes.${attribute.id}`) }}</span>
+                    </div><br>
+                </div>
+                
             </p>
-            <p>{{$t("modifiers.modifier")}} </p><br>
-            <div v-for="modifier in item.modifiers">
-                <ModifierComponent :modifier="modifier"></ModifierComponent>
+            <div v-if="allModifiers.length != 0">
+                <p>{{$t("modifiers.modifier")}} </p><br>
+                <div  v-for="modifier in allModifiers">
+                    <ModifierComponent v-if="modifier != undefined" :modifier="modifier"></ModifierComponent>
+                </div>
             </div>
+            
+            
+            <div v-if="showingUpgradePanel"> <!--Upgrade Items-->
+                <br>
+                <GridDisplayComponent :elements="[item]" :columns="2" :no-margin="true"></GridDisplayComponent>
+                <button class="smallbutton nnnbutton" @click="upgrade()">upgrade</button>
+                
+                
+            </div><br>
+            
+            <span v-if="item.type == ItemType.Equipment && !isForLoot" class="clickable" @click="showingUpgradePanel = ! showingUpgradePanel">upgrade {{showingUpgradePanel ? "⤴" : "⤵"}}</span>
         </div>
     </div>
 </template>
@@ -74,9 +122,9 @@ export default {
 #focusedObject img {
     /*max-width: 25vw;
     max-height: 60vh;*/
-    padding-right: 5vw;
-    height: 100px;
-    width: 100px;
+    padding: 2.5vw 2.5vw;
+    height: 128px;
+    width: 128px;
 }
 
 #itemImage {

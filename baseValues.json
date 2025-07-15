@@ -46,6 +46,8 @@
         [0 , 0 , 0 , 40, 10]
     ],
     "dungeon_stat_randomness":0.20,
+    "equipment_main_stat_level_up_multiplicator":1.40,
+    "attribute_stat_randomness":0.30,
     "proportion_of_energy_used_for_each_action":0.25,
     "free_energy_not_used_for_each_action":5,
     "energy_regen_tick_in_seconds":1,
@@ -66,36 +68,36 @@
     "modifiersWeapon": [
                 {
                     "stat": 3,
-                    "amount": 10,
+                    "amount": 20,
                     "operationType": 0
                 },
                 {
                     "stat": 4,
-                    "amount": 10,
+                    "amount": 20,
                     "operationType": 0
                 },
                 {
                     "stat": 5,
-                    "amount": 10,
+                    "amount": 20,
                     "operationType": 0
                 }
             ],
     "modifiersDress": [
                 {
                     "stat": 6,
-                    "amount": 5,
+                    "amount": 10,
                     "operationType": 0
                 },
                 {
                     "stat": 7,
-                    "amount": 5,
+                    "amount": 10,
                     "operationType": 0
                 }
             ],
     "modifiersAccessory": [
                 {
                     "stat": 8,
-                    "amount": 3,
+                    "amount": 5,
                     "operationType": 0
                 },
                 {

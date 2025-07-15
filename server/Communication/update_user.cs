@@ -4,6 +4,7 @@ using Nanina.Database;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.WaifuData;
 using Nanina.UserData;
+using Newtonsoft.Json.Bson;
 
 namespace Nanina.Communication
 {
@@ -279,5 +280,26 @@ namespace Nanina.Communication
             Send(ClientNotification.NotificationData("admin", "modified inventory", 1));
             DBUtils.Update(user);
         }
+
+        protected void UpgradeEquipment(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user == null) 
+            {
+                Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); 
+                return;
+            }
+            var equipmentIndex = user.inventory.equipment.FindIndex(equipment => equipment.inventoryId == Convert.ToUInt32(rawData.data));
+            if(equipmentIndex == -1)
+            {
+                Send(ClientNotification.NotificationData("User", "This equipment does not exist!", 1)); 
+                return;
+            }
+            Console.WriteLine(equipmentIndex);
+            Console.WriteLine(user.inventory.equipment.Count);
+            user.inventory.equipment[equipmentIndex].LevelUp();
+            Send(ClientNotification.NotificationData("admin", "temp mes", 1));
+            DBUtils.Update(user);
+        }   
     }
 }

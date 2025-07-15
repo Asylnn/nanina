@@ -20,6 +20,8 @@ namespace Nanina.UserData.ItemData
         public Modifier stat {get; set;}
         public ushort setId {get; set;}
         public EquipmentPiece piece {get; set;}
+        public byte lvl {get; set;}
+        public List<EquipmentAttribute> attributes {get; set;}
 
         public static IEnumerable<Equipment> CreateEquipmentsForDungeon(ActiveDungeon dungeon, ushort numberOfEquipments)
         {
@@ -93,8 +95,34 @@ namespace Nanina.UserData.ItemData
                 amount = amount,
                 timeout = 0
             });*/
-                
-            
+        }
+
+        public void LevelUp()
+        {
+            stat.amount *= Global.baseValues.equipment_main_stat_level_up_multiplicator;
+            GetAttribute();
+            lvl++;
+        }
+
+        public void GetAttribute()
+        {
+            var possibleAttributes = Global.baseAttributes.Where(attribute => attribute.tier == lvl - 1);
+            var attribute = Utils.DeepCopyReflection(possibleAttributes.RandomElement());
+            var rng = new Random();
+
+            attribute.modifiers.ForEach(modifier =>
+            {
+                var statRandomness = 1 + (float)(rng.NextDouble() * 2 - 1) * Global.baseValues.dungeon_stat_randomness;
+                modifier.amount *= statRandomness;
+            });
+
+            attributes.Add(attribute);
+        }
+
+        public List<Modifier> GetAllModifiers()
+        {
+            var attributesModifiers = attributes.Aggregate(new List<Modifier>(), (modifiers, attribute) => [.. modifiers, .. attribute.modifiers]);
+            return [stat, .. modifiers, ..attributesModifiers];
         }
     }
 }
