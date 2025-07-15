@@ -28,7 +28,7 @@ export default {
 <template>
     <div>
         <div class="modifier">
-            <span>{{ $t(`modifiers.${modifier.stat}.name`) }}</span>
+            <span class="modifierName">{{ $t(`modifiers.${modifier.stat}.name`) }}</span>
             <span v-if="modifier.operationType==1 || modifier.stat == StatModifier.CritChance || modifier.stat == StatModifier.CritDamage">
                 <span v-if="upgradeQuantity == 0" class="stat">+{{ Math.trunc(((modifier.amount)*100)*10)/10}}%</span>
                 <span v-else>+{{ Math.trunc(((modifier.amount)*100)*10)/10}}% ➔ <span class="upgrade">+{{ Math.trunc(((modifier.amount + upgradeQuantity)*100)*10)/10}}%</span></span>
@@ -44,17 +44,15 @@ export default {
 <style lang="css" scoped>
 
 .modifier {
-    display: grid;
-    grid-template-columns: 5fr 1fr;
+    display: flex;
 }
 
+.modifierName
+{
+    width:20vw
+}
 .stat {
     width:60px;
-}
-
-.upgrade
-{
-    color:green
 }
 
 

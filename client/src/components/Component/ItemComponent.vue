@@ -94,6 +94,7 @@ export default {
                 {{ $t(`item.stat`) }}
                 <ModifierComponent v-if="showingUpgradePanel" :modifier="(item as Equipment).stat" :upgrade-quantity="upgradeQuantity"></ModifierComponent>
                 <ModifierComponent v-else :modifier="(item as Equipment).stat" ></ModifierComponent><br>
+                <p v-if="showingUpgradePanel" class="upgrade">{{$t("item.attributes.new")}} </p><br>
                 <div v-if="(item as Equipment).attributes.length != 0">
                     <p>{{$t("item.attributes.attribute")}} </p><br>
                     <div v-for="attribute in (item as Equipment).attributes">

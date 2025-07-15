@@ -68,6 +68,7 @@
         "stat":"Main statistic",
         "attributes":{
             "attribute":"Attributes",
+            "new":"New Attribute",
             "0":"Pointy",
             "1":"Complex",
             "2":"Cute",

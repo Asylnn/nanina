@@ -161,3 +161,8 @@ a:hover {
     display:flex;
     flex-direction: column;
 }
+
+.upgrade
+{
+    color:green
+}
