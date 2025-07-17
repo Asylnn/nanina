@@ -13,6 +13,7 @@ import Notification from './classes/notif'
 import PullPage from './components/Page/PullPage.vue'
 import WaifuListPage from './components/Page/WaifuListPage.vue'
 import LootDisplayComponent from './components/Component/LootDisplayComponent.vue'
+import FooterComponent from './components/Component/FooterComponent.vue'
 import type WebSocketReponse from './classes/web_socket_response'
 import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
@@ -92,6 +93,7 @@ export default {
 		ActiveDungeonPage,
 		LootDisplayComponent,
 		UserWaifuManagerPage,
+		FooterComponent,
 	},	
 	methods : {
 		updateTheme(theme : string) {
@@ -341,6 +343,7 @@ export default {
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 		<LootDisplayComponent  :is-new-loot="true"  :loots=loots></LootDisplayComponent>
+		<FooterComponent></FooterComponent>
 	</div>
 </template>
 
