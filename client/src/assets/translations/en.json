@@ -1,4 +1,19 @@
 {
+    "homepage":{
+        "welcome":"Welcome To Nanina",
+        "what_is_nanina":"What is Nanina?",
+        "nanina_explanation":"Nanina is a browser gacha game with the objective of providing an alternative non skill based progression system to rhythm games. Enjoy playing rhythm games even when you reached your skill cap!",
+        "nanina_objective":"The objective is to get characters from various media, obtain XP by playing a rhythm game, improve their stats for doing various tasks and clearing dungeons to get gear. Optimize your party and their equipment to progress through the game and compete with other players, while playing and getting better at rhythms games!",
+        "nanina_supported_games":"For now the only supported game is osu! standard with the other three osu gamemodes comming soon!",
+        
+        "nanina_help":{
+            "open_source":"It's a completely free and open source project with no microtransactions. If you want to, you can participate by :",
+            "translation":"Providing translations for other languages.",
+            "support_games":"Adding support for not yet supported rhythm games.",
+            "help":"Simply by helping with the developpement of the project!"
+        },
+        "wiki_link":"Click here to see a detailed explaination of the mechanics of the game."
+    },
     "header": {
         "inventory": "Inventory",
         "waifus": "Waifus",
@@ -191,6 +206,9 @@
         "psychic":"Psychic"
     },
     "option":{
+        "unothorized":"Sorry, the game is not yet accessible to everyone. ",
+        "join_beta":"To join the closed beta, please provide the entry code we provided here :",
+        "request_join_beta":"If you want to participate to the closed beta, please fill this google form.",
         "change_theme":"Choose your favourite theme !",
         "dark_theme":"Dark theme",
         "white_theme":"White theme",

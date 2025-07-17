@@ -1,4 +1,4 @@
-Fights normaux soient infinis par jour mais l'exp est réduite de manière exponantielle à chaque fight (se reset à Xh tous les jours) (genshin moment)
+Fights normaux soient infinis par jour mais l'exp est réduite de manière exponentielle à chaque fight (se reset à Xh tous les jours) (genshin moment)
 Si chaque fight -10% de restant et xp proportionnelle a la stamina dépensée -> début bcp consommé = beaucoup xp / fin pas bcp consommé = pas bcp xp (meta endgame = double compte = double compte osu = BANNED)
 ou alors compte sur plusieurs jeux de rythme différents si la ressource est par jeu
 

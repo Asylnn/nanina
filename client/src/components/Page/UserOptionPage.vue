@@ -120,6 +120,7 @@ export default {
         </div>
         
         <button @click="Disconect()">{{ $t('option.disconnect') }}</button>
+        
     </div>
 </template>
 
