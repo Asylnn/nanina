@@ -13,7 +13,9 @@ export default {
         return {
             config: config,
         }
-    }
+    },
+    emits: ["theme-change","page-change"],
+
 }
 
 </script>
@@ -29,8 +31,8 @@ export default {
         </div>
         <div class="category">
             <div class="categoryName">Legal Stuff</div><br>
-            <a>Privacy</a><br>
-            <a>Terms</a><br>
+            <span @click="$emit('page-change', 18)">Privacy</span><br>
+            <span>Terms</span><br>
         </div>
         <div class="category">
             <div class="categoryName">About Us</div><br>

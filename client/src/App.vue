@@ -46,6 +46,7 @@ import Chart from './classes/maimai/chart'
 import type Loot from './classes/loot/loot'
 import type Equipment from './classes/item/equipment'
 import UserWaifuManagerPage from './components/Admin/Manager/UserWaifuManagerPage.vue'
+import PrivacyPage from './components/Page/PrivacyPage.vue'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -94,6 +95,7 @@ export default {
 		LootDisplayComponent,
 		UserWaifuManagerPage,
 		FooterComponent,
+		PrivacyPage,
 	},	
 	methods : {
 		updateTheme(theme : string) {
@@ -148,6 +150,8 @@ export default {
 				return 120
 			case Page.ItemManagerPage:
 				return 130
+			case Page.PrivacyPage:
+				return 180
 			case Page.InventoryManagerPage:
 				return 140
 			default:
@@ -341,9 +345,12 @@ export default {
 		<div v-else-if="loadingPage === 160">
 			<UserWaifuManagerPage  :user="user"></UserWaifuManagerPage>
 		</div>
+		<div v-else-if="loadingPage === 180">
+			<PrivacyPage ></PrivacyPage>
+		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 		<LootDisplayComponent  :is-new-loot="true"  :loots=loots></LootDisplayComponent>
-		<FooterComponent></FooterComponent>
+		<FooterComponent @page-change="updatePage"></FooterComponent>
 	</div>
 </template>
 

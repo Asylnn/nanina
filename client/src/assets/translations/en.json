@@ -14,6 +14,25 @@
         },
         "wiki_link":"Click here to see a detailed explaination of the mechanics of the game."
     },
+    "privacy_policy":{
+        "privacy_policy":"Privacy Policy",
+        "data_collection_title":"Data we collect",
+        "data_collection_body":"On account registration, we only collect your discord username. As you play Nanina, we collect various information on how you are using the website.",
+        "use_of_data_title":"Use of Data",
+        "use_of_data_body":"Collected data is used to improve the website and for analytics purposes.",
+        "data_protection_title":"Data Protection",
+        "data_protection_body":"Data protection is important to us, Nanina follows standards procedures to protect your data.",
+        "cookies_body":"We use cookies only to maintain login credentials across multiple sessions. If you refuse to those conditions, please do not use the website.",
+        "cookies_title":"Cookies",
+        "sharing_data_body":"We do not share your data with third parties, except as required by law.",
+        "sharing_data_title":"Sharing Data",
+        "your_rights_body":"As a user, you have the right to request access or delet your data by contacting us at: {mail}",
+        "your_rights_title":"Your Rights",
+        "contact_us_body":"If you have any questions, please contact us at: {mail}",
+        "contact_us_title":"Contact Us",
+        "last_updated":"Last updated : {date}"
+
+    },  
     "header": {
         "inventory": "Inventory",
         "waifus": "Waifus",

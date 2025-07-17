@@ -17,6 +17,7 @@ enum Page {
 	ItemManagerPage,
 	InventoryManagerPage,
 	UserWaifuManagerPage,
+	PrivacyPage,
 }
 
 export default Page
