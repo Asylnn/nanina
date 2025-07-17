@@ -116,6 +116,9 @@ namespace Nanina.Communication
                     case "upgrade equipment":
                         UpgradeEquipment(rawData);
                         break;
+                    case "become admin":
+                        BecomeAdmin(rawData);
+                        break;
                 }
             }
             catch(Exception err)

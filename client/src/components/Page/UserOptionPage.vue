@@ -2,7 +2,7 @@
 
 import Game from '@/classes/user/game';
 import User from '@/classes/user/user';
-
+import config from '../../../../config.json'
 
 /*
 Theme
@@ -37,7 +37,8 @@ export default {
             request : false,
             code: 0,
             entered_token: "",
-            Game:Game
+            Game:Game,
+            config:config,
         }
     },
     props:{
@@ -73,6 +74,10 @@ export default {
             this.SendToServer("disconect", "", this.user.Id)
             await new Promise(r => setTimeout(r, 200));
             location.href = "/"
+        },
+        AddAdmin()
+        {
+            this.SendToServer("become admin", "", this.user.Id)
         }
     }
 }
@@ -120,7 +125,7 @@ export default {
         </div>
         
         <button @click="Disconect()">{{ $t('option.disconnect') }}</button>
-        
+        <button v-if="config.dev" @click="AddAdmin()">Become Admin</button>
     </div>
 </template>
 

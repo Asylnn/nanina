@@ -300,6 +300,24 @@ namespace Nanina.Communication
             user.inventory.equipment[equipmentIndex].LevelUp();
             Send(ClientNotification.NotificationData("admin", "temp mes", 1));
             DBUtils.Update(user);
-        }   
+        }
+
+        protected void BecomeAdmin(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(Global.config.dev == false) 
+            {
+                Send(ClientNotification.NotificationData("Admin", "The server is in production, you can't use this!", 1)); 
+                return;
+            }
+            if(user == null) 
+            {
+                Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); 
+                return;
+            }
+            user.admin = true;
+            Send(ClientNotification.NotificationData("admin", "temp mes", 1));
+            DBUtils.Update(user);
+        }
     }
 }
