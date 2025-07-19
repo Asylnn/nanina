@@ -58,15 +58,15 @@ export default {
             <p @click="onClickChangePage(0)">Nanina</p>
         </div>
         <ul id="pages" v-if="logged">
-            <li id="acti_li">
-                <span class="clickable" >{{ $t("header.activities") }}</span>
-                <ul id="actiMenu">
+            <li class="clickable" id="acti_li" @click="onClickChangePage(19)">
+                <span >{{ $t("header.activities") }}</span>
+                <!--ul id="actiMenu">
                     <li class="clickable">{{ $t("header.maidCafé") }}</li>
                     <li class="clickable">{{ $t("header.mineralMining") }}</li>
                     <li class="clickable">{{ $t("header.technoTree") }}</li>
                     <li class="clickable">{{ $t("header.gadgetAnalyse") }}</li>
                     <li class="clickable">{{ $t("header.exploration") }}</li>
-                </ul>
+                </ul>-->
             </li>
             <li class="clickable" @click="onClickChangePage(1)"><span>{{ $t("header.inventory") }}</span></li>
             <li class="clickable" @click="onClickChangePage(14)"><span>{{ $t("header.waifus") }}</span></li>
