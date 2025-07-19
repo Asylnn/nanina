@@ -1,17 +1,15 @@
 
 <script lang="ts">
 
-import type { PropType } from 'vue';
 import Page from '../../classes/page';
 import config from '../../../../config.json'
-import User from '@/classes/user/user';
-import ItemUse from './ItemUse.vue';
 
 export default {
     name : "FooterComponent",
     data() {
         return {
             config: config,
+            Page:Page,
         }
     },
     emits: ["theme-change","page-change"],
@@ -31,7 +29,7 @@ export default {
         </div>
         <div class="category">
             <div class="categoryName">Legal Stuff</div><br>
-            <span class="clickable" @click="$emit('page-change', 18)">Privacy</span><br>
+            <span class="clickable" @click="$emit('page-change', Page.Privacy)">Privacy</span><br>
             <span class="clickable">Terms</span><br>
         </div>
         <div class="category">

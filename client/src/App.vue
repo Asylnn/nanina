@@ -74,6 +74,7 @@ export default {
 			maimai_chart : null as Chart | null,
 			loots : [] as Array<Loot[]>,
 			inside_dungeon : false,
+			Page : Page
 		}
 	},
 	components: {
@@ -109,60 +110,9 @@ export default {
 			}
 		},
     	updatePage(page : Page) {
-			console.log(page)
       		this.page = page
     	},
 	},
-  	computed : {
-		loadingPage() {
-		this.page;
-		this.logged;
-		console.log("page", this.page)
-		console.log("page name", Page.UserWaifuManagerPage)
-		switch (this.page) {
-			case Page.Homepage :
-				return 10
-			case Page.InventoryPage :
-				if (this.logged === true) return 20
-				else return 40
-			case Page.NotFound :
-				return 40
-			case Page.WaifuListPage :
-				return 50
-			case Page.YouSomehowEndedUpThere:
-				return 60
-			case Page.User:
-				return 70
-			case Page.UserOption:
-				return 80
-			case Page.ClaimAndFightPage:
-				return 100
-			case Page.DungeonPage:
-				return 150
-			case Page.UserWaifuManagerPage:
-				console.log("baseball, huh?")
-				return 160
-			case Page.AddMap :
-				if (this.user.admin == true)	return 90
-				else 					return 50
-			case Page.WaifuManagerPage :
-				if (this.user.admin == true && this.dev == true)	return 110
-				else 					return 50
-			case Page.PullPage:
-				return 120
-			case Page.ItemManagerPage:
-				return 130
-			case Page.PrivacyPage:
-				return 180
-			case Page.ActivitiesPage:
-				return 190
-			case Page.InventoryManagerPage:
-				return 140
-			default:
-				return 40
-		}
-    }
-  },
 	mounted() {
 		console.log("mounted app!")
 		const $cookies = inject<VueCookies>('$cookies')!; 
@@ -296,48 +246,46 @@ export default {
 	<div id="main" :class="[user.theme]">
 	
 		<NNNHeader :dev=dev :logged=logged :user="user" @page-change="updatePage"></NNNHeader>
-		<div v-if="loadingPage === 10">
+		<div v-if="page == Page.Homepage">
 			<Homepage></Homepage>
 		</div>
-		<div v-else-if="loadingPage === 20">
+		<div v-else-if="page == Page.Inventory">
 			<InventoryPage :user="user"></InventoryPage>
 			<!--<StatsBlock :objectType="objectType" :stars="stars" :rarity="rarity" :value="value" :owner="owner" :xp="xp" :lvl="lvl" :b_int="b_int" :b_luck="b_luck" :b_exp="b_exp" :o_int="o_int" :o_luck="o_luck"
 			:o_exp="o_exp" :u_int="u_int" :u_exp="u_exp" :diffLvlup="diffLvlup"></StatsBlock>-->
 		</div>
-		<div v-else-if="loadingPage === 40">
-			ERREUR 404 AHAHAHAHAH
-		</div>
-		<div v-else-if="loadingPage === 50">
+		
+		<div v-else-if="page == Page.WaifuList">
 			<WaifuListPage :user="user"></WaifuListPage>
 		</div>
-		<div v-else-if="loadingPage === 60">
+		<div v-else-if="page == Page.YouSomehowEndedUpThere">
 			How tf did you even up here?
 		</div>
-		<div v-else-if="loadingPage === 70">
+		<div v-else-if="page == Page.User">
 			<UserPage :user="user"></UserPage>
 		</div>
-		<div v-else-if="loadingPage === 80">
+		<div v-else-if="page == Page.UserOption">
 			<UserOptionPage :user=user :theme=user.theme @theme-change="updateTheme"></UserOptionPage>
 		</div>
-		<div v-else-if="loadingPage === 90">
+		<div v-else-if="page == Page.AddMap">
 			<AddMap :id="user.Id"></AddMap>
 		</div>
-		<div v-else-if="loadingPage === 100">
+		<div v-else-if="page == Page.ClaimAndFight">
 			<ClaimAndFightPage :maimai_chart="maimai_chart" :xp="xp" :fighting="fighting" :user="user" :beatmap="beatmap"></ClaimAndFightPage>
 		</div>
-		<div v-else-if="loadingPage === 110">
+		<div v-else-if="page == Page.WaifuManager">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
 		</div>
-		<div v-else-if="loadingPage === 120">
+		<div v-else-if="page == Page.Pull">
 			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"></PullPage>
 		</div>
-		<div v-else-if="loadingPage === 130">
+		<div v-else-if="page == Page.ItemManager">
 			<ItemManagerPage :id="user.Id" :item_db="item_db" :equipment_db="equipment_db" :set_db="set_db"></ItemManagerPage>
 		</div>
-		<div v-else-if="loadingPage === 140">
+		<div v-else-if="page == Page.InventoryManager">
 			<InventoryManagerPage :user="user" :items="item_db"></InventoryManagerPage>
 		</div>
-		<div v-else-if="loadingPage === 150">
+		<div v-else-if="page == Page.Dungeon">
 			<div v-if="inside_dungeon">
 				<ActiveDungeonPage :user="user" :active_dungeon="active_dungeon" @leave-dungeon="inside_dungeon = false"></ActiveDungeonPage>
 			</div>
@@ -346,14 +294,17 @@ export default {
 			</div>
 			
 		</div>
-		<div v-else-if="loadingPage === 160">
+		<div v-else-if="page == Page.UserWaifuManager">
 			<UserWaifuManagerPage  :user="user"></UserWaifuManagerPage>
 		</div>
-		<div v-else-if="loadingPage === 180">
+		<div v-else-if="page == Page.Privacy">
 			<PrivacyPage ></PrivacyPage>
 		</div>
-		<div v-else-if="loadingPage === 190">
+		<div v-else-if="page == Page.Activities">
 			<ActivitiesPage :user="user"></ActivitiesPage>
+		</div>
+		<div v-else>
+			ERREUR 404 AHAHAHAHAH
 		</div>
 		<NotificationMenu :notifs=notifs></NotificationMenu>
 		<LootDisplayComponent  :is-new-loot="true"  :loots=loots></LootDisplayComponent>

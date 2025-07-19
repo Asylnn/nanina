@@ -1,7 +1,6 @@
 
 <script lang="ts">
 
-import type { PropType } from 'vue';
 import Page from '../../classes/page';
 import config from '../../../../config.json'
 import User from '@/classes/user/user';
@@ -13,6 +12,7 @@ export default {
         return {
             config: config,
             showEnergyItems: false,
+            Page: Page,
         }
     },
     props: {
@@ -55,7 +55,7 @@ export default {
 <template>
     <header>
         <div id="logo">
-            <p @click="onClickChangePage(0)">Nanina</p>
+            <p @click="onClickChangePage(Page.Homepage)">Nanina</p>
         </div>
         <ul id="pages" v-if="logged">
             <li class="clickable" id="acti_li" @click="onClickChangePage(19)">
@@ -68,26 +68,26 @@ export default {
                     <li class="clickable">{{ $t("header.exploration") }}</li>
                 </ul>-->
             </li>
-            <li class="clickable" @click="onClickChangePage(1)"><span>{{ $t("header.inventory") }}</span></li>
-            <li class="clickable" @click="onClickChangePage(14)"><span>{{ $t("header.waifus") }}</span></li>
-            <li class="clickable" @click="onClickChangePage(7)"><span>{{ $t("header.fighting") }}</span></li>
-            <li class="clickable" @click="onClickChangePage(9)"><span>{{ $t("header.pull") }}</span></li>
-            <li class="clickable" @click="onClickChangePage(10)"><span>{{ $t("header.dungeon") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(Page.Inventory)"><span>{{ $t("header.inventory") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(Page.WaifuList)"><span>{{ $t("header.waifus") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(Page.ClaimAndFight)"><span>{{ $t("header.fighting") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(Page.Pull)"><span>{{ $t("header.pull") }}</span></li>
+            <li class="clickable" @click="onClickChangePage(Page.Dungeon)"><span>{{ $t("header.dungeon") }}</span></li>
             <li id="db_li" v-if="user.admin">
                 <span class="clickable" >Databases</span>
                 <ul id="dbMenu">
-                    <li class="clickable" @click="onClickChangePage(15)"><span>Item</span></li>   
-                    <li class="clickable" @click="onClickChangePage(8)"><span>Waifu</span></li>
+                    <li class="clickable" @click="onClickChangePage(Page.ItemManager)"><span>Item</span></li>   
+                    <li class="clickable" @click="onClickChangePage(Page.WaifuManager)"><span>Waifu</span></li>
                 </ul>
             </li>
             <li id="manager_li" v-if="user.admin && dev">
                 <span class="clickable" >Let me speak to your manager !</span>
                 <ul id="managerMenu">
-                    <li class="clickable" @click="onClickChangePage(16)"><span>Inventory</span></li>
-                    <li class="clickable" @click="onClickChangePage(17)"><span>Waifu</span></li>
+                    <li class="clickable" @click="onClickChangePage(Page.InventoryManager)"><span>Inventory</span></li>
+                    <li class="clickable" @click="onClickChangePage(Page.UserWaifuManager)"><span>Waifu</span></li>
                 </ul>
             </li>
-            <li class="clickable" @click="onClickChangePage(6)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
+            <li class="clickable" @click="onClickChangePage(Page.AddMap)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
         </ul>
         <div id="buttList">
             <div class="butitem halo" >
@@ -99,10 +99,10 @@ export default {
             <div class="butitem halo" v-if="!logged">
                 <a :href="config.dev ? config.dev_discord_oauth_url : config.prod_discord_oauth_url"><img id="discordLogin" src="@/assets/discord.png"></a>
             </div>
-            <div class="butitem halo" @click="onClickChangePage(5)" v-else>
+            <div class="butitem halo" @click="onClickChangePage(Page.UserOption)" v-else>
                 <img height=38px width=38px src="@/assets/settings.png">
             </div>
-            <div id="user" class="butitem" v-if="logged" @click="onClickChangePage(4)"><img :src="`${user.avatarPATH}?size=40`"></div>
+            <div id="user" class="butitem" v-if="logged" @click="onClickChangePage(Page.User)"><img :src="`${user.avatarPATH}?size=40`"></div>
             
         </div>
         <div v-if="logged" id="energy">
