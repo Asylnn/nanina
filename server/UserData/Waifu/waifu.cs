@@ -1,17 +1,5 @@
-/*
-Force -> Attaque physique, Minage de minerais
-Agilité -> Vitesse d'attaque, Explorations
-Intelligence -> Attaque magique, Decryptage
-Chance -> (les % des raretés) Loots, Fights
-Dextérité -> Coups critiques, Analyse
-Kawaii -> Attaque psychique, Maid café
-*/
-
-using LiteDB;
-using Nanina.Database;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.ModifierData;
-using Newtonsoft.Json;
 
 namespace Nanina.UserData.WaifuData
 {
@@ -69,7 +57,7 @@ namespace Nanina.UserData.WaifuData
             get => ApplyModificators(2*Str, StatModifier.Physical); 
         }
         public double CritChance {
-            get => ApplyModificators(0.05f + Luck/200, StatModifier.CritChance); 
+            get => ApplyModificators(0.05f + Agi/400, StatModifier.CritChance); 
         }
         public double CritDamage {
             get => ApplyModificators(0.50f + Dex/400, StatModifier.CritDamage); 
