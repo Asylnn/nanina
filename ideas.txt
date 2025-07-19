@@ -1,168 +1,192 @@
-Fights normaux soient infinis par jour mais l'exp est réduite de manière exponentielle à chaque fight (se reset à Xh tous les jours) (genshin moment)
-Si chaque fight -10% de restant et xp proportionnelle a la stamina dépensée -> début bcp consommé = beaucoup xp / fin pas bcp consommé = pas bcp xp (meta endgame = double compte = double compte osu = BANNED)
-ou alors compte sur plusieurs jeux de rythme différents si la ressource est par jeu
+Simple gameplay loop (first version):
 
-Systeme de fight continu :
-ne se cumule pas aux fights normaux, gagne un % de l'exp a chaque score submit et reduit les temps des trucs timegated
+Everything that consume energy : earn GC
+GC => new waifus
 
-(A refléchir) :
-Fight normal et fight continu réduisent tous les 2 du temps de truc timegated
-Fight normal et fight continu possèdent un choix entre gagner de l'exp et réduire le temps (possiblement choisir des pourcentage de reward pour avoir une partie des 2)
+Normal fights => earn waifu XP (simple statistic increase)
+Constant fights => earn a bit of money and waifu XP, time down on activities
 
-Achievements -> rewards permanents (basé sur les hush-hush) genre passer une map ar11 od11 hp11
+Dungeons => earn equipment
+Activities
+    -> cafe (money)[KAW]
+    -> mining (crystals) [STR]
+    -> exploration (materials) [AGI]
+    -> crafting (items) [DEXT]
+    -> research (bonuses) [INT]
 
-User level -> Gagne des bonus semi-linéaires selon les bonus / + de stamina max par level (gain constant)
+Normal fights, dungeon, activities => user XP
 
-Armure / Tenue = Pieces séparées avec des sets différents (bonus de set si X pièces equipées) 
-    full set = un truc sinon rien
-    2/3/4/5 pieces = un truc a chaque palier (ou augmentation du meme truc a chaque palier)
-    Paliers en mode haut + bas = truc / tete + chapeau = truc
+Money   source  => cafe, daily login, continuous fights
+        costs   => upgrade items, crafting, shop
 
-Accessoires / Bijoux = Pieces séparées avec des sets différents (bonus de set si X pièces equipées) 
-    full set = un truc sinon rien
-    2/3/4/5 pieces = un truc a chaque palier (ou augmentation du meme truc a chaque palier)
-    Paliers en mode haut + bas = truc / tete + chapeau = truc
+recycle equipment
+    => equipment piece (3* - 5*) (20%)
+    => materials
 
-Arme = Pieces séparées avec des sets différents (bonus de set si X pièces equipées) peut etre 1 au début, pourquoi pas une deuxieme plus tard
+To upgrade Items you need : (+money)
+    1* => 1* crystals
+    2* => 2* crystals
+    3* => 3* crystals, equipment piece
+    4* & 5* => crystals, materials, equipment piece
 
-Quid du powercreep? Quid de l'ancien BiS? Quid du fomo?
+Crafting (from materials, money, (and crystals?))
+    => new materials
+    => permanent buffs
+    => temp buffs
+    => waifu upgrade materials
+    => tools (more efficient activities)
 
-Powercreep de tout ce qui a des stats.
-
-Waifus : 3 slots (1 arme 1 tenue 1 accessoire) + 1/2 gadgets 
-    Consommables qui ne s'utilisent qu'une fois par waifu donnant des bonus permanents
-    Système d'étoiles -> Toutes peuvent monter max meme si elles démarrent plus bas (commencent 2/3 star)
-        Pourquoi pull 3 star et pas 1/2? Esthétique/notre waifu préférée/powercreep
-    Pour monter soit duplicata de la waifu soit un item event/rare/limité qui le fait a la place
-    Kit de sorts (passif + auto attack + spell + ult)
-
-Qu'est ce qu'il y a à faire?
-    Créer un compte + lien un compte d'un jeu de rythme
-    Bannière limitée
-    Bannière permanente
-    Waifus de base au début (waifus qui couvrent tous les types de dégats)
-    Fights (normal ou continu) + claim ou auto-claim
-    Dungons (Fight un boss/ un ennemi) et tu fais des dégats en finissant la map proposée par l'ennemi de manière dynamique (peut etre debuffs par le boss/peut etre regen/peut etre combat limité par le temps x minutes pour le battre)
-        Partie active (tu joue pour les aider et faire des dégats toi meme) (passif et ult)
-        Partie inactive (tu fais la pom pom girl qui veut pas se friter) (passif et auto et spell)
-        Principe d'un combat de dungon -> ex : 10minutes pour battre eugeo -> les waifus tapent avec leur partie inactive du début a la fin et tu peux les aider en faisant la/les map/maps proposée par eugeo 
-            si tu réussis, tu fais des dégats et/ou ca active des passifs et/ou ults de 1 ou plusieurs waifus puis il te propose une autre map. 10min pour mettre ses hp a 0
-            (Variantes : claims offensifs/défensifs, limité a 3 claim par fight ce qui crée une sorte de dmg check, conséquence tu passe au prochain set de maps proposés?)
-            Buffs/Débuffs/Cleanse/Hard CC crées par les waifus, le boss, le user (via consommable et via claim)
-    
-
-
-Stats offensives pour les waifus :
-    KAW = dégats psychiques
-    STR = dégats physiques
-    INT = dégats magiques
-    LUCK = crit chance (200% crit = crit crit / 150% crit = crit + 50% chance crit) /// Tu peux crit tout sauf les débuffs recus
-    DEXT = Augmentation durée buff/reduction durée debuffs
-    AGI = Crit dmg (+ de dégats mais aussi potency buff/débuff)
-
-Stats hors combat :
-    KAW = maid café/concerts d'idol -> Thune
-    STR = Minage de minerais -> Cristaux donnant les bonus permanents
-    INT = Arbre de techno /// unlock content / % bonus a rechercher a l'infini / ressources générées en X temps
-    LUCK = Plus de truc /// Plus de thune / Plus de cristaux ou plus de chance d'avoir plus rare / plus de ressources générées en X temps / plus de chance de meilleure qualité gadget / Plus de loot dans explo
-    DEXT = Artisanat de gadgets
-    AGI = Explorations (Matériaux pour artisanat et amélioration de waifu)
-
-
-A faire pour moi :
-Changer fight pour pouvoir select une waifu (avec barre recherche en lazy si j suis pas lazy)
-Commencer la page inventory avec arme, tenue, accessoire, gadget, consommable
+Research (unlocks with user lvl)
+    => new dungeons
+    => new floors
+    => new craftables
+    => new mechanics
+    => permanent buffs
 
 
 
+Shop => extra stuff.
 
-A changer dans back :
+End game gameplay loop?
 
-Dungeon modifier weights ->
-Modifier a un id unique et les items de dungeons ont une variable tableau de Modifier qui contient leurs possibles rolls. <-
-
-Item classe abstraite et instanciés en Equipment, UserConsumable, WaifuConsumable, Material
-
-Material, UserConsumable et WaifuConsumable ont la propriété stackable et count, pas Equipment
-
-Weapon, Dress, Accessory des classes dérivées de Equipment
-
-Classe Set (id, name, modifiers) <-
-
-Waifu <- Tableau d'Equipement
-
-Banner <- tableau de weights?
-
-fonction isAdmin() un peu globale?
-
-Item (machin de base instanciable)
-Equipement (dérivée de Item) : + id, piece (valeur de l'enum), objet de type Set
+    -> very hard dungeons
+        -> rewards : gc, simplifying getting other copies of a waifu, *other ressources?*
+    -> leaderboards
+        -> rewards : prestige?
+    -> season system with pvp?
+            -> rewards : gc, rare currency?
 
 
-Shop & money
-Obtenir money :
-    Maid café -> money
-    Fight continu -> (peut etre Limité par jour)
-    login rewards
-    daily quests
-    Bonus de level up
-Utiliser money : 
-    Skins
-    Upgrade Equipement (level 1 à 2 etc)
-    Acheter items dans le Shop 
-    Acheter des couleurs pour le site 
-    Dons aux autres gens
+What we can add later
 
-Choses dans le shop (money):
-    Items consommables:
-        Item pour reload un fight (X fois par jour max)
-        Item pour obtenir de l'energie (X fois par jour max) (croissant)
-        Potion de boost xp (fight non continu)???
-        Potion de boost user xp???
-        Potion de boost de dégats???
+quests, leaderboard (should be in some form at first version), pvp
+soul equipment (equipment dropped by gacha, main equipment of a waifu)
 
-    Items permanents:
-        Gadgets
-        Equipement
-        Titres
-        Skins
-        Boosts permanents d'exp ou d'autres machins (one time purchase)
 
-    Misc :
-        Un peu de gacha currency par jour (grosse somme d'argent) (in game + 💳)
-        Music Theme
-        Website Theme
-        Background de donjon???
-        Bannière sur le site sur le coté avec le perso préféré???
+Details on how mechanics should works
 
-Choses dans le shop de gacha (avec la gacha currency):
-    Acheter des pulls
-    Achat de boite de sélection de waifu (100% chance d'avoir ce qu'on veut)
-    Achat de boite de sélection de waifu (dans un pool donné) 2* 3* (si ta une waifu elle est enlevée du pool et puis a un moment t aura tout)
-    Achat de duplicate de waifu
-    Titres? (Titre JE NAIME PAS PULL DE WAIFU) (I PLAY FOR THE GAMEPLAY NOT FOR PNGS) (I CAME FOR WAIFU, STAYED FOR IMPROVEMENT) (I DONT LIKE NFTS) (PLEASE ADD MY FAVOURITE ANIME SERIES)
-    Acheter un accès aux bannières en avant première (streams en avance des autres, vidéos etc) (95% evil (maybe 95% good?) never seen before in a gacha game)
-    Accès à une ancienne bannière (durée d'1 jour le temps de pull until pity un truc que tu veux)
-    //Modifier les chances de proba par compte (105% evil (can't be good)) (selling accounts 20% 3* chance on black market) (i spend 3h rerolling account until i get 20% 3* chance to sell the account)
+Main Four ressources that are time gated :
+    -> user XP, used for 
+    -> Gacha Currency (or GC), used for mostly pulls
+    -> Energy (or Cherish), used for normal fights and dungeons
+    -> Time itself, used for activites and dungeons
+
+
+GC is obtained through spending energy, daily rewards and end game dungeons. You should be able to do ~2 pull per day
+
+In pulls, you can either obtain soul equipment or waifus (with a ratio of 10:1).
+There is a limited and permanent banner. when pulling you get a currency. With enough of those, you can get the character of your choice.
+Maybe a limited banner with a select waifu pool, with a limited number of pulls. when pulled, the waifu is removed from the pool. at the end you get all
+the waifus in the pool.
+
+GC shop :
+                buy pulls
+                waifu selection box (100% of getting the selected waifu)
+                waifu duplicate
+                Titles? (title I DON'T LIKE PULLING WAIFUS) (I PLAY FOR THE GAMEPLAY NOT FOR PNGS) (I CAME FOR WAIFU, STAYED FOR IMPROVEMENT) (I DONT LIKE NFTS) (PLEASE ADD MY FAVOURITE ANIME SERIES)
+                Acheter un accès aux bannières en avant première (streams en avance des autres, vidéos etc) (95% evil (maybe 95% good?) never seen before in a gacha game)
+                Accès à une ancienne bannière (durée d'1 jour le temps de pull until pity un truc que tu veux)
+                //Modifier les chances de proba par compte (105% evil (can't be good)) (selling accounts 20% 3* chance on black market) (i spend 3h rerolling account until i get 20% 3* chance to sell the account)
 
 
 
-Rewards unique dans un story mode (questlines once per user with the last quests not being targeted at mrekk level because if you make last quest to do a 2k pp play it's gonna be hard to get)
-Dans ce story mode, il pourrait aussi servir de tutoriel pour ce qui existe dans le site
+You can earn user XP when doing normal fights, dungeon and activities. this is only a constant amount only maybe modified by activity's required time.
+With user XP, you can earn some bonus, some of them are max stamina (and maybe stamina regen speed.)
 
-Inventaire Equipement : limite à 500 ou 1000 (pour pas avoir un user avec 543545436435463 items d'Equipement)
-
-
-
-
-
-
-Pas de système de spells
-Pas de système d'upgrade d'équipement
-Pas de système d'étoiles?
-Pas de système de quêtes ?
+Spending energy : 
+    When spending energy, you use a fraction of your total available energy (e.g. 20%). So for exemple if you have 80 energy left, an action will
+    consume 16 energy. your rewards will be proportionnal to your energy spent plus a constant extra energy (e.g. 5). You also earn GC proportionnally
+    to the energy consummed, whatever the action is. 
+    The quantity regen should be proportionnal to missing energy.
 
 
+Normal fights is an action where after doing a designated rhythm game map/chart, you need to spend energy to get waifu XP (proportionnal to the energy spent)
+    waifu XP also depends strongly on the difficulty and the results. You also earn some user XP (constant).
+
+Continuous fights :
+    gain a little quantity of waifu XP and money, does not give user XP. It reduce activities cooldown. Since it doesn't cost stamina, you don't get gc
+
+(Possibles changes) :
+    Normal fight also reduce activities cooldown.
+    You could choose between xp or reduce activities cooldown when doing a continuous fight.
+
+Waifus : 3 equipment slots + (1/2 gadgets on future update?)
+    Consumable usable only once on the same waifu which give permanent stats increase
+    Star system -> from 1* to 5* (stat increase)
+        Why not from 3*? Or different rarities?
+    To star up, you need a duplicata or a very rare item as a substitute
+    (future update : spell kit (passif + auto + spell + ult?))
+
+    offensive stats : 
+        KAW = psychic damage
+        STR = physical damage
+        INT = magic damage
+        LUCK = useless right now, could be used for crit chance
+        DEXT = critical damage
+        AGI = critical chance, could be used for buff length / debuff length reduction
+
+    activities stats : 
+        KAW = maid café/idol concert    -> money
+        STR = mining minerals/crystals  -> Cristal giving permanent buffs/crafting.
+        INT = research tree             -> unlock content, permanent buffs, maybe ressources
+        LUCK =                          -> more of everything
+        DEXT = crafting                 -> craft new gadgets, materials, items
+        AGI = exploration               -> materials for crafting, upgrading waifu and items
+
+        
+        AGI DEX x2 stat weight
+        Luck x4 stat weight
+        max base stats for lvl 100 : 2000 (without powercreep)
+
+Dungeons :
+    Dungeons have 5 floors. Higher floors gives better equipment.
+    There are multiple dungeons which gives different sets of equipments.
+    When in a dungeon, your waifus fight a boss. When the boss is defeated you get waifu equipment. 
+    The number is dependent on the energy spent. you also get user XP.
+    your waifus do auto attack which inflict damage every X second.
+    you can do a map proposed by the dungeon. at completion you get a burst of damage. 
+    (from waifu's base stats, or give buffs, or activate some waifu's specific spells?. Should there be a limited amount of maps?)
+    Waifu and bosses have access to buffs, debuffs, cleansing. user have access to claiming and consommables.
+
+    To avoid players completing a very hard dungeon just by taking a lot of time, there should be a defeat mechanic?
+    Time limit? Boss regeneration ? Debuffs that render waifus useless?
+    (future update : blue archive like ult system?)
+
+Money :
+    obtain money :
+        cafe
+        continuous fights
+        login rewards
+        daily quests (future update)
+        user level up bonus
+    use money : 
+        upgrade equipment
+        upgrade waifu
+        buy stuff in the shop
+            consummables:
+                item for reloading a fight (X time a day max)
+                item for getting energy back (X time a day max) (increasing) (with gc?)
+                XP boost potion (normal fight)???
+                Damage boost potion ? 
+
+            permanents:
+                Gadgets
+                Equipement
+                Titres
+                skins (lol)
+                Boosts permanents d'exp ou d'autres machins (one time purchase)
+
+            Misc :
+                some gc each day (lots of money) (in game + 💳 :3)
+                music theme??
+                dungeon background??
+                Banner on the site on the side with your favorite character?
+
+User : 
+    Have a limited equipment inventory
+
+
+[OLD (i think)]
 star rating multiplicator   : (2 + e**(0.45*x))/3.57
 acc multiplicator           : (x^2)
 drain time multplicator     : ((x^0.4)/1.18)
@@ -172,19 +196,20 @@ combo multiplicator         : (x^0.15)
 Spent energy scale with fight drain time
 Ask for energy when fighting
 
+osu rank => average amount of time required to reach this level (difficulty rating of maps played) 
 1k => 2600h (8*)        x1.5
 10k => 1500h (7*)       x2
 100k => 500h (6*)       x3
 
 
-5 fights par jour de 4m ? => 20m de jeu par jour
+5 fights per day of 4m ? => 20m of game per day
 average player's fight
-5.5 *
-90% acc         => 20m de fight = 500XP
+5.5*
+90% acc         => 20m of fights = 500XP
 20% max combo
 
 
-les 20m suivants => 20m = 125XP
+the next 20 minutes => 20m = 125XP
 
 1 mois => 10h => 500*3*10 = 20 000XP (+bonus ...)
 
@@ -192,44 +217,27 @@ les 20m suivants => 20m = 125XP
 lvl => 50 + 10*lvl + 0.5*lvl^2
 
 
-donjon, 10min?
-donjon without fighting, 8h
+dungeon, 10min?
+dungeon without fighting, 8h?
 
+    T1      Lv. 5
+    T2      Lv. 20
 
-"T0" Lv. 5 (ineficient)
-T1      Lv. 5
-T2      Lv. 20
+    first floor 165 damage per tick, 165*6*60*8 => 475200 (500 000?)
+    second floor 600 damage per tick => 1728000
 
-first floor 165 damage per tick, 165*6*60*8 => 475200 (500 000?)
-second floor 600 damage per tick => 1728000
+user lvl 15 after one month
+    10XP per fight, 150 fights => 1.5kXP
 
-user lvl 15 après un mois
+Future Updates
 
-10XP par fight, 150 fights
-1500XP
+Achievements -> permanent and or one time rewards when completing a achievement (some based on hush-hush for exemple) like pass a ar11 od11 hp11 map.
 
+How do we manage powercreep and fomo?
 
-Stats : 
+Give waifu spells
 
-10lvl base.
-
-AGI DEX x2 stat weight
-Luck x4 stat weight
-max base stats for lvl 100 : 2000
-
-
-
-
-fights
-donjons
-activitées 
-    maid cafe => argent
-    luck => plus de trucs
-    //minage => crystaux => stats flats
-    //int => arbe de techno
-    //dext => gadgets 
-    //agi => exploration (mat pour gadget)
-
-
-How should equipment work?
-    Max
+Ideas 
+    Introductory/"story" dungeons?
+    Rewards unique dans un story mode (questlines once per user with the last quests not being targeted at mrekk level because if you make last quest to do a 2k pp play it's gonna be hard to get)
+    Dans ce story mode, il pourrait aussi servir de tutoriel pour ce qui existe dans le site
