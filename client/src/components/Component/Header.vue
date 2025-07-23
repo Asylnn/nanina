@@ -60,13 +60,6 @@ export default {
         <ul id="pages" v-if="logged">
             <li class="clickable" id="acti_li" @click="onClickChangePage(19)">
                 <span >{{ $t("header.activities") }}</span>
-                <!--ul id="actiMenu">
-                    <li class="clickable">{{ $t("header.maidCafé") }}</li>
-                    <li class="clickable">{{ $t("header.mineralMining") }}</li>
-                    <li class="clickable">{{ $t("header.technoTree") }}</li>
-                    <li class="clickable">{{ $t("header.gadgetAnalyse") }}</li>
-                    <li class="clickable">{{ $t("header.exploration") }}</li>
-                </ul>-->
             </li>
             <li class="clickable" @click="onClickChangePage(Page.Inventory)"><span>{{ $t("header.inventory") }}</span></li>
             <li class="clickable" @click="onClickChangePage(Page.WaifuList)"><span>{{ $t("header.waifus") }}</span></li>
@@ -147,7 +140,7 @@ header, #pages {
     display: grid;
 }
 
-header, #actiMenu li, #dbMenu li, #managerMenu li {
+header, #dbMenu li, #managerMenu li {
     text-align: center;
     background-color: rgb(39, 11, 65);
 }
@@ -160,13 +153,13 @@ header {
     padding: 0 8vw;
     z-index: 9000;
 }
-#actiMenu, #dbMenu, #managerMenu {
+#dbMenu, #managerMenu {
     position: absolute;
     z-index: 9999;
     display: none;
 }
 
-#acti_li:hover #actiMenu{
+#acti_li:hover {
     display: block;
 }
 
@@ -178,7 +171,7 @@ header {
     display: block;
 }
 
-#actiMenu li, #dbMenu li, #managerMenu li {
+#dbMenu li, #managerMenu li {
     padding: 0.727vh 0.5vw;
 }
 
