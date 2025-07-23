@@ -44,10 +44,11 @@ import type Set from './classes/item/set'
 import ActiveDungeon from './classes/dungeons/active_dungeon'
 import Chart from './classes/maimai/chart'
 import type Loot from './classes/loot/loot'
-import type Equipment from './classes/item/equipment'
+import Equipment from './classes/item/equipment'
 import UserWaifuManagerPage from './components/Admin/Manager/UserWaifuManagerPage.vue'
 import PrivacyPage from './components/Page/PrivacyPage.vue'
 import ActivitiesPage from './components/Page/ActivitiesPage.vue'
+import LootType from './classes/loot/loot_type'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -227,6 +228,15 @@ export default {
 					break
 				case "loot":
 					this.loots.push(JSON.parse(res.data))
+					this.loots.forEach(arr => {
+						arr.forEach(loot => {
+							switch(loot.lootType){
+								case LootType.Equipment:
+									loot.item = Object.assign(new Equipment, loot.item as Equipment)
+									break
+							}
+						})
+					})
 					console.log("Got loot : ")
 					console.log(this.loots)
 					break
