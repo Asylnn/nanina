@@ -1,7 +1,7 @@
 <script lang="ts">
 import { useRoute, RouterLink, RouterView } from 'vue-router'
 
-import NNNHeader from './components/Component/NNNHeader.vue'
+import Header from './components/Component/Header.vue'
 import Homepage from './components/Page/Homepage.vue'
 import UserPage from './components/Page/UserPage.vue'
 import UserOptionPage from './components/Page/UserOptionPage.vue'
@@ -78,7 +78,7 @@ export default {
 		}
 	},
 	components: {
-		NNNHeader,
+		Header,
 		Homepage,
 		UserPage,
 		UserOptionPage,
@@ -245,7 +245,7 @@ export default {
 <template>
 	<div id="main" :class="[user.theme]">
 	
-		<NNNHeader :dev=dev :logged=logged :user="user" @page-change="updatePage"></NNNHeader>
+		<Header :dev=dev :logged=logged :user="user" @page-change="updatePage"></Header>
 		<div v-if="page == Page.Homepage">
 			<Homepage></Homepage>
 		</div>

@@ -7,7 +7,7 @@ import User from '@/classes/user/user';
 import ItemUse from './ItemUse.vue';
 
 export default {
-    name : "NNNHeader",
+    name : "Header",
     data() {
         return {
             config: config,
