@@ -58,7 +58,7 @@ export default {
             <p @click="onClickChangePage(Page.Homepage)">Nanina</p>
         </div>
         <ul id="pages" v-if="logged">
-            <li class="clickable" id="acti_li" @click="onClickChangePage(19)">
+            <li class="clickable" @click="onClickChangePage(19)">
                 <span >{{ $t("header.activities") }}</span>
             </li>
             <li class="clickable" @click="onClickChangePage(Page.Inventory)"><span>{{ $t("header.inventory") }}</span></li>
@@ -157,10 +157,6 @@ header {
     position: absolute;
     z-index: 9999;
     display: none;
-}
-
-#acti_li:hover {
-    display: block;
 }
 
 #db_li:hover #dbMenu{
