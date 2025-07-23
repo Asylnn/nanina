@@ -1,13 +1,14 @@
 <script lang="ts">
 import Item from '@/classes/item/item';
 import Waifu from '@/classes/waifu/waifu';
-
+import { getRarityStyle } from '@/classes/utils';
 
 export default {
     name : "GridDisplayComponent",
     data() {
         return {
             publicPath : import.meta.env.BASE_URL,
+            getRarityStyle:getRarityStyle,
         }
     },
     props: {
@@ -47,20 +48,6 @@ export default {
         onShowElement(element : Waifu | Item) {
             this.$emit("show-element", element)
         },
-        getRarityStyle(rarity: number)
-        {
-            let style = ""
-            let color = "yellow;"
-            if(rarity == 0)
-                color = "black;"
-            else if(rarity == 1)
-                color = "blue;"
-            else if(rarity == 2)
-                color = "green;"
-            else if(rarity == 3)
-                color = "purple;"
-            return style + "border-color:" + color
-        }
     },
 }
 

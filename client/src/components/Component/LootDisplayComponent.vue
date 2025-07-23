@@ -11,7 +11,7 @@ export default {
             LootType: LootType,
             publicPath : import.meta.env.BASE_URL,
             isDisplayingLoot : false,
-            displayedLoot : null as Loot | null
+            displayedLoot : null as Loot | null,
         }
     },
     props:{
