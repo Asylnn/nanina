@@ -9,7 +9,7 @@ import Waifu from '@/classes/waifu/waifu';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import Chart from '@/classes/maimai/chart';
 import Game from '@/classes/user/game';
-
+import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
 
 
 /*
@@ -96,12 +96,11 @@ export default {
         },
         fightWaitTime()
         {
-            console.log("date milli", this.date_milli)
-            return Math.ceil((this.user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - this.date_milli)/60000*60)
+            return MillisecondsToHourMinuteSecondFormat(this.user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds - this.date_milli)
         },
         claimWaitTime()
         {
-            return Math.ceil((this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - this.date_milli)/60000*60)
+            return MillisecondsToHourMinuteSecondFormat(this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - this.date_milli)
         },
     },
 }

@@ -9,7 +9,7 @@ import ActivityType from '@/classes/user/activity_type';
 import type Activity from '@/classes/user/activity';
 import type Waifu from '@/classes/waifu/waifu';
 import LootComponent from '../Component/LootComponent.vue';
-
+import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
 export default {
     name : "ActivitiesPage",
     data(){
@@ -42,12 +42,10 @@ export default {
         },
         getTimeLeftNumber(activity : Activity)
         {
-            console.log(activity)
-            return Math.ceil((activity.timestamp + activity.timeout - this.date_milli)/60000*60)
+            return MillisecondsToHourMinuteSecondFormat(activity.timestamp + activity.timeout - this.date_milli)
         },
         getTimeLeft(activity : Activity)
         {
-            console.log(activity)
             return " width:" + 60*(activity.timestamp + activity.timeout - this.date_milli)/activity.timeout  + "vw";
         },
         openWaifuDisplay(waifu : Waifu)
