@@ -7,13 +7,17 @@ import type Inventory from './inventory'
 import type Game from './game'
 import config from '../../../../baseValues.json'
 import Equipment from '../item/equipment'
+import type Activity from './activity'
 
 
 
 export default class User {
+    public money!: number
     public xp! : number
     public lvl! : number
     public XpToLvlUp! : number
+    public maxConcurrentActivities! :number
+    public activities!: Activity[]
     public admin : boolean = false
     public username : string = "Pro Osu Player"
     public theme : string = "dark_theme"
@@ -22,6 +26,9 @@ export default class User {
     public ids : any = {}
     public statCount : StatCount = new StatCount()
     public waifus : Waifu[] = []
+    public get availableWaifus() : Waifu[] {
+        return this.waifus.filter(waifu => ! waifu.isDoingSomething)
+    }
     public Id : string = "772277"
     public locale : string = "en"
     public avatarPATH : string = ""
@@ -62,10 +69,8 @@ export default class User {
             
         User.updateTimer(this)
         setInterval(User.updateTimer, 1000, this)
-
-        
-
     }
+    
 
     static updateTimer(user: User) {
         let date_milli = Date.now()

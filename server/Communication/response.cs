@@ -119,6 +119,12 @@ namespace Nanina.Communication
                     case "become admin":
                         BecomeAdmin(rawData);
                         break;
+                    case "send waifu to cafe":
+                        SendWaifuToCafe(rawData);
+                        break;
+                    case "claim activity":
+                        ClaimActivity(rawData);
+                        break;
                 }
             }
             catch(Exception err)

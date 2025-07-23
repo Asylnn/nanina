@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="ugly_coin.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="7.71875"
+     inkscape:cx="1.8785425"
+     inkscape:cy="5.7651822"
+     inkscape:window-width="1876"
+     inkscape:window-height="1006"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#ffaaee;stroke-width:2;stroke-dasharray:none;stroke:#800066"
+       id="path1"
+       cx="16"
+       cy="16"
+       r="14.445344" />
+    <text
+       xml:space="preserve"
+       style="font-size:256px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:17.729;fill:#ffd42a;stroke:#d4aa00;stroke-width:2;stroke-dasharray:none"
+       x="12.566802"
+       y="15.546559"
+       id="text1"><tspan
+         x="12.566802"
+         y="15.546559"
+         id="tspan3"><tspan
+           dx="0 184.83203 184.83203"
+           id="tspan2">wwW</tspan></tspan></text>
+    <path
+       id="text2"
+       style="font-size:96px;line-height:0;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#800080;stroke:#800080;stroke-width:0.445458;stroke-dasharray:none"
+       d="M 10.39062,8.0518189 V 15.196806 H 7.5845194 v 1.956382 H 10.39062 v 7.144533 h 1.805209 v -7.144533 h 3.539037 l 4.195589,7.144533 h 2.154147 v -7.144533 h 2.80611 v -1.956382 h -2.80611 V 8.0518189 H 20.278979 V 15.196806 H 16.667317 L 12.462539,8.0518189 Z m 1.805209,3.0753501 2.389965,4.069637 h -2.389965 z m 5.622643,6.026019 h 2.460507 v 4.180717 z"
+       sodipodi:nodetypes="ccccccccccccccccccccccccccccc" />
+  </g>
+</svg>

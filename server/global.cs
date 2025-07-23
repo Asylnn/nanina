@@ -10,6 +10,7 @@ using Nanina.UserData.ModifierData;
 namespace Nanina
 {
     public static class Global {
+        public static readonly Dictionary<ulong, System.Timers.Timer> activityTimers = [];
         public static readonly Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../config.json"));
         public static readonly List<Waifu> waifus = JsonConvert.DeserializeObject<List<Waifu>>(File.ReadAllText("../save/waifu.json"));
         public static readonly List<Item> items = JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText("../save/item.json"));

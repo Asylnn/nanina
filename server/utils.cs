@@ -8,6 +8,16 @@ public static class Utils
     {
         return (ulong)new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
     }
+    public static string CreateId()
+    {   
+        Random rng = new Random();
+        return Utils.GetTimestamp().ToString() + (rng.Next(89_999_999) + 10_000_000).ToString();
+    }
+    public static ulong CreateIdUlong()
+    {   
+        Random rng = new Random();
+        return GetTimestamp() + (ulong)(rng.Next(89_999_999) + 10_000_000);
+    }
 
     //yoinked from the internet, sorry, best next choice was serializing and deserializing.
     public static T DeepCopyReflection<T>(T input)
@@ -36,5 +46,10 @@ public static class Utils
     public static T ScuffedJsonSerializationDeepCopy<T>(T input)
     {
         return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(input));
+    }
+
+    public static float RandomMultiplicator(float plusMinus)
+    {
+        return 1 + (float) (new Random().NextDouble()*2 - 1)*plusMinus;
     }
 }

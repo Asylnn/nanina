@@ -108,7 +108,11 @@ namespace Nanina.Database
                 user.energy = user.max_energy;
                 user.isRegenerating = false;
                 //user.inventory.equipment = [];
-
+                //user.activities = [];
+                foreach(Waifu waifu in user.waifus)
+                {
+                    waifu.isDoingSomething = false;
+                }
                 /*var equipments = user.inventory.equipment;
                 user.inventory.equipment = [];
                 foreach(var equipment in equipments)

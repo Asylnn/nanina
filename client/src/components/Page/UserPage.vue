@@ -43,6 +43,8 @@ export default {
         <div id="profileBody">
             <div v-if="page == 0">
                 <StatsPage :user="user"></StatsPage>
+                <img src="@/assets/ugly_coin.svg">
+                <div class="amount">{{ user.money }}</div>
             </div>
             <div v-else-if="page == 1">
                 <TreePage :user="user"></TreePage>

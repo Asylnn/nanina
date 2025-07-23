@@ -74,8 +74,8 @@ namespace Nanina.UserData.ItemData
                     float baseValue = modifierWeight.modifier.operationType == OperationType.Multiplicative ?
                             Global.baseValues.baseStatsMulti[modifierWeight.modifier.stat.ToString()]  
                         :   Global.baseValues.baseStatsAdd[modifierWeight.modifier.stat.ToString()];*/
-                
-            var statRandomness = 1 + (float) (rng.NextDouble()*2 - 1)*Global.baseValues.dungeon_stat_randomness;
+
+            var statRandomness = Utils.RandomMultiplicator(Global.baseValues.dungeon_stat_randomness);
             Console.WriteLine("id " + id);
             Console.WriteLine("rarity " + rarity);
             Console.WriteLine("initial stat " + stat.amount);

@@ -193,18 +193,8 @@ namespace Nanina.Communication
                 
             user.lvlRewards += Convert.ToInt64(Math.Pow(2, lvl));
 
-        
-            foreach(var reward in Global.userLevelRewards[lvl-2])
-            {
-                switch(reward.lootType){
-                    case LootType.GC:
-                        user.gacha_currency += reward.amount;
-                        break;
-                    case LootType.Item:
-                        user.inventory.AddItem(reward.item);
-                        break;
-                }
-            }
+            Loot.GrantLoot(Global.userLevelRewards[lvl - 2], user);
+
             SendLoot([.. Global.userLevelRewards[lvl-2]]);
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse

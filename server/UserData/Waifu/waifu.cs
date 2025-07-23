@@ -11,6 +11,7 @@ namespace Nanina.UserData.WaifuData
         public string id { get; set; }
         public string imgPATH { get; set; }
         public WaifuEquipmentManager equipment { get; set; } = new ();
+        public bool isDoingSomething { get; set; } = false;
         public ushort o_str { get; set; }
         public ushort u_str { get; set; }
         public uint b_str { get; set; }

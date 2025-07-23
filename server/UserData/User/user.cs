@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Xml.XPath;
 using Nanina.Communication;
 using Nanina.Database;
@@ -12,12 +13,15 @@ namespace Nanina.UserData
 
     public class User(string username, Ids ids)
     {
+        public uint money { get; set; } = 0;
         public bool admin {get; set;} = false;
         public byte lvl {get; set;} = 1;
         public uint xp {get; set;} = 0;
         public uint XpToLvlUp {
             get => 40u + lvl*10u;
         }
+        public List<Activity> activities { get; set; } = [];
+        public byte maxConcurrentActivities { get; set; } = 3;
         public bool isInDungeon {get; set;}
         public ulong dungeonInstanceId {get; set;}
         public Game preferedGame {get; set;} = Game.OsuStandard;
@@ -28,7 +32,7 @@ namespace Nanina.UserData
         public bool isRegenerating {get; set;} = false;
         public string username { get; set; } = username;
         public List<Waifu> waifus { get; set; } = [Utils.DeepCopyReflection(Global.waifus.Find(x => x.id == "0"))];
-        public string Id { get; set; } = CreateId();
+        public string Id { get; set; } = Utils.CreateId();
         public string theme { get; set; } = Global.baseValues.base_theme;
         public Ids ids { get; set; } = ids;
         public Tokens tokens { get; set; } = new ();
@@ -42,12 +46,6 @@ namespace Nanina.UserData
         public Verification verification { get; set; } = new() { osuVerificationCode=null, osuVerificationCodeTimestamp = 0, isOsuIdVerified=false };
         public ulong claimTimestamp { get; set; } = 0;
         public Inventory inventory { get; set; } = new ();
-
-        private static string CreateId()
-        {   
-            Random rng = new Random();
-            return Utils.GetTimestamp().ToString() + (rng.Next(89_999_999) + 10_000_000).ToString();
-        }
 
         public (double energy, uint gc) SpendEnergy(double ratio)
         {
@@ -131,6 +129,39 @@ namespace Nanina.UserData
                         break;
                 }
             }
+        }
+
+        public void ActivityFinished(ulong activityId)
+        {
+            foreach(var activity in activities)
+            {
+                if(activity.id == activityId)
+                {
+                    //if cafe...
+                    var session = DBUtils.Get<Session>(session => session.id == activeSessionId);
+                    var waifu = waifus.Find(waifu => waifu.id == activity.waifuID);
+                    var money = (uint) Math.Ceiling(Activity.ConcludeCafeActivity(waifu));
+                    var loot = new Loot()
+                    {
+                        lootType = LootType.Money,
+                        amount = money,
+                    };
+                    activity.finished = true;
+                    activity.loot = [loot];
+
+                    if(session.webSocketId != null)
+                    {
+                        Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                        {
+                            type = "user",
+                            data = JsonConvert.SerializeObject(this)
+                        }), session.webSocketId);
+                    }
+                    DBUtils.Update(this);
+                    return;
+                }
+            }
+            Console.Error.WriteLine($"ActivityTimer finished with no associated activity, userId:{Id}, activityId:{activityId}");
         }
     }
 }

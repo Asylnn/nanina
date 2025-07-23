@@ -2,6 +2,7 @@ enum LootType
 {
     UserXP,
     WaifuXP,
+    Money,
     GC,
     Item,
     Equipment

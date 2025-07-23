@@ -1,4 +1,6 @@
 using Nanina.UserData.ItemData;
+using Nanina.UserData;
+using Nanina.Database;
 
 namespace Nanina.Communication
 {
@@ -6,15 +8,34 @@ namespace Nanina.Communication
     {
         UserXP,
         WaifuXP,
+        Money,
         GC,
         Item,
         Equipment
     }
     public class Loot
     {
-        public LootType lootType;
-        public uint amount;
-        public Item item;
+        public LootType lootType { get; set; }
+        public uint amount { get; set; }
+        public Item item { get; set; }
+
+        public static void GrantLoot(List<Loot> loots, User user)
+        {
+            foreach(var loot in loots)
+            {
+                switch(loot.lootType){
+                    case LootType.GC:
+                        user.gacha_currency += loot.amount;
+                        break;
+                    case LootType.Money:
+                        user.money += loot.amount;
+                        break;
+                    case LootType.Item:
+                        user.inventory.AddItem(loot.item);
+                        break;
+                }
+            }
+        }
     }
 
     public class LiteLoot

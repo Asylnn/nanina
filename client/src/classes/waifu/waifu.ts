@@ -11,6 +11,7 @@ export default class Waifu {
     public imgPATH : string = "GYrXGACboAACxp7.jpg"
     public stars : number = 2
     public equipment! : WaifuEquipmentManager
+    public isDoingSomething! : Boolean
 
     public b_str : number = 0
     public o_str : number = 0

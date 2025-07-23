@@ -35,11 +35,11 @@ export default {
                 <img src="@/assets/waifu_xp.svg">
                 <div>{{ loot.amount }}</div>
             </div>
-            <div v-if="loot.lootType == LootType.UserXP" class="loot">
+            <div v-else-if="loot.lootType == LootType.UserXP" class="loot">
                 <img src="@/assets/user_xp.svg">
                 <div>{{ loot.amount }}</div>
             </div>
-            <div @click="$emit('display-loot', loot)" v-else-if="loot.lootType == LootType.Equipment" class="loot">
+            <div v-else-if="loot.lootType == LootType.Equipment" class="loot" @click="$emit('display-loot', loot)" >
                 <img :src="`${publicPath}/item-image/${loot.item!.imgPATH}`">
             </div>
             <div v-else-if="loot.lootType == LootType.Item" class="loot">
@@ -48,6 +48,10 @@ export default {
             </div>
             <div v-else-if="loot.lootType == LootType.GC" class="loot">
                 <img src="@/assets/gc.svg">
+                <div class="amount">{{ loot.amount }}</div>
+            </div>
+            <div v-else-if="loot.lootType == LootType.Money" class="loot">
+                <img src="@/assets/ugly_coin.svg">
                 <div class="amount">{{ loot.amount }}</div>
             </div>
         </div>

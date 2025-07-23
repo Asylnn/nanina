@@ -109,6 +109,7 @@ TODO : Implement the first waifus (should be balanced for all damage types).
 TODO : Implement continuous fights.
 TODO : Make item class abstract
 TODO : Make a function that check if a request is valid before working on it
+TODO : Restart all timers when restarting the server
     
 
 
