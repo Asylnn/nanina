@@ -55,7 +55,7 @@ export default {
         <div v-if="isDisplayingLoot">
             <div @click="closeLootDisplay" class="veil" id="displaylootveil"></div>
             <div v-if="displayedLoot!.lootType == LootType.Equipment">
-                <ItemComponent :is-for-equiping="false" :item="displayedLoot!.item!"></ItemComponent>
+                <ItemComponent :is-for-equiping="false" :is-for-loot="true" :item="displayedLoot!.item!"></ItemComponent>
             </div>
         </div>
         <div @click="removeLoot" class="veil" id="lootveil"></div>
