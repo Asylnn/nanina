@@ -26,6 +26,9 @@ TODO : Implement "World Level" mechanic                             #Done
 TODO : Make health boss formula                                     #Done
 TODO : Make resistance boss formula                                 #Done
 TODO : Put list for database tables (like activities list)          #Done
+TODO : [BUG] First dungeon never works (blank page)                 #Done
+TODO : [BUG] Dungeon page is very laggy?                            #Done
+TODO : Implement Waifu Stats                                        #Done
 TODO : Finish Donjon System 
 TODO : Have multiple dungeons of increasing difficulty
 TODO : Scoping classes (public / private /protected)
@@ -36,21 +39,16 @@ TODO : Add regen tick clock on client
 TODO : Simple remove cherish battery use interface
             (cross, escape or outside click?)
 TODO : [BUG] Cherish battery use, item count doesn't decrease
-TODO : [BUG] First dungeon never works (blank page)
-TODO : [BUG] Dungeon page is very laggy?
+TODO : Implement Money System (page/component/database)
+TODO : Implement Shop System (page/component/database)
+TODO : Implement Activities
+
+
 
 Release Version 0.2 (Public release?)
 
-
-TODO : Implement Waifu Stats                                        #Done
-TODO : Implement Money System (page/component/database)
-TODO : Implement Shop System (page/component/database)
 TODO : Implement First Version of the leaderboard system
-TODO : Implement Activities
 TODO : Implement Buffs/Debuffs
-
-Those are necessary for a fully public release 
-
 TODO : Implement logging                               
 TODO : Implement units tests
 TODO : Not sending the user object everytime to save bandwidth
@@ -58,7 +56,6 @@ TODO : Optimize data sent to client, for example don't send old data each time t
 TODO : Implement IRedDotYouMustClaim/Notification/WhatYouSeeInGacha
 
 Release Version 0.3
-
 
 TODO : Implement Quest System
 TODO : Implement Achievements
@@ -94,7 +91,7 @@ TODO : Make waifus, items, equipments and sets global variable as dictionnaries 
 TODO : Is not deleting old unused sessions ids not secure? To think about.²
 
 TODO : Modify break property in Maimai 
-TODO : [BUG] Crash when schwartzchild (re:mast?)
+TODO : [BUG] Crash when schwartzchild (re:mast?) (maimai)
 TODO : Add cross to menus to close them.
 TODO : Create an extention which add beatmaps to Nanina
 TODO : ActiveDungeon code should be compatible with any rhythm game
