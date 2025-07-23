@@ -151,10 +151,8 @@ export default {
     justify-items: center;
     align-content: center;
     justify-content: center;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 30px;
     margin-bottom: 15px;
-    margin-left: 15px;
 }
 
 .itemSlot p {
