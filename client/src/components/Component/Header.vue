@@ -74,7 +74,7 @@ export default {
                 </ul>
             </li>
             <li id="manager_li" v-if="user.admin && dev">
-                <span class="clickable" >Let me speak to your manager !</span>
+                <span class="clickable" >Manager</span>
                 <ul id="managerMenu">
                     <li class="clickable" @click="onClickChangePage(Page.InventoryManager)"><span>Inventory</span></li>
                     <li class="clickable" @click="onClickChangePage(Page.UserWaifuManager)"><span>Waifu</span></li>
@@ -153,26 +153,19 @@ header {
     padding: 0 8vw;
     z-index: 9000;
 }
+
 #dbMenu, #managerMenu {
     position: absolute;
     z-index: 9999;
     display: none;
 }
 
-#db_li:hover #dbMenu{
-    display: block;
-}
-
-#manager_li:hover #managerMenu{
+#db_li:hover #dbMenu, #manager_li:hover #managerMenu{
     display: block;
 }
 
 #dbMenu li, #managerMenu li {
     padding: 0.727vh 0.5vw;
-}
-
-#manager_li {
-    font-size: small;
 }
 
 #logo, .butitem
