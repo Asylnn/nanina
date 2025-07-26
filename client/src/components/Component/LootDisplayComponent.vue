@@ -60,7 +60,7 @@ export default {
         </div>
         <div @click="removeLoot" class="veil" id="lootveil"></div>
         <div id="lootDisplay">
-            <LootComponent @display-loot="displayLoot"  :loots="loots[0]"></LootComponent>
+            <LootComponent :play-animation=true @display-loot="displayLoot"  :loots="loots[0]"></LootComponent>
         </div>
     </div>
 </template>
@@ -84,5 +84,7 @@ export default {
     left:50%;                               
     transform: translateX(-50%);
 }
+
+
 
 </style>
