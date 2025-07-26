@@ -35,12 +35,10 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("Activities", "Waifu is already doing something", 1)); return ;}
 
             waifu.isDoingSomething = true;
-            var timerId = Utils.CreateIdUlong();
             Activity activity = new()
             {
                 type = ActivityType.Cafe,
                 timeout = Global.baseValues.cafe_length_in_milliseconds,
-                timerId = timerId,
                 waifuID = rawData.data,
             };
             user.activities.Add(activity);
@@ -50,10 +48,9 @@ namespace Nanina.Communication
             {
                 userId = user.Id,
                 activityId = activity.id,
-                id = timerId,
             };
             tim.Start();
-            Global.activityTimers.Add(timerId, tim);
+            Global.activityTimers.Add(activity.id, tim);
 
             DBUtils.Update(user);Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {

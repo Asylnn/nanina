@@ -7,7 +7,6 @@ namespace Nanina.Activities
 {
     class ActivityTimer : System.Timers.Timer
     {
-        public ulong id;
         public ulong activityId;
         public string userId;
 
@@ -23,7 +22,7 @@ namespace Nanina.Activities
             
             var user = DBUtils.Get<UserData.User>(x => x.Id == timer.userId);
             user.ActivityFinished(timer.activityId);
-            Global.activityTimers.Remove(timer.id);
+            Global.activityTimers.Remove(timer.activityId);
             timer.Dispose();
         }
     }

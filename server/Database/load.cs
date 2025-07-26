@@ -7,6 +7,7 @@ using Nanina.Communication;
 using Nanina.UserData.WaifuData;
 using System.Net;
 using Nanina.UserData.ItemData;
+using Nanina.Activities;
 
 namespace Nanina.Database
 {

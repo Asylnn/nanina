@@ -18,7 +18,6 @@ namespace Nanina.UserData
         public ulong timestamp { get; set; } = Utils.GetTimestamp();
         public bool finished { get; set; } = false;
         public ActivityType type { get; set; }
-        public ulong timerId { get; set; }
         public ulong timeout { get; set; }
         public string waifuID { get; set; }
         public List<Loot> loot { get; set; }
