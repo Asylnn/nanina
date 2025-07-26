@@ -8,18 +8,6 @@ namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
     {
-        protected void ProvideWaifuDatabase(string userId)
-        {
-            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
-            if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
-            if(!user.admin)
-                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-            
-
-            /*get waifu col to findall and send a websocket containing the whole waifu database*/
-            DBUtils.SendDatabaseToClient(ID, "waifu");
-        }
         protected void UpdateWaifuDatabase(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);

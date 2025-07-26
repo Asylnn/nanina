@@ -72,10 +72,17 @@ namespace Nanina.Communication
             }
             if(user.admin)
             {
-                ProvideItemDatabase(userId);
-                ProvideEquipmentDatabase(userId);
-                ProvideSetDatabase(userId);
-                ProvideWaifuDatabase(userId);
+                /*Send the full waifu, item, set and equipment database*/
+                List<string> dbNames = ["waifu", "item", "set", "equipment"];
+                foreach(string dbName in dbNames)
+                {
+                    var data = File.ReadAllText($"../save/{dbName}.json");
+                    Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                    {
+                        type = dbName + " db",
+                        data = data
+                    }));
+                }
             }
         }
         protected void SendLoot(Loot[] loot)

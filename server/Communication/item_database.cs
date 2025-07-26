@@ -19,35 +19,6 @@ namespace Nanina.Communication
             public List<Item> user_consumable;
             public List<Equipment> equipment;
         }
-
-        /*
-            If the user is an admin, then it sends the item database
-        */
-        protected void ProvideItemDatabase(string userId)
-        {
-            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
-            if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
-            if(!user.admin)
-                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-
-            /* Get item col to find all and send a websocket containing the item database
-            */
-            DBUtils.SendDatabaseToClient(ID, "item");
-        }
-
-        protected void ProvideEquipmentDatabase(string userId)
-        {
-            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
-            if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
-            if(!user.admin)
-                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-
-            /* Get item col to find all and send a websocket containing the item database
-            */
-            DBUtils.SendDatabaseToClient(ID, "equipment");
-        }
         protected void UpdateItemDatabase(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
@@ -80,19 +51,6 @@ namespace Nanina.Communication
             var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
             File.WriteAllText("../save/equipment.json", JsonConvert.SerializeObject(itemDBResponse.equipment));
             Send(ClientNotification.NotificationData("admin", "updated the equipment database!", 0));
-        }
-
-        protected void ProvideSetDatabase(string userId)
-        {
-            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
-            if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
-            if(!user.admin)
-                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-
-            /* Get set col to find all and send a websocket containing the set database
-            */
-            DBUtils.SendDatabaseToClient(ID, "set");
         }
         protected void UpdateSetDatabase(ClientWebSocketResponse rawData)
         {

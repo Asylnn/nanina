@@ -26,18 +26,6 @@ namespace Nanina.Database
             if(col.Count() == 0) return default;
             return randomized ? col.Find(func).RandomElement() : col.FindOne(func);
         }
-
-        public static void SendDatabaseToClient(string webSocketId, string databaseName)
-        {
-            var data = File.ReadAllText($"../save/{databaseName}.json");
-
-            Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
-            {
-                type = databaseName + " db",
-                data = data
-            }), webSocketId);
-        }
-
         public static void Insert<T>(T thing)
         {
             using var db = new LiteDatabase($@"{Global.config.database_path}");
