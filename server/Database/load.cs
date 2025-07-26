@@ -108,9 +108,10 @@ namespace Nanina.Database
 
                 user.energy = user.max_energy;
                 user.isRegenerating = false;
+                user.isInDungeon = false;
                 //user.inventory.equipment = [];
                 //user.activities = [];
-                
+
                 //Restart unfinished timers
                 foreach(var activity in user.activities)
                 {

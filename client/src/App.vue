@@ -181,10 +181,11 @@ export default {
 					break
 				case "waifu db" :
 					let waifus = JSON.parse(res.data)
+					console.log("WAIFU DATABASE")
 					waifus.forEach((waifu:Waifu) => {
 						this.all_waifus.push(new Waifu(waifu))
 					});
-
+					console.log(this.all_waifus)
 					break
 				case "item db" :
 					this.item_db = JSON.parse(res.data)
