@@ -52,6 +52,7 @@ namespace Nanina.Communication
             {
                 waifu.isDoingSomething = true;
             }
+            user.waifuIdsInDungeon = clientData.waifuIds.ToList();
             user.isInDungeon = true;
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse

@@ -110,6 +110,27 @@ namespace Nanina.Database
                 user.isRegenerating = false;
                 //user.inventory.equipment = [];
                 //user.activities = [];
+                
+                //Restart unfinished timers
+                foreach(var activity in user.activities)
+                {
+                    if(activity.timestamp + activity.timeout <= Utils.GetTimestamp())
+                        user.ActivityFinished(activity.id);
+                    else{
+                        var timer = new ActivityTimer(activity.timestamp + activity.timeout - Utils.GetTimestamp())
+                        {
+                            userId = user.Id,
+                            activityId = activity.id
+                        };
+                        timer.Start();
+                        Global.activityTimers.Add(activity.id, timer);
+                    }
+                }
+                foreach(var waifuID in user.waifuIdsInDungeon)
+                {
+                    user.waifus.Find(waifu => waifu.id == waifuID).isDoingSomething = false;
+                }
+
                 /*foreach(Waifu waifu in user.waifus)
                 {
                     waifu.isDoingSomething = false;

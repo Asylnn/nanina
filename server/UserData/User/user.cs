@@ -23,6 +23,8 @@ namespace Nanina.UserData
         public List<Activity> activities { get; set; } = [];
         public byte maxConcurrentActivities { get; set; } = 3;
         public bool isInDungeon {get; set;}
+        public List<string> waifuIdsInDungeon {get; set;}
+        //This is necessary since dungeons are stored only in memory and if the servers stop, we need to get back the waifus in the dungeon to put isDoingAction at false.
         public ulong dungeonInstanceId {get; set;}
         public Game preferedGame {get; set;} = Game.OsuStandard;
         public long lvlRewards {get; set;}

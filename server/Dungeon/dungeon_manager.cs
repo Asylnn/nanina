@@ -38,14 +38,8 @@ namespace Nanina.Dungeon
         public static void FreeWaifus(ActiveDungeon activeDungeon){
 
             var user = DBUtils.Get<User>(x => x.Id == activeDungeon.userId);
-            Console.WriteLine(JsonConvert.SerializeObject(user.waifus));
-            Console.WriteLine("CXXXXXXXXXXXXXXXXXXX");
-            Console.WriteLine(JsonConvert.SerializeObject(user.waifus.Where(waifu => activeDungeon.waifus.Any(dungeonWaifu => waifu.id == dungeonWaifu.id)).ToList()));
             user.waifus.Where(waifu => activeDungeon.waifus.Any(dungeonWaifu => waifu.id == dungeonWaifu.id)).ToList().ForEach(waifu => waifu.isDoingSomething = false);
-
-            Console.WriteLine("CXXXXXXXXXXXXXXXXXXX");
-            Console.WriteLine(JsonConvert.SerializeObject(user.waifus));
-
+            user.waifuIdsInDungeon = [];
             DBUtils.Update(user);
 
             var session = DBUtils.Get<Session>(x => x.id == activeDungeon.sessionId);
