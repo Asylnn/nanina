@@ -109,10 +109,10 @@ namespace Nanina.Database
                 user.isRegenerating = false;
                 //user.inventory.equipment = [];
                 //user.activities = [];
-                foreach(Waifu waifu in user.waifus)
+                /*foreach(Waifu waifu in user.waifus)
                 {
                     waifu.isDoingSomething = false;
-                }
+                }*/
                 /*var equipments = user.inventory.equipment;
                 user.inventory.equipment = [];
                 foreach(var equipment in equipments)

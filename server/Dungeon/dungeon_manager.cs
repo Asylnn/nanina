@@ -15,9 +15,9 @@ namespace Nanina.Dungeon
             var instanceId = Utils.GetTimestamp();
             var activeDungeon = new ActiveDungeon(dungeon, user.Id, waifus, sessionId, instanceId, floor);
             activeDungeons.Add(instanceId, activeDungeon);
-            user.isInDungeon = true;
+            
             user.dungeonInstanceId = activeDungeon.instanceId;
-            DBUtils.Update(user);
+
             UpdateDungeonOfClient(activeDungeon);
         }
 
@@ -33,8 +33,33 @@ namespace Nanina.Dungeon
                     data = activeDungeon.ToString()
                 }), session.webSocketId);
             }
-
         }
+
+        public static void FreeWaifus(ActiveDungeon activeDungeon){
+
+            var user = DBUtils.Get<User>(x => x.Id == activeDungeon.userId);
+            Console.WriteLine(JsonConvert.SerializeObject(user.waifus));
+            Console.WriteLine("CXXXXXXXXXXXXXXXXXXX");
+            Console.WriteLine(JsonConvert.SerializeObject(user.waifus.Where(waifu => activeDungeon.waifus.Any(dungeonWaifu => waifu.id == dungeonWaifu.id)).ToList()));
+            user.waifus.Where(waifu => activeDungeon.waifus.Any(dungeonWaifu => waifu.id == dungeonWaifu.id)).ToList().ForEach(waifu => waifu.isDoingSomething = false);
+
+            Console.WriteLine("CXXXXXXXXXXXXXXXXXXX");
+            Console.WriteLine(JsonConvert.SerializeObject(user.waifus));
+
+            DBUtils.Update(user);
+
+            var session = DBUtils.Get<Session>(x => x.id == activeDungeon.sessionId);
+            if(session == null) return;
+            if(session.webSocketId != null)
+            {
+                Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                {
+                    type = "user",
+                    data = JsonConvert.SerializeObject(user)
+                }), session.webSocketId);
+            }
+        }
+        
 
         public static void SendLootToClient(ActiveDungeon activeDungeon, List<Loot> loot)
         {

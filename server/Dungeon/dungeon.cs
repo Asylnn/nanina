@@ -57,6 +57,7 @@ namespace Nanina.Dungeon
         public void StopDungeon(){
             damageTimer.Dispose();
             isCompleted = true;
+            DungeonManager.FreeWaifus(this);
         }
         public async void StartDungeon(){
 
@@ -64,7 +65,6 @@ namespace Nanina.Dungeon
             {   
                 DealDamage();
                 if(health <= 0) {
-                    damageTimer.Dispose();
                     ConcludeDungeon();
                 }
                 else 
@@ -147,9 +147,10 @@ namespace Nanina.Dungeon
             UserData.User.RegenEnergy(user);
             DBUtils.Update(user);
 
-            StopDungeon();
+            
             DungeonManager.UpdateDungeonOfClient(this);
             DungeonManager.SendLootToClient(this, lootToServer);
+            StopDungeon();
             
         }
     }

@@ -107,7 +107,7 @@ TODO : Implement continuous fights.
 TODO : Make item class abstract
 TODO : Make a function that check if a request is valid before working on it
 TODO : Restart all timers when restarting the server
-    
+TODO : Add cancel activity button
 
 
 

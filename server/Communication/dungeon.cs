@@ -37,14 +37,29 @@ namespace Nanina.Communication
             var waifus = user.waifus.Where(waifu => clientData.waifuIds.Contains(waifu.id)).ToList();
             if(waifus.Count() != 3)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (at least one invalid waifu)", 1)); return ;}
+
+            if(waifus.Any(waifu => waifu.isDoingSomething))
+                {Send(ClientNotification.NotificationData("User", "One of the waifu is doing something", 1)); return ;}
             
-            //In case any dungeon is still in progress somehow?
+            //In case any dungeon is still in progress somehow? Maybe break too much the performance ?
             var activeDungeons = DungeonManager.activeDungeons.Values.ToList().Where(dungeon => dungeon.userId == user.Id);
             foreach(ActiveDungeon activeDungeon in activeDungeons)
                 activeDungeon.StopDungeon();
 
             DungeonManager.InstantiateDungeon(dungeon, user, waifus, session.id, clientData.floor);
             
+            foreach(var waifu in waifus)
+            {
+                waifu.isDoingSomething = true;
+            }
+            user.isInDungeon = true;
+            DBUtils.Update(user);
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "user",
+                data = JsonConvert.SerializeObject(user)
+            }));
+
             /*
                 The data of the new dungeon is sent to the client inside the InstantiateDungeon method
             */
@@ -68,8 +83,9 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't stop someone's else dungeon", 1)); return ;}
 
             user.isInDungeon = false;
+            DBUtils.Update(user); //Since StopDungeon also modify user, this update should be before stopDungeon.
             dungeon.StopDungeon();
-            DBUtils.Update(user);
+            
         }
 
 

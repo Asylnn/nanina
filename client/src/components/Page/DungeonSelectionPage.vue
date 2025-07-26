@@ -33,7 +33,7 @@ export default {
         }
     },
     mounted(){
-        this.availableWaifus = this.user.waifus
+        this.availableWaifus = this.user.availableWaifus
     },
     components :{
         WaifuDisplayComponent,
