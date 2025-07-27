@@ -65,7 +65,7 @@
     "user_xp_for_dungeons":25,
     "fight_damage_multiplier":3000,
     "maimai_score_expiration_in_milliseconds":1800000,
-    "cafe_length_in_milliseconds":120000,
+    "cafe_length_in_milliseconds":5000,
     "cafe_reward_randomness":0.30,
     "modifiersWeapon": [
                 {
