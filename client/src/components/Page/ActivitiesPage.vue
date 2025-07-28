@@ -33,12 +33,6 @@ export default {
         applyTextColor(activity : ActivityType){
             return activity == this.selectedActivity ? "selected" : ""
         },
-        sendWaifuToCafe()
-        {
-            
-            this.SendToServer("send waifu to cafe", this.selectedWaifu!.id, this.user.Id)
-            this.selectedWaifu = null
-        },
         openWaifuDisplay(waifu : Waifu)
         {
             
