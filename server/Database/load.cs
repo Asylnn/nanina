@@ -131,7 +131,45 @@ namespace Nanina.Database
                 {
                     user.waifus.Find(waifu => waifu.id == waifuID).isDoingSomething = false;
                 }
-
+                foreach(var waifuID in user.waifuIdsInDungeon)
+                {
+                    user.waifus.Find(waifu => waifu.id == waifuID).isDoingSomething = false;
+                }
+                foreach(var item in user.inventory.material)
+                {
+                    Console.WriteLine(item);
+                    var dbItem = Global.items.Find(dbitem => dbitem.id == item.id);
+                    if(dbItem == null) continue;
+                    item.imgPATH = dbItem.imgPATH;
+                    item.rarity = dbItem.rarity;
+                    item.modifiers = dbItem.modifiers;
+                }
+                foreach(var item in user.inventory.waifuConsumable)
+                {
+                    var dbItem = Global.items.Find(dbitem => dbitem.id == item.id);
+                    item.imgPATH = dbItem.imgPATH;
+                    item.rarity = dbItem.rarity;
+                    item.modifiers = dbItem.modifiers;
+                }
+                foreach(var item in user.inventory.userConsumable)
+                {
+                    var dbItem = Global.items.Find(dbitem => dbitem.id == item.id);
+                    item.imgPATH = dbItem.imgPATH;
+                    item.rarity = dbItem.rarity;
+                    item.modifiers = dbItem.modifiers;
+                }
+                foreach(var item in user.inventory.equipment)
+                {
+                    var dbItem = Global.equipments.Find(dbitem => dbitem.id == item.id);
+                    if(dbItem == null){
+                        Console.WriteLine(item.id);
+                        Console.WriteLine(JsonConvert.SerializeObject(item));
+                        continue;
+                    }
+                    item.imgPATH = dbItem.imgPATH;
+                    item.rarity = dbItem.rarity;
+                    item.modifiers = dbItem.modifiers;
+                }
                 /*foreach(Waifu waifu in user.waifus)
                 {
                     waifu.isDoingSomething = false;
