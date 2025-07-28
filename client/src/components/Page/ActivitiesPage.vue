@@ -87,8 +87,8 @@ export default {
         </ul>
     </div>
     <div>
-        <div v-if="selectedActivity == ActivityType.Cafe">
-            <ActivityWaifuPickerComponent :user="user" :selected-waifu="selectedWaifu"
+        <div v-if="selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining">
+            <ActivityWaifuPickerComponent :user="user" :selected-waifu="selectedWaifu" :activity-type="selectedActivity"
                 v-on:reset-selected-waifu="selectedWaifu = null" 
                 v-on:show-waifu-selector="waifuSelectorVisible = true">
             </ActivityWaifuPickerComponent>

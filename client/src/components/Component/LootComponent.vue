@@ -51,7 +51,8 @@ export default {
             </div>
             <div v-else-if="loot.lootType == LootType.Item" c>
                 <img :src="`${publicPath}/item-image/${loot.item!.imgPATH}`">
-                <div class="amount">{{ loot.item!.count }}</div>
+                <div v-if="loot.amount == 1" class="amount">{{ loot.item!.count }}</div>
+                <div v-else class="amount">{{ loot.amount }}</div>
             </div>
             <div v-else-if="loot.lootType == LootType.GC" >
                 <img src="@/assets/gc.svg">

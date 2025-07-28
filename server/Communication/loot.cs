@@ -31,6 +31,8 @@ namespace Nanina.Communication
                         user.money += loot.amount;
                         break;
                     case LootType.Item:
+                        if(loot.amount != 1)
+                            loot.item.count = loot.amount;
                         user.inventory.AddItem(loot.item);
                         break;
                 }

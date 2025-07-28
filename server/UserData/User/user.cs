@@ -133,8 +133,9 @@ namespace Nanina.UserData
             }
         }
 
-        public void ActivityFinished(ulong activityId)
+        public void ActivityTimeout(ulong activityId)
         {
+            Console.WriteLine("activity timeout");
             foreach(var activity in activities)
             {
                 if(activity.id == activityId)
@@ -142,14 +143,8 @@ namespace Nanina.UserData
                     //if cafe...
                     var session = DBUtils.Get<Session>(session => session.id == activeSessionId);
                     var waifu = waifus.Find(waifu => waifu.id == activity.waifuID);
-                    var money = (uint) Math.Ceiling(Activity.ConcludeCafeActivity(waifu));
-                    var loot = new Loot()
-                    {
-                        lootType = LootType.Money,
-                        amount = money,
-                    };
-                    activity.finished = true;
-                    activity.loot = [loot];
+                    Console.WriteLine("activity timeout 2");
+                    activity.Timeout(waifu);
 
                     if(session.webSocketId != null)
                     {

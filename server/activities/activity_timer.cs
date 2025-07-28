@@ -19,10 +19,9 @@ namespace Nanina.Activities
         public static void ActivityFinished(object sender, ElapsedEventArgs e)
         {
             var timer = sender as ActivityTimer;
-            
+            Console.WriteLine("Activity timer finished");
             var user = DBUtils.Get<UserData.User>(x => x.Id == timer.userId);
-            user.ActivityFinished(timer.activityId);
-            Global.activityTimers.Remove(timer.activityId);
+            user.ActivityTimeout(timer.activityId);
             timer.Dispose();
         }
     }

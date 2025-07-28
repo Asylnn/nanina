@@ -31,6 +31,6 @@ namespace Nanina
         public float equipment_main_stat_level_up_multiplicator;
         public float attribute_stat_randomness;
         public float cafe_reward_randomness;
-        public uint cafe_length_in_milliseconds;
+        public uint base_activity_length_in_milliseconds;
     }
 }

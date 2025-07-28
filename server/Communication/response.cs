@@ -140,8 +140,8 @@ namespace Nanina.Communication
                 case "become admin":
                     BecomeAdmin(rawData);
                     break;
-                case "send waifu to cafe":
-                    SendWaifuToCafe(rawData);
+                case "send waifu to activity":
+                    SendWaifuToActivity(rawData);
                     break;
                 case "claim activity":
                     ClaimActivity(rawData);

@@ -19,14 +19,34 @@ export default {
         selectedWaifu:{
             type:[Waifu, null],
             required:true,
-        }
+        },
+        activityType:{
+            type:Number,
+            required:true,
+        },
     },
     methods:{
-        sendWaifuToCafe()
+        sendWaifuToActivity()
         {
-            this.SendToServer("send waifu to cafe", this.selectedWaifu!.id, this.user.Id)
+            this.SendToServer("send waifu to activity", JSON.stringify({"waifuID": this.selectedWaifu!.id, "activityType":this.activityType}), this.user.Id)
             this.$emit("reset-selected-waifu")
         },
+        getActivityName()
+        {
+            switch(this.activityType)
+            {
+                case ActivityType.Cafe:
+                    return "cafe"
+                case ActivityType.Crafting:
+                    return "crafting"
+                case ActivityType.Exploration:
+                    return "exploration"
+                case ActivityType.Research:
+                    return "research"
+                case ActivityType.Mining:
+                    return "mining"
+            }
+        }
     },
     emits: ["show-waifu-selector", "reset-selected-waifu"],
 }
@@ -35,10 +55,10 @@ export default {
 </script>
 
 <template>
-    <p>{{$t("activities.cafe.explanation")}}</p>
+    <p>{{$t(`activities.${getActivityName()}.explanation`)}}</p>
     <div v-if="user.activities.length < user.maxConcurrentActivities">
         Add waifu
-        <button class="smallbutton nnnbutton" v-if="selectedWaifu != null" @click="sendWaifuToCafe()">{{ $t("activities.sendwaifu") }}</button>
+        <button class="smallbutton nnnbutton" v-if="selectedWaifu != null" @click="sendWaifuToActivity()">{{ $t("activities.sendwaifu") }}</button>
         
         <div class="waifuSlot clickable" @click="$emit('show-waifu-selector')">
             <img :src="`${publicPath}waifu-image/${selectedWaifu?.imgPATH || 'unknown.svg'}`">

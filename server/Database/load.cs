@@ -110,13 +110,13 @@ namespace Nanina.Database
                 user.isRegenerating = false;
                 user.isInDungeon = false;
                 //user.inventory.equipment = [];
-                //user.activities = [];
+                user.activities = [];
 
                 //Restart unfinished timers
                 foreach(var activity in user.activities)
                 {
                     if(activity.timestamp + activity.timeout <= Utils.GetTimestamp())
-                        user.ActivityFinished(activity.id);
+                        user.ActivityTimeout(activity.id);
                     else{
                         var timer = new ActivityTimer(activity.timestamp + activity.timeout - Utils.GetTimestamp())
                         {
