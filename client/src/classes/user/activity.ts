@@ -11,5 +11,6 @@ export default class Activity
     public waifuID!:string
     public loot!: Loot[]
     public finished!: boolean
+    public researchID !: string
 }
 

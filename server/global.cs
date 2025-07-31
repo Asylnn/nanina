@@ -20,6 +20,9 @@ namespace Nanina
         public static readonly Maimai.Chart[] charts = JsonConvert.DeserializeObject<Maimai.Chart[]>(File.ReadAllText("../charts.json"));
         public static readonly List<List<Loot>> userLevelRewards = LoadUserLevelRewards();
         public static readonly List<EquipmentAttribute> baseAttributes = JsonConvert.DeserializeObject<List<EquipmentAttribute>>(File.ReadAllText("../save/attributes.json"));
+        public static readonly List<ResearchNode> researchNodes = JsonConvert.DeserializeObject<List<ResearchNode>>(File.ReadAllText("../save/research.json"));
+        //If at release it's only used to send the data to the client, then just send it without deserializing
+
         public static WebSocketServer ws;
 
         private static List<List<Loot>> LoadUserLevelRewards()

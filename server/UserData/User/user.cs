@@ -48,6 +48,8 @@ namespace Nanina.UserData
         public Verification verification { get; set; } = new() { osuVerificationCode=null, osuVerificationCodeTimestamp = 0, isOsuIdVerified=false };
         public ulong claimTimestamp { get; set; } = 0;
         public Inventory inventory { get; set; } = new ();
+        public List<CompletedResearch> completedResearches { get; set; } = [];
+        public Unlocks unlocks { get; set; } = new ();
 
         public (double energy, uint gc) SpendEnergy(double ratio)
         {
@@ -119,32 +121,38 @@ namespace Nanina.UserData
             return (Convert.ToInt64(Math.Pow(2, level))&lvlRewards) == 0;
         }
 
-        public void UseItem(Item item)
+        public void UseUserConsumable(Item item)
         {
             foreach(var modifier in item.modifiers)
             {
-                switch(modifier.stat)
+                ApplyUserModifier(modifier);
+            }
+        }
+
+        public void ApplyUserModifier(Modifier modifier)
+        {
+            switch(modifier.stat)
                 {
                     case StatModifier.MaxEnergy:
-                        this.max_energy += modifier.amount;
-                        this.energy += modifier.amount;
+                        max_energy += modifier.amount;
+                        energy += modifier.amount;
                         break;
-                }
+                    case StatModifier.UnlockFloor:
+                        unlocks.maxDungeonFloor = (byte) modifier.amount;
+                        break;
             }
         }
 
         public void ActivityTimeout(ulong activityId)
         {
-            Console.WriteLine("activity timeout");
             foreach(var activity in activities)
             {
                 if(activity.id == activityId)
                 {
                     //if cafe...
                     var session = DBUtils.Get<Session>(session => session.id == activeSessionId);
-                    var waifu = waifus.Find(waifu => waifu.id == activity.waifuID);
-                    Console.WriteLine("activity timeout 2");
-                    activity.Timeout(waifu);
+                    
+                    activity.Timeout(this);
 
                     if(session.webSocketId != null)
                     {

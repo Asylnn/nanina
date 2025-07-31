@@ -22,16 +22,21 @@ namespace Nanina.UserData
         public ulong timeout { get; set; }
         public string waifuID { get; set; }
         public List<Loot> loot { get; set; } = [];
+        public string researchID { get; set; }
 
-        public void Timeout(Waifu waifu)
+        public void Timeout(User user)
         {
+            finished = true;
             switch(type)
             {
                 case ActivityType.Cafe:
-                    CafeTimeout(waifu);
+                    CafeTimeout(user.waifus.Find(waifu => waifu.id == waifuID));
                     break;
                 case ActivityType.Mining:
-                    MiningTimeout(waifu);
+                    MiningTimeout(user.waifus.Find(waifu => waifu.id == waifuID));
+                    break;
+                case ActivityType.Research:
+                    OnResearchTimeout(user);
                     break;
             }
         }
@@ -44,12 +49,10 @@ namespace Nanina.UserData
                 lootType = LootType.Money,
                 amount = money,
             };
-            finished = true;
             this.loot = [loot];
         }
         public void MiningTimeout(Waifu waifu)
         {
-            finished = true;
 
             foreach(int tier in Enumerable.Range(1,4))
             {
@@ -80,5 +83,38 @@ namespace Nanina.UserData
                 }
             }
         }
+
+        public void OnResearchTimeout(User user)
+        {
+            var researchNode = Global.researchNodes.Find(RN => RN.id == researchID);
+            var vehicleItem = Utils.DeepCopyReflection(Global.items.Find(i => i.id == 0));
+
+            var completedResearch = user.completedResearches.Find(r => r.id == researchID);
+            if(completedResearch == null)
+                user.completedResearches.Add(new CompletedResearch
+                {
+                    id=researchID,
+                    amount=1,
+                });
+            else
+                completedResearch.amount++;
+
+            /*Right now we only give the unlocks/else after the user clicked the "finish research" button, and those unlocks go through
+            a vehicleItem's modifiers. We could do it right now though, but i don't know which is better*/
+
+            vehicleItem.modifiers = researchNode.modifiers;
+            loot.Add(new ()
+            {
+                lootType = LootType.Modifiers,
+                item = vehicleItem,
+            });
+        }
+
+        public static ulong GetResearchTimeout(Waifu waifu, double cost)
+        {
+            return (ulong) (cost / (waifu.Int + waifu.Luck) * 3600d * 1000d);
+        }
+
+        
     }
 }

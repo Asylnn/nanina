@@ -62,6 +62,9 @@ export default {
                 <img src="@/assets/ugly_coin.svg">
                 <div class="amount">{{ loot.amount }}</div>
             </div>
+            <div v-else-if="loot.lootType == LootType.Modifiers">
+                <img src="@/assets/unlock.svg">
+            </div>
         </div>
         
     </div>

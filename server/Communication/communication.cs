@@ -64,6 +64,11 @@ namespace Nanina.Communication
                 type = "get dungeons",
                 data = JsonConvert.SerializeObject(DungeonManager.dungeons),
             }));
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "get research nodes",
+                data = JsonConvert.SerializeObject(Global.researchNodes),
+            }));
             if(user.isInDungeon)
             {
                 var activeDungeon = DungeonManager.activeDungeons.Values.ToList().Find(dungeon => user.dungeonInstanceId == dungeon.instanceId);

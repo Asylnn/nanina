@@ -21,12 +21,12 @@ namespace Nanina.UserData.ModifierData
 
 
 
-
         // User Stat Modifier
 
-        
         EnergyRegen,
         MaxEnergy,
+        UnlockFloor,
+        UnlockTools,
         
     }
 }

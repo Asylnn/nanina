@@ -5,7 +5,8 @@ enum LootType
     Money,
     GC,
     Item,
-    Equipment
+    Equipment,
+    Modifiers,
 }
 
 export default LootType

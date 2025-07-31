@@ -17,9 +17,16 @@ namespace Nanina.Communication
     */
     partial class WS : WebSocketBehavior
     {
-        partial class ClientActivityRequest
+        class ClientActivityRequest
         {
             public string waifuID;
+            public ActivityType activityType;
+        }
+
+        class ClientResearchRequest
+        {
+            public string waifuID;
+            public string researchID;
             public ActivityType activityType;
         }
         protected (User user, Waifu waifu, bool validResult) CheckForActivityValidity(ClientWebSocketResponse rawData)
@@ -46,26 +53,62 @@ namespace Nanina.Communication
 
             return (user, waifu, true);
         }
+
+        protected (bool, ResearchNode) CheckForResearchValidity(User user, string data)
+        {
+            var researchRequest = JsonConvert.DeserializeObject<ClientResearchRequest>(data);
+            var researchNode = Global.researchNodes.Find(RN => RN.id == researchRequest.researchID);
+            Console.WriteLine(researchRequest.researchID);
+            if(researchNode == null)
+                {Send(ClientNotification.NotificationData("Activities", "this research doesn't exist", 1)); return (false, null);}
+
+            if(! researchNode.requirements.All(requirement => user.completedResearches.Any(completedResearch => completedResearch.id == requirement)))
+                {Send(ClientNotification.NotificationData("Activities", "you didn't already complete all the requirements", 1)); return (false, null);}
+
+            if(! researchNode.infinite && user.completedResearches.Any(completedResearch => completedResearch.id == researchNode.id))
+                {Send(ClientNotification.NotificationData("Activities", "you already did the research (and it's not an infinite research)", 1)); return (false, null);}
+
+            return (true, researchNode);
+
+        }
         protected void SendWaifuToActivity(ClientWebSocketResponse rawData)
         {
-            Console.WriteLine("SendWaifuToActivity");
+
             var (user, waifu, validResult) = CheckForActivityValidity(rawData);
             if(!validResult) return;
-            Console.WriteLine("TEST PASSED");
 
             var activityRequest = JsonConvert.DeserializeObject<ClientActivityRequest>(rawData.data);
 
-            waifu.isDoingSomething = true;
+            
+
             Activity activity = new()
             {
                 type = activityRequest.activityType,
-                timeout = Global.baseValues.base_activity_length_in_milliseconds,
                 waifuID = activityRequest.waifuID,
             };
+
+            switch(activityRequest.activityType)
+            {
+                case ActivityType.Cafe or ActivityType.Crafting or ActivityType.Exploration:
+                    activity.timeout = Global.baseValues.base_activity_length_in_milliseconds;
+                    break;
+                case ActivityType.Research:
+                    var (validResearchResult, researchNode) = CheckForResearchValidity(user, rawData.data);
+                    if(! validResearchResult) return;
+                    activity.timeout = Activity.GetResearchTimeout(waifu, researchNode.cost);
+                    activity.researchID = researchNode.id;
+                    break;
+                default:
+                    Console.Error.WriteLine("ActivityRequest doesn't have a valid type after checking for it????");
+                    return;
+            }
+
+            waifu.isDoingSomething = true;
+            
             user.activities.Add(activity);
 
 
-            var timer = new Activities.ActivityTimer(Global.baseValues.base_activity_length_in_milliseconds)
+            var timer = new Activities.ActivityTimer(activity.timeout)
             {
                 userId = user.Id,
                 activityId = activity.id,

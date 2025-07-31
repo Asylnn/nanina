@@ -8,6 +8,9 @@ import ActivityType from '@/classes/user/activity_type';
 import type Waifu from '@/classes/waifu/waifu';
 import ActivityProgressComponent from '../Component/ActivityProgressComponent.vue';
 import ActivityWaifuPickerComponent from '../Component/ActivityWaifuPickerComponent.vue';
+import ResearchNode from '@/classes/research/research_nodes';
+import ResearchPage from './ResearchPage.vue';
+
 
 export default {
     name : "ActivitiesPage",
@@ -27,6 +30,10 @@ export default {
         user: {
             type: User,
             required: true
+        },
+        researchNodes:{
+            type:Array<ResearchNode>,
+            required:true,
         }
     },
     methods:{
@@ -45,12 +52,19 @@ export default {
             this.waifuSelectorVisible = false
             this.selectedWaifu = this.waifuToView
         },
+        showWaifuSelector()
+        {
+            this.waifuSelectorVisible = true;
+            this.selectedWaifu = null;
+        },
+
     },
     components:{
         GridDisplayComponent,
         WaifuDisplayComponent,
         ActivityProgressComponent,
         ActivityWaifuPickerComponent,
+        ResearchPage,
     },
     computed:{
         
@@ -90,11 +104,18 @@ export default {
         <div v-if="selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining">
             <ActivityWaifuPickerComponent :user="user" :selected-waifu="selectedWaifu" :activity-type="selectedActivity"
                 v-on:reset-selected-waifu="selectedWaifu = null" 
-                v-on:show-waifu-selector="waifuSelectorVisible = true">
+                v-on:show-waifu-selector="showWaifuSelector()">
             </ActivityWaifuPickerComponent>
         </div>
-        <div v-for="activity in user.activities">
-            <ActivityProgressComponent v-if="activity.type == selectedActivity" :user="user" :activity="activity"></ActivityProgressComponent>
+        <div v-else-if="selectedActivity == ActivityType.Research">
+            <ResearchPage :research-nodes="researchNodes" :user="user" :selected-waifu="selectedWaifu"
+                v-on:show-waifu-selector="showWaifuSelector()">
+
+            </ResearchPage>
+        </div>
+        <div v-for="activity in user.activities"> 
+            <ActivityProgressComponent :user="user" :activity="activity"
+            v-if="activity.type == selectedActivity && (selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining)" ></ActivityProgressComponent>
         </div>
     </div>
 </template>
@@ -120,6 +141,14 @@ export default {
     margin: 0 15vw;
     text-align: center;
     cursor: pointer;
+}
+
+#waifuSelectorVeil{
+    z-index: 100;
+}
+
+#waifuveil{
+    z-index: 200;
 }
 
 </style>

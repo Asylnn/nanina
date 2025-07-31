@@ -4,6 +4,7 @@ import {createI18n} from 'vue-i18n'
 import fr from './assets/translations/fr.json'
 import en from './assets/translations/en.json'
 import config from '../../config.json'
+import VueDragscroll from 'vue-dragscroll'
 
 //import router from './router'
 import {
@@ -42,6 +43,7 @@ let i18n = createI18n({
 export const app = createApp(App)
 app.use(VueCookies)
 app.use(i18n)
+app.use(VueDragscroll)
 
 let url = (config.dev ? config.ws_dev_server_url : config.ws_prod_server_url) 
 let port = (config.dev ? config.ws_port : config.prod_ws_port) 

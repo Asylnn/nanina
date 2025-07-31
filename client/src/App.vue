@@ -49,6 +49,7 @@ import UserWaifuManagerPage from './components/Admin/Manager/UserWaifuManagerPag
 import PrivacyPage from './components/Page/PrivacyPage.vue'
 import ActivitiesPage from './components/Page/ActivitiesPage.vue'
 import LootType from './classes/loot/loot_type'
+import ResearchNode from './classes/research/research_nodes'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -75,7 +76,8 @@ export default {
 			maimai_chart : null as Chart | null,
 			loots : [] as Array<Loot[]>,
 			inside_dungeon : false,
-			Page : Page
+			Page : Page,
+			researchNodes : [] as ResearchNode[],
 		}
 	},
 	components: {
@@ -221,6 +223,12 @@ export default {
 					console.log("Dungeon data : ")
 					console.log(this.dungeons)
 					break
+				case "get research nodes":
+					this.researchNodes = JSON.parse(res.data)
+					this.researchNodes = this.researchNodes.map(rn => Object.assign(new ResearchNode, rn))
+					console.log("research node data : ")
+					console.log(this.researchNodes)
+					break
 				case "get active dungeon":
 					this.inside_dungeon = true;
 					console.log("ACTIVE DUNGEON")
@@ -312,7 +320,7 @@ export default {
 			<PrivacyPage ></PrivacyPage>
 		</div>
 		<div v-else-if="page == Page.Activities">
-			<ActivitiesPage :user="user"></ActivitiesPage>
+			<ActivitiesPage :user="user" :research-nodes="researchNodes"></ActivitiesPage>
 		</div>
 		<div v-else>
 			ERREUR 404 AHAHAHAHAH

@@ -226,7 +226,7 @@ namespace Nanina.Communication
 
             var item = user.inventory.userConsumable[itemIndex];
 
-            user.UseItem(item);
+            user.UseUserConsumable(item);
             user.inventory.RemoveItem(item);
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse

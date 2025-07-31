@@ -11,7 +11,8 @@ namespace Nanina.Communication
         Money,
         GC,
         Item,
-        Equipment
+        Equipment,
+        Modifiers,
     }
     public class Loot
     {
@@ -34,6 +35,9 @@ namespace Nanina.Communication
                         if(loot.amount != 1)
                             loot.item.count = loot.amount;
                         user.inventory.AddItem(loot.item);
+                        break;
+                    case LootType.Modifiers:
+                        user.UseUserConsumable(loot.item);
                         break;
                 }
             }

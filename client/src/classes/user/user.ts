@@ -8,6 +8,7 @@ import type Game from './game'
 import config from '../../../../baseValues.json'
 import Equipment from '../item/equipment'
 import type Activity from './activity'
+import type CompletedResearch from './completed_research'
 
 
 
@@ -41,6 +42,7 @@ export default class User {
     public inventory! : Inventory
     public lvlRewards! : number
     public preferedGame! : Game
+    public completedResearches !: CompletedResearch[]
 
     /*
         Local only properties
@@ -71,6 +73,10 @@ export default class User {
         setInterval(User.updateTimer, 1000, this)
     }
     
+    isResearchDone(id:string)
+    {
+        this.completedResearches.some(research => research.id == id)
+    }
 
     static updateTimer(user: User) {
         let date_milli = Date.now()
