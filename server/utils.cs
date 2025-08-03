@@ -1,5 +1,9 @@
+using System.Collections;
 using System.Diagnostics;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using Nanina.Crafting;
 using Newtonsoft.Json;
 
 public static class Utils
@@ -22,6 +26,10 @@ public static class Utils
     //yoinked from the internet, sorry, best next choice was serializing and deserializing.
     public static T DeepCopyReflection<T>(T input)
     {
+        Console.WriteLine("DCR");
+        Console.WriteLine(input.GetType());
+        Console.WriteLine(JsonConvert.SerializeObject(input));
+
         var type = input.GetType();
         var properties = type.GetProperties();
         T clonedObj = (T)Activator.CreateInstance(type);
@@ -29,8 +37,41 @@ public static class Utils
         {
             if (property.CanWrite)
             {
+
+                
+
+
                 object value = property.GetValue(input);
-                if (value != null && value.GetType().IsClass && !value.GetType().FullName.StartsWith("System."))
+                if (value != null && property.PropertyType.FullName.StartsWith("System.Collections.Generic.List"))
+                {
+                    
+                    //var ListElementType = property.PropertyType.GetGenericArguments().First();
+                    dynamic newList = Activator.CreateInstance(property.PropertyType);
+                    Action<object> uwu2 = (elem) => {
+                        if (elem != null && elem.GetType().IsClass && !elem.GetType().FullName.StartsWith("System."))
+                        {
+                            newList.Add((dynamic) DeepCopyReflection(elem));
+                        }
+                        else
+                            newList.Add(elem);
+                    };
+
+                    //((dynamic)value).ForEach(uwu2); Simpler way with dynamic
+                    property.PropertyType.GetMethod("ForEach").Invoke(value, [uwu2]);
+                    property.SetValue(clonedObj, newList);
+
+                    //Couldn't make ConvertAll work
+                    /* Converter<object, object> uwu2 = (x) => {
+                         return DeepCopyReflection(x);
+                    };
+                    Type generic = typeof(Converter<, >).MakeGenericType(ListElementType, ListElementType);
+                    var uwu3 = uwu2.GetMethodInfo().CreateDelegate(generic);
+                    //Cannot bind to the target method because its signature is not compatible with that of the delegate type.
+                    /*var uuu = property.GetValue(input).GetType().GetMethod("ConvertAll").MakeGenericMethod(ListElementType).Invoke(value, [uwu3]);*/
+
+                    
+                }
+                else if (value != null && property.PropertyType.IsClass && !property.PropertyType.FullName.StartsWith("System."))
                 {
                     property.SetValue(clonedObj, DeepCopyReflection(value));
                 }
@@ -43,6 +84,12 @@ public static class Utils
         return clonedObj;
     }
 
+    private static T ArcaneShit<T>(T shit)
+    {
+        Console.WriteLine("some shit");
+        return shit;
+    }
+    public delegate void test2(dynamic elem);
     public static T ScuffedJsonSerializationDeepCopy<T>(T input)
     {
         return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(input));
