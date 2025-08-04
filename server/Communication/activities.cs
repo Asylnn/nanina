@@ -8,6 +8,7 @@ using Nanina.UserData;
 using System.Data.Common;
 using System.Timers;
 using Nanina.UserData.WaifuData;
+using Nanina.Crafting;
 
 namespace Nanina.Communication
 {
@@ -17,17 +18,30 @@ namespace Nanina.Communication
     */
     partial class WS : WebSocketBehavior
     {
-        class ClientActivityRequest
+        public class ClientActivityRequest
         {
             public string waifuID;
             public ActivityType activityType;
         }
 
-        class ClientResearchRequest
+        public class ClientResearchRequest
         {
             public string waifuID;
             public string researchID;
             public ActivityType activityType;
+        }
+
+        public class CraftingRequest
+        {
+            public ushort id;
+            public ushort quantity;
+        }
+
+        public class ClientCraftingRequest
+        {
+            public string waifuID;
+            public ActivityType activityType;
+            public List<CraftingRequest> craftingList;
         }
         protected (User user, Waifu waifu, bool validResult) CheckForActivityValidity(ClientWebSocketResponse rawData)
         {
@@ -71,6 +85,64 @@ namespace Nanina.Communication
             return (true, researchNode);
 
         }
+
+        protected (bool, Craft) CheckForCraftingValidity(User user, string data)
+        {   
+            
+            var craftingRequest = JsonConvert.DeserializeObject<ClientCraftingRequest>(data);
+
+            //We merge all the crafting requests into a single craft object
+            Craft craftMerge = new ();
+            foreach(var craft in craftingRequest.craftingList)
+            {
+                if(craft.quantity <= 0)
+                    {Send(ClientNotification.NotificationData("Activities", "you craft something 0 or negatives times", 1)); return (false, null);}
+                
+                var fullCraft = Global.craftingRecipes.Find(cr => cr.id == craft.id);
+
+                if(fullCraft == null)
+                    {Send(ClientNotification.NotificationData("Activities", "the craft does not exist", 1)); return (false, null);}
+
+                var fullCraftCopy = Utils.DeepCopyReflection(fullCraft);
+                if(fullCraftCopy.ingredients.Count != 0)
+                    fullCraftCopy.ingredients.First().Test();
+
+                /*Each ingredient and result quantity is multiplied by the craft quantity*/
+                fullCraftCopy.ingredients.ForEach(ingredient => ingredient.quantity *= craft.quantity);
+                fullCraftCopy.results.ForEach(result => result.quantity *= craft.quantity);
+                craftMerge.ingredients.AddRange(fullCraftCopy.ingredients);
+                craftMerge.results.AddRange(fullCraftCopy.results);
+
+                var s = craftMerge.ingredients.Select(e => e);
+
+                craftMerge.moneyCost += fullCraftCopy.moneyCost * craft.quantity;
+                craftMerge.timeCost += fullCraftCopy.timeCost * craft.quantity;
+            }
+
+            if(user.money < craftMerge.moneyCost)
+                {Send(ClientNotification.NotificationData("Activities", "you don't have enough money", 1)); return (false, null);}
+
+            /*We remove items with the same id, and add their quantity together*/
+            for(var i = 0; i < craftMerge.ingredients.Count; i++)
+            {
+                for(var j = i+1; j < craftMerge.ingredients.Count; j++)
+                {
+                    if(craftMerge.ingredients[i].id == craftMerge.ingredients[j].id)
+                    {
+                        craftMerge.ingredients[i].quantity += craftMerge.ingredients[j].quantity;
+                        craftMerge.ingredients.RemoveAt(j);
+                        j--;
+                    }
+                }
+                if(! user.inventory.HasItem(craftMerge.ingredients[i].id, craftMerge.ingredients[i].quantity))
+                    {Send(ClientNotification.NotificationData("Activities", "you don't have enough items", 1)); return (false, null);}   
+            }
+
+            return (true, craftMerge);
+            /*foreach(var ingredient in craftMerge.ingredients)
+                user.inventory.RemoveItem(ingredient.id, ingredient.quantity);*/
+
+        }
         protected void SendWaifuToActivity(ClientWebSocketResponse rawData)
         {
 
@@ -89,7 +161,7 @@ namespace Nanina.Communication
 
             switch(activityRequest.activityType)
             {
-                case ActivityType.Cafe or ActivityType.Crafting or ActivityType.Exploration:
+                case ActivityType.Cafe or ActivityType.Mining or ActivityType.Exploration:
                     activity.timeout = Global.baseValues.base_activity_length_in_milliseconds;
                     break;
                 case ActivityType.Research:
@@ -97,6 +169,25 @@ namespace Nanina.Communication
                     if(! validResearchResult) return;
                     activity.timeout = Activity.GetResearchTimeout(waifu, researchNode.cost);
                     activity.researchID = researchNode.id;
+                    break;
+                case ActivityType.Crafting:
+                    var (validCraftResult, craft) = CheckForCraftingValidity(user, rawData.data);
+                    if(! validCraftResult) return;
+                    user.money -= craft.moneyCost;
+                    activity.timeout = Activity.GetCraftingTimeout(waifu, craft.timeCost);
+                    foreach(var ingredient in craft.ingredients)
+                        user.inventory.RemoveItem(ingredient.id, ingredient.quantity);
+                    foreach(var result in craft.results)
+                        activity.loot.Add(
+                            new Loot
+                            {
+                                lootType = LootType.Item,
+                                amount = result.quantity,
+                                item = Global.items.Find(item => item.id == result.id)
+                            }
+                        );
+                    
+                        
                     break;
                 default:
                     Console.Error.WriteLine("ActivityRequest doesn't have a valid type after checking for it????");

@@ -6,6 +6,7 @@ using Nanina.Database;
 using Nanina.UserData.ItemData;
 using Nanina.UserData.WaifuData;
 using Nanina.UserData.ModifierData;
+using Nanina.Crafting;
 
 namespace Nanina
 {
@@ -21,6 +22,8 @@ namespace Nanina
         public static readonly List<List<Loot>> userLevelRewards = LoadUserLevelRewards();
         public static readonly List<EquipmentAttribute> baseAttributes = JsonConvert.DeserializeObject<List<EquipmentAttribute>>(File.ReadAllText("../save/attributes.json"));
         public static readonly List<ResearchNode> researchNodes = JsonConvert.DeserializeObject<List<ResearchNode>>(File.ReadAllText("../save/research.json"));
+        public static readonly List<Craft> craftingRecipes = JsonConvert.DeserializeObject<List<Craft>>(File.ReadAllText("../save/crafts.json"));
+
         //If at release it's only used to send the data to the client, then just send it without deserializing
 
         public static WebSocketServer ws;

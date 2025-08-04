@@ -63,6 +63,7 @@ export default {
             </div>
             <span> {{ getTimeLeftNumber(activity) }}</span>
         </div>
+        <LootComponent v-if="activity.type == ActivityType.Crafting":loots="activity.loot"></LootComponent>
     </div>
     <div v-else>
         activity finished

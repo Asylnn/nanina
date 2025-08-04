@@ -9,7 +9,15 @@ namespace Nanina.UserData
         public List<Item> material {get; set;} = [];
         public List<Item> userConsumable {get; set;} = [];
         public List<Item> waifuConsumable {get; set;} = [];
+        public List<Item> AllItems 
+        {
+            get => [.. userConsumable, .. waifuConsumable, .. material];
+        }
 
+        public bool HasItem(ushort id, ushort quantity = 1)
+        {
+            return AllItems.Any(item => item.id == id && item.count >= quantity);
+        }
         public void AddItem(Item item)
         {
             item.inventoryId = inventoryIdCounter;
@@ -45,6 +53,32 @@ namespace Nanina.UserData
                     else 
                         item.count--;
                     break;
+                case ItemType.WaifuConsumable:
+                    if(item.count == 1)
+                        waifuConsumable.Remove(item);
+                    else 
+                        item.count--;
+                    break;
+                case ItemType.Material:
+                    if(item.count == 1)
+                        material.Remove(item);
+                    else 
+                        item.count--;
+                    break;
+            }
+        }
+
+        public void RemoveItem(ushort id, ushort quantity)
+        {
+            var item = AllItems.Find(item => item.id == id);
+            if(item.count > quantity)
+            {
+                item.count -= quantity;
+            }
+            else
+            {
+                item.count = 1;
+                RemoveItem(item);
             }
         }
 

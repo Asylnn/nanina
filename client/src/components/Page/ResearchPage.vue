@@ -66,8 +66,6 @@ export default {
         //Make a deep copy of researchNodes
         let researchNodeCopy = JSON.parse(JSON.stringify(this.researchNodes)) as Array<ResearchNode>
         
-
-
         /*Create Trees based on nodes without any requirement (tree roots in some sense)*/ 
         
         for(var index = 0; researchNodeCopy.length > index; index++)

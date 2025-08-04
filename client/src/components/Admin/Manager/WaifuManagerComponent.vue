@@ -34,8 +34,8 @@ export default {
 
 <template>
     <div class="WaifuManagerComponent">
-        <button @click="Delete">delete</button>
-        <button v-if="editingExistingWaifu" @click="Reset">snap stats to level</button>
+        <button class="wmcButton" @click="Delete">delete</button>
+        <button class="wmcButton" v-if="editingExistingWaifu" @click="Reset">snap stats to level</button>
         <span class="attribute">Id  <input class="numberInput" v-model="waifu.id" type="text"></span>
         <span class="attribute">★  <input class="numberInput" v-model="waifu.stars" type="number"></span>
 
@@ -109,7 +109,7 @@ export default {
     width: 200px;
 }
 
-button {
+.wmcButton {
     margin-right: 10px;
 }
 

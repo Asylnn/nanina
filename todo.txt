@@ -108,8 +108,11 @@ TODO : Make item class abstract
 TODO : Make a function that check if a request is valid before working on it
 TODO : Restart all timers when restarting the server
 TODO : Add cancel activity button
-
-
-
+TODO : Make it impossible to have materials of some rarity without the user lvl / research necessary
+TODO : We are currently using the item database for displaying images for the crafting interface, we should do something that doesn't involve sending the entire db
+            Possible solution : just put ImgPath after loading the research.json file and sending it to the client?
+TODO (idea) : Make Luck stat increase chance of crafting additionnal items
+TODO : Add shift click for increasing by ten in the crafting menue
+TODO : Instead of hiding the waifu selector, just hide the send button
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

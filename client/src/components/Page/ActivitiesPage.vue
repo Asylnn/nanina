@@ -10,6 +10,8 @@ import ActivityProgressComponent from '../Component/ActivityProgressComponent.vu
 import ActivityWaifuPickerComponent from '../Component/ActivityWaifuPickerComponent.vue';
 import ResearchNode from '@/classes/research/research_nodes';
 import ResearchPage from './ResearchPage.vue';
+import CraftingPage from './CraftingPage.vue';
+import Craft from '@/classes/crafting/craft';
 
 
 export default {
@@ -34,7 +36,15 @@ export default {
         researchNodes:{
             type:Array<ResearchNode>,
             required:true,
-        }
+        },
+        craftingRecipes:{
+            type:Array<Craft>,
+            required:true,
+        },
+        item_db:{
+            type:Array<Item>,
+            required:true,
+        },
     },
     methods:{
         applyTextColor(activity : ActivityType){
@@ -65,6 +75,7 @@ export default {
         ActivityProgressComponent,
         ActivityWaifuPickerComponent,
         ResearchPage,
+        CraftingPage,
     },
     computed:{
         
@@ -112,6 +123,12 @@ export default {
                 v-on:show-waifu-selector="showWaifuSelector()">
 
             </ResearchPage>
+        </div>
+        <div v-else-if="selectedActivity == ActivityType.Crafting">
+            <CraftingPage :user="user" :selected-waifu="selectedWaifu" :crafting-recipes="craftingRecipes" :item_db="item_db"
+                v-on:show-waifu-selector="showWaifuSelector()">
+
+            </CraftingPage>
         </div>
         <div v-for="activity in user.activities"> 
             <ActivityProgressComponent :user="user" :activity="activity"

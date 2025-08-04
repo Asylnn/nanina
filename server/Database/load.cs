@@ -110,7 +110,7 @@ namespace Nanina.Database
                 user.isRegenerating = false;
                 user.isInDungeon = false;
                 //user.inventory.equipment = [];
-                user.activities = [];
+                //user.activities = [];
 
                 //Restart unfinished timers
                 foreach(var activity in user.activities)

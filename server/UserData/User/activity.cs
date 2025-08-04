@@ -38,6 +38,8 @@ namespace Nanina.UserData
                 case ActivityType.Research:
                     OnResearchTimeout(user);
                     break;
+                case ActivityType.Crafting:
+                    break;
             }
         }
         public void CafeTimeout(Waifu waifu)
@@ -115,6 +117,10 @@ namespace Nanina.UserData
             return (ulong) (cost / (waifu.Int + waifu.Luck) * 3600d * 1000d);
         }
 
+        public static ulong GetCraftingTimeout(Waifu waifu, double cost)
+        {
+            return (ulong) (cost / (waifu.Dex + waifu.Luck) * 1800d * 1000d);
+        }
         
     }
 }

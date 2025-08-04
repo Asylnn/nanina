@@ -50,6 +50,7 @@ import PrivacyPage from './components/Page/PrivacyPage.vue'
 import ActivitiesPage from './components/Page/ActivitiesPage.vue'
 import LootType from './classes/loot/loot_type'
 import ResearchNode from './classes/research/research_nodes'
+import Craft from './classes/crafting/craft'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -78,6 +79,7 @@ export default {
 			inside_dungeon : false,
 			Page : Page,
 			researchNodes : [] as ResearchNode[],
+			craftingRecipes : [] as Craft[],
 		}
 	},
 	components: {
@@ -229,6 +231,12 @@ export default {
 					console.log("research node data : ")
 					console.log(this.researchNodes)
 					break
+				case "get crafting recipes":
+					this.craftingRecipes = JSON.parse(res.data)
+					this.craftingRecipes = this.craftingRecipes.map(rn => Object.assign(new Craft, rn))
+					console.log("crafting recipes data : ")
+					console.log(this.craftingRecipes)
+					break
 				case "get active dungeon":
 					this.inside_dungeon = true;
 					console.log("ACTIVE DUNGEON")
@@ -320,7 +328,7 @@ export default {
 			<PrivacyPage ></PrivacyPage>
 		</div>
 		<div v-else-if="page == Page.Activities">
-			<ActivitiesPage :user="user" :research-nodes="researchNodes"></ActivitiesPage>
+			<ActivitiesPage :user="user" :research-nodes="researchNodes" :item_db="item_db" :crafting-recipes="craftingRecipes"></ActivitiesPage>
 		</div>
 		<div v-else>
 			ERREUR 404 AHAHAHAHAH

@@ -28,8 +28,14 @@ export default {
     methods:{
         sendWaifuToActivity()
         {
-            this.SendToServer("send waifu to activity", JSON.stringify({"waifuID": this.selectedWaifu!.id, "activityType":this.activityType}), this.user.Id)
+            if(this.activityType != ActivityType.Crafting)
+                this.SendToServer("send waifu to activity", JSON.stringify({"waifuID": this.selectedWaifu!.id, "activityType":this.activityType}), this.user.Id)
+            
+            else
+                this.$emit("start-crafting-activity")
+
             this.$emit("reset-selected-waifu")
+            
         },
         getActivityName()
         {
@@ -48,16 +54,15 @@ export default {
             }
         }
     },
-    emits: ["show-waifu-selector", "reset-selected-waifu"],
+    emits: ["show-waifu-selector", "reset-selected-waifu", "start-crafting-activity"],
 }
 
 
 </script>
 
 <template>
-    <p>{{$t(`activities.${getActivityName()}.explanation`)}}</p>
+    <p v-if="activityType != ActivityType.Crafting">{{$t(`activities.${getActivityName()}.explanation`)}}</p>
     <div v-if="user.activities.length < user.maxConcurrentActivities">
-        Add waifu
         <button class="smallbutton nnnbutton" v-if="selectedWaifu != null" @click="sendWaifuToActivity()">{{ $t("activities.sendwaifu") }}</button>
         
         <div class="waifuSlot clickable" @click="$emit('show-waifu-selector')">
@@ -75,13 +80,13 @@ export default {
     border-style: solid;
     border-radius: 20px;
     border-color:rgb(20,20,20);
-    width: 15vw;
-    height: 15vw;
+    width: 8vw;
+    height: 8vw;
     overflow: hidden;
 }
 
 .waifuSlot img {
-    width: 15vw;
+    width: 8vw;
     overflow: hidden;
 }
 
