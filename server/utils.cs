@@ -26,10 +26,6 @@ public static class Utils
     //yoinked from the internet, sorry, best next choice was serializing and deserializing.
     public static T DeepCopyReflection<T>(T input)
     {
-        Console.WriteLine("DCR");
-        Console.WriteLine(input.GetType());
-        Console.WriteLine(JsonConvert.SerializeObject(input));
-
         var type = input.GetType();
         var properties = type.GetProperties();
         T clonedObj = (T)Activator.CreateInstance(type);
@@ -38,16 +34,13 @@ public static class Utils
             if (property.CanWrite)
             {
 
-                
-
-
                 object value = property.GetValue(input);
                 if (value != null && property.PropertyType.FullName.StartsWith("System.Collections.Generic.List"))
                 {
                     
                     //var ListElementType = property.PropertyType.GetGenericArguments().First();
                     dynamic newList = Activator.CreateInstance(property.PropertyType);
-                    Action<object> uwu2 = (elem) => {
+                    Action<object> forEach = (elem) => {
                         if (elem != null && elem.GetType().IsClass && !elem.GetType().FullName.StartsWith("System."))
                         {
                             newList.Add((dynamic) DeepCopyReflection(elem));
@@ -57,7 +50,7 @@ public static class Utils
                     };
 
                     //((dynamic)value).ForEach(uwu2); Simpler way with dynamic
-                    property.PropertyType.GetMethod("ForEach").Invoke(value, [uwu2]);
+                    property.PropertyType.GetMethod("ForEach").Invoke(value, [forEach]);
                     property.SetValue(clonedObj, newList);
 
                     //Couldn't make ConvertAll work
@@ -83,13 +76,6 @@ public static class Utils
         }
         return clonedObj;
     }
-
-    private static T ArcaneShit<T>(T shit)
-    {
-        Console.WriteLine("some shit");
-        return shit;
-    }
-    public delegate void test2(dynamic elem);
     public static T ScuffedJsonSerializationDeepCopy<T>(T input)
     {
         return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(input));
