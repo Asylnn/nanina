@@ -39,6 +39,11 @@ namespace Nanina.UserData
                     OnResearchTimeout(user);
                     break;
                 case ActivityType.Crafting:
+                    //since loot is already created at the moment the activity is created (since it's more practical this way), there is no need to do stuff here 
+                    //maybe do the same thing with research? Yeah difinitively
+                    break;
+                case ActivityType.Exploration:
+                    OnExplorationTimeout(user.waifus.Find(waifu => waifu.id == waifuID));
                     break;
             }
         }
@@ -110,6 +115,31 @@ namespace Nanina.UserData
                 lootType = LootType.Modifiers,
                 item = vehicleItem,
             });
+        }
+        
+        public void OnExplorationTimeout(Waifu waifu)
+        {
+            var statRandomness = Utils.RandomMultiplicator(Global.baseValues.cafe_reward_randomness);
+            var explorationPower = Math.Ceiling((waifu.Agi + waifu.Luck)*statRandomness);
+            Console.WriteLine(explorationPower);
+            var lootPool = Global.explorationLoot.Where(loot => loot.powerRequired <= explorationPower);
+            var totalWeight = lootPool.Aggregate(0d, (weight, loot) => weight + loot.weight);
+            while(explorationPower > 0)
+            {
+                var currentWeight = new Random().NextDouble()*totalWeight;
+                var explorationLoot = lootPool.First(loot => //That actually good, a bit proud of myself
+                {
+                    currentWeight -= loot.weight;
+                    return currentWeight <= 0;
+                });
+                explorationPower -= explorationLoot.cost;
+                loot.Add(new()
+                {
+                    lootType = LootType.Item,
+                    item = Global.items.Find(item => item.id == explorationLoot.itemId),
+                    amount = 1,
+                });
+            }
         }
 
         public static ulong GetResearchTimeout(Waifu waifu, double cost)

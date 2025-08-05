@@ -112,7 +112,7 @@ export default {
         </ul>
     </div>
     <div>
-        <div v-if="selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining">
+        <div v-if="selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining || selectedActivity == ActivityType.Exploration">
             <ActivityWaifuPickerComponent :user="user" :selected-waifu="selectedWaifu" :activity-type="selectedActivity"
                 v-on:reset-selected-waifu="selectedWaifu = null" 
                 v-on:show-waifu-selector="showWaifuSelector()">
@@ -126,13 +126,15 @@ export default {
         </div>
         <div v-else-if="selectedActivity == ActivityType.Crafting">
             <CraftingPage :user="user" :selected-waifu="selectedWaifu" :crafting-recipes="craftingRecipes" :item_db="item_db"
+                v-on:reset-selected-waifu="selectedWaifu = null" 
                 v-on:show-waifu-selector="showWaifuSelector()">
 
             </CraftingPage>
         </div>
         <div v-for="activity in user.activities"> 
             <ActivityProgressComponent :user="user" :activity="activity"
-            v-if="activity.type == selectedActivity && (selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining)" ></ActivityProgressComponent>
+                v-if="activity.type == selectedActivity && (selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining || selectedActivity == ActivityType.Exploration)" >
+            </ActivityProgressComponent>
         </div>
     </div>
 </template>

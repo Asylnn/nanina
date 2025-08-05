@@ -114,5 +114,9 @@ TODO : We are currently using the item database for displaying images for the cr
 TODO (idea) : Make Luck stat increase chance of crafting additionnal items
 TODO : Add shift click for increasing by ten in the crafting menue
 TODO : Instead of hiding the waifu selector, just hide the send button
+TODO : (user/activity.cs)
+    //since loot is already created at the moment the activity is created (since it's more practical this way), there is no need to do stuff here 
+    //maybe do the same thing with research? Yeah difinitively
+
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done
