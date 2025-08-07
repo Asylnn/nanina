@@ -32,7 +32,7 @@ export default {
         },
         getTimeLeft(activity : Activity)
         {
-            return " width:" + 60*(activity.timestamp + activity.timeout - this.date_milli)/activity.timeout  + "vw";
+            return " width:" + 60*(activity.timestamp + activity.timeout - this.date_milli)/activity.originalTimeout  + "vw";
         },
         getActivityClaim(activity : Activity)
         {

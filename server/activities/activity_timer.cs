@@ -23,6 +23,7 @@ namespace Nanina.Activities
             var user = DBUtils.Get<UserData.User>(x => x.Id == timer.userId);
             user.ActivityTimeout(timer.activityId);
             timer.Dispose();
+            Global.activityTimers.Remove(timer.activityId);
         }
     }
 }

@@ -230,5 +230,105 @@ namespace Nanina.Communication
             
             return validscore;
         }
+
+        protected async void CheckContinuousFight(ClientWebSocketResponse rawData)
+        {
+
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if (user == null)
+            { Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return; }
+            var activeActivities = user.activities.Where(acitivity => !acitivity.finished);
+            if (!activeActivities.Any())
+            { Send(ClientNotification.NotificationData("User", "You need to have at least a single valid activity in progress", 1)); return; }
+
+
+            if (!user.verification.isOsuIdVerified)
+            { Send(ClientNotification.NotificationData("Fighting", "You didn't verify your osu account! Go to the settings and enter your osu id!", 0)); return; }
+
+            var allScores = (await Api.GetUserRecentScores(user.ids.osuId, "osu", "10"));
+            Utils.ConsoleObject(allScores);
+            Utils.ConsoleObject(user.continuousFightLog);
+            allScores.Where(score =>
+            {
+                Console.WriteLine("ah");
+                Console.WriteLine(user.continuousFightLog.Any(log => log.scoreId == score.id));
+                return user.continuousFightLog.Any(log => log.scoreId == score.id);
+            });
+            Console.WriteLine("uh");
+            var scores = allScores.Where(score => score.beatmap.status == "ranked" && ! user.continuousFightLog.Any(log => log.scoreId == score.id));
+            Utils.ConsoleObject(scores);
+            
+            
+
+            Console.WriteLine("#scores");
+            Console.WriteLine(scores.Count());
+            var totalTimeSave = 0d;
+            foreach(var score in scores)
+            {
+                Utils.ConsoleObject(score);
+                Console.WriteLine("xp");
+                var xp = Api.GetXP(score)*1000;
+                Console.WriteLine(xp);
+                totalTimeSave += Math.Pow(xp, 0.75);
+            }
+            
+            Console.WriteLine("total time save");
+            Console.WriteLine(totalTimeSave);
+            totalTimeSave *= 1000;
+            totalTimeSave /= activeActivities.Count();
+            foreach(var activity in activeActivities)
+            {
+                Console.WriteLine("inside for each");
+                if(Global.activityTimers.TryGetValue(activity.id, out var timer))
+                {
+                    Console.WriteLine("individual time save (milli)");
+                    Console.WriteLine(totalTimeSave);
+                    activity.timeout = (ulong) Math.Max(0, activity.timeout - totalTimeSave);
+                    //To avoid integer overflow
+                    if(activity.timestamp + activity.timeout + 100 <= Utils.GetTimestamp())
+                        timer.Interval = 100;
+                        
+                    else
+                        //since setting the interval restarts the timer from zero.
+                        timer.Interval = activity.timestamp + activity.timeout - Utils.GetTimestamp();
+                    Console.WriteLine("activity timeout");
+                    Console.WriteLine(activity.timeout);
+                    Console.WriteLine("timer interval");
+                    Console.WriteLine((ulong) Math.Max(100, activity.timestamp + activity.timeout - Utils.GetTimestamp()));
+                }
+                else
+                {
+                    Console.Error.WriteLine($"Activity {activity.id} doesn't have a timer");
+                }
+            }
+
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = "user",
+                data = JsonConvert.SerializeObject(user) 
+            }));
+
+            List<ContinuousFightLog> remover = [];
+            foreach(var log in user.continuousFightLog)
+            {
+                if(log.expirationTimestamp <= Utils.GetTimestamp())
+                    remover.Add(log);
+            }
+            user.continuousFightLog.RemoveAll(remover.Contains);
+            Console.WriteLine("hi");
+            Utils.ConsoleObject(scores);
+            foreach(var score in scores)
+            {
+                Utils.ConsoleObject(score);
+                user.continuousFightLog.Add(new()
+                {
+                    scoreId = score.id,
+                    expirationTimestamp = Utils.GetTimestamp() + Global.baseValues.continuous_fight_score_expiration_time_in_milliseconds
+                });
+            }
+            Console.WriteLine("hi2");
+            Utils.ConsoleObject(user.continuousFightLog);
+            DBUtils.Update(user);
+        }
     }
 }

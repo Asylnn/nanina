@@ -67,6 +67,10 @@ export default {
             this.waifuSelectorVisible = true;
             this.selectedWaifu = null;
         },
+        CheckContinuousFight()
+        {
+            this.SendToServer("continuous fight", "", this.user.Id)
+        }
 
     },
     components:{
@@ -109,6 +113,9 @@ export default {
             <li :class="applyTextColor(2) + ' clickable'" @click="selectedActivity = ActivityType.Crafting" >{{$t("activities.crafting")}}</li>
             <li :class="applyTextColor(1) + ' clickable'" @click="selectedActivity = ActivityType.Exploration" >{{$t("activities.exploration")}}</li>
             <li>{{`${user.activities.length}/${user.maxConcurrentActivities}`}}</li>
+            <li>
+                <button class="nnnbutton smallbutton" @click="CheckContinuousFight()">{{ $t("activities.fight") }}</button>
+            </li>
         </ul>
     </div>
     <div>

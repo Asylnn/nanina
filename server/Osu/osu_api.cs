@@ -55,11 +55,11 @@ namespace Nanina.Osu
             Console.WriteLine("updated osu tokens");
         }
 
-        public static async Task<ScoreExtended[]> GetUserRecentScores(string id, string mode)
+        public static async Task<ScoreExtended[]> GetUserRecentScores(string id, string mode, string quantity = "1")
         {
             var request = new RestRequest($"users/{id}/scores/recent", Method.Get);
             AddDefaultHeader(request)
-                .AddQueryParameter("limit", "1") //# Of scores you get from the Api
+                .AddQueryParameter("limit", quantity) //# Of scores you get from the Api
                 .AddQueryParameter("mode", mode);
             var response = await client.ExecuteGetAsync(request);
 

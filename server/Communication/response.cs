@@ -146,6 +146,9 @@ namespace Nanina.Communication
                 case "claim activity":
                     ClaimActivity(rawData);
                     break;
+                case "continuous fight":
+                    CheckContinuousFight(rawData);
+                    break;
             }
         }
 

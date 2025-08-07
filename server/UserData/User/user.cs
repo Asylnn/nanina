@@ -50,6 +50,7 @@ namespace Nanina.UserData
         public Inventory inventory { get; set; } = new ();
         public List<CompletedResearch> completedResearches { get; set; } = [];
         public Unlocks unlocks { get; set; } = new ();
+        public List<ContinuousFightLog> continuousFightLog { get; set; } = [];
 
         public (double energy, uint gc) SpendEnergy(double ratio)
         {
@@ -152,7 +153,7 @@ namespace Nanina.UserData
                     //if cafe...
                     var session = DBUtils.Get<Session>(session => session.id == activeSessionId);
                     
-                    activity.Timeout(this);
+                    activity.OnTimeout(this);
 
                     if(session.webSocketId != null)
                     {

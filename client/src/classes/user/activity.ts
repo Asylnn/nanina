@@ -8,6 +8,7 @@ export default class Activity
     public type!: ActivityType
     public timestamp!:number
     public timeout!:number
+    public originalTimeout !: number
     public waifuID!:string
     public loot!: Loot[]
     public finished!: boolean

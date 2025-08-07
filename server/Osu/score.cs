@@ -18,7 +18,7 @@ namespace Nanina.Osu
         public int classic_total_score;
         public string ended_at;
         public bool has_replay;
-        public double id;
+        public ulong id;
         public bool is_perfect_combo;
         public int legacy_perfect;
         public int legacy_score_id;

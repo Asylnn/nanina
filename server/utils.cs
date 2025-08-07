@@ -85,4 +85,8 @@ public static class Utils
     {
         return 1 + (float) (new Random().NextDouble()*2 - 1)*plusMinus;
     }
+    public static void ConsoleObject(object obj)
+    {
+        Console.WriteLine(JsonConvert.SerializeObject(obj));
+    }
 }

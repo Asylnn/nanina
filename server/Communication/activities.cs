@@ -162,19 +162,19 @@ namespace Nanina.Communication
             switch(activityRequest.activityType)
             {
                 case ActivityType.Cafe or ActivityType.Mining or ActivityType.Exploration:
-                    activity.timeout = Global.baseValues.base_activity_length_in_milliseconds;
+                    activity.Timeout = Global.baseValues.base_activity_length_in_milliseconds;
                     break;
                 case ActivityType.Research:
                     var (validResearchResult, researchNode) = CheckForResearchValidity(user, rawData.data);
                     if(! validResearchResult) return;
-                    activity.timeout = Activity.GetResearchTimeout(waifu, researchNode.cost);
+                    activity.Timeout = Activity.GetResearchTimeout(waifu, researchNode.cost);
                     activity.researchID = researchNode.id;
                     break;
                 case ActivityType.Crafting:
                     var (validCraftResult, craft) = CheckForCraftingValidity(user, rawData.data);
                     if(! validCraftResult) return;
                     user.money -= craft.moneyCost;
-                    activity.timeout = Activity.GetCraftingTimeout(waifu, craft.timeCost);
+                    activity.Timeout = Activity.GetCraftingTimeout(waifu, craft.timeCost);
                     foreach(var ingredient in craft.ingredients)
                         user.inventory.RemoveItem(ingredient.id, ingredient.quantity);
                     foreach(var result in craft.results)
@@ -205,7 +205,7 @@ namespace Nanina.Communication
                 activityId = activity.id,
             };
             timer.Start();
-
+            Global.activityTimers.Add(activity.id, timer);
             DBUtils.Update(user);Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "user",

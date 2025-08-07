@@ -1,6 +1,7 @@
 using Nanina.UserData.WaifuData;
 using Nanina.Communication;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Nanina.UserData
 {
@@ -19,12 +20,22 @@ namespace Nanina.UserData
         public ulong timestamp { get; set; } = Utils.GetTimestamp();
         public bool finished { get; set; } = false;
         public ActivityType type { get; set; }
+        public ulong Timeout 
+        {
+            set 
+            {
+                timeout = value;
+                originalTimeout = value;
+            } 
+        }
+        public ulong originalTimeout { get; set; }
         public ulong timeout { get; set; }
         public string waifuID { get; set; }
         public List<Loot> loot { get; set; } = [];
         public string researchID { get; set; }
+        
 
-        public void Timeout(User user)
+        public void OnTimeout(User user)
         {
             finished = true;
             switch(type)

@@ -117,6 +117,22 @@ TODO : Instead of hiding the waifu selector, just hide the send button
 TODO : (user/activity.cs)
     //since loot is already created at the moment the activity is created (since it's more practical this way), there is no need to do stuff here 
     //maybe do the same thing with research? Yeah difinitively
-
+TODO : add 30min timer on continuous fight
+TODO : make sendtoserver type parameter an enum
+TODO : add commands on osu message
+TODO : remove unnessary sessions checks
+TODO : make a lot of arrays into dictionnaries for performance
+TODO : add error messages for continuous fight
+TODO : use the [.. array] thinghy 
+TODO : [BUG] code for verifying account is sometime expired
+TODO : remove the code input when the osu id is verified
+TODO : try to use the same syntax as Global.activityTimers.TryGetValue(activity.id, out var timer) somewhere else in the code
+TODO : Use BsonDocuments for Updating/Getting an object from LiteDB
+(https://github.com/teekay/litedb-sqlite-handbook/blob/master/MusicLibrary.Persistence.LiteDb/Model/Track.cs,
+https://github.com/teekay/litedb-handbook/tree/master)
+TODO : one day switch to postgresql?
+TODO : think where we can use struct instead of classes
+TODO : implements checks for scores already processed by continuous for not gaining time with the same score.
+TODO : supress warning CS0649
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

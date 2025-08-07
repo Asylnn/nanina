@@ -32,5 +32,6 @@ namespace Nanina
         public float attribute_stat_randomness;
         public float cafe_reward_randomness;
         public uint base_activity_length_in_milliseconds;
+        public ulong continuous_fight_score_expiration_time_in_milliseconds;
     }
 }

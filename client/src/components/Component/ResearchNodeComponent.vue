@@ -38,7 +38,7 @@ export default {
             return MillisecondsToHourMinuteSecondFormat(activity.timestamp + activity.timeout - this.date_milli)
         },
         getTimeLeft(activity: Activity) {
-            return " width:" + 330 * (activity.timestamp + activity.timeout - this.date_milli) / activity.timeout + "px";
+            return " width:" + 330 * (activity.timestamp + activity.timeout - this.date_milli) / activity.originalTimeout + "px";
         },
         getBackgroundColor() {
             var style = "background-color:"
