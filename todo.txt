@@ -86,6 +86,7 @@ TODO : Update stats when doing dungeon or claim                                 
 TODO : make cursor be style locked when claim or fight is timeout                   #Done
 TODO : Make a writeline to the console when a status code is different from 200/OK  #Done
 TODO : Make the code in repsonse.cs follow camelCase convention                     #Done 
+TODO : supress warning CS0649                                                       #Done
 
 TODO : Make becoming an admin and giving yourself gacha currency less convoluted
 TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
@@ -133,6 +134,6 @@ TODO : Use BsonDocuments for Updating/Getting an object from LiteDB
 https://github.com/teekay/litedb-handbook/tree/master)
 TODO : one day switch to postgresql?
 TODO : think where we can use struct instead of classes
-TODO : supress warning CS0649
+
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done
