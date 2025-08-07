@@ -10,6 +10,19 @@ namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
     {
+        #pragma warning disable 0649
+        protected class EquipItemFormat
+        {
+            public int equipmentId;
+            public string waifuId;
+        }
+
+        protected class UnequipItemFormat
+        {
+            public EquipmentPiece equipmentPiece;
+            public string waifuId;
+        }
+        #pragma warning restore 0649
         protected async void UpdateOsuId(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
@@ -60,18 +73,6 @@ namespace Nanina.Communication
                 user.theme = rawData.data;
                 DBUtils.Update(user);
             }
-        }
-
-        protected class EquipItemFormat
-        {
-            public int equipmentId;
-            public string waifuId;
-        }
-
-        protected class UnequipItemFormat
-        {
-            public EquipmentPiece equipmentPiece;
-            public string waifuId;
         }
         protected void EquipItem(ClientWebSocketResponse rawData)
         {

@@ -12,6 +12,7 @@ namespace Nanina.Communication
         /*
             This is how the client send back the item database
         */
+        #pragma warning disable 0649
         private class ItemDBResponse
         {
             public List<Item> material;
@@ -19,6 +20,7 @@ namespace Nanina.Communication
             public List<Item> user_consumable;
             public List<Equipment> equipment;
         }
+        #pragma warning restore 0649
         protected void UpdateItemDatabase(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);

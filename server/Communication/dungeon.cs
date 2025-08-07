@@ -9,12 +9,14 @@ namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
     {
+        #pragma warning disable 0649
         protected class StartDungeonFormat
         {
             public string id;
             public string[] waifuIds;
             public byte floor;
         }
+        #pragma warning restore 0649
         protected void StartDungeon(ClientWebSocketResponse rawData){
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)

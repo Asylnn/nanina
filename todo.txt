@@ -72,6 +72,7 @@ TODO : Make in sort to thrust NOTHING coming from client and test EVERYTHING    
 TODO : Implement Setting page/component (Notifications)                                                                         #Done
 TODO : Implement Avatar for users                                                                                               #Done
 TODO : left:50%; transform: translateX(-50%); everywhere                                                                        #Done
+TODO : implements checks for scores already processed by continuous for not gaining time with the same score.                   #Done
 TODO : try catch onMessage                                                          #Done
 TODO : update osu tokens each day                                                   #Done
 TODO : Make so you don't need to remove the code part of the url to connect         #Done
@@ -132,7 +133,6 @@ TODO : Use BsonDocuments for Updating/Getting an object from LiteDB
 https://github.com/teekay/litedb-handbook/tree/master)
 TODO : one day switch to postgresql?
 TODO : think where we can use struct instead of classes
-TODO : implements checks for scores already processed by continuous for not gaining time with the same score.
 TODO : supress warning CS0649
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

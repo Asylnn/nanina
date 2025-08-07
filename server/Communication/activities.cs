@@ -18,6 +18,7 @@ namespace Nanina.Communication
     */
     partial class WS : WebSocketBehavior
     {
+        #pragma warning disable 0649
         public class ClientActivityRequest
         {
             public string waifuID;
@@ -43,6 +44,8 @@ namespace Nanina.Communication
             public ActivityType activityType;
             public List<CraftingRequest> craftingList;
         }
+
+        #pragma warning restore 0649
         protected (User user, Waifu waifu, bool validResult) CheckForActivityValidity(ClientWebSocketResponse rawData)
         {
             var activityRequest = JsonConvert.DeserializeObject<ClientActivityRequest>(rawData.data);

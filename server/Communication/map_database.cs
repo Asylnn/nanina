@@ -6,12 +6,15 @@ using Nanina.Osu;
 namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
+    
     {
+        #pragma warning disable 0649
         protected class AddMapRequest
         {
             public string id;
             public NaninaStdTag tag;
         }
+        #pragma warning restore 0649
         protected async void AddMapToDatabase(ClientWebSocketResponse rawData){
 
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);

@@ -11,6 +11,14 @@ namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
     {
+        #pragma warning disable 0649
+        protected class ClaimClientResponse
+        {
+            public string waifuId;
+            public Game game;
+        }
+
+        #pragma warning restore 0649
         protected void SendMapToClient(ClientWebSocketResponse rawData)
         {
             var map = DBUtils.Get<Beatmap>(x => x.id == Convert.ToInt64(rawData.data));
@@ -199,11 +207,7 @@ namespace Nanina.Communication
             DBUtils.Update(user);
         }
 
-        protected class ClaimClientResponse
-        {
-            public string waifuId;
-            public Game game;
-        }
+        
         protected async Task<ScoreExtended> CheckForOsuStandardScores(UserData.User user){
 
             if(!user.verification.isOsuIdVerified) 
