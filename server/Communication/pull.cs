@@ -9,6 +9,11 @@ namespace Nanina.Communication
 {
     partial class WS : WebSocketBehavior
     {
+        public class PullRequest 
+    {
+            public string? bannerId {get; set;}
+            public byte pullAmount {get; set;}
+        }
         protected void Pull(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
