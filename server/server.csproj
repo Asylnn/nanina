@@ -5,7 +5,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
     
   </PropertyGroup>
   <ItemGroup>

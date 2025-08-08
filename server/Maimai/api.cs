@@ -18,7 +18,7 @@ namespace Maimai
             Console.WriteLine("getting tracks...");
 
             var request = new RestRequest($"api/v1/tracks", Method.Get);
-            AddDefaultHeader(request, Environment.GetEnvironmentVariable("MAITEA_AUTH_KEY"));
+            AddDefaultHeader(request, Environment.GetEnvironmentVariable("MAITEA_AUTH_KEY")!);
             var response = await client.ExecuteGetAsync(request);
             Console.WriteLine("response status code "+ response.StatusCode);
             File.WriteAllText("../gettracks.json", response.Content);
@@ -46,7 +46,7 @@ namespace Maimai
             Console.WriteLine("response maimai GetRecentScores status code "+ response.StatusCode);
             Console.WriteLine("response maimai GetRecentScores content " + response.Content);
             if(response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ScoreResponse>(response.Content).data;
+                return JsonConvert.DeserializeObject<ScoreResponse>(response.Content!)!.data;
             else
                 return [];
             

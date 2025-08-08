@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml.XPath;
 using Nanina.Communication;
 using Nanina.Database;
@@ -11,8 +12,10 @@ using WebSocketSharp;
 namespace Nanina.UserData
 {
 
-    public class User(string username, Ids ids)
+    public class User
     {
+        public required string username { get; set; }
+        public required Ids ids { get; set; }
         public uint money { get; set; } = 0;
         public bool admin {get; set;} = false;
         public byte lvl {get; set;} = 1;
@@ -22,30 +25,28 @@ namespace Nanina.UserData
         }
         public List<Activity> activities { get; set; } = [];
         public byte maxConcurrentActivities { get; set; } = 3;
-        public bool isInDungeon {get; set;}
-        public List<string> waifuIdsInDungeon {get; set;}
+        public bool isInDungeon { get; set; } = false;
+        public List<string> waifuIdsInDungeon {get; set;} = [];
         //This is necessary since dungeons are stored only in memory and if the servers stop, we need to get back the waifus in the dungeon to put isDoingAction at false.
-        public ulong dungeonInstanceId {get; set;}
+        public ulong dungeonInstanceId { get; set; } = 0;
         public Game preferedGame {get; set;} = Game.OsuStandard;
-        public long lvlRewards {get; set;}
-        public string activeSessionId {get; set;} = null;
+        public long lvlRewards { get; set; } = 0;
+        public string? activeSessionId {get; set;} = null;
         public double max_energy {get; set;} = Global.baseValues.base_max_energy;
         public double energy {get; set;} = Global.baseValues.base_max_energy;
         public bool isRegenerating {get; set;} = false;
-        public string username { get; set; } = username;
         public List<Waifu> waifus { get; set; } = [Utils.DeepCopyReflection(Global.waifus.Find(x => x.id == "0"))];
         public string Id { get; set; } = Utils.CreateId();
         public string theme { get; set; } = Global.baseValues.base_theme;
-        public Ids ids { get; set; } = ids;
         public Tokens tokens { get; set; } = new ();
         public string locale { get; set; } = Global.config.default_locale;  
         public string avatarPATH { get; set; } = ""; //Unused
         public StatCount statCount { get; set; } = new();
         public Dictionary<Game, string[]> fightHistory { get; set; } = new();
-        public Fight fight { get; set; } = new Fight();
+        public Fight? fight { get; set; }
         public uint gacha_currency { get; set; } = Global.baseValues.base_gacha_currency_amount;
         public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; } = [];
-        public Verification verification { get; set; } = new() { osuVerificationCode=null, osuVerificationCodeTimestamp = 0, isOsuIdVerified=false };
+        public Verification verification { get; set; } = new ();
         public ulong claimTimestamp { get; set; } = 0;
         public Inventory inventory { get; set; } = new ();
         public List<CompletedResearch> completedResearches { get; set; } = [];
@@ -83,7 +84,7 @@ namespace Nanina.UserData
             PeriodicTimer energyRegenTimer = new (new (Global.baseValues.energy_regen_tick_in_seconds*10_000_000)); //units are 100ns
             while (await energyRegenTimer.WaitForNextTickAsync())
             {
-                var u = DBUtils.Get<UserData.User>(x => x.Id == id);
+                var u = DBUtils.Get<UserData.User>(x => x.Id == id)!;
                 
                 u.energy += Global.baseValues.energy_regen_tick_amount_in_percent/100d*u.max_energy;
                 if(u.energy >= u.max_energy)
@@ -151,11 +152,11 @@ namespace Nanina.UserData
                 if(activity.id == activityId)
                 {
                     //if cafe...
-                    var session = DBUtils.Get<Session>(session => session.id == activeSessionId);
+                    var session = DBUtils.Get<Session>(session => session.id == activeSessionId)!;
                     
                     activity.OnTimeout(this);
 
-                    if(session.webSocketId != null)
+                    if(session.webSocketId is not null)
                     {
                         Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                         {

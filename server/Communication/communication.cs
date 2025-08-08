@@ -49,7 +49,7 @@ namespace Nanina.Communication
 
         protected void ProvideUserToClient(string userId)
         {
-            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
+            var user = DBUtils.Get<User>(x => x.Id == userId)!;
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
                 type = "user",
                 data = JsonConvert.SerializeObject(user),
@@ -57,7 +57,7 @@ namespace Nanina.Communication
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = "get banners",
-                data = JsonConvert.SerializeObject(GachaManager.banners),
+                data = JsonConvert.SerializeObject(Global.banners),
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
@@ -76,8 +76,8 @@ namespace Nanina.Communication
             }));
             if(user.isInDungeon)
             {
-                var activeDungeon = DungeonManager.activeDungeons.Values.ToList().Find(dungeon => user.dungeonInstanceId == dungeon.instanceId);
-                activeDungeon.sessionId = user.activeSessionId;
+                var activeDungeon = DungeonManager.activeDungeons.Values.ToList().Find(dungeon => user.dungeonInstanceId == dungeon.instanceId)!;
+                activeDungeon.sessionId = user.activeSessionId!;
                 DungeonManager.UpdateDungeonOfClient(activeDungeon);
             }
             if(user.admin)

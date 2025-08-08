@@ -3,17 +3,20 @@ using Newtonsoft.Json;
 
 namespace Nanina.Database
 {
-    public class Session {
+    public class Session() {
         public string id {get; set;} = Guid.NewGuid().ToString();
-        public string userId {get; set;} = null;
+        public string? userId {get; set;}
         public ulong date {get; set;} = Utils.GetTimestamp();
         public string locale {get; set;} = Global.config.default_locale;
-        public string webSocketId {get; set;}
-    
+        public required string webSocketId { get; set; }
+
         public static Session NewSession(string _webSocketId)
         {
-            var session = new Session();
-            /*get session col to insert newly created session to the db*/
+            var session = new Session()
+            {
+                webSocketId = _webSocketId
+            };
+
             Console.WriteLine("New session with id : " + session.id);
             DBUtils.Insert(session);
             return session;
@@ -22,7 +25,7 @@ namespace Nanina.Database
         {
             locale = newLocale;
             if(userId == null){
-                var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
+                var user = DBUtils.Get<UserData.User>(x => x.Id == userId)!;
                 user.locale = locale;
                 DBUtils.Update(user);
             }
@@ -35,11 +38,11 @@ namespace Nanina.Database
             /*get session col to update this session in the db*/
             DBUtils.Update(this);
         }
-        public void UpdateUserId(string id) 
+        public void UpdateUserId(string? id) 
         {
             if(id is not null)
             {
-                var user = DBUtils.Get<UserData.User>(x => x.Id == id);
+                var user = DBUtils.Get<UserData.User>(x => x.Id == id)!;
                 user.activeSessionId = this.id;
                 DBUtils.Update(user);
             }

@@ -15,10 +15,10 @@ namespace Nanina.Communication
         #pragma warning disable 0649
         private class ItemDBResponse
         {
-            public List<Item> material;
-            public List<Item> waifu_consumable;
-            public List<Item> user_consumable;
-            public List<Equipment> equipment;
+            public required List<Item> material;
+            public required List<Item> waifu_consumable;
+            public required List<Item> user_consumable;
+            public required List<Equipment> equipment;
         }
         #pragma warning restore 0649
         protected void UpdateItemDatabase(ClientWebSocketResponse rawData)
@@ -32,7 +32,7 @@ namespace Nanina.Communication
             if(!Global.config.dev) 
                 {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
-            var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
+            var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data)!;
             IEnumerable<Item> items = itemDBResponse.user_consumable.Concat(itemDBResponse.material).Concat(itemDBResponse.waifu_consumable);
             File.WriteAllText("../save/item.json", JsonConvert.SerializeObject(items));
             Send(ClientNotification.NotificationData("admin", "updated the item database!", 0));
@@ -50,7 +50,7 @@ namespace Nanina.Communication
             if(!Global.config.dev) 
                 {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
-            var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data);
+            var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data)!;
             File.WriteAllText("../save/equipment.json", JsonConvert.SerializeObject(itemDBResponse.equipment));
             Send(ClientNotification.NotificationData("admin", "updated the equipment database!", 0));
         }

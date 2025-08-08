@@ -12,8 +12,8 @@ namespace Nanina.Communication
         #pragma warning disable 0649
         protected class StartDungeonFormat
         {
-            public string id;
-            public string[] waifuIds;
+            public string? id;
+            public string[]? waifuIds;
             public byte floor;
         }
         #pragma warning restore 0649
@@ -104,6 +104,7 @@ namespace Nanina.Communication
                 { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
 
             var score = await CheckForOsuStandardScores(user);
+            if(score is null) return;
             var mult = Osu.Api.GetDungeonMult(score);
 
             var dungeon = DungeonManager.activeDungeons[Convert.ToUInt64(rawData.data)];

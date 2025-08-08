@@ -71,6 +71,11 @@ namespace Nanina.UserData
         public void RemoveItem(ushort id, ushort quantity)
         {
             var item = AllItems.Find(item => item.id == id);
+            if(item is null)
+            {
+                Console.Error.WriteLine($"Remove Item got invalid id: {id}");
+                return;
+            }
             if(item.count > quantity)
             {
                 item.count -= quantity;

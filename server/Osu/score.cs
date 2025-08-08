@@ -16,7 +16,7 @@ namespace Nanina.Osu
         public double best_id;
         public double build_id;
         public int classic_total_score;
-        public string ended_at;
+        public required string ended_at;
         public bool has_replay;
         public ulong id;
         public bool is_perfect_combo;
@@ -24,36 +24,36 @@ namespace Nanina.Osu
         public int legacy_score_id;
         public int legacy_total_score;
         public int max_combo;
-        public ScoreStatistics maximum_statistics; 	
-        public Mod[] mods;
+        public required ScoreStatistics maximum_statistics; 	
+        public required Mod[] mods;
         public bool passed;
         public int playlist_item_id;
         public float pp;
         public bool preserve;
         public bool processed;
-        public string rank;
+        public required string rank;
         public bool ranked;
         public int room_id;
         public int ruleset_id;
-        public string started_at;
-        public ScoreStatistics statistics;
+        public required string started_at;
+        public required ScoreStatistics statistics;
         public int total_score;
-        public string type;
+        public required string type;
         public double user_id;
-        public User user;
-        public LookUpBeatmap beatmap;
-        public ScoreBeatmapset beatmapset;
+        public required User user;
+        public required LookUpBeatmap beatmap;
+        public required ScoreBeatmapset beatmapset;
     }
 
     public class ScoreExtended : Score
     {
-        public string created_at;
-        public string mode;
+        public required string created_at;
+        public required string mode;
         public int mode_int;
         public bool perfect;
         public bool replay;
         public int score;
-        public Object current_user_attributes; // "current_user_attributes":{"pin":null
+        public required object current_user_attributes; // "current_user_attributes":{"pin":null
     }
 }
 

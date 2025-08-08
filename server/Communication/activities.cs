@@ -21,14 +21,14 @@ namespace Nanina.Communication
         #pragma warning disable 0649
         public class ClientActivityRequest
         {
-            public string waifuID;
+            public string? waifuID;
             public ActivityType activityType;
         }
 
         public class ClientResearchRequest
         {
-            public string waifuID;
-            public string researchID;
+            public string? waifuID;
+            public string? researchID;
             public ActivityType activityType;
         }
 
@@ -40,13 +40,13 @@ namespace Nanina.Communication
 
         public class ClientCraftingRequest
         {
-            public string waifuID;
+            public string? waifuID;
             public ActivityType activityType;
-            public List<CraftingRequest> craftingList;
+            public List<CraftingRequest?>? craftingList;
         }
 
         #pragma warning restore 0649
-        protected (User user, Waifu waifu, bool validResult) CheckForActivityValidity(ClientWebSocketResponse rawData)
+        protected (User?, Waifu?, bool validResult) CheckForActivityValidity(ClientWebSocketResponse rawData)
         {
             var activityRequest = JsonConvert.DeserializeObject<ClientActivityRequest>(rawData.data);
 
@@ -56,7 +56,8 @@ namespace Nanina.Communication
             var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
             if(session == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return (null, null, false);}
-            
+            if(activityRequest is null)
+                {Send(ClientNotification.NotificationData("Activities", "activityRequest is null!", 1)); return (null, null, false);}
             if(user.activities.Count >= user.maxConcurrentActivities)
                 {Send(ClientNotification.NotificationData("Activities", "You reached the limit of waifus able to do an activity", 1)); return (null, null, false);}
             var waifuIndex = user.waifus.FindIndex(waifu => waifu.id == activityRequest.waifuID);
@@ -71,11 +72,11 @@ namespace Nanina.Communication
             return (user, waifu, true);
         }
 
-        protected (bool, ResearchNode) CheckForResearchValidity(User user, string data)
+        protected (bool, ResearchNode?) CheckForResearchValidity(User user, string data)
         {
-            var researchRequest = JsonConvert.DeserializeObject<ClientResearchRequest>(data);
+            var researchRequest = JsonConvert.DeserializeObject<ClientResearchRequest>(data)!;
+            
             var researchNode = Global.researchNodes.Find(RN => RN.id == researchRequest.researchID);
-            Console.WriteLine(researchRequest.researchID);
             if(researchNode == null)
                 {Send(ClientNotification.NotificationData("Activities", "this research doesn't exist", 1)); return (false, null);}
 
@@ -89,15 +90,20 @@ namespace Nanina.Communication
 
         }
 
-        protected (bool, Craft) CheckForCraftingValidity(User user, string data)
+        protected (bool, Craft?) CheckForCraftingValidity(User user, string data)
         {   
             
-            var craftingRequest = JsonConvert.DeserializeObject<ClientCraftingRequest>(data);
-
-            //We merge all the crafting requests into a single craft object
+            var craftingRequest = JsonConvert.DeserializeObject<ClientCraftingRequest>(data)!;
+            if(craftingRequest.craftingList is null)
+                    {Send(ClientNotification.NotificationData("Activities", "the crafting list is null!", 1)); return (false, null);}
+            if(craftingRequest.craftingList.Count == 0)
+                {Send(ClientNotification.NotificationData("Activities", "one of the craft is null!", 1)); return (false, null);}
+            //We merge all the crafting requests into a single  craft object
             Craft craftMerge = new ();
             foreach(var craft in craftingRequest.craftingList)
             {
+                if(craft is null)
+                    {Send(ClientNotification.NotificationData("Activities", "one of the craft is null!", 1)); return (false, null);}
                 if(craft.quantity <= 0)
                     {Send(ClientNotification.NotificationData("Activities", "you craft something 0 or negatives times", 1)); return (false, null);}
                 
@@ -106,7 +112,7 @@ namespace Nanina.Communication
                 if(fullCraft == null)
                     {Send(ClientNotification.NotificationData("Activities", "the craft does not exist", 1)); return (false, null);}
 
-                var fullCraftCopy = Utils.DeepCopyReflection(fullCraft);
+                var fullCraftCopy = Utils.DeepCopyReflection(fullCraft)!;
                 if(fullCraftCopy.ingredients.Count != 0)
                     fullCraftCopy.ingredients.First().Test();
 
@@ -152,14 +158,14 @@ namespace Nanina.Communication
             var (user, waifu, validResult) = CheckForActivityValidity(rawData);
             if(!validResult) return;
 
-            var activityRequest = JsonConvert.DeserializeObject<ClientActivityRequest>(rawData.data);
+            var activityRequest = JsonConvert.DeserializeObject<ClientActivityRequest>(rawData.data)!;
 
             
 
             Activity activity = new()
             {
                 type = activityRequest.activityType,
-                waifuID = activityRequest.waifuID,
+                waifuID = activityRequest.waifuID!,
             };
 
             switch(activityRequest.activityType)
@@ -168,16 +174,16 @@ namespace Nanina.Communication
                     activity.Timeout = Global.baseValues.base_activity_length_in_milliseconds;
                     break;
                 case ActivityType.Research:
-                    var (validResearchResult, researchNode) = CheckForResearchValidity(user, rawData.data);
+                    var (validResearchResult, researchNode) = CheckForResearchValidity(user!, rawData.data);
                     if(! validResearchResult) return;
-                    activity.Timeout = Activity.GetResearchTimeout(waifu, researchNode.cost);
+                    activity.Timeout = Activity.GetResearchTimeout(waifu!, researchNode!.cost);
                     activity.researchID = researchNode.id;
                     break;
                 case ActivityType.Crafting:
-                    var (validCraftResult, craft) = CheckForCraftingValidity(user, rawData.data);
+                    var (validCraftResult, craft) = CheckForCraftingValidity(user!, rawData.data);
                     if(! validCraftResult) return;
-                    user.money -= craft.moneyCost;
-                    activity.Timeout = Activity.GetCraftingTimeout(waifu, craft.timeCost);
+                    user!.money -= craft!.moneyCost;
+                    activity.Timeout = Activity.GetCraftingTimeout(waifu!, craft.timeCost);
                     foreach(var ingredient in craft.ingredients)
                         user.inventory.RemoveItem(ingredient.id, ingredient.quantity);
                     foreach(var result in craft.results)
@@ -197,9 +203,9 @@ namespace Nanina.Communication
                     return;
             }
 
-            waifu.isDoingSomething = true;
+            waifu!.isDoingSomething = true;
             
-            user.activities.Add(activity);
+            user!.activities.Add(activity);
 
 
             var timer = new Activities.ActivityTimer(activity.timeout)
@@ -234,7 +240,7 @@ namespace Nanina.Communication
             if(!activity.finished)
                 {Send(ClientNotification.NotificationData("Dungeon", "This activity is not yet finished", 1)); return ;}
 
-            var waifu = user.waifus.Find(waifu => waifu.id == activity.waifuID);
+            var waifu = user.waifus.Find(waifu => waifu.id == activity.waifuID)!;
             waifu.isDoingSomething = false;
             Loot.GrantLoot(activity.loot, user);
             

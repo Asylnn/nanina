@@ -8,8 +8,8 @@ namespace Nanina.UserData.WaifuData
         public uint xp { get; set; } = 0;
         public byte lvl { get; set; } = 1;
         public float diffLvlUp { get; set; }
-        public string id { get; set; }
-        public string imgPATH { get; set; }
+        public required string id { get; set; }
+        public required string imgPATH { get; set; }
         public WaifuEquipmentManager equipment { get; set; } = new ();
         public bool isDoingSomething { get; set; } = false;
         public ushort o_str { get; set; }
@@ -91,7 +91,7 @@ namespace Nanina.UserData.WaifuData
             b_luck += u_luck;
         }
         public void Update(){
-            var DBwaifu = Global.waifus.Find(x => x.id == id);
+            var DBwaifu = Global.waifus.Find(x => x.id == id)!;
             diffLvlUp = DBwaifu.diffLvlUp;
             imgPATH = DBwaifu.imgPATH;
             o_str = DBwaifu.o_str;
@@ -114,10 +114,10 @@ namespace Nanina.UserData.WaifuData
             b_luck = o_luck + (lvl-1u)*u_luck;
         }
 
-        public Equipment Equip(Equipment newEquipment)
+        public Equipment? Equip(Equipment newEquipment)
         {
             // Equips the equipment and check for set changes
-            Equipment oldEquipment = null;
+            Equipment? oldEquipment = null;
             switch(newEquipment.piece){
                 case EquipmentPiece.Weapon:
                     oldEquipment = equipment.weapon;
@@ -132,7 +132,7 @@ namespace Nanina.UserData.WaifuData
                     equipment.accessory = newEquipment;
                     break;
             }
-            if(equipment.weapon?.setId == equipment.dress?.setId && equipment.dress?.setId == equipment.accessory?.setId && equipment.dress?.setId != null)
+            if(equipment.weapon?.setId == equipment.dress?.setId && equipment.dress?.setId == equipment.accessory?.setId && equipment.weapon?.setId != null)
             {
 
                 /*get set col to find one on the equipement to update equipment.set*/

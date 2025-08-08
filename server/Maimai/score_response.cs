@@ -2,9 +2,9 @@ namespace Maimai
 {
     public class ScoreResponse
     {
-        public Score[] data;
-        public object links;
-        public object meta;
+        public required Score[] data;
+        public required object links;
+        public required object meta;
     }
 }
 /*

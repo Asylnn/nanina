@@ -15,8 +15,8 @@ namespace Nanina.UserData.ItemData
         public uint inventoryId {get; set;}
         public uint count {get; set;}
         public ItemType type {get; set;}
-        public string imgPATH {get; set;}
+        public required string imgPATH {get; set;}
         public byte rarity {get; set;}
-        public List<Modifier> modifiers {get; set;}
+        public required List<Modifier> modifiers {get; set;}
     }
 }

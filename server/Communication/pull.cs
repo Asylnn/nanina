@@ -18,6 +18,8 @@ namespace Nanina.Communication
             var pullData = JsonConvert.DeserializeObject<PullRequest>(rawData.data);
             if(pullData == null)
                 {Send(ClientNotification.NotificationData("Pulling", "The banner you tried to pull on doesn't exists!", 1)); return;}
+            if(pullData.bannerId == null)
+                {Send(ClientNotification.NotificationData("Pulling", "The banner you tried to pull on doesn't exists!", 1)); return;}
             if(user.gacha_currency < GachaManager.GetBannerCost(pullData.bannerId, pullData.pullAmount))
                 {Send(ClientNotification.NotificationData("Pulling", "You don't have enough gacha currency!", 3));return;}
             if(!GachaManager.BannerExists(pullData.bannerId))
@@ -46,7 +48,7 @@ namespace Nanina.Communication
             /*get item db to find one item?*/
             var baseItem = Global.items.Find(item => item.id == 50_000); //Item id for waifu essence
             foreach(var waifu in alreadyOwnedWaifus){
-                var item = Utils.DeepCopyReflection(baseItem); 
+                var item = Utils.DeepCopyReflection(baseItem)!; 
                 item.id += Convert.ToUInt16(waifu.id);
                 user.inventory.AddMaterial(item);
             }

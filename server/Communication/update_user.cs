@@ -14,13 +14,13 @@ namespace Nanina.Communication
         protected class EquipItemFormat
         {
             public int equipmentId;
-            public string waifuId;
+            public string? waifuId;
         }
 
         protected class UnequipItemFormat
         {
             public EquipmentPiece equipmentPiece;
-            public string waifuId;
+            public string? waifuId;
         }
         #pragma warning restore 0649
         protected async void UpdateOsuId(ClientWebSocketResponse rawData)
@@ -124,7 +124,7 @@ namespace Nanina.Communication
             if(waifu is null)
                 {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to equip the item with doesn't exist", 1)); return;}
 
-            Equipment oldEquipment = null;
+            Equipment? oldEquipment = null;
             switch(clientData.equipmentPiece)
             {
                 case EquipmentPiece.Weapon:
@@ -251,7 +251,7 @@ namespace Nanina.Communication
             if(!user.admin)
                 {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
 
-            user.waifus = JsonConvert.DeserializeObject<List<Waifu>>(rawData.data);
+            user.waifus = JsonConvert.DeserializeObject<List<Waifu>>(rawData.data)!;
             Send(ClientNotification.NotificationData("admin", "modified waifus", 1));
             DBUtils.Update(user);
         }
@@ -267,7 +267,7 @@ namespace Nanina.Communication
             if(!user.admin)
                 {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
 
-            var inventory = JsonConvert.DeserializeObject<Inventory>(rawData.data);
+            var inventory = JsonConvert.DeserializeObject<Inventory>(rawData.data)!;
             user.inventory = inventory;
             Send(ClientNotification.NotificationData("admin", "modified inventory", 1));
             DBUtils.Update(user);
@@ -310,6 +310,14 @@ namespace Nanina.Communication
             user.admin = true;
             Send(ClientNotification.NotificationData("admin", "temp mes", 1));
             DBUtils.Update(user);
+        }
+
+        protected void UpdateLocale(ClientWebSocketResponse rawData)
+        {
+            var session = DBUtils.Get<Session>(session => session.id == rawData.sessionId);
+            if(session == null)
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
+            session.UpdateLocale(rawData.data);
         }
     }
 }

@@ -134,6 +134,12 @@ TODO : Use BsonDocuments for Updating/Getting an object from LiteDB
 https://github.com/teekay/litedb-handbook/tree/master)
 TODO : one day switch to postgresql?
 TODO : think where we can use struct instead of classes
+TODO : choose if we keep using file paths in config or directly in code
+TODO : fix pull pity amount bug
+TODO : clean up session code
+TODO : check if malformed json sent to server make it crash
+TODO : instead of checking if isOsuIdVerified is true, just check if osuId is not null
+TODO : clean up activity code (one big function is actually preferable)
 
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

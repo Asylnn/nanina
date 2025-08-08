@@ -17,11 +17,11 @@ namespace Nanina.UserData.ItemData
     public class Equipment : Item
     {
         public new ItemType type {get; set;} = ItemType.Equipment;
-        public Modifier stat {get; set;}
+        public required Modifier stat {get; set;}
         public ushort setId {get; set;}
         public EquipmentPiece piece {get; set;}
         public byte lvl {get; set;}
-        public List<EquipmentAttribute> attributes {get; set;}
+        public required List<EquipmentAttribute> attributes {get; set;}
 
         public static IEnumerable<Equipment> CreateEquipmentsForDungeon(ActiveDungeon dungeon, ushort numberOfEquipments)
         {
@@ -31,7 +31,7 @@ namespace Nanina.UserData.ItemData
 
             for(int i = 0; i < numberOfEquipments; i++)
             {
-                var equipment = Utils.DeepCopyReflection(equipments.RandomElement());
+                var equipment = Utils.DeepCopyReflection(equipments.RandomElement())!;
 
                 var rarityWeights = Global.baseValues.equipment_rarity_probability[dungeon.template.difficulty-1];
                 var totalWeight = rarityWeights.Sum();
@@ -60,7 +60,7 @@ namespace Nanina.UserData.ItemData
                 EquipmentPiece.Dress => Global.baseValues.modifiersDress.RandomElement(),
                 EquipmentPiece.Accessory => Global.baseValues.modifiersAccessory.RandomElement(),
                 _ => throw new NotImplementedException(),
-            });
+            })!;
             Random rng = new ();
 
             /*uint totalWeight = modifierWeights.Aggregate(0u, (accum, current) => accum + current.weight); //Add all the weights
@@ -107,7 +107,7 @@ namespace Nanina.UserData.ItemData
         public void GetAttribute()
         {
             var possibleAttributes = Global.baseAttributes.Where(attribute => attribute.tier == lvl - 1);
-            var attribute = Utils.DeepCopyReflection(possibleAttributes.RandomElement());
+            var attribute = Utils.DeepCopyReflection(possibleAttributes.RandomElement())!;
             var rng = new Random();
 
             attribute.modifiers.ForEach(modifier =>

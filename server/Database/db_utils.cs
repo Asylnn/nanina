@@ -18,7 +18,7 @@ namespace Nanina.Database
             var collection = GetCollectionName<T>();
             return db.GetCollection<T>(collection);
         }
-        public static T Get<T>(System.Linq.Expressions.Expression<Func<T, bool>> func, bool randomized = false)
+        public static T? Get<T>(System.Linq.Expressions.Expression<Func<T, bool>> func, bool randomized = false)
         {
             using var db = new LiteDatabase($@"{Global.config.database_path}");
             var collectionName = GetCollectionName<T>();
@@ -70,7 +70,7 @@ namespace Nanina.Database
                 Type type when type == typeof(UserData.User) => "userdb",
                 Type type when type == typeof(Session) => "sessiondb",
                 Type type when type == typeof(Beatmap) => "osumapsdb",
-                _ => null
+                _ => throw new NotImplementedException(),
             };
         }
 

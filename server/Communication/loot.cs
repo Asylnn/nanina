@@ -18,7 +18,7 @@ namespace Nanina.Communication
     {
         public LootType lootType { get; set; }
         public uint amount { get; set; }
-        public Item item { get; set; }
+        public Item? item { get; set; }
 
         public static void GrantLoot(List<Loot> loots, User user)
         {
@@ -33,11 +33,11 @@ namespace Nanina.Communication
                         break;
                     case LootType.Item:
                         if(loot.amount != 1)
-                            loot.item.count = loot.amount;
-                        user.inventory.AddItem(loot.item);
+                            loot.item!.count = loot.amount;
+                        user.inventory.AddItem(loot.item!);
                         break;
                     case LootType.Modifiers:
-                        user.UseUserConsumable(loot.item);
+                        user.UseUserConsumable(loot.item!);
                         break;
                 }
             }

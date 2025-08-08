@@ -36,7 +36,7 @@ namespace Nanina.Database
 
             if(File.Exists(Global.config.osu_tokens_storage_path))
             {
-                Osu.Api.tokens = JsonConvert.DeserializeObject<OAuthTokens>(File.ReadAllText(Global.config.osu_tokens_storage_path));
+                Osu.Api.tokens = JsonConvert.DeserializeObject<OAuthTokens>(File.ReadAllText(Global.config.osu_tokens_storage_path))!;
                 if(Osu.Api.tokens.expiration_timestamp < Utils.GetTimestamp())
                     updateTokens = true;
             }
@@ -48,7 +48,7 @@ namespace Nanina.Database
 
             if(File.Exists(Global.config.osu_chat_tokens_storage_path))
             {
-                Osu.Api.chat_tokens = JsonConvert.DeserializeObject<OAuthTokens>(File.ReadAllText(Global.config.osu_chat_tokens_storage_path));
+                Osu.Api.chat_tokens = JsonConvert.DeserializeObject<OAuthTokens>(File.ReadAllText(Global.config.osu_chat_tokens_storage_path))!;
                 if(Osu.Api.chat_tokens.expiration_timestamp < Utils.GetTimestamp())
                     updateChatTokens = true;
             }
@@ -129,11 +129,11 @@ namespace Nanina.Database
                 }
                 foreach(var waifuID in user.waifuIdsInDungeon)
                 {
-                    user.waifus.Find(waifu => waifu.id == waifuID).isDoingSomething = false;
+                    user.waifus.Find(waifu => waifu.id == waifuID)!.isDoingSomething = false;
                 }
                 foreach(var waifuID in user.waifuIdsInDungeon)
                 {
-                    user.waifus.Find(waifu => waifu.id == waifuID).isDoingSomething = false;
+                    user.waifus.Find(waifu => waifu.id == waifuID)!.isDoingSomething = false;
                 }
                 foreach(var item in user.inventory.material)
                 {
@@ -146,14 +146,14 @@ namespace Nanina.Database
                 }
                 foreach(var item in user.inventory.waifuConsumable)
                 {
-                    var dbItem = Global.items.Find(dbitem => dbitem.id == item.id);
+                    var dbItem = Global.items.Find(dbitem => dbitem.id == item.id)!;
                     item.imgPATH = dbItem.imgPATH;
                     item.rarity = dbItem.rarity;
                     item.modifiers = dbItem.modifiers;
                 }
                 foreach(var item in user.inventory.userConsumable)
                 {
-                    var dbItem = Global.items.Find(dbitem => dbitem.id == item.id);
+                    var dbItem = Global.items.Find(dbitem => dbitem.id == item.id)!;
                     item.imgPATH = dbItem.imgPATH;
                     item.rarity = dbItem.rarity;
                     item.modifiers = dbItem.modifiers;

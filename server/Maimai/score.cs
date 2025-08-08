@@ -3,22 +3,22 @@ namespace Maimai
 {
     public class Lang
     {
-        public string en;
-        public string jp;
+        public required string en;
+        public required string jp;
     }
     public class Song
     {
         public ushort id;
-        public string code;
-        public Lang name;
-        public Lang artist;
+        public required string code;
+        public required Lang name;
+        public required Lang artist;
     }
     public class ScoreDetail
     {
-        public Stat hits;
-        public Stat slide;
-        public Stat hold;
-        public Stat tap;
+        public required Stat hits;
+        public required Stat slide;
+        public required Stat hold;
+        public required Stat tap;
         //public Stat break;  <------- !!
     }
 
@@ -33,28 +33,28 @@ namespace Maimai
     public class DifficultyLevel
     {
         public int key;
-        public string value;
-        public string label;
+        public required string value;
+        public required string label;
     }
     public class Score
     {
         public int id;
         public short achievement;
-        public string achievement_formatted;
+        public required string achievement_formatted;
         public int track;
         public int score;
-        public string score_formatted;
-        public string rank;
+        public required string score_formatted;
+        public required string rank;
         public byte full_combo;
         //public string full_combo_label; No idea of what this is
         public bool is_high_score;
         public bool is_all_perfect;
         public bool is_track_skip;
-        public DifficultyLevel difficulty_level;
-        public string play_date;
+        public required DifficultyLevel difficulty_level;
+        public required string play_date;
         public uint play_date_unix;
-        public Song song;
-        public object player;
+        public required Song song;
+        public required object player;
 
     }
 }

@@ -2,20 +2,20 @@ namespace Nanina.Discord
 {
     public class UserInformationResponse 
     {
-        public string id;
-        public string username;
-        public string avatar;
-        public string discriminator;
+        public required string id;
+        public required string username;
+        public required string avatar;
+        public required string discriminator;
         public int public_flags;
         public int flags;
-        public object banner;
+        public required object banner;
         public int accent_color;
-        public string global_name;
-        public object avatar_decoration_box;
-        public string banner_color;
-        public object clan;
+        public required string global_name;
+        public required object avatar_decoration_box;
+        public required string banner_color;
+        public required object clan;
         public bool mfa_enabled;
-        public string locale;
+        public required string locale;
         public int premium_type; 
     }
 }

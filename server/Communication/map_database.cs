@@ -11,7 +11,7 @@ namespace Nanina.Communication
         #pragma warning disable 0649
         protected class AddMapRequest
         {
-            public string id;
+            public string? id;
             public NaninaStdTag tag;
         }
         #pragma warning restore 0649
@@ -23,9 +23,9 @@ namespace Nanina.Communication
             if (!user.admin)
                 {Send(ClientNotification.NotificationData("Admin", "You don't have the permissions for this action!", 0)); return;}
 
-            var request = JsonConvert.DeserializeObject<AddMapRequest>(rawData.data);
+            var request = JsonConvert.DeserializeObject<AddMapRequest>(rawData.data)!;
 
-            var map = await Osu.Api.GetBeatmapById(request.id);
+            var map = await Osu.Api.GetBeatmapById(request.id!);
             if(map == null) 
                 {Send(ClientNotification.NotificationData("Admin", "either this beatmap doesn't exist, or the osu api keys are wrong/expired", 1)); return;}
 

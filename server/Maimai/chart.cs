@@ -2,36 +2,36 @@ namespace Maimai
 {
     public class Chart
     {
-        public string chartID;
-        public string difficulty;
+        public required string chartID;
+        public required string difficulty;
         public byte difficultyNum;
         public bool isPrimary;
-        public string level;
+        public required string level;
         public float levelNum;
-        public string playtype;
+        public required string playtype;
         public short songID;
-        public string[] versions;
-        public string[] altTitles;
-        public string artist;
+        public required string[] versions;
+        public required string[] altTitles;
+        public required string artist;
         public short id;
-        public string[] searchTerms;
-        public string title;
-        public Data data;
-        public SongData songData;
+        public required string[] searchTerms;
+        public required string title;
+        public required Data data;
+        public required SongData songData;
     }
 
     public class Data
     {
-        public string inGameID;
-        public string inGameStrID;
+        public required string inGameID;
+        public required string inGameStrID;
         public float maxPercent;
     }
 
     public class SongData
     {
-        public string artistJP;
-        public string displayVersion;
-        public string titleJP;
+        public required string artistJP;
+        public required string displayVersion;
+        public required string titleJP;
     }
 }
 

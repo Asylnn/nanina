@@ -13,7 +13,8 @@ namespace Nanina.Communication
         protected override void OnMessage(MessageEventArgs e)
         {
             Console.WriteLine("DATA : " + (string) e.Data); 
-            ClientWebSocketResponse rawData = Newtonsoft.Json.JsonConvert.DeserializeObject<ClientWebSocketResponse>(e.Data);
+            ClientWebSocketResponse? rawData = Newtonsoft.Json.JsonConvert.DeserializeObject<ClientWebSocketResponse>(e.Data);
+            if(rawData is null) return;
 
             if(Global.config.dev)
                 ProcessMessage(rawData);
@@ -59,7 +60,7 @@ namespace Nanina.Communication
                     ProvideSetDatabase(rawData);
                     break;*/
                 case "change locale":
-                    DBUtils.Get<Session>(session => session.id == rawData.sessionId).UpdateLocale(rawData.data);
+                    UpdateLocale(rawData);
                     break;
                 case "update prefered game":
                     UpdatePreferedGame(rawData);
@@ -156,11 +157,11 @@ namespace Nanina.Communication
         {
             /*Get session col
             to find one session and empty its websocket id*/
-            var session = DBUtils.Get<Session>(session => session.webSocketId == ID);
+            /*var session = DBUtils.Get<Session>(session => session.webSocketId == ID);
             if(session is not null)
             {
                 session.UpdateWebSocketId(null);
-            }
+            }*/
             Console.WriteLine("Bye :'(");
         }
 

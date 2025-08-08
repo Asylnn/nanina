@@ -19,7 +19,7 @@ namespace Nanina.UserData
         public ulong id { get; set; } = Utils.CreateIdUlong();
         public ulong timestamp { get; set; } = Utils.GetTimestamp();
         public bool finished { get; set; } = false;
-        public ActivityType type { get; set; }
+        public required ActivityType type { get; set; }
         public ulong Timeout 
         {
             set 
@@ -30,9 +30,9 @@ namespace Nanina.UserData
         }
         public ulong originalTimeout { get; set; }
         public ulong timeout { get; set; }
-        public string waifuID { get; set; }
+        public required string waifuID { get; set; }
         public List<Loot> loot { get; set; } = [];
-        public string researchID { get; set; }
+        public string? researchID { get; set; }
         
 
         public void OnTimeout(User user)
@@ -41,10 +41,10 @@ namespace Nanina.UserData
             switch(type)
             {
                 case ActivityType.Cafe:
-                    CafeTimeout(user.waifus.Find(waifu => waifu.id == waifuID));
+                    OnCafeTimeout(user.waifus.Find(waifu => waifu.id == waifuID)!);
                     break;
                 case ActivityType.Mining:
-                    MiningTimeout(user.waifus.Find(waifu => waifu.id == waifuID));
+                    OnMiningTimeout(user.waifus.Find(waifu => waifu.id == waifuID)!);
                     break;
                 case ActivityType.Research:
                     OnResearchTimeout(user);
@@ -54,11 +54,11 @@ namespace Nanina.UserData
                     //maybe do the same thing with research? Yeah difinitively
                     break;
                 case ActivityType.Exploration:
-                    OnExplorationTimeout(user.waifus.Find(waifu => waifu.id == waifuID));
+                    OnExplorationTimeout(user.waifus.Find(waifu => waifu.id == waifuID)!);
                     break;
             }
         }
-        public void CafeTimeout(Waifu waifu)
+        private void OnCafeTimeout(Waifu waifu)
         {
             var statRandomness = Utils.RandomMultiplicator(Global.baseValues.cafe_reward_randomness);
             var money = (uint) Math.Ceiling((waifu.Kaw + waifu.Luck)*statRandomness);
@@ -69,7 +69,7 @@ namespace Nanina.UserData
             };
             this.loot = [loot];
         }
-        public void MiningTimeout(Waifu waifu)
+        private void OnMiningTimeout(Waifu waifu)
         {
 
             foreach(int tier in Enumerable.Range(1,4))
@@ -96,23 +96,22 @@ namespace Nanina.UserData
                     {
                         lootType = LootType.Item,
                         amount = (ushort)wholeQty,
-                        item = Utils.DeepCopyReflection(Global.items.Find(item => item.id == 5 + tier)),
+                        item = Utils.DeepCopyReflection(Global.items.Find(item => item.id == 5 + tier))!,
                     });
                 }
             }
         }
 
-        public void OnResearchTimeout(User user)
+        private void OnResearchTimeout(User user)
         {
-            var researchNode = Global.researchNodes.Find(RN => RN.id == researchID);
-            var vehicleItem = Utils.DeepCopyReflection(Global.items.Find(i => i.id == 0));
+            var researchNode = Global.researchNodes.Find(RN => RN.id == researchID)!;
+            var vehicleItem = Utils.DeepCopyReflection(Global.items.Find(i => i.id == 0))!;
 
             var completedResearch = user.completedResearches.Find(r => r.id == researchID);
             if(completedResearch == null)
                 user.completedResearches.Add(new CompletedResearch
                 {
-                    id=researchID,
-                    amount=1,
+                    id=researchID!,
                 });
             else
                 completedResearch.amount++;
@@ -128,7 +127,7 @@ namespace Nanina.UserData
             });
         }
         
-        public void OnExplorationTimeout(Waifu waifu)
+        private void OnExplorationTimeout(Waifu waifu)
         {
             var statRandomness = Utils.RandomMultiplicator(Global.baseValues.cafe_reward_randomness);
             var explorationPower = Math.Ceiling((waifu.Agi + waifu.Luck)*statRandomness);
@@ -147,7 +146,7 @@ namespace Nanina.UserData
                 loot.Add(new()
                 {
                     lootType = LootType.Item,
-                    item = Global.items.Find(item => item.id == explorationLoot.itemId),
+                    item = Global.items.Find(item => item.id == explorationLoot.itemId)!,
                     amount = 1,
                 });
             }

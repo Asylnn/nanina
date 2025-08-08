@@ -14,43 +14,46 @@ public static class Utils
     }
     public static string CreateId()
     {   
-        Random rng = new Random();
+        Random rng = new ();
         return Utils.GetTimestamp().ToString() + (rng.Next(89_999_999) + 10_000_000).ToString();
     }
     public static ulong CreateIdUlong()
     {   
-        Random rng = new Random();
+        Random rng = new ();
         return GetTimestamp() + (ulong)(rng.Next(89_999_999) + 10_000_000);
     }
 
     //yoinked from the internet, sorry, best next choice was serializing and deserializing.
-    public static T DeepCopyReflection<T>(T input)
+    public static T? DeepCopyReflection<T>(T input)
     {
+        if(input == null) return default;
         var type = input.GetType();
         var properties = type.GetProperties();
-        T clonedObj = (T)Activator.CreateInstance(type);
+        T? clonedObj = (T?)Activator.CreateInstance(type);
         foreach (var property in properties)
         {
-            if (property.CanWrite)
+            if (property != null && property.CanWrite)
             {
 
-                object value = property.GetValue(input);
-                if (value != null && property.PropertyType.FullName.StartsWith("System.Collections.Generic.List"))
+                object? value = property.GetValue(input);
+                if (value != null && property.PropertyType.FullName != null && property.PropertyType.FullName.StartsWith("System.Collections.Generic.List"))
                 {
                     
                     //var ListElementType = property.PropertyType.GetGenericArguments().First();
-                    dynamic newList = Activator.CreateInstance(property.PropertyType);
+                    //Doesn't work on double dimension arrays!
+                    dynamic newList = Activator.CreateInstance(property.PropertyType)!;
                     Action<object> forEach = (elem) => {
-                        if (elem != null && elem.GetType().IsClass && !elem.GetType().FullName.StartsWith("System."))
+                        var elemType = elem.GetType();
+                        if (elem != null && elemType.IsClass && elemType.FullName != null && !elemType.FullName.StartsWith("System."))
                         {
-                            newList.Add((dynamic) DeepCopyReflection(elem));
+                            newList.Add((dynamic) DeepCopyReflection(elem)!);
                         }
                         else
                             newList.Add(elem);
                     };
 
                     //((dynamic)value).ForEach(uwu2); Simpler way with dynamic
-                    property.PropertyType.GetMethod("ForEach").Invoke(value, [forEach]);
+                    property.PropertyType.GetMethod("ForEach")!.Invoke(value, [forEach]);
                     property.SetValue(clonedObj, newList);
 
                     //Couldn't make ConvertAll work
@@ -64,7 +67,7 @@ public static class Utils
 
                     
                 }
-                else if (value != null && property.PropertyType.IsClass && !property.PropertyType.FullName.StartsWith("System."))
+                else if (value != null && property.PropertyType.IsClass && property.PropertyType.FullName != null && !property.PropertyType.FullName.StartsWith("System."))
                 {
                     property.SetValue(clonedObj, DeepCopyReflection(value));
                 }
@@ -76,7 +79,7 @@ public static class Utils
         }
         return clonedObj;
     }
-    public static T ScuffedJsonSerializationDeepCopy<T>(T input)
+    public static T? ScuffedJsonSerializationDeepCopy<T>(T input)
     {
         return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(input));
     }
@@ -87,6 +90,6 @@ public static class Utils
     }
     public static void ConsoleObject(object obj)
     {
-        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        Console.WriteLine(JsonConvert.SerializeObject(obj) ?? "null");
     }
 }

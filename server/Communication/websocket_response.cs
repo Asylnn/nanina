@@ -6,10 +6,10 @@ namespace Nanina.Communication
     */
     public class ClientWebSocketResponse
     {
-        public string type;
-        public string data;
-        public string sessionId;
-        public string userId;
+        public required string type;
+        public required string data;
+        public required string sessionId;
+        public required string userId;
     }
 
     /*
@@ -17,7 +17,7 @@ namespace Nanina.Communication
     */
     public class ServerWebSocketResponse
     {
-        public string type;
-        public string data;
+        public required string type;
+        public required string data;
     }
 }

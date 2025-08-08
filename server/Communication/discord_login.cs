@@ -43,7 +43,7 @@ namespace Nanina.Communication
             var response_access_token = await client.ExecutePostAsync(request_access_token);
             if(!response_access_token.IsSuccessStatusCode) 
                 {Console.WriteLine("Status code: " + response_access_token.StatusCode + " et " + response_access_token.Content); return;}
-            var discordTokenResponse = JsonConvert.DeserializeObject<Discord.TokenResponse>(response_access_token.Content);
+            var discordTokenResponse = JsonConvert.DeserializeObject<Discord.TokenResponse>(response_access_token.Content!)!;
 
 
             var request_user_information = new RestRequest("users/@me", Method.Get)
@@ -52,7 +52,7 @@ namespace Nanina.Communication
             var response_user_information = await client.ExecuteGetAsync(request_user_information);
             if(!response_access_token.IsSuccessStatusCode) return;
 
-            var discordUserInformationResponse = JsonConvert.DeserializeObject<Discord.UserInformationResponse>(response_user_information.Content);
+            var discordUserInformationResponse = JsonConvert.DeserializeObject<Discord.UserInformationResponse>(response_user_information.Content!)!;
             
 
             /*  Recup la collection d'objects Users, on find un user avec le bon id,
@@ -65,12 +65,16 @@ namespace Nanina.Communication
             
             if (user is null){
 
-                var ids = new Ids() 
+                var ids = new Ids()
                 {
                     discordId = discordUserInformationResponse.id
                 };
-                user = new (discordUserInformationResponse.global_name, ids);
-                
+                user = new()
+                {
+                    username = discordUserInformationResponse.global_name,
+                    ids = ids,
+                };
+
                 Console.WriteLine("Inserted new user! Id : " + user.Id);
                 user.tokens = new Tokens()
                 {

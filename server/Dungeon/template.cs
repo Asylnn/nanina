@@ -5,21 +5,21 @@ using Nanina.UserData.ModifierData;
 namespace Nanina.Dungeon
 {
     public class Template {
-        public string id;
+        public required string id;
         public byte numberOfRewardsPerEnergy;
-        public BossResistances bossResistances;
-        public ushort[] setRewards; 
-        public double[] maxHealthByFloor;
+        public required BossResistances bossResistances;
+        public required ushort[] setRewards; 
+        public required double[] maxHealthByFloor;
         public byte difficulty;
         public NaninaStdTag game_playstyle;
-        public ModifierWeights[] modifierWeightsWeapon;
-        public ModifierWeights[] modifierWeightsDress;
-        public ModifierWeights[] modifierWeightsAccessory;
+        public required ModifierWeights[] modifierWeightsWeapon;
+        public required ModifierWeights[] modifierWeightsDress;
+        public required ModifierWeights[] modifierWeightsAccessory;
 
     }
 
     public class ModifierWeights {
-        public Modifier modifier;
+        public required Modifier modifier;
         public uint weight;
     }
 }

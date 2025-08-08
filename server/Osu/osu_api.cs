@@ -34,8 +34,8 @@ namespace Nanina.Osu
 
             Console.WriteLine("updated osu chat tokens");
             Console.WriteLine("osu api chat refresh response status code " + response.StatusCode);
-
-            chat_tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
+            if(response.IsSuccessStatusCode == false) return;
+            chat_tokens =  JsonConvert.DeserializeObject<OAuthTokens>(response.Content!)!;
             File.WriteAllText(Global.config.osu_chat_tokens_storage_path, response.Content);
         }
         public static async void GetTokens()
@@ -48,8 +48,8 @@ namespace Nanina.Osu
                 .AddParameter("client_secret", Environment.GetEnvironmentVariable("OSU_CLIENT_SECRET"))
                 .AddParameter("scope","public");
             var response = await new RestClient().ExecutePostAsync(request);
-            
-            tokens = JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
+            if(response.IsSuccessStatusCode == false) return;
+            tokens = JsonConvert.DeserializeObject<OAuthTokens>(response.Content!)!;
             tokens.expiration_timestamp = Utils.GetTimestamp() + (ulong) (tokens.expires_in - 3600)*1000;
             File.WriteAllText(Global.config.osu_tokens_storage_path, JsonConvert.SerializeObject(tokens));
             Console.WriteLine("updated osu tokens");
@@ -68,10 +68,10 @@ namespace Nanina.Osu
             
             if(response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ScoreExtended[]>(response.Content,  new JsonSerializerSettings
+                return JsonConvert.DeserializeObject<ScoreExtended[]>(response.Content!,  new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore
-                });
+                })!;
             }
             else 
             {
@@ -139,7 +139,7 @@ namespace Nanina.Osu
             return (float)(mult *Global.baseValues.fight_damage_multiplier);
         }
 
-        public static async Task<Beatmap> GetBeatmapById(string beatmapId)
+        public static async Task<Beatmap?> GetBeatmapById(string beatmapId)
         {
             var request = new RestRequest($"/beatmaps/{beatmapId}", Method.Get);
             AddDefaultHeader(request);
@@ -148,10 +148,10 @@ namespace Nanina.Osu
             Console.WriteLine("GetBeatmapById : osu api response status code "+ response.StatusCode);
 
             
-            if(!response.IsSuccessStatusCode)
+            if(response.IsSuccessStatusCode == false)
                 {Console.WriteLine("osu api GetBeatmapById response error content" + response.Content); return null;}
             
-            var content = response.Content
+            var content = response.Content!
                 .Replace("cover@2x", "cover2x")
                 .Replace("card@2x", "cover2x")
                 .Replace("list@2x", "cover2x")
@@ -159,9 +159,9 @@ namespace Nanina.Osu
             var beatmap =  JsonConvert.DeserializeObject<Beatmap>(content,  new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
-            });
+            })!;
             
-            beatmap.beatmapset.covers.cover2x ??= beatmap.beatmapset.covers.cover2x.Replace("cover2x", "cover@2x");
+            if(beatmap.beatmapset.covers.card2x != null) beatmap.beatmapset.covers.cover2x = beatmap.beatmapset.covers.cover2x.Replace("cover2x", "cover@2x");
             if(beatmap.beatmapset.covers.card2x != null) beatmap.beatmapset.covers.card2x = beatmap.beatmapset.covers.card2x.Replace("card2x", "card@2x");
             if(beatmap.beatmapset.covers.list2x != null) beatmap.beatmapset.covers.list2x = beatmap.beatmapset.covers.list2x.Replace("list2x", "list@2x");
             if(beatmap.beatmapset.covers.slimcover2x != null) beatmap.beatmapset.covers.slimcover2x = beatmap.beatmapset.covers.slimcover2x.Replace("slimcover2x", "slimcover@2x");
@@ -271,7 +271,7 @@ namespace Nanina.Osu
             Console.WriteLine("osu api AuthorizeSelf response status code " + response.StatusCode);
             if(response.IsSuccessful)
             {
-                chat_tokens =  Newtonsoft.Json.JsonConvert.DeserializeObject<OAuthTokens>(response.Content);
+                chat_tokens =  JsonConvert.DeserializeObject<OAuthTokens>(response.Content!)!;
                 chat_tokens.expiration_timestamp = Utils.GetTimestamp() + (ulong) (tokens.expires_in - 3600)*1000;
                 File.WriteAllText(Global.config.osu_chat_tokens_storage_path, JsonConvert.SerializeObject(chat_tokens));
             }

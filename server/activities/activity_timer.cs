@@ -7,8 +7,8 @@ namespace Nanina.Activities
 {
     class ActivityTimer : System.Timers.Timer
     {
-        public ulong activityId;
-        public string userId;
+        public required ulong activityId;
+        public required string userId;
 
         public ActivityTimer(double interval) : base(interval)
         {
@@ -16,11 +16,15 @@ namespace Nanina.Activities
             Start();
         }
 
-        public static void ActivityFinished(object sender, ElapsedEventArgs e)
+        public static void ActivityFinished(object? sender, ElapsedEventArgs e)
         {
-            var timer = sender as ActivityTimer;
+            if (sender is not ActivityTimer timer)
+            {
+                Console.Error.WriteLine("Activity timer is undefined on Activity Finished??");
+                return;
+            }
             Console.WriteLine("Activity timer finished");
-            var user = DBUtils.Get<UserData.User>(x => x.Id == timer.userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == timer.userId)!;
             user.ActivityTimeout(timer.activityId);
             timer.Dispose();
             Global.activityTimers.Remove(timer.activityId);
