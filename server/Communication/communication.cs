@@ -37,8 +37,9 @@ namespace Nanina.Communication
                 session = Session.NewSession(ID);
             else
             {
-                session.UpdateWebSocketId(ID);
-                if(session.userId != null)
+                session.webSocketId = ID;
+                DBUtils.Update(this);
+                if(session.userId is not null)
                     ProvideUserToClient(session.userId);
             }
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {

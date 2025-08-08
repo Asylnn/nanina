@@ -21,23 +21,7 @@ namespace Nanina.Database
             DBUtils.Insert(session);
             return session;
         }
-        public void UpdateLocale(string newLocale)
-        {
-            locale = newLocale;
-            if(userId == null){
-                var user = DBUtils.Get<UserData.User>(x => x.Id == userId)!;
-                user.locale = locale;
-                DBUtils.Update(user);
-            }
-
-            UpdateDB();
-        }
         
-        public void UpdateDB()
-        {
-            /*get session col to update this session in the db*/
-            DBUtils.Update(this);
-        }
         public void UpdateUserId(string? id) 
         {
             if(id is not null)
@@ -47,13 +31,7 @@ namespace Nanina.Database
                 DBUtils.Update(user);
             }
             userId = id;
-            UpdateDB();
-        }
-
-        public void UpdateWebSocketId(string _webSocketId) 
-        {
-            webSocketId = _webSocketId;
-            UpdateDB();
+            DBUtils.Update(this);
         }
     }
 }

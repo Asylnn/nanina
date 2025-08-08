@@ -140,6 +140,6 @@ TODO : clean up session code
 TODO : check if malformed json sent to server make it crash
 TODO : instead of checking if isOsuIdVerified is true, just check if osuId is not null
 TODO : clean up activity code (one big function is actually preferable)
-
+TODO : add check for valid language in UpdateLocale
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

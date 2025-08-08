@@ -317,7 +317,14 @@ namespace Nanina.Communication
             var session = DBUtils.Get<Session>(session => session.id == rawData.sessionId);
             if(session == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
-            session.UpdateLocale(rawData.data);
+            session.locale = rawData.data;
+            if(session.userId is not null){
+                var user = DBUtils.Get<UserData.User>(x => x.Id == session.userId)!;
+                user.locale = rawData.data;
+                DBUtils.Update(user);
+            }
+
+            DBUtils.Update(session);
         }
     }
 }
