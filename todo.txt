@@ -29,6 +29,8 @@ TODO : Put list for database tables (like activities list)          #Done
 TODO : [BUG] First dungeon never works (blank page)                 #Done
 TODO : [BUG] Dungeon page is very laggy?                            #Done
 TODO : Implement Waifu Stats                                        #Done
+TODO : Implement Activities                                         #Done
+TODO : Implement continuous fights.                                 #Done
 TODO : Finish Donjon System 
 TODO : Have multiple dungeons of increasing difficulty
 TODO : Scoping classes (public / private /protected)
@@ -41,7 +43,7 @@ TODO : Simple remove cherish battery use interface
 TODO : [BUG] Cherish battery use, item count doesn't decrease
 TODO : Implement Money System (page/component/database)
 TODO : Implement Shop System (page/component/database)
-TODO : Implement Activities
+
 
 
 
@@ -87,28 +89,25 @@ TODO : make cursor be style locked when claim or fight is timeout               
 TODO : Make a writeline to the console when a status code is different from 200/OK  #Done
 TODO : Make the code in repsonse.cs follow camelCase convention                     #Done 
 TODO : supress warning CS0649                                                       #Done
+TODO : fix pull pity amount bug                                                     #Done
+TODO : clean up session code                                                        #Done
+TODO : Restart all timers when restarting the server                                #Done
+TODO : Make becoming an admin and giving yourself gacha currency less convoluted    #Done
 
-TODO : Make becoming an admin and giving yourself gacha currency less convoluted
+
 TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
-TODO : Is not deleting old unused sessions ids not secure? To think about.²
+        (and more generally make a lot of arrays into dictionnaries for performanc)
 
-TODO : Modify break property in Maimai 
-TODO : [BUG] Crash when schwartzchild (re:mast?) (maimai)
+TODO : Is not deleting old unused sessions ids not secure? To think about.²
 TODO : Add cross to menus to close them.
-TODO : Create an extention which add beatmaps to Nanina
-TODO : ActiveDungeon code should be compatible with any rhythm game
-TODO : Create a search bar for items
 TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.
 TODO : Display the set bonus on the waifu stat card
 TODO : Have the "plus" change color when hovered
 TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)
 TODO : Show loot rarity in loot component
-TODO : When you don't have the corresponding item in your inventory, the use item menu doesn't show up
+TODO : [BUG] When you don't have the corresponding item in your inventory, the use item menu doesn't show up
 TODO : Implement the first waifus (should be balanced for all damage types).
-TODO : Implement continuous fights.
-TODO : Make item class abstract
 TODO : Make a function that check if a request is valid before working on it
-TODO : Restart all timers when restarting the server
 TODO : Add cancel activity button
 TODO : Make it impossible to have materials of some rarity without the user lvl / research necessary
 TODO : We are currently using the item database for displaying images for the crafting interface, we should do something that doesn't involve sending the entire db
@@ -123,7 +122,6 @@ TODO : add 30min timer on continuous fight
 TODO : make sendtoserver type parameter an enum
 TODO : add commands on osu message
 TODO : remove unnessary sessions checks
-TODO : make a lot of arrays into dictionnaries for performance
 TODO : add error messages for continuous fight
 TODO : use the [.. array] thinghy 
 TODO : [BUG] code for verifying account is sometime expired
@@ -132,14 +130,23 @@ TODO : try to use the same syntax as Global.activityTimers.TryGetValue(activity.
 TODO : Use BsonDocuments for Updating/Getting an object from LiteDB
 (https://github.com/teekay/litedb-sqlite-handbook/blob/master/MusicLibrary.Persistence.LiteDb/Model/Track.cs,
 https://github.com/teekay/litedb-handbook/tree/master)
-TODO : one day switch to postgresql?
-TODO : think where we can use struct instead of classes
 TODO : choose if we keep using file paths in config or directly in code
-TODO : fix pull pity amount bug
-TODO : clean up session code
 TODO : check if malformed json sent to server make it crash
-TODO : instead of checking if isOsuIdVerified is true, just check if osuId is not null
 TODO : clean up activity code (one big function is actually preferable)
 TODO : add check for valid language in UpdateLocale
+
+
+Low priority
+
+TODO : Modify break property in Maimai 
+TODO : [BUG] Crash when schwartzchild (re:mast?) (maimai)
+TODO : Create an extention which add beatmaps to Nanina
+TODO : ActiveDungeon code should be compatible with any rhythm game
+TODO : Create a search bar for items
+TODO : one day switch to postgresql?
+TODO : think where we can use struct instead of classes
+TODO : instead of checking if isOsuIdVerified is true, just check if osuId is not null
+
+
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done
