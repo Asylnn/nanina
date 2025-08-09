@@ -50,7 +50,7 @@ namespace Nanina.Dungeon
             waifus = EquippedWaifus;
             maxHealth = template.maxHealthByFloor[floor-1];
             health = maxHealth;
-            beatmap = DBUtils.Get<Beatmap>(x => x.nanina_tag == template.game_playstyle, randomized:true);
+            beatmap = DBUtils.Get<Beatmap>(x => x.nanina_tag == template.game_playstyle, randomized:true)!;
             StartDungeon();
         }
 
@@ -127,7 +127,7 @@ namespace Nanina.Dungeon
         public void ConcludeDungeon(){
             health = 0;
             List<Loot> lootToServer = [];
-            var user = DBUtils.Get<UserData.User>(x => x.Id == userId);
+            var user = DBUtils.Get<UserData.User>(x => x.Id == userId)!;
             var (spent_energy, gc) = user.SpendEnergy(1);
             loot = GetLoot(spent_energy);
             foreach(var equipment in loot)

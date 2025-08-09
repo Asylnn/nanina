@@ -37,7 +37,7 @@ namespace Nanina.Dungeon
 
         public static void FreeWaifus(ActiveDungeon activeDungeon){
 
-            var user = DBUtils.Get<User>(x => x.Id == activeDungeon.userId);
+            var user = DBUtils.Get<User>(x => x.Id == activeDungeon.userId)!;
             user.waifus.Where(waifu => activeDungeon.waifus.Any(dungeonWaifu => waifu.id == dungeonWaifu.id)).ToList().ForEach(waifu => waifu.isDoingSomething = false);
             user.waifuIdsInDungeon = [];
             DBUtils.Update(user);
