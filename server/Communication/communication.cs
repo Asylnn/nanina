@@ -38,7 +38,7 @@ namespace Nanina.Communication
             else
             {
                 session.webSocketId = ID;
-                DBUtils.Update(this);
+                DBUtils.Update(session);
                 if(session.userId is not null)
                     ProvideUserToClient(session.userId);
             }
