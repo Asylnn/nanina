@@ -1,17 +1,27 @@
-[
-    {
-        "bannerName": "Vocaloid ~~~",
-        "bannerDescription": "Vocaloid",
+{
+    "vocaloid": {
         "id": "vocaloid",
         "pityAmount": 10,
         "pullCost": 10,
-        "twoStarsWeight": 0,
-        "threeStarsWeight": 10,
-        "rateUpTwoStarsWeight": 0,
-        "rateUpThreeStarsWeight": 0,
-        "twoStarsPoolId" : [],
-        "threeStarsPoolId" : ["6", "7", "8"],
-        "rateUpTwoStarsPoolId" : [],
-        "rateUpThreeStarsPoolId" : []
+        "standardPool":[
+            {
+                "waifuId":"6",
+                "weight":10
+            },
+            {
+                "waifuId":"7",
+                "weight":10
+            },
+            {
+                "waifuId":"8",
+                "weight":5
+            }
+        ],
+        "pityPool":[
+            {
+                "waifuId":"8",
+                "weight":10
+            }
+        ]
     }
-]
+}

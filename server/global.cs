@@ -7,13 +7,14 @@ using Nanina.UserData.ModifierData;
 using Nanina.Crafting;
 using Nanina.Activities;
 using Nanina.Gacha;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Nanina
 {
     public static class Global {
         public static readonly Dictionary<ulong, System.Timers.Timer> activityTimers = [];
         public static readonly Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../config.json"))!;
-        public static readonly List<Banner> banners =  JsonConvert.DeserializeObject<List<Banner>>(File.ReadAllText(Global.config.banners_storage_path))!;
+        public static readonly Dictionary<string, Banner> banners =  JsonConvert.DeserializeObject<Dictionary<string, Banner>>(File.ReadAllText(Global.config.banners_storage_path))!;
         public static readonly List<Waifu> waifus = JsonConvert.DeserializeObject<List<Waifu>>(File.ReadAllText("../save/waifu.json"))!;
         public static readonly List<Item> items = JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText("../save/item.json"))!;
         public static readonly List<Equipment> equipments = JsonConvert.DeserializeObject<List<Equipment>>(File.ReadAllText("../save/equipment.json"))!;

@@ -38,7 +38,7 @@ import InventoryPage from './components/Page/InventoryPage.vue'
 import DungeonSelectionPage from './components/Page/DungeonSelectionPage.vue'
 import ActiveDungeonPage from './components/Page/ActiveDungeonPage.vue'
 import type DungeonTemplate from './classes/dungeons/template_dungeons'
-import type Banner from './classes/banner'
+import type Banner from './classes/banner/banner'
 import type Item from './classes/item/item'
 import type Set from './classes/item/set'
 import ActiveDungeon from './classes/dungeons/active_dungeon'
@@ -51,6 +51,7 @@ import ActivitiesPage from './components/Page/ActivitiesPage.vue'
 import LootType from './classes/loot/loot_type'
 import ResearchNode from './classes/research/research_nodes'
 import Craft from './classes/crafting/craft'
+import type Dictionary from './classes/dictionary'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -70,7 +71,7 @@ export default {
 			equipment_db : [] as Equipment[],
 			set_db : [] as Set[],
 			pulled_waifus : [] as Waifu[],
-			banners : [] as Banner[],
+			banners : {} as Dictionary<Banner> ,
 			dungeons : [] as DungeonTemplate[],
 			active_dungeon : new ActiveDungeon,
 			localeSetByUser : false,

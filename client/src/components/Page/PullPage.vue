@@ -1,12 +1,12 @@
 <script lang="ts">
 
 import Waifu from '@/classes/waifu/waifu';
-import Banner from '@/classes/banner';
+import Banner from '@/classes/banner/banner';
 import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
-import PullBannerHistory from '@/classes/user/pull_history';
 import type Dictionary from '@/classes/dictionary';
 import User from '@/classes/user/user';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
+import type { PropType } from 'vue';
 
 export default {
     name : "PullPage",
@@ -32,7 +32,7 @@ export default {
             required : true
         },
         banners: {
-            type : Array<Banner>,
+            type : Object as () => Dictionary<Banner>, //ugly but it works
             required : true
         },
     },
@@ -86,7 +86,7 @@ export default {
     <div id="gachaWindow">
         <div id="bannerInfo">
             <select v-for="banner in banners" v-model="selected_banner">
-                <option :value="banner" >{{banner.bannerName}}</option>
+                <option :value="banner" >{{banner.id}}</option>
             </select>
             <button @click="pull(1)">{{ $t("gacha.pull", {pullAmount:1}) }}</button>
             <button @click="pull(10)">{{ $t("gacha.pull", {pullAmount:10}) }}</button>
