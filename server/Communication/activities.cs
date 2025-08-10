@@ -80,10 +80,10 @@ namespace Nanina.Communication
             if(researchNode == null)
                 {Send(ClientNotification.NotificationData("Activities", "this research doesn't exist", 1)); return (false, null);}
 
-            if(! researchNode.requirements.All(requirement => user.completedResearches.Any(completedResearch => completedResearch.id == requirement)))
+            if(! researchNode.requirements.All(requirement => user.completedResearches.Any(completedResearch => completedResearch.Key == requirement)))
                 {Send(ClientNotification.NotificationData("Activities", "you didn't already complete all the requirements", 1)); return (false, null);}
 
-            if(! researchNode.infinite && user.completedResearches.Any(completedResearch => completedResearch.id == researchNode.id))
+            if(! researchNode.infinite && user.completedResearches.Any(completedResearch => completedResearch.Key == researchNode.id))
                 {Send(ClientNotification.NotificationData("Activities", "you already did the research (and it's not an infinite research)", 1)); return (false, null);}
 
             return (true, researchNode);
@@ -270,7 +270,7 @@ namespace Nanina.Communication
             user.activities.Remove(activity);
             Global.activityTimers[activity.id].Dispose();
             Global.activityTimers.Remove(activity.id);
-
+            DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = ServerResponseType.ProvideUser,
