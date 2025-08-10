@@ -8,19 +8,19 @@ using Newtonsoft.Json;
 
 public static class Utils
 {
-    public static ulong GetTimestamp()
+    public static long GetTimestamp()
     {
-        return (ulong)new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+        return new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
     }
     public static string CreateId()
     {   
         Random rng = new ();
         return Utils.GetTimestamp().ToString() + (rng.Next(89_999_999) + 10_000_000).ToString();
     }
-    public static ulong CreateIdUlong()
+    public static long CreateIdLong()
     {   
         Random rng = new ();
-        return GetTimestamp() + (ulong)(rng.Next(89_999_999) + 10_000_000);
+        return GetTimestamp() + rng.Next(99_999_999);
     }
 
     //yoinked from the internet, sorry, best next choice was serializing and deserializing.

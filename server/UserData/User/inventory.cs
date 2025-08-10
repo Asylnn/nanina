@@ -4,7 +4,7 @@ namespace Nanina.UserData
 {
     public class Inventory 
     {
-        public uint inventoryIdCounter {get; set;} = 0;
+        public int inventoryIdCounter {get; set;} = 0;
         public List<Equipment> equipment {get; set;} = [];
         public List<Item> material {get; set;} = [];
         public List<Item> userConsumable {get; set;} = [];
@@ -14,7 +14,7 @@ namespace Nanina.UserData
             get => [.. userConsumable, .. waifuConsumable, .. material];
         }
 
-        public bool HasItem(ushort id, ushort quantity = 1)
+        public bool HasItem(short id, short quantity = 1)
         {
             return AllItems.Any(item => item.id == id && item.count >= quantity);
         }
@@ -68,7 +68,7 @@ namespace Nanina.UserData
             }
         }
 
-        public void RemoveItem(ushort id, ushort quantity)
+        public void RemoveItem(short id, short quantity)
         {
             var item = AllItems.Find(item => item.id == id);
             if(item is null)

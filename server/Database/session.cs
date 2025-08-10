@@ -6,7 +6,7 @@ namespace Nanina.Database
     public class Session() {
         public string id {get; set;} = Guid.NewGuid().ToString();
         public string? userId {get; set;}
-        public ulong date {get; set;} = Utils.GetTimestamp();
+        public long date {get; set;} = Utils.GetTimestamp();
         public string locale {get; set;} = Global.config.default_locale;
         public required string webSocketId { get; set; }
 

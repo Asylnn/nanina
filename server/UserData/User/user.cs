@@ -17,19 +17,19 @@ namespace Nanina.UserData
     {
         public required string username { get; set; }
         public required Ids ids { get; set; }
-        public uint money { get; set; } = 0;
+        public int money { get; set; } = 0;
         public bool admin {get; set;} = false;
-        public byte lvl {get; set;} = 1;
-        public uint xp {get; set;} = 0;
-        public uint XpToLvlUp {
-            get => 40u + lvl*10u;
+        public short lvl {get; set;} = 1;
+        public int xp {get; set;} = 0;
+        public int XpToLvlUp {
+            get => 40 + lvl*10;
         }
         public List<Activity> activities { get; set; } = [];
-        public byte maxConcurrentActivities { get; set; } = 3;
+        public int maxConcurrentActivities { get; set; } = 3;
         public bool isInDungeon { get; set; } = false;
         public List<string> waifuIdsInDungeon {get; set;} = [];
         //This is necessary since dungeons are stored only in memory and if the servers stop, we need to get back the waifus in the dungeon to put isDoingAction at false.
-        public ulong dungeonInstanceId { get; set; } = 0;
+        public long dungeonInstanceId { get; set; } = 0;
         public Game preferedGame {get; set;} = Game.OsuStandard;
         public long lvlRewards { get; set; } = 0;
         public string? activeSessionId {get; set;} = null;
@@ -45,30 +45,30 @@ namespace Nanina.UserData
         public StatCount statCount { get; set; } = new();
         public Dictionary<Game, string[]> fightHistory { get; set; } = new();
         public Fight? fight { get; set; }
-        public uint gacha_currency { get; set; } = Global.baseValues.base_gacha_currency_amount;
+        public int gacha_currency { get; set; } = Global.baseValues.base_gacha_currency_amount;
         public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; } = [];
         public Verification verification { get; set; } = new ();
-        public ulong claimTimestamp { get; set; } = 0;
+        public long claimTimestamp { get; set; } = 0;
         public Inventory inventory { get; set; } = new ();
-        public Dictionary<string, byte> completedResearches { get; set; } = [];
+        public Dictionary<string, short> completedResearches { get; set; } = [];
         public Unlocks unlocks { get; set; } = new ();
         public List<ContinuousFightLog> continuousFightLog { get; set; } = [];
 
-        public (double energy, uint gc) SpendEnergy(double ratio)
+        public (double energy, int gc) SpendEnergy(double ratio)
         {
             var spent_energy = energy*Global.baseValues.proportion_of_energy_used_for_each_action*ratio;
             energy -= spent_energy;
-            var gc = (uint) Math.Ceiling(spent_energy*Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
-            gacha_currency += (uint) Math.Floor(gc*ratio);
+            var gc = (int) Math.Ceiling(spent_energy*Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
+            gacha_currency += (int) Math.Floor(gc*ratio);
             return (energy:spent_energy + Global.baseValues.free_energy_not_used_for_each_action*ratio, gc);
         }
 
-        public void GetXP(uint _xp)
+        public void GetXP(int _xp)
         {
             xp += _xp;
             if(xp >= XpToLvlUp){
                 xp -= XpToLvlUp;
-                uint temp_xp = xp;
+                int temp_xp = xp;
                 lvl++; 
                 xp = 0;
                 GetXP(temp_xp);
@@ -146,18 +146,18 @@ namespace Nanina.UserData
             }
         }
 
-        public void ActivityTimeout(ulong activityId)
+        public void ActivityTimeout(long activityId)
         {
-            foreach(var activity in activities)
+            foreach (var activity in activities)
             {
-                if(activity.id == activityId)
+                if (activity.id == activityId)
                 {
                     //if cafe...
                     var session = DBUtils.Get<Session>(session => session.id == activeSessionId)!;
-                    
+
                     activity.OnTimeout(this);
 
-                    if(session.webSocketId is not null)
+                    if (session.webSocketId is not null)
                     {
                         Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                         {
@@ -171,5 +171,10 @@ namespace Nanina.UserData
             }
             Console.Error.WriteLine($"ActivityTimer finished with no associated activity, userId:{Id}, activityId:{activityId}");
         }
+
+        /*public User() {}
+        
+        public User(BsonDocument bson){}
+        */
     }
 }

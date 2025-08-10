@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Nanina
 {
     public static class Global {
-        public static readonly Dictionary<ulong, System.Timers.Timer> activityTimers = [];
+        public static readonly Dictionary<long, System.Timers.Timer> activityTimers = [];
         public static readonly Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../config.json"))!;
         public static readonly Dictionary<string, Banner> banners =  JsonConvert.DeserializeObject<Dictionary<string, Banner>>(File.ReadAllText(Global.config.banners_storage_path))!;
         public static readonly List<Waifu> waifus = JsonConvert.DeserializeObject<List<Waifu>>(File.ReadAllText("../save/waifu.json"))!;

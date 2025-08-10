@@ -3,6 +3,6 @@ namespace Nanina.UserData
     public class CompletedResearch
     {
         public required string id { get; set; }
-        public byte amount { get; set; } = 1;
+        public short amount { get; set; } = 1;
     }
 }

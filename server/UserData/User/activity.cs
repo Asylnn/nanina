@@ -16,11 +16,11 @@ namespace Nanina.UserData
 
     public class Activity
     {
-        public ulong id { get; set; } = Utils.CreateIdUlong();
-        public ulong timestamp { get; set; } = Utils.GetTimestamp();
+        public long id { get; set; } = Utils.CreateIdLong();
+        public long timestamp { get; set; } = Utils.GetTimestamp();
         public bool finished { get; set; } = false;
         public required ActivityType type { get; set; }
-        public ulong Timeout 
+        public long Timeout 
         {
             set 
             {
@@ -28,8 +28,8 @@ namespace Nanina.UserData
                 originalTimeout = value;
             } 
         }
-        public ulong originalTimeout { get; set; }
-        public ulong timeout { get; set; }
+        public long originalTimeout { get; set; }
+        public long timeout { get; set; }
         public required string waifuID { get; set; }
         public List<Loot> loot { get; set; } = [];
         public string? researchID { get; set; }
@@ -61,7 +61,7 @@ namespace Nanina.UserData
         private void OnCafeTimeout(Waifu waifu)
         {
             var statRandomness = Utils.RandomMultiplicator(Global.baseValues.cafe_reward_randomness);
-            var money = (uint) Math.Ceiling((waifu.Kaw + waifu.Luck)*statRandomness);
+            var money = (int) Math.Ceiling((waifu.Kaw + waifu.Luck)*statRandomness);
             var loot = new Loot()
             {
                 lootType = LootType.Money,
@@ -75,7 +75,7 @@ namespace Nanina.UserData
             foreach(int tier in Enumerable.Range(1,4))
             {
                 var statRandomness = Utils.RandomMultiplicator(Global.baseValues.cafe_reward_randomness);
-                var miningPower = (uint) Math.Ceiling((waifu.Str + waifu.Luck)*statRandomness);
+                var miningPower = (int) Math.Ceiling((waifu.Str + waifu.Luck)*statRandomness);
                 
                 double qty = tier switch
                 {
@@ -95,7 +95,7 @@ namespace Nanina.UserData
                     loot.Add(new ()
                     {
                         lootType = LootType.Item,
-                        amount = (ushort)wholeQty,
+                        amount = (short)wholeQty,
                         item = Utils.DeepCopyReflection(Global.items.Find(item => item.id == 5 + tier))!,
                     });
                 }
@@ -149,14 +149,14 @@ namespace Nanina.UserData
             }
         }
 
-        public static ulong GetResearchTimeout(Waifu waifu, double cost)
+        public static long GetResearchTimeout(Waifu waifu, double cost)
         {
-            return (ulong) (cost / (waifu.Int + waifu.Luck) * 3600d  /*1000d*/);
+            return (long) (cost / (waifu.Int + waifu.Luck) * 3600d  /*1000d*/);
         }
 
-        public static ulong GetCraftingTimeout(Waifu waifu, double cost)
+        public static long GetCraftingTimeout(Waifu waifu, double cost)
         {
-            return (ulong) (cost / (waifu.Dex + waifu.Luck) * 1800d * 1000d);
+            return (long) (cost / (waifu.Dex + waifu.Luck) * 1800d * 1000d);
         }
         
     }

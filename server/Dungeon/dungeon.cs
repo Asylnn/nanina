@@ -23,12 +23,12 @@ namespace Nanina.Dungeon
         /*
             The code should allow for any game in the future
         */
-        public ulong instanceId;
+        public long instanceId;
         public Template template;
         public string userId;
         public string sessionId;
         public List<Waifu> waifus;
-        public ulong timestamp = Utils.GetTimestamp();
+        public long timestamp = Utils.GetTimestamp();
         public List<DungeonLog> log = [];
         public double health; 
         public double maxHealth;
@@ -37,7 +37,7 @@ namespace Nanina.Dungeon
         public byte floor;
         public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
 
-        public ActiveDungeon(Template dungeon, string _userId, List<Waifu> EquippedWaifus, string _sessionId, ulong _instanceId, byte floor)
+        public ActiveDungeon(Template dungeon, string _userId, List<Waifu> EquippedWaifus, string _sessionId, long _instanceId, byte floor)
         {
             instanceId = _instanceId;
             sessionId = _sessionId;

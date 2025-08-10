@@ -136,7 +136,7 @@ namespace Nanina.Communication
             if(baseXP == 0) return;
 
             var (spent_energy, gc) = user.SpendEnergy(ratio);
-            var xp = (uint) Math.Ceiling(baseXP*spent_energy/25);
+            var xp = (int) Math.Ceiling(baseXP*spent_energy/25);
             waifu.GiveXP(xp);
             user.fight.completed = true;
             if(user.fightHistory.ContainsKey(user.fight.game))
@@ -290,7 +290,7 @@ namespace Nanina.Communication
                 {
                     Console.WriteLine("individual time save (milli)");
                     Console.WriteLine(totalTimeSave);
-                    activity.timeout = (ulong) Math.Max(0, activity.timeout - totalTimeSave);
+                    activity.timeout = (long) Math.Max(0, activity.timeout - totalTimeSave);
                     //To avoid integer overflow
                     if(activity.timestamp + activity.timeout + 100 <= Utils.GetTimestamp())
                         timer.Interval = 100;

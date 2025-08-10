@@ -34,8 +34,8 @@ namespace Nanina.Communication
 
         public class CraftingRequest
         {
-            public ushort id;
-            public ushort quantity;
+            public short id;
+            public short quantity;
         }
 
         public class ClientCraftingRequest
@@ -232,7 +232,7 @@ namespace Nanina.Communication
             if(session == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
 
-            var activityIndex = user.activities.FindIndex(activity => activity.id == Convert.ToUInt64(rawData.data));
+            var activityIndex = user.activities.FindIndex(activity => activity.id == Convert.ToInt64(rawData.data));
             if(activityIndex == -1)
                 {Send(ClientNotification.NotificationData("Dungeon", "There is no activity with that id", 1)); return ;}
             var activity = user.activities[activityIndex];
@@ -261,7 +261,7 @@ namespace Nanina.Communication
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user is null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
-            var activity = user.activities.Find(activity => activity.id == Convert.ToUInt64(rawData.data));
+            var activity = user.activities.Find(activity => activity.id == Convert.ToInt64(rawData.data));
             if(activity is null)
                 {Send(ClientNotification.NotificationData("Dungeon", "There is no activity with that id", 1)); return ;}
             if(activity.finished)

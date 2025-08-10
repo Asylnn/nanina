@@ -17,7 +17,7 @@ namespace Nanina.Communication
     public class Loot
     {
         public LootType lootType { get; set; }
-        public uint amount { get; set; }
+        public int amount { get; set; }
         public Item? item { get; set; }
 
         public static void GrantLoot(List<Loot> loots, User user)
@@ -47,7 +47,7 @@ namespace Nanina.Communication
     public class LiteLoot
     {
         public LootType lootType;
-        public uint amount;
+        public int amount;
         public ushort? itemId;
     }
 }

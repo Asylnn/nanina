@@ -2,8 +2,8 @@ namespace Nanina.Crafting
 {
     public class CraftIngredient
     {
-        public ushort id {get; set;}
-        public ushort quantity {get; set;}
+        public short id {get; set;}
+        public short quantity {get; set;}
         public void Test()
         {
             Console.WriteLine("TEST IS FLAWLESS"); 
@@ -12,9 +12,9 @@ namespace Nanina.Crafting
     }
     public class Craft
     {
-        public ushort id {get; set;}
-        public uint moneyCost {get; set;}
-        public uint timeCost {get; set;}
+        public short id {get; set;}
+        public int moneyCost {get; set;}
+        public int timeCost {get; set;}
         public List<CraftIngredient> ingredients { get; set; } = [];
         public List<CraftIngredient> results {get; set;} = [];
     }

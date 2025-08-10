@@ -18,9 +18,9 @@ namespace Nanina.UserData.ItemData
     {
         public new ItemType type {get; set;} = ItemType.Equipment;
         public required Modifier stat {get; set;}
-        public ushort setId {get; set;}
+        public short setId {get; set;}
         public EquipmentPiece piece {get; set;}
-        public byte lvl {get; set;}
+        public short lvl {get; set;}
         public required List<EquipmentAttribute> attributes {get; set;}
 
         public static IEnumerable<Equipment> CreateEquipmentsForDungeon(ActiveDungeon dungeon, ushort numberOfEquipments)

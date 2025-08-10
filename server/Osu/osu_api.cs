@@ -50,7 +50,7 @@ namespace Nanina.Osu
             var response = await new RestClient().ExecutePostAsync(request);
             if(response.IsSuccessStatusCode == false) return;
             tokens = JsonConvert.DeserializeObject<OAuthTokens>(response.Content!)!;
-            tokens.expiration_timestamp = Utils.GetTimestamp() + (ulong) (tokens.expires_in - 3600)*1000;
+            tokens.expiration_timestamp = Utils.GetTimestamp() + (tokens.expires_in - 3600)*1000;
             File.WriteAllText(Global.config.osu_tokens_storage_path, JsonConvert.SerializeObject(tokens));
             Console.WriteLine("updated osu tokens");
         }
@@ -272,7 +272,7 @@ namespace Nanina.Osu
             if(response.IsSuccessful)
             {
                 chat_tokens =  JsonConvert.DeserializeObject<OAuthTokens>(response.Content!)!;
-                chat_tokens.expiration_timestamp = Utils.GetTimestamp() + (ulong) (tokens.expires_in - 3600)*1000;
+                chat_tokens.expiration_timestamp = Utils.GetTimestamp() + (tokens.expires_in - 3600)*1000;
                 File.WriteAllText(Global.config.osu_chat_tokens_storage_path, JsonConvert.SerializeObject(chat_tokens));
             }
         }

@@ -5,31 +5,31 @@ namespace Nanina.UserData.WaifuData
 {
     public class Waifu
     {
-        public uint xp { get; set; } = 0;
-        public byte lvl { get; set; } = 1;
+        public int xp { get; set; } = 0;
+        public short lvl { get; set; } = 1;
         public float diffLvlUp { get; set; }
         public required string id { get; set; }
         public required string imgPATH { get; set; }
         public WaifuEquipmentManager equipment { get; set; } = new ();
         public bool isDoingSomething { get; set; } = false;
-        public ushort o_str { get; set; }
-        public ushort u_str { get; set; }
-        public uint b_str { get; set; }
-        public ushort o_luck { get; set; }
-        public ushort u_luck { get; set; }
-        public uint b_luck { get; set; }
-        public ushort o_kaw { get; set; }
-        public ushort u_kaw { get; set; }
-        public uint b_kaw { get; set; }
-        public ushort o_int { get; set; }
-        public ushort u_int { get; set; }
-        public uint b_int { get; set; }
-        public uint b_agi { get; set; }
-        public ushort o_agi { get; set; }
-        public ushort u_agi { get; set; }
-        public uint b_dex { get; set; }
-        public ushort o_dex { get; set; }
-        public ushort u_dex { get; set; }
+        public short o_str { get; set; }
+        public short u_str { get; set; }
+        public int b_str { get; set; }
+        public short o_luck { get; set; }
+        public short u_luck { get; set; }
+        public int b_luck { get; set; }
+        public short o_kaw { get; set; }
+        public short u_kaw { get; set; }
+        public int b_kaw { get; set; }
+        public short o_int { get; set; }
+        public short u_int { get; set; }
+        public int b_int { get; set; }
+        public int b_agi { get; set; }
+        public short o_agi { get; set; }
+        public short u_agi { get; set; }
+        public int b_dex { get; set; }
+        public short o_dex { get; set; }
+        public short u_dex { get; set; }
         public double Dex {
             get => ApplyModificators(b_dex, StatModifier.DEX);
         }
@@ -63,18 +63,18 @@ namespace Nanina.UserData.WaifuData
         public double CritDamage {
             get => ApplyModificators(0.50f + Dex/400, StatModifier.CritDamage); 
         }
-        public byte stars { get; set; }
-        private uint XpToLvlUp
+        public short stars { get; set; }
+        private int XpToLvlUp
         {
-            get => (uint) Math.Ceiling(50d + 10d*lvl + 0.5d*Math.Pow(lvl, 2));
+            get => (int) Math.Ceiling(50d + 10d*lvl + 0.5d*Math.Pow(lvl, 2));
         }
 
-        public void GiveXP(uint _xp)
+        public void GiveXP(int _xp)
         {
             xp += _xp;
             if(xp >= XpToLvlUp){
                 xp -= XpToLvlUp;
-                uint temp_xp = xp;
+                int temp_xp = xp;
                 LevelUp();
                 xp = 0;
                 GiveXP(temp_xp);
@@ -96,22 +96,22 @@ namespace Nanina.UserData.WaifuData
             imgPATH = DBwaifu.imgPATH;
             o_str = DBwaifu.o_str;
             u_str = DBwaifu.u_str;
-            b_str = o_str + (lvl-1u)*u_str;
+            b_str = o_str + (lvl-1)*u_str;
             o_kaw = DBwaifu.o_kaw;
             u_kaw = DBwaifu.u_kaw;
-            b_kaw = o_kaw + (lvl-1u)*u_kaw;
+            b_kaw = o_kaw + (lvl-1)*u_kaw;
             o_dex = DBwaifu.o_dex;
             u_dex = DBwaifu.u_dex;
-            b_dex = o_dex + (lvl-1u)*u_dex;
+            b_dex = o_dex + (lvl-1)*u_dex;
             o_agi = DBwaifu.o_agi;
             u_agi = DBwaifu.u_agi;
-            b_agi = o_agi + (lvl-1u)*u_agi;
+            b_agi = o_agi + (lvl-1)*u_agi;
             o_int = DBwaifu.o_int;
             u_int = DBwaifu.u_int;
-            b_int = o_int + (lvl-1u)*u_int;
+            b_int = o_int + (lvl-1)*u_int;
             o_luck = DBwaifu.o_luck;
             u_luck = DBwaifu.u_luck;
-            b_luck = o_luck + (lvl-1u)*u_luck;
+            b_luck = o_luck + (lvl-1)*u_luck;
         }
 
         public Equipment? Equip(Equipment newEquipment)

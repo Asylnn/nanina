@@ -7,7 +7,7 @@ namespace Nanina.Activities
 {
     class ActivityTimer : System.Timers.Timer
     {
-        public required ulong activityId;
+        public required long activityId;
         public required string userId;
 
         public ActivityTimer(double interval) : base(interval)

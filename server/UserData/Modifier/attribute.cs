@@ -2,8 +2,8 @@ namespace Nanina.UserData.ModifierData
 {
     public class EquipmentAttribute 
     {
-        public byte tier {get; set;}
-        public ushort id {get; set;}
+        public short tier {get; set;}
+        public short id {get; set;}
         public required List<Modifier> modifiers { get; set; }
     }
 }

@@ -78,7 +78,7 @@ namespace Nanina.Communication
             if(session == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
 
-            var dungeon = DungeonManager.activeDungeons[Convert.ToUInt64(rawData.data)];
+            var dungeon = DungeonManager.activeDungeons[Convert.ToInt64(rawData.data)];
             if(dungeon == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You are not in a dungeon", 1)); return ;}
             // I don't know if this is trully necessary but It's just costing me a few minutes anyways
@@ -107,7 +107,7 @@ namespace Nanina.Communication
             if(score is null) return;
             var mult = Osu.Api.GetDungeonMult(score);
 
-            var dungeon = DungeonManager.activeDungeons[Convert.ToUInt64(rawData.data)];
+            var dungeon = DungeonManager.activeDungeons[Convert.ToInt64(rawData.data)];
             dungeon.DealDamage(mult);
             DungeonManager.UpdateDungeonOfClient(dungeon);
         }

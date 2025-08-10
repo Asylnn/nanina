@@ -7,8 +7,8 @@ namespace Nanina.Gacha
     }
     public class Banner {
         public required string id;
-        public ushort pityAmount;
-        public ushort pullCost;
+        public short pityAmount;
+        public short pullCost;
         public required List<BannerPoolElement> standardPool;
         public required List<BannerPoolElement> pityPool;
     }

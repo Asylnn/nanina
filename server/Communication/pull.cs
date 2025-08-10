@@ -34,7 +34,7 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("Pulling", "You can't pull a different amount of 1 or 10 times", 1)); return;}
 
 
-            user.gacha_currency -= (uint)bannerCost;
+            user.gacha_currency -= bannerCost;
 
             if(user.pullBannerHistory.ContainsKey(banner.id) == false) 
             {
@@ -93,7 +93,7 @@ namespace Nanina.Communication
             }
 
             /*get item db to find one item?*/
-            var baseItem = Global.items.Find(item => item.id == 50_000); //Item id for waifu essence
+            var baseItem = Global.items.Find(item => item.id == 10_000); //Item id for waifu essence
             foreach(var waifu in alreadyOwnedWaifus){
                 var item = Utils.DeepCopyReflection(baseItem)!; 
                 item.id += Convert.ToUInt16(waifu.id);
