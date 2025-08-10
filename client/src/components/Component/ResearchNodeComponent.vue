@@ -69,6 +69,10 @@ export default {
                 activityType: ActivityType.Research
             }
             this.SendToServer(ClientResponseType.SendWaifuToActivity, JSON.stringify(u), this.user.Id)
+        },
+        cancelResearch()
+        {
+            this.SendToServer(ClientResponseType.CancelActivity, this.activity!.id.toString(), this.user.Id)
         }
     },
     components: {
@@ -98,7 +102,7 @@ export default {
             </div>
             <button v-if="activity == null" class="smallbutton nnnbutton" id="sendbutton"
                 @click="sendWaifuToResearch()">send waifu</button>
-            <button v-else-if="! activity.finished" class="smallbutton nnnbutton" id="sendbutton">cancel</button>
+            <button v-else-if="! activity.finished" class="smallbutton nnnbutton" id="sendbutton"  @click="cancelResearch()">cancel</button>
             <button v-else class="smallbutton nnnbutton" id="sendbutton" @click="getActivityClaim()">finish</button>
         </div>
 

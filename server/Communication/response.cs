@@ -141,6 +141,9 @@ namespace Nanina.Communication
                 case ClientResponseType.CheckContinuousFight:
                     CheckContinuousFight(rawData);
                     break;
+                case ClientResponseType.CancelActivity:
+                    CancelActivity(rawData);
+                    break;
             }
         }
 

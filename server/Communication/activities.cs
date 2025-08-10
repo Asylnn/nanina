@@ -255,5 +255,27 @@ namespace Nanina.Communication
                 data = JsonConvert.SerializeObject(user) 
             }));
         }
+
+        protected void CancelActivity(ClientWebSocketResponse rawData)
+        {
+            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
+            if(user is null)
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
+            var activity = user.activities.Find(activity => activity.id == Convert.ToUInt64(rawData.data));
+            if(activity is null)
+                {Send(ClientNotification.NotificationData("Dungeon", "There is no activity with that id", 1)); return ;}
+            if(activity.finished)
+                {Send(ClientNotification.NotificationData("Dungeon", "This activity is already finished", 1)); return ;}
+            user.waifus.Find(waifu => waifu.id == activity.waifuID)!.isDoingSomething = false;
+            user.activities.Remove(activity);
+            Global.activityTimers[activity.id].Dispose();
+            Global.activityTimers.Remove(activity.id);
+
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = ServerResponseType.ProvideUser,
+                data = JsonConvert.SerializeObject(user) 
+            }));
+        }
     }
 }

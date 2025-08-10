@@ -38,6 +38,7 @@ namespace Nanina.Communication
         UpdateUserInventory,
         BecomeAdmin,
         ClaimActivity,
+        CancelActivity,
     }
     public class ClientWebSocketResponse
     {
