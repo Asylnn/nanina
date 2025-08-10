@@ -3,6 +3,7 @@
 import Game from '@/classes/user/game';
 import User from '@/classes/user/user';
 import config from '../../../../config.json'
+import ClientResponseType from '@/classes/client_response_type';
 
 /*
 Theme
@@ -58,26 +59,26 @@ export default {
         },
         onChangePreferedGame(){
             this.user.preferedGame = this.selected_prefered_game
-            this.SendToServer("update prefered game", (+this.selected_prefered_game).toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.UpdatePreferedGame, (+this.selected_prefered_game).toString(), this.user.Id)
         },
         updateSettings(){
             this.request = true
-            this.SendToServer("update osu id", this.entered_id.toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.UpdateOsuId, this.entered_id.toString(), this.user.Id)
         },
         verifyOsuId(){
-            this.SendToServer("verify osu id", this.code.toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.VerifyOsuId, this.code.toString(), this.user.Id)
         },
         verifyMaimaiToken(){
-            this.SendToServer("verify maimai token", this.entered_token.toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.VerifyMaimaiToken, this.entered_token.toString(), this.user.Id)
         },
         async Disconect(){
-            this.SendToServer("disconect", "", this.user.Id)
+            this.SendToServer(ClientResponseType.Logout, "", this.user.Id)
             await new Promise(r => setTimeout(r, 200));
             location.href = "/"
         },
         AddAdmin()
         {
-            this.SendToServer("become admin", "", this.user.Id)
+            this.SendToServer(ClientResponseType.BecomeAdmin, "", this.user.Id)
         }
     }
 }

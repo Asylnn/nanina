@@ -7,6 +7,7 @@ import type Dictionary from '@/classes/dictionary';
 import User from '@/classes/user/user';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import type { PropType } from 'vue';
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name : "PullPage",
@@ -48,7 +49,7 @@ export default {
             this.showing_history = !this.showing_history
         },
         pull(pullAmount: number){
-            this.SendToServer("pull request", JSON.stringify({bannerId:this.selected_banner.id, pullAmount:pullAmount}), this.user.Id)
+            this.SendToServer(ClientResponseType.GetPullResults, JSON.stringify({bannerId:this.selected_banner.id, pullAmount:pullAmount}), this.user.Id)
             console.log("J'ai pull")
             this.count = 0
             this.focusedView = true

@@ -62,7 +62,7 @@ namespace Nanina.Communication
             Send(ClientNotification.NotificationData("Update osu ID", "You successfully modified your osu id!", 1));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
         }
@@ -102,7 +102,7 @@ namespace Nanina.Communication
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
         }
@@ -149,7 +149,7 @@ namespace Nanina.Communication
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
         }
@@ -174,7 +174,7 @@ namespace Nanina.Communication
             Send(ClientNotification.NotificationData("Update Maimai token", "You successfully modified your maimai token!", 1));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
         }
@@ -201,7 +201,7 @@ namespace Nanina.Communication
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
         }
@@ -233,7 +233,7 @@ namespace Nanina.Communication
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
 

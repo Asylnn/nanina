@@ -4,6 +4,8 @@ import { WebsocketEvent, type Websocket } from 'websocket-ts';
 import type WebSocketReponse from '@/classes/web_socket_response'
 import type Loot from '@/classes/loot/loot';
 import LootComponent from '@/components/Component/LootComponent.vue';
+import ClientResponseType from '@/classes/client_response_type';
+import ServerResponseType from '@/classes/server_response_type';
 
 export default {
     name : "TreePage",
@@ -28,7 +30,7 @@ export default {
 			console.log(`received message: ${ev.data}`);
 			var res : WebSocketReponse = JSON.parse(ev.data)
 			switch (res.type) {
-                case "user level rewards":
+                case ServerResponseType.ProvideLevelRewardsData:
                     this.user_level_rewards = JSON.parse(res.data)
                     console.log("USER REWARDS")
                     console.log(res.data)
@@ -37,7 +39,7 @@ export default {
             }
         })
         
-        this.SendToServer("get possible user level up loot", "", this.user.Id)
+        this.SendToServer(ClientResponseType.GetLevelRewardsData, "", this.user.Id)
     },
     methods:
     {
@@ -91,7 +93,7 @@ export default {
         {
             if(this.checkRewardAvailability(lvl))
             {
-                this.SendToServer("get level reward", `${lvl+2}`, this.user.Id)
+                this.SendToServer(ClientResponseType.GetLevelRewards, `${lvl+2}`, this.user.Id)
             }
         }
     }

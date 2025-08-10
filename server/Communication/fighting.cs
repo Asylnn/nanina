@@ -27,7 +27,7 @@ namespace Nanina.Communication
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "map link",
+                type = ServerResponseType.ProvideMapData,
                 data = JsonConvert.SerializeObject(map)
             }));
         }
@@ -38,7 +38,7 @@ namespace Nanina.Communication
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "maimai link",
+                type = ServerResponseType.ProvideMaimaiChartData,
                 data = JsonConvert.SerializeObject(chart)
             }));
             user.fight = new Fight
@@ -164,14 +164,14 @@ namespace Nanina.Communication
             
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "fighting results",
+                type = ServerResponseType.ProvideFightResults,
                 data = xp.ToString()
             }));
 
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
             
@@ -198,7 +198,7 @@ namespace Nanina.Communication
             }
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "map link",
+                type = ServerResponseType.ProvideMapData,
                 data = JsonConvert.SerializeObject(map)
             }));
             user.fight = new Fight 
@@ -311,7 +311,7 @@ namespace Nanina.Communication
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
 

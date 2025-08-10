@@ -6,6 +6,7 @@ import ModifierComponent from './ModifierComponent.vue';
 import GridDisplayComponent from './GridDisplayComponent.vue';
 import Modifier from '@/classes/modifiers/modifiers';
 import config from '../../../../baseValues.json'
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name : "ItemComponent",
@@ -45,7 +46,7 @@ export default {
         upgrade()
         {
             console.log(this.userID)
-            this.SendToServer("upgrade equipment", this.item.inventoryId.toString(), this.userID!)
+            this.SendToServer(ClientResponseType.UpgradeEquipment, this.item.inventoryId.toString(), this.userID!)
         },
         lvlStarsCSS(upgrade : boolean = false)
         {

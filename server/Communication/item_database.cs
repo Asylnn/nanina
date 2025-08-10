@@ -77,7 +77,7 @@ namespace Nanina.Communication
             
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user level rewards",
+                type = ServerResponseType.ProvideLevelRewardsData,
                 data = JsonConvert.SerializeObject(Global.userLevelRewards) 
             }));
             

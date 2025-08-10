@@ -52,6 +52,8 @@ import LootType from './classes/loot/loot_type'
 import ResearchNode from './classes/research/research_nodes'
 import Craft from './classes/crafting/craft'
 import type Dictionary from './classes/dictionary'
+import ClientResponseType from './classes/client_response_type'
+import ServerResponseType from './classes/server_response_type'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -110,7 +112,7 @@ export default {
 		updateTheme(theme : string) {
 			this.user.theme = theme
 			if (this.logged) {
-				this.SendToServer("update theme", theme, this.user.Id)
+				this.SendToServer(ClientResponseType.UpdateTheme, theme, this.user.Id)
 
 				
 			}
@@ -138,10 +140,10 @@ export default {
 		const queryParams = new URLSearchParams(url.search);
 		if(queryParams.has("code")){
 			var code = queryParams.get("code") + ""
-			this.SendToServer("connect with discord", queryParams.get("code")!, null)
+			this.SendToServer(ClientResponseType.ConnectWithDiscord, queryParams.get("code")!, null)
 		}
 		else 
-			this.SendToServer("get session id", "", null)
+			this.SendToServer(ClientResponseType.GetSession, "", null)
 		
 		
 		
@@ -149,7 +151,7 @@ export default {
 			//console.log(`received message: ${ev.data}`);
 			var res : WebSocketReponse = JSON.parse(ev.data)
 			switch (res.type) {
-				case "session" :
+				case ServerResponseType.ProvideSession :
 					let session = JSON.parse(res.data)
 					$cookies.set("session_id", session.id)
 					console.log("session : ")
@@ -157,7 +159,7 @@ export default {
 					if(!this.localeSetByUser)
 						this.$i18n.locale = session.locale
 					break
-				case "user" :
+				case ServerResponseType.ProvideUser :
 					this.logged = true
 					this.user = new User(JSON.parse(res.data))
 					console.log("user : ")
@@ -170,21 +172,21 @@ export default {
 						this.SendToServer("request waifu db", "",this.user.Id)
 					}*/
 					break
-				case "map link" :
+				case ServerResponseType.ProvideMapData :
 					this.fighting = true
 					this.beatmap = JSON.parse(res.data)
 					this.link = 'https://osu.ppy.sh/beatmapsets/'+this.beatmap.beatmapset_id+'#'+this.beatmap.mode+'/'+this.beatmap.id
 					//this.notifs.push(new Notification("Fight", "You started a fight with the following beatmap! " + this.link, NotificationSeverity.Notification))
 					break
-				case "maimai link" :
+				case ServerResponseType.ProvideMaimaiChartData :
 					this.fighting = true
 					this.maimai_chart = JSON.parse(res.data)
 					break
-				case "fighting results" :
+				case ServerResponseType.ProvideFightResults :
 					this.fighting = false 
 					this.xp = res.data
 					break
-				case "waifu db" :
+				case ServerResponseType.ProvideWaifuDB :
 					let waifus = JSON.parse(res.data)
 					console.log("WAIFU DATABASE")
 					waifus.forEach((waifu:Waifu) => {
@@ -192,59 +194,59 @@ export default {
 					});
 					console.log(this.all_waifus)
 					break
-				case "item db" :
+				case ServerResponseType.ProvideItemDB :
 					this.item_db = JSON.parse(res.data)
 					console.log("ITEM DATABASE")
 					console.log(this.item_db)
 					break
-				case "equipment db" :
+				case ServerResponseType.ProvideEquipmentDB :
 					this.equipment_db = JSON.parse(res.data)
 					console.log("EQUIPMENT DATABASE")
 					console.log(this.equipment_db)
 					break
-				case "set db" :
+				case ServerResponseType.ProvideSetDB :
 					this.set_db = JSON.parse(res.data)
 					console.log("SET DATABASE")
 					console.log(this.item_db)
 					break
-				case "get banners":
+				case ServerResponseType.ProvideBanners:
 					this.banners = JSON.parse(res.data)
 					console.log("Banners data : ")
 					console.log(this.banners)
 					break
-				case "notification":
+				case ServerResponseType.Notification:
 					let notification = Object.assign(new Notification("","",0), JSON.parse(res.data))
 					this.notifs.push(notification)
 					break
-				case "pull results":
+				case ServerResponseType.ProvidePullResults:
 					this.pulled_waifus = JSON.parse(res.data)
 					console.log("Pulled Waifus data : ")
 					console.log(this.pulled_waifus)
 					break
-				case "get dungeons":
+				case ServerResponseType.ProvideDungeons:
 					this.dungeons = JSON.parse(res.data)
 					console.log("Dungeon data : ")
 					console.log(this.dungeons)
 					break
-				case "get research nodes":
+				case ServerResponseType.ProvideResearchNodes:
 					this.researchNodes = JSON.parse(res.data)
 					this.researchNodes = this.researchNodes.map(rn => Object.assign(new ResearchNode, rn))
 					console.log("research node data : ")
 					console.log(this.researchNodes)
 					break
-				case "get crafting recipes":
+				case ServerResponseType.ProvideCraftingRecipes:
 					this.craftingRecipes = JSON.parse(res.data)
 					this.craftingRecipes = this.craftingRecipes.map(rn => Object.assign(new Craft, rn))
 					console.log("crafting recipes data : ")
 					console.log(this.craftingRecipes)
 					break
-				case "get active dungeon":
+				case ServerResponseType.ProvideActiveDungeon:
 					this.inside_dungeon = true;
 					console.log("ACTIVE DUNGEON")
 					console.log(this.active_dungeon)
 					this.active_dungeon = JSON.parse(res.data)
 					break
-				case "loot":
+				case ServerResponseType.ProvideLoot:
 					this.loots.push(JSON.parse(res.data))
 					this.loots.forEach(arr => {
 						arr.forEach(loot => {

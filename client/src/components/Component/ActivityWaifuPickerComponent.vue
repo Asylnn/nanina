@@ -2,6 +2,7 @@
 import User from '@/classes/user/user';
 import ActivityType from '@/classes/user/activity_type';
 import Waifu from '@/classes/waifu/waifu';
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name : "ActivityWaifuPickerComponent",
@@ -29,7 +30,7 @@ export default {
         sendWaifuToActivity()
         {
             if(this.activityType != ActivityType.Crafting)
-                this.SendToServer("send waifu to activity", JSON.stringify({"waifuID": this.selectedWaifu!.id, "activityType":this.activityType}), this.user.Id)
+                this.SendToServer(ClientResponseType.SendWaifuToActivity, JSON.stringify({"waifuID": this.selectedWaifu!.id, "activityType":this.activityType}), this.user.Id)
             
             else
                 this.$emit("start-crafting-activity")

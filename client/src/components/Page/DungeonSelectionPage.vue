@@ -4,6 +4,7 @@ import User from '@/classes/user/user';
 import type Waifu from '@/classes/waifu/waifu';
 import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name : "DungeonSelectionPage",
@@ -43,7 +44,7 @@ export default {
         EnterDungeon(){
             this.is_fighting_a_dungeon = true
             let waifuIds = this.waifuSelection.map(waifu => waifu!.id)
-            this.SendToServer("start dungeon", JSON.stringify({id:this.selected_dungeon, waifuIds:waifuIds, floor:this.selected_floor}), this.user.Id)
+            this.SendToServer(ClientResponseType.StartDungeon, JSON.stringify({id:this.selected_dungeon, waifuIds:waifuIds, floor:this.selected_floor}), this.user.Id)
         },
         unequip(selectNumber : number, e : Event)
         {

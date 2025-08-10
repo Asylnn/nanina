@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace Nanina.Communication
 {
+    
     partial class WS : WebSocketBehavior
     {
         //static private List<WS> webSocketConnections = [];
@@ -42,112 +43,102 @@ namespace Nanina.Communication
 
                 //Recieve a request from the client to get a user from a sessionId stored in cookies.
                 //It check the database for that sessionId and return, if found, the user associated with that session ID.
-                case "update theme": 
+                case ClientResponseType.UpdateTheme: 
                     UpdateTheme(rawData);
                     break;
                 
-                case "update osu id":  
+                case ClientResponseType.UpdateOsuId:  
                     UpdateOsuId(rawData);
                     break;
-
-                /*case "request waifu db" :
-                    ProvideWaifuDatabase(rawData);
-                    break;
-                case "request item db" :
-                    ProvideItemDatabase(rawData);
-                    break;
-                case "request set db":
-                    ProvideSetDatabase(rawData);
-                    break;*/
-                case "change locale":
+                case ClientResponseType.UpdateLocale:
                     UpdateLocale(rawData);
                     break;
-                case "update prefered game":
+                case ClientResponseType.UpdatePreferedGame:
                     UpdatePreferedGame(rawData);
                     break;
-                case "update waifu db": 
+                case ClientResponseType.UpdateWaifuDB: 
                     UpdateWaifuDatabase(rawData);
                     break;
-                case "update item db": 
+                case ClientResponseType.UpdateItemDB: 
                     UpdateItemDatabase(rawData);
                     UpdateEquipmentDatabase(rawData);
                     break;
-                case "update set db":
+                case ClientResponseType.UpdateSetDB:
                     UpdateSetDatabase(rawData);
                     break;
-                case "get map to fight": 
+                case ClientResponseType.StartFight: 
                     StartFight(rawData);
                     break;
-                case "claim fight":
+                case ClientResponseType.ClaimFight:
                     ClaimFight(rawData);
                     break;
-                case "get session id":
+                case ClientResponseType.GetSession:
                     ProvideSessionToClient(rawData);
                     break;
-                case "add beatmap with id": 
+                case ClientResponseType.AddBeatmap: 
                     AddMapToDatabase(rawData);
                     break;
-                case "connect with discord":
+                case ClientResponseType.ConnectWithDiscord:
                     DiscordLogin(rawData);
                     break;
-                case "pull request":
+                case ClientResponseType.GetPullResults:
                     Pull(rawData);
                     break;
-                case "verify osu id":
+                case ClientResponseType.VerifyOsuId:
                     VerifyOsuId(rawData);
                     break;
-                case "get map back":
+                case ClientResponseType.GetMapData:
                     SendMapToClient(rawData);
                     break;
-                case "start dungeon":
+                case ClientResponseType.StartDungeon:
                     StartDungeon(rawData);
                     break;
-                case "stop dungeon":
+                case ClientResponseType.StopDungeon:
                     StopDungeon(rawData);
                     break;
-                case "unequip item":
+                case ClientResponseType.UnequipItem:
                     UnequipItem(rawData);
                     break;
-                case "disconect":
+                case ClientResponseType.Logout:
                     Disconnect(rawData);
                     break;
-                case "equip item":
+                case ClientResponseType.EquipItem:
                     EquipItem(rawData);
                     break;
-                case "verify maimai token":
+                case ClientResponseType.VerifyMaimaiToken:
                     VerifyMaimaiToken(rawData);
                     break;
-                case "get possible user level up loot":
+                case ClientResponseType.GetLevelRewardsData:
                     GetLevelRewards(rawData);
                     break;
-                case "get level reward":
+                case ClientResponseType.GetLevelRewards:
                     GetReward(rawData);
                     break;
-                case "use user consumable":
+                case ClientResponseType.UseUserConsumable:
                     UseUserConsumable(rawData);
                     break;
-                case "update user waifus":
+                case ClientResponseType.UpdateUserWaifu:
                     UpdateUserWaifus(rawData);
                     break;
-                case "claim dungeon fight":
+                case ClientResponseType.ClaimDungeonFight:
                     ClaimDungeonFight(rawData);
                     break;
-                case "update user inventory":
+                case ClientResponseType.UpdateUserInventory:
                     UpdateUserInventory(rawData);
                     break;
-                case "upgrade equipment":
+                case ClientResponseType.UpgradeEquipment:
                     UpgradeEquipment(rawData);
                     break;
-                case "become admin":
+                case ClientResponseType.BecomeAdmin:
                     BecomeAdmin(rawData);
                     break;
-                case "send waifu to activity":
+                case ClientResponseType.SendWaifuToActivity:
                     SendWaifuToActivity(rawData);
                     break;
-                case "claim activity":
+                case  ClientResponseType.ClaimActivity:
                     ClaimActivity(rawData);
                     break;
-                case "continuous fight":
+                case ClientResponseType.CheckContinuousFight:
                     CheckContinuousFight(rawData);
                     break;
             }

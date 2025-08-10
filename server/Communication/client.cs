@@ -21,7 +21,7 @@ namespace Nanina.Communication
         public static string NotificationData(string type, string message, short severity){
             return JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "notification",
+                type = ServerResponseType.Notification,
                 data = JsonConvert.SerializeObject( new ClientNotification(type, message, severity))
             });
         }

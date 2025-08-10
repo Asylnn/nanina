@@ -5,6 +5,7 @@ import Page from '../../classes/page';
 import config from '../../../../config.json'
 import User from '@/classes/user/user';
 import ItemUse from './ItemUse.vue';
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name : "Header",
@@ -36,7 +37,7 @@ export default {
 
         },
         onChangeLocale(){
-            this.SendToServer("change locale", this.$i18n.locale, null)
+            this.SendToServer(ClientResponseType.UpdateLocale, this.$i18n.locale, null)
         },
         getEnergyColor(){
             if(this.user.energy >= this.user.max_energy)

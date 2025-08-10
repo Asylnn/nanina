@@ -217,7 +217,7 @@ namespace Nanina.Communication
             Global.activityTimers.Add(activity.id, timer);
             DBUtils.Update(user);Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
             Console.WriteLine("activity started");
@@ -251,7 +251,7 @@ namespace Nanina.Communication
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user) 
             }));
         }

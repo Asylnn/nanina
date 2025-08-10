@@ -4,6 +4,7 @@ import User from '@/classes/user/user';
 import config from '../../../../baseValues.json'
 import { WebsocketEvent, type Websocket } from 'websocket-ts';
 import type WebSocketReponse from '@/classes/web_socket_response'
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name : "ActiveDungeonPage",
@@ -28,7 +29,7 @@ export default {
     methods:{
         LeaveDungeon(){
             this.$emit("leave-dungeon")
-            this.SendToServer("stop dungeon", this.active_dungeon.instanceId, this.user.Id)
+            this.SendToServer(ClientResponseType.StopDungeon, this.active_dungeon.instanceId, this.user.Id)
         },
         getHealthBarStyle()
         {
@@ -38,7 +39,7 @@ export default {
         {
             this.user.claimTimestamp = Date.now()
             User.updateTimer(this.user)
-            this.SendToServer("claim dungeon fight", this.active_dungeon.instanceId, this.user.Id)
+            this.SendToServer(ClientResponseType.ClaimDungeonFight, this.active_dungeon.instanceId, this.user.Id)
             
         },
         damageColor(critical_amount: number)

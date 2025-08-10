@@ -29,7 +29,7 @@ namespace Nanina.Dungeon
             {
                 Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                 {
-                    type = "get active dungeon",
+                    type = ServerResponseType.ProvideActiveDungeon,
                     data = activeDungeon.ToString()
                 }), session.webSocketId);
             }
@@ -48,7 +48,7 @@ namespace Nanina.Dungeon
             {
                 Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                 {
-                    type = "user",
+                    type = ServerResponseType.ProvideUser,
                     data = JsonConvert.SerializeObject(user)
                 }), session.webSocketId);
             }
@@ -64,7 +64,7 @@ namespace Nanina.Dungeon
                 
                 Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                 {
-                    type = "loot",
+                    type = ServerResponseType.ProvideLoot,
                     data = JsonConvert.SerializeObject(loot)
                 }), session.webSocketId);
             }

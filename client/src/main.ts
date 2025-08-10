@@ -24,11 +24,12 @@ declare module "@vue/runtime-core" {
 		$t: (key: string, ...args: any[]) => string;
 		ws: WebSocket
 		$i18n : any
-		SendToServer : (type : string, data: string, userId: string | null) => void;
+		SendToServer : (type : ClientResponseType, data: string, userId: string | null) => void;
 	}
 }
 
 import VueCookies from "vue-cookies"
+import type ClientResponseType from './classes/client_response_type'
 
 
 

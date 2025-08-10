@@ -103,7 +103,7 @@ namespace Nanina.UserData
                     {
                         Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                         {
-                            type = "user",
+                            type = ServerResponseType.ProvideUser,
                             data = JsonConvert.SerializeObject(u),
                         }), session.webSocketId);
                     }
@@ -160,7 +160,7 @@ namespace Nanina.UserData
                     {
                         Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                         {
-                            type = "user",
+                            type = ServerResponseType.ProvideUser,
                             data = JsonConvert.SerializeObject(this)
                         }), session.webSocketId);
                     }

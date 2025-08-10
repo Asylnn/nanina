@@ -146,6 +146,7 @@ TODO : Create a search bar for items
 TODO : one day switch to postgresql?
 TODO : think where we can use struct instead of classes
 TODO : instead of checking if isOsuIdVerified is true, just check if osuId is not null
+TODO : Get server data inside relevent page instead of the main page
 
 
 

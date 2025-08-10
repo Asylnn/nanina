@@ -59,7 +59,7 @@ namespace Nanina.Communication
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user)
             }));
 

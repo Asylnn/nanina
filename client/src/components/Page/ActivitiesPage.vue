@@ -12,6 +12,7 @@ import ResearchNode from '@/classes/research/research_nodes';
 import ResearchPage from './ResearchPage.vue';
 import CraftingPage from './CraftingPage.vue';
 import Craft from '@/classes/crafting/craft';
+import ClientResponseType from '@/classes/client_response_type';
 
 
 export default {
@@ -69,7 +70,7 @@ export default {
         },
         CheckContinuousFight()
         {
-            this.SendToServer("continuous fight", "", this.user.Id)
+            this.SendToServer(ClientResponseType.CheckContinuousFight, "", this.user.Id)
         }
 
     },

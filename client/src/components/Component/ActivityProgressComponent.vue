@@ -6,6 +6,7 @@ import Activity from '@/classes/user/activity';
 import type Waifu from '@/classes/waifu/waifu';
 import LootComponent from '../Component/LootComponent.vue';
 import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
+import ClientResponseType from '@/classes/client_response_type';
 export default {
     name : "ActivityProgressComponent",
     data(){
@@ -26,17 +27,21 @@ export default {
         }
     },
     methods:{
-        getTimeLeftNumber(activity : Activity)
+        getTimeLeftNumber()
         {
-            return MillisecondsToHourMinuteSecondFormat(activity.timestamp + activity.timeout - this.date_milli)
+            return MillisecondsToHourMinuteSecondFormat(this.activity.timestamp + this.activity.timeout - this.date_milli)
         },
-        getTimeLeft(activity : Activity)
+        getTimeLeft()
         {
-            return " width:" + 60*(activity.timestamp + activity.timeout - this.date_milli)/activity.originalTimeout  + "vw";
+            return " width:" + 60*(this.activity.timestamp + this.activity.timeout - this.date_milli)/this.activity.originalTimeout  + "vw";
         },
-        getActivityClaim(activity : Activity)
+        getActivityClaim()
         {
-            this.SendToServer("claim activity", activity.id.toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.ClaimActivity, this.activity.id.toString(), this.user.Id)
+        },
+        cancelActivity()
+        {
+            this.SendToServer(ClientResponseType.CancelActivity, this.activity.id.toString(), this.user.Id)
         }
     },
     components:{
@@ -59,16 +64,17 @@ export default {
     </div>
     <div v-if="! activity.finished" id="activityContainer">
         <div id="activityBorder">
-            <div id="timeleft" :style="getTimeLeft(activity)">
+            <div id="timeleft" :style="getTimeLeft()">
             </div>
-            <span> {{ getTimeLeftNumber(activity) }}</span>
+            <span> {{ getTimeLeftNumber() }}</span>
         </div>
+        <button class="nnnbutton smallbutton" @click="cancelActivity()"> {{ "cancel" }}</button>
         <LootComponent v-if="activity.type == ActivityType.Crafting":loots="activity.loot"></LootComponent>
     </div>
     <div v-else>
         activity finished
         <LootComponent :loots="activity.loot"></LootComponent>
-        <button class="smallbutton nnnbutton" @click="getActivityClaim(activity)">{{ $t("activities.claim") }}</button>
+        <button class="smallbutton nnnbutton" @click="getActivityClaim()">{{ $t("activities.claim") }}</button>
     </div>
 </template>
 

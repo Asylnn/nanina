@@ -5,6 +5,7 @@ import User from '@/classes/user/user';
 import Waifu from '@/classes/waifu/waifu';
 import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
 import type Activity from '@/classes/user/activity';
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name: "ResearchNodeComponent",
@@ -32,7 +33,7 @@ export default {
     methods: {
         getActivityClaim()
         {
-            this.SendToServer("claim activity", this.activity!.id.toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.ClaimActivity, this.activity!.id.toString(), this.user.Id)
         },
         getTimeLeftNumber(activity: Activity) {
             return MillisecondsToHourMinuteSecondFormat(activity.timestamp + activity.timeout - this.date_milli)
@@ -67,7 +68,7 @@ export default {
                 researchID: this.researchNode.id,
                 activityType: ActivityType.Research
             }
-            this.SendToServer("send waifu to activity", JSON.stringify(u), this.user.Id)
+            this.SendToServer(ClientResponseType.SendWaifuToActivity, JSON.stringify(u), this.user.Id)
         }
     },
     components: {

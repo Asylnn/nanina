@@ -1,4 +1,5 @@
 <script lang="ts">
+import ClientResponseType from '@/classes/client_response_type';
 import type Item from '@/classes/item/item';
 import ItemType from '@/classes/item/item_type';
 import StatModifier from '@/classes/modifiers/stat_modifier';
@@ -31,7 +32,7 @@ export default {
     methods :{
         useItem(item : Item)
         {
-            this.SendToServer("use user consumable", item.inventoryId.toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.UseUserConsumable, item.inventoryId.toString(), this.user.Id)
         }
     }
 }

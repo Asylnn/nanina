@@ -8,6 +8,7 @@ import EquipmentPiece from '@/classes/item/piece';
 import Equipment from '@/classes/item/equipment';
 import ItemComponent from './ItemComponent.vue';
 import StatModifier from '@/classes/modifiers/stat_modifier';
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name : "WaifuDisplayComponent",
@@ -82,7 +83,7 @@ export default {
             
             console.log('equiping')
             if(equip)
-                this.SendToServer("equip item", JSON.stringify({equipmentId:this.selected_item.inventoryId, waifuId:this.waifu.id}), this.user.Id)
+                this.SendToServer(ClientResponseType.EquipItem, JSON.stringify({equipmentId:this.selected_item.inventoryId, waifuId:this.waifu.id}), this.user.Id)
             this.closeAllDisplays()
         },
         openDisplay(piece : EquipmentPiece)
@@ -128,7 +129,7 @@ export default {
                     this.waifu.equipment.accessory = null
                     break;
             }
-            this.SendToServer("unequip item", JSON.stringify({equipmentPiece:piece, waifuId:this.waifu.id}), this.user.Id)
+            this.SendToServer(ClientResponseType.UnequipItem, JSON.stringify({equipmentPiece:piece, waifuId:this.waifu.id}), this.user.Id)
         }
     },
     components:{

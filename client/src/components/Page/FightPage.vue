@@ -10,6 +10,7 @@ import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import Chart from '@/classes/maimai/chart';
 import Game from '@/classes/user/game';
 import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
+import ClientResponseType from '@/classes/client_response_type';
 
 
 /*
@@ -60,7 +61,7 @@ export default {
         if(this.user.fight.id != null){
             if(!this.user.fight.completed){
                 if(this.beatmap?.id == undefined)
-                    this.SendToServer("get map back", this.user.fight.id, this.user.Id)
+                    this.SendToServer(ClientResponseType.GetMapData, this.user.fight.id, this.user.Id)
             }
         }
         setInterval(() => this.date_milli = Date.now(), 1000)
@@ -71,13 +72,13 @@ export default {
         fight(){
             this.user.localFightTimestamp = Date.now() 
             User.updateTimer(this.user)
-            this.SendToServer("get map to fight", this.game.toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.StartFight, this.game.toString(), this.user.Id)
         },
         getXP(){
             if(this.chosen_waifu != null){ //This shouldn't happen?
                 this.user.claimTimestamp = Date.now()
                 User.updateTimer(this.user)
-                this.SendToServer("claim fight", JSON.stringify({waifuId:this.chosen_waifu.id, game:this.game}), this.user.Id)
+                this.SendToServer(ClientResponseType.ClaimFight, JSON.stringify({waifuId:this.chosen_waifu.id, game:this.game}), this.user.Id)
             }
         },
         selectWaifu(waifu : Waifu) {

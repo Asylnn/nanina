@@ -43,7 +43,7 @@ namespace Nanina.Communication
                     ProvideUserToClient(session.userId);
             }
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                type = "session",
+                type = ServerResponseType.ProvideSession,
                 data = JsonConvert.SerializeObject(session),
             }));
         }
@@ -52,27 +52,27 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<User>(x => x.Id == userId)!;
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
-                type = "user",
+                type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user),
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "get banners",
+                type =  ServerResponseType.ProvideBanners,
                 data = JsonConvert.SerializeObject(Global.banners),
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "get dungeons",
+                type = ServerResponseType.ProvideDungeons,
                 data = JsonConvert.SerializeObject(DungeonManager.dungeons),
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "get research nodes",
+                type = ServerResponseType.ProvideResearchNodes,
                 data = JsonConvert.SerializeObject(Global.researchNodes),
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "get crafting recipes",
+                type = ServerResponseType.ProvideCraftingRecipes,
                 data = JsonConvert.SerializeObject(Global.craftingRecipes),
             }));
             if(user.isInDungeon)
@@ -84,14 +84,21 @@ namespace Nanina.Communication
             if(user.admin)
             {
                 /*Send the full waifu, item, set and equipment database*/
-                List<string> dbNames = ["waifu", "item", "set", "equipment"];
+                string[] dbNames = ["waifu", "item", "set", "equipment"];
                 foreach(string dbName in dbNames)
                 {
                     var data = File.ReadAllText($"../save/{dbName}.json");
                     Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
                     {
-                        type = dbName + " db",
-                        data = data
+                        type = dbName switch
+                        {
+                            "waifu" => ServerResponseType.ProvideWaifuDB,
+                            "item" => ServerResponseType.ProvideItemDB,
+                            "set" => ServerResponseType.ProvideSetDB,
+                            "equipment" => ServerResponseType.ProvideEquipmentDB,
+                            _ => throw new NotImplementedException(),
+                        },
+                        data = data,
                     }));
                 }
             }
@@ -100,7 +107,7 @@ namespace Nanina.Communication
         {
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = "loot",
+                type = ServerResponseType.ProvideLoot,
                 data = JsonConvert.SerializeObject(loot)
             }));
         }

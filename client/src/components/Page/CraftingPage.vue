@@ -7,6 +7,7 @@ import ActivityProgressComponent from '../Component/ActivityProgressComponent.vu
 import ActivityWaifuPickerComponent from '../Component/ActivityWaifuPickerComponent.vue';
 import ActivityType from '@/classes/user/activity_type';
 import Waifu from '@/classes/waifu/waifu';
+import ClientResponseType from '@/classes/client_response_type';
 
 
 export default {
@@ -67,7 +68,7 @@ export default {
                 waifuID: this.selectedWaifu!.id,
                 activityType: ActivityType.Crafting,
             }
-            this.SendToServer("send waifu to activity", JSON.stringify(craftingRequesttoClient), this.user.Id)
+            this.SendToServer(ClientResponseType.SendWaifuToActivity, JSON.stringify(craftingRequesttoClient), this.user.Id)
             this.$emit("reset-selected-waifu")
             this.craftingRecipes.forEach(craft => {
                 craft.quantity = 0;
