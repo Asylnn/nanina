@@ -175,8 +175,8 @@ export default {
         },
         showWaifuSelector(rn : ResearchNode)
         {
-            let isResearchNotLocked = rn.requirements.every(researchID => this.user.completedResearches.some(research => research.id == researchID))
-            let isResearchNotAlreadyResearchedOrInfinite = ! this.user.completedResearches.some(research => research.id == rn.id) || rn.infinite
+            let isResearchNotLocked = rn.requirements.every(researchID => this.user.isResearchDone(researchID))
+            let isResearchNotAlreadyResearchedOrInfinite = ! this.user.isResearchDone(rn.id) || rn.infinite
             let isResearchNotInProgress = this.user.activities.every(activity => activity.researchID != rn.id)
             if(isResearchNotLocked && isResearchNotAlreadyResearchedOrInfinite && isResearchNotInProgress)
             {

@@ -107,14 +107,11 @@ namespace Nanina.UserData
             var researchNode = Global.researchNodes.Find(RN => RN.id == researchID)!;
             var vehicleItem = Utils.DeepCopyReflection(Global.items.Find(i => i.id == 0))!;
 
-            var completedResearch = user.completedResearches.Find(r => r.id == researchID);
-            if(completedResearch == null)
-                user.completedResearches.Add(new CompletedResearch
-                {
-                    id=researchID!,
-                });
+            
+            if(user.completedResearches.ContainsKey(researchID!))
+                user.completedResearches[researchID!] += 1;
             else
-                completedResearch.amount++;
+                user.completedResearches[researchID!] = 1;
 
             /*Right now we only give the unlocks/else after the user clicked the "finish research" button, and those unlocks go through
             a vehicleItem's modifiers. We could do it right now though, but i don't know which is better*/
@@ -154,7 +151,7 @@ namespace Nanina.UserData
 
         public static ulong GetResearchTimeout(Waifu waifu, double cost)
         {
-            return (ulong) (cost / (waifu.Int + waifu.Luck) * 3600d * 1000d);
+            return (ulong) (cost / (waifu.Int + waifu.Luck) * 3600d  /*1000d*/);
         }
 
         public static ulong GetCraftingTimeout(Waifu waifu, double cost)

@@ -48,11 +48,11 @@ export default {
                 style += "lightblue;"
                 style += "cursor: pointer;"
             }
-            if (this.user.completedResearches.some(research => research.id == this.researchNode.id) && !this.researchNode.infinite) {
+            if (Object.keys(this.user.completedResearches).some(id => id == this.researchNode.id) && !this.researchNode.infinite) {
                 style += "green;"
             }
 
-            else if (this.researchNode.requirements.every(researchID => this.user.completedResearches.some(research => research.id == researchID))) {
+            else if (this.researchNode.requirements.every(researchID => this.user.isResearchDone(researchID))) {
                 style += "yellow;"
                 style += "cursor: pointer;"
             }

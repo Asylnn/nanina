@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.XPath;
+using LiteDB;
 using Nanina.Communication;
 using Nanina.Database;
 using Nanina.UserData.ItemData;
@@ -49,7 +50,7 @@ namespace Nanina.UserData
         public Verification verification { get; set; } = new ();
         public ulong claimTimestamp { get; set; } = 0;
         public Inventory inventory { get; set; } = new ();
-        public List<CompletedResearch> completedResearches { get; set; } = [];
+        public Dictionary<string, byte> completedResearches { get; set; } = [];
         public Unlocks unlocks { get; set; } = new ();
         public List<ContinuousFightLog> continuousFightLog { get; set; } = [];
 
