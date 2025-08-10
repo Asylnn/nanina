@@ -31,10 +31,10 @@ export default {
                     this.user.waifus.sort((a, b) => b.lvl-a.lvl)
                     break
                 case 2 :
-                    this.user.waifus.sort((a, b) => ('' + a.name).localeCompare(b.name))
+                    this.user.waifus.sort((a, b) => ('' + this.$t(`waifu.${a.id}.name`)).localeCompare( this.$t(`waifu.${b.id}.name`)))
                     break
                 case 3 :
-                    this.user.waifus.sort((a, b) => ('' + b.name).localeCompare(a.name))
+                    this.user.waifus.sort((a, b) => ('' + this.$t(`waifu.${b.id}.name`)).localeCompare(this.$t(`waifu.${a.id}.name`)))
                     break
                 default :
                     this.user.waifus.sort((a, b) => a.lvl-b.lvl)
