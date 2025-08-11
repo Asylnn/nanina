@@ -201,6 +201,7 @@ export default {
         <div v-for="researchNode in researchNodesProcessed">
             <ResearchNodeComponent 
                 v-on:show-waifu-selector="showWaifuSelector(researchNode)" 
+                v-on:reset-selected-waifu="$emit('reset-selected-waifu')"
                 data-no-dragscroll class="rn" 
                 :style="GetPosition(researchNode)" 
                 :research-node="researchNode" 

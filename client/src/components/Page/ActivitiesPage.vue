@@ -53,7 +53,7 @@ export default {
         },
         openWaifuDisplay(waifu : Waifu)
         {
-            
+
             this.waifuToView = waifu
             this.waifuDisplayComponentVisible = true
         },
@@ -128,8 +128,9 @@ export default {
         </div>
         <div v-else-if="selectedActivity == ActivityType.Research">
             <ResearchPage :research-nodes="researchNodes" :user="user" :selected-waifu="selectedWaifu"
-                v-on:show-waifu-selector="showWaifuSelector()">
-
+                v-on:show-waifu-selector="showWaifuSelector()"
+                v-on:reset-selected-waifu="selectedWaifu = null">
+                
             </ResearchPage>
         </div>
         <div v-else-if="selectedActivity == ActivityType.Crafting">

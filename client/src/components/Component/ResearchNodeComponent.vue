@@ -34,6 +34,7 @@ export default {
         getActivityClaim()
         {
             this.SendToServer(ClientResponseType.ClaimActivity, this.activity!.id.toString(), this.user.Id)
+            this.$emit("reset-selected-waifu")
         },
         getTimeLeftNumber(activity: Activity) {
             return MillisecondsToHourMinuteSecondFormat(activity.timestamp + activity.timeout - this.date_milli)
@@ -87,7 +88,7 @@ export default {
             return this.user.activities.find(activity => activity.researchID == this.researchNode.id)
         }
     },
-    emits: ["show-waifu-selector"],
+    emits: ["show-waifu-selector", "reset-selected-waifu"],
 }
 
 
