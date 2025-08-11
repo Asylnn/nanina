@@ -37,7 +37,7 @@ export default class User {
     
     public claimTimestamp : number = 0
     public fightHistory : Dictionary<string[]> = {}
-    public fight !: Fight
+    public fight !: Fight | null
     public inventory! : Inventory
     public lvlRewards! : number
     public preferedGame! : Game

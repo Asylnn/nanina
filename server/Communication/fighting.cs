@@ -86,7 +86,7 @@ namespace Nanina.Communication
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
-            if(user.fight!.timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
+            if(user.fight is not null && user.fight.timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You have a too much recent fight", 1)); return; }
             
             if((Game) Convert.ToInt16(rawData.data) == Game.MaimaiFinale)                
@@ -106,8 +106,6 @@ namespace Nanina.Communication
                 { Send(ClientNotification.NotificationData("Fighting", "You are not doing any fights", 0)); return; }
             if(claim is null) 
                 { Send(ClientNotification.NotificationData("Fighting", "Error processing the claim", 1)); return; }
-            if(user.fight.completed)
-                { Send(ClientNotification.NotificationData("Fighting", "You completed the last fight! You need to start a new one!", 0)); return; }
             if(user.claimTimestamp + Global.baseValues.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
             
@@ -137,12 +135,13 @@ namespace Nanina.Communication
             var (spent_energy, gc) = user.SpendEnergy(ratio);
             var xp = (int) Math.Ceiling(baseXP*spent_energy/25);
             waifu.GiveXP(xp);
-            user.fight.completed = true;
+            
             if(user.fightHistory.ContainsKey(user.fight.game))
                 user.fightHistory[user.fight.game].Append(user.fight.id);
             else
                 user.fightHistory.Add(user.fight.game, [user.fight.id]);
 
+            user.fight = null;
             user.statCount.std_claim_count++;
             user.GetXP(Global.baseValues.user_xp_for_fights);
 

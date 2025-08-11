@@ -6,6 +6,5 @@ namespace Nanina.UserData
         public required string id { get; set; }
         public string? secondaryId { get; set; }
         public long timestamp { get; set; } = Utils.GetTimestamp();
-        public bool completed { get; set; } = false;
     }
 }

@@ -58,7 +58,7 @@ export default {
     },
     mounted(){
         
-        if(this.user.fight.id != null){
+        if(this.user.fight != null){
             if(!this.user.fight.completed){
                 if(this.beatmap?.id == undefined)
                     this.SendToServer(ClientResponseType.GetMapData, this.user.fight.id, this.user.Id)
