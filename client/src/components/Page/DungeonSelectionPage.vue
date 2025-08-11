@@ -5,6 +5,7 @@ import type Waifu from '@/classes/waifu/waifu';
 import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import ClientResponseType from '@/classes/client_response_type';
+import type Dictionary from '@/classes/dictionary';
 
 export default {
     name : "DungeonSelectionPage",
@@ -25,7 +26,7 @@ export default {
     },
     props: {
         dungeons: {
-            type : Array<DungeonTemplate>,
+            type : Object as () => Dictionary<DungeonTemplate>, //ugly but it works,
             required : true
         },
         user : {
@@ -35,6 +36,7 @@ export default {
     },
     mounted(){
         this.availableWaifus = this.user.availableWaifus
+
     },
     components :{
         WaifuDisplayComponent,

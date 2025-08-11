@@ -1,5 +1,5 @@
-[
-    {
+{
+    "shit":{
         "id": "shit",
         "numberOfRewardsPerEnergy": 5,
         "bossResistances": {
@@ -108,7 +108,7 @@
             }
         ]
     },
-    {
+    "magic_tower":{
         "id": "magic_tower",
         "numberOfRewardsPerEnergy": 5,
         "bossResistances": {
@@ -217,7 +217,7 @@
             }
         ]
     },
-    {
+    "house":{
         "id": "house",
         "numberOfRewardsPerEnergy": 5,
         "bossResistances": {
@@ -326,7 +326,7 @@
             }
         ]
     },
-    {
+    "refrigerator":{
         "id": "refrigerator",
         "numberOfRewardsPerEnergy": 5,
         "bossResistances": {
@@ -435,4 +435,4 @@
             }
         ]
     }
-]
+}

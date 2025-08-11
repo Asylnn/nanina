@@ -74,7 +74,7 @@ export default {
 			set_db : [] as Set[],
 			pulled_waifus : [] as Waifu[],
 			banners : {} as Dictionary<Banner> ,
-			dungeons : [] as DungeonTemplate[],
+			dungeons : {} as Dictionary<DungeonTemplate>,
 			active_dungeon : new ActiveDungeon,
 			localeSetByUser : false,
 			maimai_chart : null as Chart | null,
