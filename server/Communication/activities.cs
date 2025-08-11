@@ -48,15 +48,13 @@ namespace Nanina.Communication
         #pragma warning restore 0649
         protected (User?, Waifu?, bool validResult) CheckForActivityValidity(ClientWebSocketResponse rawData)
         {
-            var activityRequest = JsonConvert.DeserializeObject<ClientActivityRequest>(rawData.data);
-
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return (null, null, false);}
             var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
             if(session == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return (null, null, false);}
-            if(activityRequest is null)
+            if(Utils.TryDeserialize<ClientActivityRequest>(rawData.data, out var activityRequest) == false)
                 {Send(ClientNotification.NotificationData("Activities", "activityRequest is null!", 1)); return (null, null, false);}
             if(user.activities.Count >= user.maxConcurrentActivities)
                 {Send(ClientNotification.NotificationData("Activities", "You reached the limit of waifus able to do an activity", 1)); return (null, null, false);}
@@ -72,8 +70,8 @@ namespace Nanina.Communication
 
         protected (bool, ResearchNode?) CheckForResearchValidity(User user, string data)
         {
-            var researchRequest = JsonConvert.DeserializeObject<ClientResearchRequest>(data)!;
-            
+            if(Utils.TryDeserialize<ClientResearchRequest>(data, out var researchRequest) == false)
+                {Send(ClientNotification.NotificationData("Activities", "Invalid research request (researchRequest in null)", 1)); return (false, null);}
             var researchNode = Global.researchNodes.Find(RN => RN.id == researchRequest.researchID);
             if(researchNode == null)
                 {Send(ClientNotification.NotificationData("Activities", "this research doesn't exist", 1)); return (false, null);}
@@ -90,8 +88,8 @@ namespace Nanina.Communication
 
         protected (bool, Craft?) CheckForCraftingValidity(User user, string data)
         {   
-            
-            var craftingRequest = JsonConvert.DeserializeObject<ClientCraftingRequest>(data)!;
+            if(Utils.TryDeserialize<ClientCraftingRequest>(data, out var craftingRequest) == false)
+                {Send(ClientNotification.NotificationData("Activities", "Invalid research request (researchRequest in null)", 1)); return (false, null);}
             if(craftingRequest.craftingList is null)
                     {Send(ClientNotification.NotificationData("Activities", "the crafting list is null!", 1)); return (false, null);}
             if(craftingRequest.craftingList.Count == 0)

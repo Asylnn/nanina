@@ -18,13 +18,12 @@ namespace Nanina.Communication
         protected async void AddMapToDatabase(ClientWebSocketResponse rawData){
 
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
-            if(user == null) 
+            if(user is null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
-            if (!user.admin)
+            if (user.admin == false)
                 {Send(ClientNotification.NotificationData("Admin", "You don't have the permissions for this action!", 0)); return;}
-
-            var request = JsonConvert.DeserializeObject<AddMapRequest>(rawData.data)!;
-
+            if(Utils.TryDeserialize<AddMapRequest>(rawData.data, out var request) == false)
+                {Send(ClientNotification.NotificationData("Admin", "request is null", 1)); return;}
             var map = await Osu.Api.GetBeatmapById(request.id!);
             if(map == null) 
                 {Send(ClientNotification.NotificationData("Admin", "either this beatmap doesn't exist, or the osu api keys are wrong/expired", 1)); return;}

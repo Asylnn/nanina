@@ -79,13 +79,10 @@ namespace Nanina.Communication
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
-            
-            var clientData = JsonConvert.DeserializeObject<EquipItemFormat>(rawData.data);
-
-            if(clientData == null)
-                {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
+            if(Utils.TryDeserialize<EquipItemFormat>(rawData.data, out var clientData) == false)
+                {Send(ClientNotification.NotificationData("User", "Invalid data (client Data is null)", 1)); return ;}
             if(clientData.waifuId == null)
-                {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "Invalid data, waifuId is null", 1)); return ;}
             
            if(user.waifus.TryGet(clientData.waifuId, out var waifu) == false)
                 {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to equip the item with doesn't exist", 1)); return;}
@@ -110,14 +107,12 @@ namespace Nanina.Communication
         protected void UnequipItem(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
-            if(user == null)
+            if(user is null)
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
-            
-            var clientData = JsonConvert.DeserializeObject<UnequipItemFormat>(rawData.data);
-            if(clientData == null)
-                {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
-            if(clientData.waifuId == null)
-                {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
+            if(Utils.TryDeserialize<UnequipItemFormat>(rawData.data, out var clientData) == false)
+                {Send(ClientNotification.NotificationData("User", "Invalid data (client Data is null)", 1)); return ;}
+            if(clientData.waifuId is null)
+                {Send(ClientNotification.NotificationData("User", "Invalid data, waifu Id is null", 1)); return ;}
             
 
 

@@ -97,14 +97,13 @@ namespace Nanina.Communication
 
         protected async void ClaimFight(ClientWebSocketResponse rawData){
 
-            var claim = JsonConvert.DeserializeObject<ClaimClientResponse>(rawData.data);
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
 
             if(user is null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
             if(user.fight is null)
                 { Send(ClientNotification.NotificationData("Fighting", "You are not doing any fights", 0)); return; }
-            if(claim is null) 
+            if(Utils.TryDeserialize<ClaimClientResponse>(rawData.data, out var claim) == false) 
                 { Send(ClientNotification.NotificationData("Fighting", "Error processing the claim", 1)); return; }
             if(user.claimTimestamp + Global.baseValues.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }

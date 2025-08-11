@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -21,6 +22,21 @@ public static class Utils
     {   
         Random rng = new ();
         return GetTimestamp() + rng.Next(99_999_999);
+    }
+
+    public static bool TryDeserialize<T>(string json, [NotNullWhen(returnValue: true)] out T? value)
+    {
+        try
+        {
+            value = JsonConvert.DeserializeObject<T>(json);
+            return value is not null;
+        }
+        catch (JsonException e)
+        {
+            Console.Error.WriteLine(e.Message);
+            value = default;
+            return false;
+        }
     }
 
     //yoinked from the internet, sorry, best next choice was serializing and deserializing.

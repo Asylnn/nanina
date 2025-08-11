@@ -3,6 +3,7 @@ using Nanina.Dungeon;
 using Nanina.Osu;
 using Nanina.UserData.WaifuData;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using WebSocketSharp.Server;
 
 namespace Nanina.Communication
@@ -24,9 +25,7 @@ namespace Nanina.Communication
             var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
             if(session == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
-
-            var clientData = JsonConvert.DeserializeObject<StartDungeonFormat>(rawData.data);
-            if(clientData == null)
+            if(Utils.TryDeserialize<StartDungeonFormat>(rawData.data, out var clientData) == false)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (cliendData is null)", 1)); return ;}
             if(clientData.id == null || clientData.waifuIds == null || clientData.floor <= 0 || clientData.floor > 5)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (clientData.id or clientData.waifuIds are null, or clientData.floor is not between 1 and 5)", 1)); return ;}

@@ -51,7 +51,7 @@ namespace Nanina.Communication
         protected void ProvideUserToClient(string userId)
         {
             var user = DBUtils.Get<User>(x => x.Id == userId)!;
-            if(user is null) return; //Shouldn't be necessary outside of a testing environnement
+            if(user is null) return; //Shouldn't be necessary outside of a testing environnements
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
                 type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user),

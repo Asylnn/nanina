@@ -14,8 +14,7 @@ namespace Nanina.Communication
         protected override void OnMessage(MessageEventArgs e)
         {
             Console.WriteLine("DATA : " + (string) e.Data); 
-            ClientWebSocketResponse? rawData = Newtonsoft.Json.JsonConvert.DeserializeObject<ClientWebSocketResponse>(e.Data);
-            if(rawData is null) return;
+            if(Utils.TryDeserialize<ClientWebSocketResponse>(e.Data, out var rawData) == false) return;
 
             if(Global.config.dev)
                 ProcessMessage(rawData);

@@ -18,9 +18,7 @@ namespace Nanina.Communication
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user is null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
-
-            var pullData = JsonConvert.DeserializeObject<PullRequest>(rawData.data);
-            if(pullData is null)
+            if(Utils.TryDeserialize<PullRequest>(rawData.data, out var pullData) == false)
                 {Send(ClientNotification.NotificationData("Pulling", "pull data is null!", 1)); return;}
             if(pullData.bannerId is null)
                 {Send(ClientNotification.NotificationData("Pulling", "The banner you tried to pull on doesn't exists!", 1)); return;}
