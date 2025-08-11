@@ -98,7 +98,7 @@ export default {
         <div v-if="selectedWaifu != null || activity != null">
             <div class="waifuSlot" @click="$emit('show-waifu-selector')">
                 <img
-                    :src="`${publicPath}waifu-image/${(selectedWaifu || user.waifus[activity!.waifuID].imgPATH)}`">
+                    :src="`${publicPath}waifu-image/${(selectedWaifu?.imgPATH || user.waifus[activity!.waifuID].imgPATH)}`">
             </div>
             <button v-if="activity == null" class="smallbutton nnnbutton" id="sendbutton"
                 @click="sendWaifuToResearch()">send waifu</button>
