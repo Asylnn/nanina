@@ -95,6 +95,7 @@ TODO : Restart all timers when restarting the server                            
 TODO : Make becoming an admin and giving yourself gacha currency less convoluted    #Done
 TODO : [BUG] fix fight null bug fight page                                          #Done
 TODO : [BUG] fix waifu still in research after being completed                      #Done
+TODO : check if malformed json sent to server make it crash                         #Done
 
 
 TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
@@ -133,7 +134,6 @@ TODO : Use BsonDocuments for Updating/Getting an object from LiteDB
 (https://github.com/teekay/litedb-sqlite-handbook/blob/master/MusicLibrary.Persistence.LiteDb/Model/Track.cs,
 https://github.com/teekay/litedb-handbook/tree/master)
 TODO : choose if we keep using file paths in config or directly in code
-TODO : check if malformed json sent to server make it crash
 TODO : clean up activity code (one big function is actually preferable)
 TODO : add check for valid language in UpdateLocale
 
@@ -149,6 +149,6 @@ TODO : one day switch to postgresql?
 TODO : think where we can use struct instead of classes
 TODO : instead of checking if isOsuIdVerified is true, just check if osuId is not null
 TODO : Get server data inside relevent page instead of the main
-TODO : use JSON Schema
+TODO : use JSON Schemas
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

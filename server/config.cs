@@ -19,4 +19,5 @@ public class Config {
         public required string discord_avatar_url;
         public required string osu_oauth_url;
         public required string chat_osu_oauth_url;
+        public required string[] available_languages;
 }

@@ -22,5 +22,6 @@
     "osu_oauth_url":"https://osu.ppy.sh/oauth/token/",
     "chat_osu_oauth_url":"https://osu.ppy.sh/oauth/token",
     "dev": true,
-    "discord_avatar_url":"https://cdn.discordapp.com/avatars/"
+    "discord_avatar_url":"https://cdn.discordapp.com/avatars/",
+    "available_languages":["fr", "en"]
 }

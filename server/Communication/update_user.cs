@@ -310,8 +310,10 @@ namespace Nanina.Communication
         protected void UpdateLocale(ClientWebSocketResponse rawData)
         {
             var session = DBUtils.Get<Session>(session => session.id == rawData.sessionId);
-            if(session == null)
-                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
+            if(session is null)
+                {Send(ClientNotification.NotificationData("Update Locale", "You can't perform this action without a valid session", 1)); return ;}
+            if(Global.config.available_languages.Contains(rawData.data) == false)
+                {Send(ClientNotification.NotificationData("Update Locale", "This language is not available", 1)); return ;}
             session.locale = rawData.data;
             if(session.userId is not null){
                 var user = DBUtils.Get<UserData.User>(x => x.Id == session.userId)!;
