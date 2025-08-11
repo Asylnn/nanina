@@ -10,6 +10,7 @@ export default {
     data() {
         return {
             focusedView : false,
+            waifus : [] as Waifu[],
             waifuDisplayed : new Waifu({}),
             columns : 4,
             lol : "",
@@ -21,23 +22,26 @@ export default {
             required : true
         },
     },
+    mounted() {
+        this.waifus = Object.values(this.user.waifus)
+    },
     methods: {
         updateSorting(filter : number) {
             switch (filter) {
                 case 0 :
-                    this.user.waifus.sort((a, b) => a.lvl-b.lvl)
+                    this.waifus.sort((a, b) => a.lvl-b.lvl)
                     break
                 case 1 :
-                    this.user.waifus.sort((a, b) => b.lvl-a.lvl)
+                    this.waifus.sort((a, b) => b.lvl-a.lvl)
                     break
                 case 2 :
-                    this.user.waifus.sort((a, b) => ('' + this.$t(`waifu.${a.id}.name`)).localeCompare( this.$t(`waifu.${b.id}.name`)))
+                    this.waifus.sort((a, b) => ('' + this.$t(`waifu.${a.id}.name`)).localeCompare( this.$t(`waifu.${b.id}.name`)))
                     break
                 case 3 :
-                    this.user.waifus.sort((a, b) => ('' + this.$t(`waifu.${b.id}.name`)).localeCompare(this.$t(`waifu.${a.id}.name`)))
+                    this.waifus.sort((a, b) => ('' + this.$t(`waifu.${b.id}.name`)).localeCompare(this.$t(`waifu.${a.id}.name`)))
                     break
                 default :
-                    this.user.waifus.sort((a, b) => a.lvl-b.lvl)
+                    this.waifus.sort((a, b) => a.lvl-b.lvl)
                     break
             }
         },
@@ -87,7 +91,7 @@ export default {
         </div>
     </div>
     <!-- tabindex is weird... truly html moment-->
-    <GridDisplayComponent @show-element="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :elements=user.waifus :columns=columns></GridDisplayComponent>
+    <GridDisplayComponent @show-element="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :elements=waifus :columns=columns></GridDisplayComponent>
     <div v-if="focusedView">
         <div @click="closeWaifuDisplay" class="veil" ></div>
         <WaifuDisplayComponent :for-dungeon="false" :for-pull="false" @input="onEscape" :waifu="waifuDisplayed" :user="user" tabindex="0" @keydown.esc="closeWaifuDisplay" :count=-1></WaifuDisplayComponent>

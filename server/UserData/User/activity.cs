@@ -41,10 +41,10 @@ namespace Nanina.UserData
             switch(type)
             {
                 case ActivityType.Cafe:
-                    OnCafeTimeout(user.waifus.Find(waifu => waifu.id == waifuID)!);
+                    OnCafeTimeout(user.waifus[waifuID]);
                     break;
                 case ActivityType.Mining:
-                    OnMiningTimeout(user.waifus.Find(waifu => waifu.id == waifuID)!);
+                    OnMiningTimeout(user.waifus[waifuID]);
                     break;
                 case ActivityType.Research:
                     OnResearchTimeout(user);
@@ -54,7 +54,7 @@ namespace Nanina.UserData
                     //maybe do the same thing with research? Yeah difinitively
                     break;
                 case ActivityType.Exploration:
-                    OnExplorationTimeout(user.waifus.Find(waifu => waifu.id == waifuID)!);
+                    OnExplorationTimeout(user.waifus[waifuID]);
                     break;
             }
         }

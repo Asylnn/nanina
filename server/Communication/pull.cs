@@ -80,8 +80,8 @@ namespace Nanina.Communication
                 but in case any properties need to be modified sometime in the future, then there won't be some difficult to find a bug*/
             var waifus = waifusId.ConvertAll(waifuId => Utils.DeepCopyReflection(Global.waifus.Find(x => x.id == waifuId))!);
 
-            var alreadyOwnedWaifus = waifus.Where(pulledWaifu => user.waifus.Any(userWaifu => pulledWaifu.id == userWaifu.id));
-            var notOwnedWaifus = waifus.Where(pulledWaifu => !user.waifus.Any(userWaifu => pulledWaifu.id == userWaifu.id));
+            var alreadyOwnedWaifus = waifus.Where(pulledWaifu => user.waifus.ContainsKey(pulledWaifu.id));
+            var notOwnedWaifus = waifus.Where(pulledWaifu => !user.waifus.ContainsKey(pulledWaifu.id));
 
             List<Waifu> aquiredWaifus = [];
             foreach(var waifu in notOwnedWaifus)
@@ -100,7 +100,8 @@ namespace Nanina.Communication
                 user.inventory.AddMaterial(item);
             }
             
-            user.waifus.AddRange(aquiredWaifus);
+            foreach(var waifu in aquiredWaifus)
+                user.waifus[waifu.id] = waifu;
 
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse

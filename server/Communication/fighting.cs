@@ -112,8 +112,7 @@ namespace Nanina.Communication
                 { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
             
             
-            var waifu = user.waifus.Find(waifus => waifus.id == claim.waifuId);
-            if(waifu == null)
+            if(user.waifus.TryGet(claim.waifuId, out var waifu) == false)
                 { Send(ClientNotification.NotificationData("Fighting", "You didn't choose a waifu to XP!", 0)); return; }
                 
             var baseXP = 0u;

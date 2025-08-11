@@ -60,10 +60,8 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("Activities", "activityRequest is null!", 1)); return (null, null, false);}
             if(user.activities.Count >= user.maxConcurrentActivities)
                 {Send(ClientNotification.NotificationData("Activities", "You reached the limit of waifus able to do an activity", 1)); return (null, null, false);}
-            var waifuIndex = user.waifus.FindIndex(waifu => waifu.id == activityRequest.waifuID);
-            if(waifuIndex == -1)
+            if(user.waifus.TryGet(activityRequest.waifuID, out var waifu) == false)
                 {Send(ClientNotification.NotificationData("Activities", "You don't have this waifu", 1)); return (null, null, false);}
-            var waifu = user.waifus[waifuIndex];
             if(waifu.isDoingSomething)
                 {Send(ClientNotification.NotificationData("Activities", "Waifu is already doing something", 1)); return (null, null, false);}
             if(!Enum.IsDefined(activityRequest.activityType))
@@ -240,7 +238,7 @@ namespace Nanina.Communication
             if(!activity.finished)
                 {Send(ClientNotification.NotificationData("Dungeon", "This activity is not yet finished", 1)); return ;}
 
-            var waifu = user.waifus.Find(waifu => waifu.id == activity.waifuID)!;
+            var waifu = user.waifus[activity.waifuID];
             waifu.isDoingSomething = false;
             Loot.GrantLoot(activity.loot, user);
             
@@ -266,7 +264,7 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("Dungeon", "There is no activity with that id", 1)); return ;}
             if(activity.finished)
                 {Send(ClientNotification.NotificationData("Dungeon", "This activity is already finished", 1)); return ;}
-            user.waifus.Find(waifu => waifu.id == activity.waifuID)!.isDoingSomething = false;
+            user.waifus[activity.waifuID].isDoingSomething = false;
             user.activities.Remove(activity);
             Global.activityTimers[activity.id].Dispose();
             Global.activityTimers.Remove(activity.id);

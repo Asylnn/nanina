@@ -148,6 +148,6 @@ TODO : think where we can use struct instead of classes
 TODO : instead of checking if isOsuIdVerified is true, just check if osuId is not null
 TODO : Get server data inside relevent page instead of the main
 TODO : [BUG] fix waifu still in research after being completed
-
+TODO : [BUG] fix fight null bug fight page
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

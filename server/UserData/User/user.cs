@@ -36,14 +36,14 @@ namespace Nanina.UserData
         public double max_energy {get; set;} = Global.baseValues.base_max_energy;
         public double energy {get; set;} = Global.baseValues.base_max_energy;
         public bool isRegenerating {get; set;} = false;
-        public List<Waifu> waifus { get; set; } = [Utils.DeepCopyReflection(Global.waifus.Find(x => x.id == "0"))];
+        public Dictionary<string, Waifu> waifus { get; set; } = new() { { "0", Utils.DeepCopyReflection(Global.waifus.Find(x => x.id == "0"))! } };
         public string Id { get; set; } = Utils.CreateId();
         public string theme { get; set; } = Global.baseValues.base_theme;
         public Tokens tokens { get; set; } = new ();
         public string locale { get; set; } = Global.config.default_locale;  
         public string avatarPATH { get; set; } = ""; //Unused
         public StatCount statCount { get; set; } = new();
-        public Dictionary<Game, string[]> fightHistory { get; set; } = new();
+        public Dictionary<Game, string[]> fightHistory { get; set; } = [];
         public Fight? fight { get; set; }
         public int gacha_currency { get; set; } = Global.baseValues.base_gacha_currency_amount;
         public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; } = [];
@@ -52,7 +52,7 @@ namespace Nanina.UserData
         public Inventory inventory { get; set; } = new ();
         public Dictionary<string, short> completedResearches { get; set; } = [];
         public Unlocks unlocks { get; set; } = new ();
-        public List<ContinuousFightLog> continuousFightLog { get; set; } = [];
+        public List<ContinuousFightLog> continuousFightLog { get; set; } = []; //Should maybe be dictionary?
 
         public (double energy, int gc) SpendEnergy(double ratio)
         {
@@ -171,9 +171,9 @@ namespace Nanina.UserData
             }
             Console.Error.WriteLine($"ActivityTimer finished with no associated activity, userId:{Id}, activityId:{activityId}");
         }
+        /*
+        public User() {}
 
-        /*public User() {}
-        
         public User(BsonDocument bson){}
         */
     }

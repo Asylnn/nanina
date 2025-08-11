@@ -155,7 +155,7 @@ export default {
             <div v-if="fighting">
                 <p>If you manage to submit a score, I will gift you XP !<br>
                     Select which waifu are worthy of earning XP</p>
-                <GridDisplayComponent class="waifuFightSelector" :no-margin="true" v-if="chosen_waifu == null" @show-element="selectWaifu" :elements="user.waifus" :columns="3"></GridDisplayComponent>
+                <GridDisplayComponent class="waifuFightSelector" :no-margin="true" v-if="chosen_waifu == null" @show-element="selectWaifu" :elements="Object.values(user.waifus)" :columns="3"></GridDisplayComponent>
                 <div class="flex" v-if="chosen_waifu != null">
                     <div id="selectedWaifu">
                         <GridDisplayComponent :no-margin="true" @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
@@ -166,7 +166,6 @@ export default {
                     <span class="button nnnbutton" v-else @click="getXP">Prove that you are worth getting XP !</span><br>
                 </div>
             </div>
-            
         </div>
     
 </template>

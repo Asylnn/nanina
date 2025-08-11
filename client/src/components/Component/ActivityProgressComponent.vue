@@ -60,7 +60,7 @@ export default {
 </script>
 <template>
     <div class="waifuSlot">
-        <img :src="`${publicPath}waifu-image/${user.waifus.find(waifu => waifu.id == activity.waifuID)!.imgPATH}`">
+        <img :src="`${publicPath}waifu-image/${user.waifus[activity.waifuID].imgPATH}`">
     </div>
     <div v-if="! activity.finished" id="activityContainer">
         <div id="activityBorder">

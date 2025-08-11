@@ -25,9 +25,9 @@ export default class User {
     public max_energy!: number
     public ids : any = {}
     public statCount : StatCount = new StatCount()
-    public waifus : Waifu[] = []
+    public waifus !: Dictionary<Waifu> 
     public get availableWaifus() : Waifu[] {
-        return this.waifus.filter(waifu => ! waifu.isDoingSomething)
+        return Object.values(this.waifus).filter(waifu => ! waifu.isDoingSomething)
     }
     public Id : string = "772277"
     public locale : string = "en"
@@ -37,7 +37,7 @@ export default class User {
     
     public claimTimestamp : number = 0
     public fightHistory : Dictionary<string[]> = {}
-    public fight! : Fight
+    public fight !: Fight
     public inventory! : Inventory
     public lvlRewards! : number
     public preferedGame! : Game
@@ -60,7 +60,10 @@ export default class User {
         console.log("user constructor")
         console.log(obj)
         Object.assign(this, obj)
-        this.waifus = this.waifus.map(waifu => new Waifu(waifu))
+        for(let waifu in this.waifus)
+        {
+            this.waifus[waifu] = new Waifu(this.waifus[waifu])
+        }
         if(this.inventory) this.inventory.equipment = this.inventory?.equipment.map((equipment) => {
             return Object.assign(new Equipment(), equipment)
         })

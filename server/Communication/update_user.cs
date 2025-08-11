@@ -87,9 +87,9 @@ namespace Nanina.Communication
             if(clientData.waifuId == null)
                 {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
             
-            var waifu = user.waifus.Find(waifu => clientData.waifuId == waifu.id);
-            if(waifu is null)
+           if(user.waifus.TryGet(clientData.waifuId, out var waifu) == false)
                 {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to equip the item with doesn't exist", 1)); return;}
+
             var itemIndex = user.inventory.equipment.FindIndex(item => clientData.equipmentId == item.inventoryId);
             if(itemIndex == -1)
                 {Send(ClientNotification.NotificationData("Equip", "The item you tried to equip doesn't exist", 1)); return;}
@@ -120,9 +120,9 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("User", "Invalid data", 1)); return ;}
             
 
-            var waifu = user.waifus.Find(waifu => clientData.waifuId == waifu.id);
-            if(waifu is null)
-                {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to equip the item with doesn't exist", 1)); return;}
+
+            if(user.waifus.TryGet(clientData.waifuId, out var waifu) == false)
+                {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to unequip the item with doesn't exist", 1)); return;}
 
             Equipment? oldEquipment = null;
             switch(clientData.equipmentPiece)
@@ -251,7 +251,7 @@ namespace Nanina.Communication
             if(!user.admin)
                 {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
 
-            user.waifus = JsonConvert.DeserializeObject<List<Waifu>>(rawData.data)!;
+            user.waifus = JsonConvert.DeserializeObject<Dictionary<string, Waifu>>(rawData.data)!;
             Send(ClientNotification.NotificationData("admin", "modified waifus", 1));
             DBUtils.Update(user);
         }

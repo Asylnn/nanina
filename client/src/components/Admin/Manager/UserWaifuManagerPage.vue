@@ -1,7 +1,6 @@
 <script lang="ts">
 
 import WaifuManagerComponent from './WaifuManagerComponent.vue'
-import Waifu from '../../../classes/waifu/waifu';
 import User from '@/classes/user/user';
 import ClientResponseType from '@/classes/client_response_type';
 
@@ -22,7 +21,7 @@ export default {
             this.SendToServer(ClientResponseType.UpdateUserWaifu, JSON.stringify(this.user.waifus), this.user.Id)
         },
         DeleteWaifu(id : string){
-            this.user.waifus.splice(this.user.waifus.findIndex(waifu => waifu.id == id), 1)
+            delete this.user.waifus[id]
         }
     }
 }

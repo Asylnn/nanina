@@ -129,11 +129,11 @@ namespace Nanina.Database
                 }
                 foreach(var waifuID in user.waifuIdsInDungeon)
                 {
-                    user.waifus.Find(waifu => waifu.id == waifuID)!.isDoingSomething = false;
+                    user.waifus[waifuID].isDoingSomething = false;
                 }
                 foreach(var waifuID in user.waifuIdsInDungeon)
                 {
-                    user.waifus.Find(waifu => waifu.id == waifuID)!.isDoingSomething = false;
+                    user.waifus[waifuID].isDoingSomething = false;
                 }
                 foreach(var item in user.inventory.material)
                 {

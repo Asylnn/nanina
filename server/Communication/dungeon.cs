@@ -13,7 +13,7 @@ namespace Nanina.Communication
         protected class StartDungeonFormat
         {
             public string? id;
-            public string[]? waifuIds;
+            public List<string?>? waifuIds;
             public byte floor;
         }
         #pragma warning restore 0649
@@ -32,15 +32,20 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("User", "Invalid data (clientData.id or clientData.waifuIds are null, or clientData.floor is not between 1 and 5)", 1)); return ;}
 
             var dungeonList = DungeonManager.dungeons.Where(dungeon => dungeon.id == clientData.id);
-            if(dungeonList.Count() == 0)
+            if(dungeonList.Any() == false)
                 {Send(ClientNotification.NotificationData("Dungeon", "The dungeon you tried to start doesn't exist!", 1)); return ;}
             var dungeon = dungeonList.First();
-            
-            var waifus = user.waifus.Where(waifu => clientData.waifuIds.Contains(waifu.id)).ToList();
-            if(waifus.Count() != 3)
+            List<Waifu?> waifus = clientData.waifuIds.ConvertAll(waifuId =>
+            {
+                user.waifus.TryGet(waifuId, out var waifu);
+                return waifu;
+            });
+            if(waifus.Any(waifu => waifu is null))
+                { Send(ClientNotification.NotificationData("User", "Invalid data (at least one invalid waifu id)", 1)); return; }
+            if(waifus.Count != 3)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (at least one invalid waifu)", 1)); return ;}
 
-            if(waifus.Any(waifu => waifu.isDoingSomething))
+            if(waifus.Any(waifu => waifu!.isDoingSomething))
                 {Send(ClientNotification.NotificationData("User", "One of the waifu is doing something", 1)); return ;}
             
             //In case any dungeon is still in progress somehow? Maybe break too much the performance ?
@@ -48,13 +53,13 @@ namespace Nanina.Communication
             foreach(ActiveDungeon activeDungeon in activeDungeons)
                 activeDungeon.StopDungeon();
 
-            DungeonManager.InstantiateDungeon(dungeon, user, waifus, session.id, clientData.floor);
+            DungeonManager.InstantiateDungeon(dungeon, user, waifus!, session.id, clientData.floor);
             
             foreach(var waifu in waifus)
             {
-                waifu.isDoingSomething = true;
+                waifu!.isDoingSomething = true;
             }
-            user.waifuIdsInDungeon = clientData.waifuIds.ToList();
+            user.waifuIdsInDungeon = clientData.waifuIds!;
             user.isInDungeon = true;
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
