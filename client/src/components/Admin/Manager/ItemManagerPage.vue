@@ -5,6 +5,7 @@ import ItemType from '@/classes/item/item_type';
 import ItemManagerComponent from './ItemManagerComponent.vue';
 import SetManagerComponent from './SetManagerComponent.vue';
 import Set from '@/classes/item/set'
+import ClientResponseType from '@/classes/client_response_type';
 
 export default {
     name : "ItemManagerPage",
@@ -69,8 +70,8 @@ export default {
                 waifu_consumable:this.db.filter(item => item.type == ItemType.WaifuConsumable),
                 user_consumable:this.db.filter(item => item.type == ItemType.UserConsumable),
             }
-            this.SendToServer("update item db", JSON.stringify(new_item_db), this.id)
-            this.SendToServer("update set db", JSON.stringify(this.set_db), this.id)
+            this.SendToServer(ClientResponseType.UpdateItemDB, JSON.stringify(new_item_db), this.id)
+            this.SendToServer(ClientResponseType.UpdateSetDB, JSON.stringify(this.set_db), this.id)
         }
     }
 }

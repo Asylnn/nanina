@@ -5,6 +5,7 @@ import User from '@/classes/user/user';
 import Item from '@/classes/item/item';
 import ItemType from '@/classes/item/item_type';
 import ItemManagerComponent from './ItemManagerComponent.vue';
+import ClientResponseType from '@/classes/client_response_type';
 
 /*Selectionner un user pour regarder son inventaire et pouvoir le modifier ##PLUS TARD
 * Ajouter un item -> 
@@ -83,7 +84,7 @@ export default {
         },
 
         UpdateDatabase(){
-            this.SendToServer("update user inventory", JSON.stringify(this.user.inventory), this.user.Id)
+            this.SendToServer(ClientResponseType.UpdateUserInventory, JSON.stringify(this.user.inventory), this.user.Id)
         }
     },
 }

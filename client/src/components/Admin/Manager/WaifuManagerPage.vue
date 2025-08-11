@@ -2,6 +2,7 @@
 
 import WaifuManagerComponent from './WaifuManagerComponent.vue'
 import Waifu from '../../../classes/waifu/waifu';
+import ClientResponseType from '@/classes/client_response_type';
 export default {
     name : "WaifuManagerPage",
     props: {
@@ -34,7 +35,7 @@ export default {
                 waifu.b_dex = waifu.o_dex
                 return waifu;
             })
-            this.SendToServer("update waifu db", JSON.stringify(updated_waifus), this.id)
+            this.SendToServer(ClientResponseType.UpdateWaifuDB, JSON.stringify(updated_waifus), this.id)
         },
         DeleteWaifu(id : string){
             this.all_waifus.splice(this.all_waifus.findIndex(waifu => waifu.id == id), 1)
