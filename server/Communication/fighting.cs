@@ -63,7 +63,7 @@ namespace Nanina.Communication
             user.claimTimestamp = Utils.GetTimestamp();
 
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
-            if(scores.Count() == 0) 
+            if(scores.Length == 0) 
                 { Send(ClientNotification.NotificationData("Fighting", "Did you do the chart?", 3)); return (0,1); }                    
 
             var validscore = Array.Find(scores, score => user.fight.id == score.song.id.ToString());
@@ -136,8 +136,8 @@ namespace Nanina.Communication
             var xp = (int) Math.Ceiling(baseXP*spent_energy/25);
             waifu.GiveXP(xp);
             
-            if(user.fightHistory.ContainsKey(user.fight.game))
-                user.fightHistory[user.fight.game].Append(user.fight.id);
+            if(user.fightHistory.TryGet(user.fight.game, out var fightHistory))
+                fightHistory.Add(user.fight.id);
             else
                 user.fightHistory.Add(user.fight.game, [user.fight.id]);
 
@@ -220,7 +220,7 @@ namespace Nanina.Communication
             
 
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
-            if(scores.Count() == 0) 
+            if(scores.Length == 0)
                 { Send(ClientNotification.NotificationData("Fighting", "You don't have any recent scores! (OR osu api keys are expired)", 3)); return null; }                    
 
             //var validscore = Array.Find(scores, score => user.fight.id == score.beatmap.id.ToString());
@@ -250,44 +250,24 @@ namespace Nanina.Communication
             if (!user.verification.isOsuIdVerified)
             { Send(ClientNotification.NotificationData("Fighting", "You didn't verify your osu account! Go to the settings and enter your osu id!", 0)); return; }
 
-            var allScores = (await Api.GetUserRecentScores(user.ids.osuId!, "osu", "10"));
-            Utils.ConsoleObject(allScores);
-            Utils.ConsoleObject(user.continuousFightLog);
-            allScores.Where(score =>
-            {
-                Console.WriteLine("ah");
-                Console.WriteLine(user.continuousFightLog.Any(log => log.scoreId == score.id));
-                return user.continuousFightLog.Any(log => log.scoreId == score.id);
-            });
-            Console.WriteLine("uh");
+            var allScores = await Api.GetUserRecentScores(user.ids.osuId!, "osu", "10");
             var scores = allScores.Where(score => score.beatmap.status == "ranked" && ! user.continuousFightLog.Any(log => log.scoreId == score.id));
-            Utils.ConsoleObject(scores);
             
             
 
-            Console.WriteLine("#scores");
-            Console.WriteLine(scores.Count());
             var totalTimeSave = 0d;
             foreach(var score in scores)
             {
-                Utils.ConsoleObject(score);
-                Console.WriteLine("xp");
                 var xp = Api.GetXP(score)*1000;
-                Console.WriteLine(xp);
                 totalTimeSave += Math.Pow(xp, 0.75);
             }
             
-            Console.WriteLine("total time save");
-            Console.WriteLine(totalTimeSave);
             totalTimeSave *= 1000;
             totalTimeSave /= activeActivities.Count();
             foreach(var activity in activeActivities)
             {
-                Console.WriteLine("inside for each");
                 if(Global.activityTimers.TryGetValue(activity.id, out var timer))
                 {
-                    Console.WriteLine("individual time save (milli)");
-                    Console.WriteLine(totalTimeSave);
                     activity.timeout = (long) Math.Max(0, activity.timeout - totalTimeSave);
                     //To avoid integer overflow
                     if(activity.timestamp + activity.timeout + 100 <= Utils.GetTimestamp())
@@ -296,10 +276,6 @@ namespace Nanina.Communication
                     else
                         //since setting the interval restarts the timer from zero.
                         timer.Interval = activity.timestamp + activity.timeout - Utils.GetTimestamp();
-                    Console.WriteLine("activity timeout");
-                    Console.WriteLine(activity.timeout);
-                    Console.WriteLine("timer interval");
-                    Console.WriteLine((ulong) Math.Max(100, activity.timestamp + activity.timeout - Utils.GetTimestamp()));
                 }
                 else
                 {
@@ -320,8 +296,6 @@ namespace Nanina.Communication
                     remover.Add(log);
             }
             user.continuousFightLog.RemoveAll(remover.Contains);
-            Console.WriteLine("hi");
-            Utils.ConsoleObject(scores);
             foreach(var score in scores)
             {
                 Utils.ConsoleObject(score);
@@ -331,8 +305,6 @@ namespace Nanina.Communication
                     expirationTimestamp = Utils.GetTimestamp() + Global.baseValues.continuous_fight_score_expiration_time_in_milliseconds
                 });
             }
-            Console.WriteLine("hi2");
-            Utils.ConsoleObject(user.continuousFightLog);
             DBUtils.Update(user);
         }
     }
