@@ -92,8 +92,7 @@ namespace Nanina.Communication
                 user.avatarPATH = $"{Global.config.discord_avatar_url}/{discordUserInformationResponse.id}/{discordUserInformationResponse.avatar}.webp";
                 DBUtils.Update(user);
             }
-            if(session is null) //Should not happen.
-                session = Session.NewSession(this.ID);
+            session ??= Session.NewSession(ID); //Should not happen.
 
             rawData.userId = user.Id;
             session.UpdateUserId(user.Id);            
