@@ -8,6 +8,7 @@ import type Game from './game'
 import config from '../../../../baseValues.json'
 import Equipment from '../item/equipment'
 import type Activity from './activity'
+import type Verification from './verification'
 
 
 
@@ -55,7 +56,7 @@ export default class User {
         return this.statCount.maimai_claim_count + this.statCount.std_claim_count
     }
     
-    public verification : any = {} //One day any objects should be properly be typed
+    public verification !: Verification
     constructor(obj : any){
         console.log("user constructor")
         console.log(obj)

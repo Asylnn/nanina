@@ -18,6 +18,8 @@ enum ServerResponseType
     ProvideMaimaiChartData,
     ProvideLevelRewardsData,
     ProvideActiveDungeon,
+    OsuIdUpdateSuccess,
+    MaimaiTokenUpdateSuccess,
 }
 
 export default ServerResponseType

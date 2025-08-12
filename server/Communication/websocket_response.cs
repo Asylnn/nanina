@@ -72,6 +72,8 @@ namespace Nanina.Communication
         ProvideMaimaiChartData,
         ProvideLevelRewardsData,
         ProvideActiveDungeon,
+        OsuIdUpdateSuccess,
+        MaimaiTokenUpdateSuccess,
     }
     public class ServerWebSocketResponse
     {

@@ -4,28 +4,9 @@ import Game from '@/classes/user/game';
 import User from '@/classes/user/user';
 import config from '../../../../config.json'
 import ClientResponseType from '@/classes/client_response_type';
-
-/*
-Theme
-Add osu id
-
-Notifs : checkbox avec toutes les categ
-si desactive checkbox, n'envoie pas les notif de quelle categ
-
-
-Gacha : afficher le montant pour pull, mettre texte en rouge et disable le bouton si pas assez de ressources
-Claim : Timer de 1min pour fight / Timer de 3min pour claim #Si pas de score trouvé, mettre timer et afficher un texte pour inciter a jouer la map
-
-
-
-
-
-
-
-
-
-
-*/ 
+import { WebsocketEvent, type Websocket } from 'websocket-ts';
+import type WebSocketResponse from '@/classes/web_socket_response';
+import ServerResponseType from '@/classes/server_response_type';
 
 
 export default {
@@ -63,12 +44,14 @@ export default {
         },
         updateSettings(){
             this.request = true
+            this.user.verification.isOsuIdVerified = false;
             this.SendToServer(ClientResponseType.UpdateOsuId, this.entered_id.toString(), this.user.Id)
         },
         verifyOsuId(){
             this.SendToServer(ClientResponseType.VerifyOsuId, this.code.toString(), this.user.Id)
         },
         verifyMaimaiToken(){
+            this.user.verification.isMaimaiTokenVerified = false
             this.SendToServer(ClientResponseType.VerifyMaimaiToken, this.entered_token.toString(), this.user.Id)
         },
         async Disconect(){
@@ -80,6 +63,23 @@ export default {
         {
             this.SendToServer(ClientResponseType.BecomeAdmin, "", this.user.Id)
         }
+    },
+    mounted()
+    {
+        const ListenForData = (i: Websocket, ev: MessageEvent) => {
+			var res : WebSocketResponse = JSON.parse(ev.data)
+			switch (res.type) {
+				case ServerResponseType.OsuIdUpdateSuccess :
+                    this.user.verification.isOsuIdVerified = true
+                    this.request = false
+                    break;
+                case ServerResponseType.MaimaiTokenUpdateSuccess:
+                    this.user.verification.isMaimaiTokenVerified = true
+                    break;
+            }
+        }
+        //@ts-ignore
+		this.ws.addEventListener(WebsocketEvent.message, ListenForData);
     }
 }
 
@@ -108,11 +108,11 @@ export default {
             <p>{{ $t('option.link_osu_id')}}</p>
             <span>
                 <input type="number" v-model.number.lazy="entered_id">
-                <span id="userOsuId" v-if="user.verification.isOsuIdVerified"><img src="@/assets/green_checkmark.png"></span>
+                <span v-if="user.verification.isOsuIdVerified" id="userOsuId" ><img src="@/assets/green_checkmark.png"></span>
             </span>
             <button @click="updateSettings()">{{ $t('option.update') }}</button>
         </div>
-        <div id="optionVerifOsuId" v-if=request>
+        <div v-if=request id="optionVerifOsuId">
             <p>{{ $t('option.got_code') }}</p>
             <input type="number" v-model.number.lazy="code">
             <button @click="verifyOsuId()">{{ $t('option.verify_code') }}</button>

@@ -96,7 +96,7 @@ TODO : Make becoming an admin and giving yourself gacha currency less convoluted
 TODO : [BUG] fix fight null bug fight page                                          #Done
 TODO : [BUG] fix waifu still in research after being completed                      #Done
 TODO : check if malformed json sent to server make it crash                         #Done
-
+TODO : add check for valid language in UpdateLocale                                 #Done
 
 TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
         (and more generally make a lot of arrays into dictionnaries for performanc)
@@ -129,13 +129,6 @@ TODO : add error messages for continuous fight
 TODO : use the [.. array] thinghy 
 TODO : [BUG] code for verifying account is sometime expired
 TODO : remove the code input when the osu id is verified
-TODO : try to use the same syntax as Global.activityTimers.TryGetValue(activity.id, out var timer) somewhere else in the code
-TODO : Use BsonDocuments for Updating/Getting an object from LiteDB
-(https://github.com/teekay/litedb-sqlite-handbook/blob/master/MusicLibrary.Persistence.LiteDb/Model/Track.cs,
-https://github.com/teekay/litedb-handbook/tree/master)
-TODO : choose if we keep using file paths in config or directly in code
-TODO : clean up activity code (one big function is actually preferable)
-TODO : add check for valid language in UpdateLocale
 
 
 Low priority
@@ -150,5 +143,11 @@ TODO : think where we can use struct instead of classes
 TODO : instead of checking if isOsuIdVerified is true, just check if osuId is not null
 TODO : Get server data inside relevent page instead of the main
 TODO : use JSON Schemas
+TODO : clean up activity code (one big function is actually preferable)
+TODO : choose if we keep using file paths in config or directly in code
+TODO : Use BsonDocuments for Updating/Getting an object from LiteDB (avoid so called "reflection tax")
+    (https://github.com/teekay/litedb-sqlite-handbook/blob/master/MusicLibrary.Persistence.LiteDb/Model/Track.cs,
+    https://github.com/teekay/litedb-handbook/tree/master)
+TODO : use osu oauth instead of code shinenigans
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done

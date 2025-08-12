@@ -62,8 +62,8 @@ namespace Nanina.Communication
             Send(ClientNotification.NotificationData("Update osu ID", "You successfully modified your osu id!", 1));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.OsuIdUpdateSuccess,
+                data = ""
             }));
         }
         protected void UpdateTheme(ClientWebSocketResponse rawData)
@@ -169,8 +169,8 @@ namespace Nanina.Communication
             Send(ClientNotification.NotificationData("Update Maimai token", "You successfully modified your maimai token!", 1));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.MaimaiTokenUpdateSuccess,
+                data = ""
             }));
         }
 
