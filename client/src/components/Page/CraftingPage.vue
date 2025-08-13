@@ -17,6 +17,7 @@ export default {
             publicPath: import.meta.env.BASE_URL,
             ActivityType:ActivityType,
             aboveLimits:false,
+            shiftKey:false,
         }
     },
     props: {
@@ -38,6 +39,18 @@ export default {
         }
     },
     methods: {
+        checkShiftKey(event : KeyboardEvent)
+        {  
+            this.shiftKey = ! event.shiftKey
+        },
+        increaseQuantity(craft: Craft)
+        {
+            craft.quantity +=  this.shiftKey ? 1 : 10
+        },
+        decreaseQuantity(craft: Craft)
+        {
+            craft.quantity -=  this.shiftKey ? 1 : 10
+        },
         getImgUrl(id: number)
         {
             return this.item_db.find(itemdb => itemdb.id == id)!.imgPATH
@@ -157,7 +170,7 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div @keydown="checkShiftKey" @keyup="checkShiftKey">
         <div v-for="activity in user.activities.filter(activity => activity.type == ActivityType.Crafting)">
             <ActivityProgressComponent :user="user" :activity="activity">
 
@@ -221,9 +234,9 @@ export default {
                 <span :style="getColor(craft.quantity)">{{ craft.timeCost * Math.max(1, craft.quantity)}}</span>
             </div>
             <div class="quantityPicker flex">
-                <button @click="craft.quantity++">▲</button>
+                <button @click="increaseQuantity(craft)">▲</button>
                 <input type="number" placeholder="0" v-model.number.lazy="craft.quantity"></input>
-                <button @click="craft.quantity--">▼</button>
+                <button @click="decreaseQuantity(craft)">▼</button>
             </div>
         </div>
     </div>
@@ -300,7 +313,7 @@ input
 
 .craftingRecap
 {
-    min-height: 360px;
+    min-height: 380px;
 }
 
 </style>
