@@ -43,10 +43,6 @@ export default {
             type:Array<Craft>,
             required:true,
         },
-        item_db:{
-            type:Array<Item>,
-            required:true,
-        },
     },
     methods:{
         applyTextColor(activity : ActivityType){
@@ -129,7 +125,7 @@ export default {
             </ResearchPage>
         </div>
         <div v-else-if="selectedActivity == ActivityType.Crafting">
-            <CraftingPage :user="user" :selected-waifu="selectedWaifu" :crafting-recipes="craftingRecipes" :item_db="item_db"
+            <CraftingPage :user="user" :selected-waifu="selectedWaifu" :crafting-recipes="craftingRecipes"
                 v-on:reset-selected-waifu="selectedWaifu = null" 
                 v-on:show-waifu-selector="showWaifuSelector()">
 

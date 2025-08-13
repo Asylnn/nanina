@@ -21,10 +21,6 @@ export default {
         }
     },
     props: {
-        item_db:{
-            type:Array<Item>,
-            required: true,
-        },
         user:{
             type:User,
             required:true,
@@ -50,10 +46,6 @@ export default {
         decreaseQuantity(craft: Craft)
         {
             craft.quantity -=  this.shiftKey ? 1 : 10
-        },
-        getImgUrl(id: number)
-        {
-            return this.item_db.find(itemdb => itemdb.id == id)!.imgPATH
         },
         getColor(qty : number)
         {
@@ -183,7 +175,7 @@ export default {
                 <div class="craftingMenu flex">
                     <div v-for="ingredient in craftingList.ingredients" class="itemSlot">
                         <div class="itemImage">
-                            <img :src="`${publicPath}item-image/${getImgUrl(ingredient.id)}`">
+                            <img :src="`${publicPath}item-image/${ingredient.imgPATH}`">
                         </div>
                         <div class="quantity"
                             :style="isAboveLimit(ingredient.quantity, getItemQuantity(ingredient.id))">
@@ -193,7 +185,7 @@ export default {
                     ➔
                     <div v-for="result in craftingList.results" class="itemSlot">
                         <div class="itemImage">
-                            <img :src="`${publicPath}item-image/${getImgUrl(result.id)}`">
+                            <img :src="`${publicPath}item-image/${result.imgPATH}`">
                             
                         </div>
                         <div class="quantity">{{ result.quantity }}</div>
@@ -217,14 +209,14 @@ export default {
             <div class="craftRecipe flex">
                 <div v-for="ingredient in craft.ingredients" class="itemSlot">
                     <div class="itemImage">
-                        <img :src="`${publicPath}item-image/${getImgUrl(ingredient.id)}`">
+                        <img :src="`${publicPath}item-image/${ingredient.imgPATH}`">
                     </div>
                     <div class="quantity" :style="getColor(craft.quantity)">{{ ingredient.quantity * Math.max(1, craft.quantity)}}</div>
                 </div>
                 ➔
                 <div v-for="result in craft.results" class="itemSlot">
                     <div class="itemImage">
-                        <img :src="`${publicPath}item-image/${getImgUrl(result.id)}`">
+                        <img :src="`${publicPath}item-image/${result.imgPATH}`">
                     </div>
                     <div class="quantity" :style="getColor(craft.quantity)">{{ result.quantity * Math.max(1, craft.quantity)}}</div>
                 </div>

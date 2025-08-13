@@ -331,7 +331,7 @@ export default {
 			<PrivacyPage ></PrivacyPage>
 		</div>
 		<div v-else-if="page == Page.Activities">
-			<ActivitiesPage :user="user" :research-nodes="researchNodes" :item_db="item_db" :crafting-recipes="craftingRecipes"></ActivitiesPage>
+			<ActivitiesPage :user="user" :research-nodes="researchNodes" :crafting-recipes="craftingRecipes"></ActivitiesPage>
 		</div>
 		<div v-else>
 			ERREUR 404 AHAHAHAHAH
