@@ -146,6 +146,30 @@ namespace Nanina.UserData.WaifuData
             return oldEquipment;
         }
 
+        public Equipment? Unequip(EquipmentPiece equipmentPiece)
+        {
+            Equipment? oldEquipment = null;
+            switch(equipmentPiece)
+            {
+                case EquipmentPiece.Weapon:
+                    oldEquipment = equipment.weapon;
+                    equipment.weapon = null;
+                    break;
+                case EquipmentPiece.Dress:
+                    oldEquipment = equipment.dress;
+                    equipment.dress = null;
+                    break;
+                case EquipmentPiece.Accessory:
+                    oldEquipment = equipment.accessory;
+                    equipment.accessory = null;
+                    break;
+                default:    //??
+                    break;
+            }
+            equipment.set = null;
+            return oldEquipment;
+        }
+
         public double GetMultModificators(StatModifier statModifier){
             return new List<Modifier>().Concat(equipment.weapon?.GetAllModifiers() ?? []).Concat(equipment.dress?.GetAllModifiers() ?? []).Concat(equipment.accessory?.GetAllModifiers() ?? []).Concat(equipment.set?.modifiers ?? [])
                 .Where(modif => modif?.operationType == OperationType.Multiplicative && modif?.stat == statModifier)

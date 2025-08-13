@@ -113,34 +113,15 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("User", "Invalid data (client Data is null)", 1)); return ;}
             if(clientData.waifuId is null)
                 {Send(ClientNotification.NotificationData("User", "Invalid data, waifu Id is null", 1)); return ;}
-            
-
-
             if(user.waifus.TryGet(clientData.waifuId, out var waifu) == false)
                 {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to unequip the item with doesn't exist", 1)); return;}
+            if(Enum.IsDefined(clientData.equipmentPiece) == false)
+                {Send(ClientNotification.NotificationData("Equip", "The equipment piece enum doesn't exist", 1)); return;}
 
-            Equipment? oldEquipment = null;
-            switch(clientData.equipmentPiece)
-            {
-                case EquipmentPiece.Weapon:
-                    oldEquipment = waifu.equipment.weapon;
-                    waifu.equipment.weapon = null;
-                    break;
-                case EquipmentPiece.Dress:
-                    oldEquipment = waifu.equipment.dress;
-                    waifu.equipment.dress = null;
-                    break;
-                case EquipmentPiece.Accessory:
-                    oldEquipment = waifu.equipment.accessory;
-                    waifu.equipment.accessory = null;
-                    break;
-                default:
-                    Send(ClientNotification.NotificationData("Equip", "Wrong equipment piece", 1));
-                    break;
-            }
+            var oldEquipment = waifu.Unequip(clientData.equipmentPiece);
+
             if(oldEquipment is not null)
                 user.inventory.AddEquipment(oldEquipment);
-
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
