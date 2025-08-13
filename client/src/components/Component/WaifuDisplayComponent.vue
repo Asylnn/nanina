@@ -9,6 +9,7 @@ import Equipment from '@/classes/item/equipment';
 import ItemComponent from './ItemComponent.vue';
 import StatModifier from '@/classes/modifiers/stat_modifier';
 import ClientResponseType from '@/classes/client_response_type';
+import ModifierComponent from './ModifierComponent.vue';
 
 export default {
     name : "WaifuDisplayComponent",
@@ -136,6 +137,7 @@ export default {
         GridDisplayComponent,
         ItemComponent,
         WaifuStatDisplayComponent,
+        ModifierComponent,
     },
     emits:["click"],
     computed : {
@@ -189,7 +191,14 @@ export default {
                     <div @click.right="unequip(EquipmentPiece.Accessory, $event)" @click="openDisplay(EquipmentPiece.Accessory)" class="itemSlot">
                         <img :src="`${publicPath}item-image/${waifu.equipment.accessory?.imgPATH ?? 'unknown.svg'}`">
                     </div>
+                </div><br>
+                <div v-if="waifu.equipment.set != null">
+                    <span> {{ "Set Bonus" }}</span>
+                    <div v-for="modifier in waifu.equipment.set.modifiers">
+                        <ModifierComponent :modifier="modifier"></ModifierComponent>
+                    </div>
                 </div>
+                
             </div>
             <div v-else>
                 <span v-if="count != undefined">{{ $t("gacha.pull_number") }} {{ count+1 }}</span><br>

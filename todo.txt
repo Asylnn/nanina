@@ -77,6 +77,9 @@ TODO : left:50%; transform: translateX(-50%); everywhere                        
 TODO : implements checks for scores already processed by continuous for not gaining time with the same score.                   #Done
 TODO : Make it so we don't need to send the entire itemDB for getting images for crafting recipes                               #Done
 TODO : [BUG] When you don't have the corresponding item in your inventory, the use item menu doesn't show up                    #Done
+TODO : Have the "plus" change color when hovered                                                                                #Done
+TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)    #Done
+TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.     #Done
 TODO : try catch onMessage                                                          #Done
 TODO : update osu tokens each day                                                   #Done
 TODO : Make so you don't need to remove the code part of the url to connect         #Done
@@ -117,10 +120,8 @@ TODO : Make continuous fight page with a list of all the scores done and how muc
 TODO : Is not deleting old unused sessions ids not secure? To think about.²
 TODO : Make timesave loot icon.
 TODO : Add cross to menus to close them.
-TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.
 TODO : Display the set bonus on the waifu stat card
-TODO : Have the "plus" change color when hovered
-TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)
+
 
 
 Balancing
