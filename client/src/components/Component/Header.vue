@@ -259,7 +259,9 @@ li, #logo{
 
 #energyAmount
 {
+    min-width: 25px;
     margin-right: 20px;
+    margin-left: 2px;
 }
 
 #addEnergy
