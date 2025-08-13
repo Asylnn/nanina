@@ -267,6 +267,11 @@ li, #logo{
     cursor:pointer;
 }
 
+#addEnergy:hover
+{
+    filter:brightness(1.5)
+}
+
 header
 {
     margin-bottom: 20px;

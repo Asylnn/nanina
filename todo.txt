@@ -76,6 +76,7 @@ TODO : Implement Avatar for users                                               
 TODO : left:50%; transform: translateX(-50%); everywhere                                                                        #Done
 TODO : implements checks for scores already processed by continuous for not gaining time with the same score.                   #Done
 TODO : Make it so we don't need to send the entire itemDB for getting images for crafting recipes                               #Done
+TODO : [BUG] When you don't have the corresponding item in your inventory, the use item menu doesn't show up                    #Done
 TODO : try catch onMessage                                                          #Done
 TODO : update osu tokens each day                                                   #Done
 TODO : Make so you don't need to remove the code part of the url to connect         #Done
@@ -105,6 +106,7 @@ TODO : Instead of hiding the waifu selector, just hide the send button          
 TODO : Add shift click for increasing by ten in the crafting menue                  #Done
 TODO : Add cancel activity button                                                   #Done
 TODO : Make a function that check if a request is valid before working on it        #Done
+TODO : Show loot rarity in loot component                                           #Done
 
 TODO : [BUG] code for verifying account is sometime expired                         #Seems to be fixed? Was it that the limit was 10 seconds?
 TODO : send file to client without doing serialazation, directly from file
@@ -119,8 +121,7 @@ TODO : [BUG] When creating a new account, the profile picture does not load, log
 TODO : Display the set bonus on the waifu stat card
 TODO : Have the "plus" change color when hovered
 TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)
-TODO : Show loot rarity in loot component
-TODO : [BUG] When you don't have the corresponding item in your inventory, the use item menu doesn't show up
+
 
 Balancing
 
