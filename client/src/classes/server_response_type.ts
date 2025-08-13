@@ -20,6 +20,7 @@ enum ServerResponseType
     ProvideActiveDungeon,
     OsuIdUpdateSuccess,
     MaimaiTokenUpdateSuccess,
+    ProvideContinuousFightResults,
 }
 
 export default ServerResponseType

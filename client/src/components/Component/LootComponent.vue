@@ -2,7 +2,7 @@
 import type Loot from '@/classes/loot/loot';
 import LootType from '@/classes/loot/loot_type';
 import ItemComponent from './ItemComponent.vue';
-import { getRarityStyle } from '@/classes/utils';
+import { getRarityStyle, MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
 
 export default {
     name : "Homepage",
@@ -11,6 +11,7 @@ export default {
             LootType: LootType,
             publicPath : import.meta.env.BASE_URL,
             getRarityStyle:getRarityStyle,
+            MillisecondsToHourMinuteSecondFormat:MillisecondsToHourMinuteSecondFormat,
             /*isDisplayingLoot : false,
             displayedLoot : null as Loot | null*/
         }
@@ -64,6 +65,10 @@ export default {
             </div>
             <div v-else-if="loot.lootType == LootType.Modifiers">
                 <img src="@/assets/unlock.svg">
+            </div>
+            <div v-else-if="loot.lootType == LootType.TimeSave">
+                <img src="@/assets/unlock.svg">
+                <div class="amount">{{ MillisecondsToHourMinuteSecondFormat(loot.amount) }}</div>
             </div>
         </div>
         

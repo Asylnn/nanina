@@ -34,5 +34,6 @@ namespace Nanina
         public required float cafe_reward_randomness;
         public required int base_activity_length_in_milliseconds;
         public required long continuous_fight_score_expiration_time_in_milliseconds;
+        public required int time_for_allowing_another_continuous_fight_in_milliseconds;
     }
 }

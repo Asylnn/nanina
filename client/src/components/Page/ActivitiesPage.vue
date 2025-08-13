@@ -13,6 +13,7 @@ import ResearchPage from './ResearchPage.vue';
 import CraftingPage from './CraftingPage.vue';
 import Craft from '@/classes/crafting/craft';
 import ClientResponseType from '@/classes/client_response_type';
+import ContinuousFightPage from './ContinuousFightPage.vue';
 
 
 export default {
@@ -68,11 +69,6 @@ export default {
             this.waifuSelectorVisible = true;
             this.selectedWaifu = null;
         },
-        CheckContinuousFight()
-        {
-            this.SendToServer(ClientResponseType.CheckContinuousFight, "", this.user.Id)
-        }
-
     },
     components:{
         GridDisplayComponent,
@@ -81,6 +77,7 @@ export default {
         ActivityWaifuPickerComponent,
         ResearchPage,
         CraftingPage,
+        ContinuousFightPage,
     },
     computed:{
         
@@ -107,16 +104,14 @@ export default {
 
     <div>
         <ul id="activityHeader">
-            <li :class="applyTextColor(-1) + ' clickable'" @click="selectedActivity = ActivityType.Help">{{$t("activities.help")}}</li>
+            <li :class="applyTextColor(-2) + ' clickable'" @click="selectedActivity = ActivityType.Help">{{$t("activities.help")}}</li>
             <li :class="applyTextColor(0) + ' clickable'" @click="selectedActivity = ActivityType.Cafe">{{$t("activities.cafe")}}</li>
             <li :class="applyTextColor(4) + ' clickable'" @click="selectedActivity = ActivityType.Mining">{{$t("activities.mining")}}</li>
             <li :class="applyTextColor(3) + ' clickable'" @click="selectedActivity = ActivityType.Research">{{$t("activities.research")}}</li>
             <li :class="applyTextColor(2) + ' clickable'" @click="selectedActivity = ActivityType.Crafting" >{{$t("activities.crafting")}}</li>
             <li :class="applyTextColor(1) + ' clickable'" @click="selectedActivity = ActivityType.Exploration" >{{$t("activities.exploration")}}</li>
+            <li :class="applyTextColor(-1) + ' clickable'" @click="selectedActivity = ActivityType.ContinousFight" >{{$t("activities.fight")}}</li>
             <li>{{`${user.activities.length}/${user.maxConcurrentActivities}`}}</li>
-            <li>
-                <button class="nnnbutton smallbutton" @click="CheckContinuousFight()">{{ $t("activities.fight") }}</button>
-            </li>
         </ul>
     </div>
     <div>
@@ -139,6 +134,9 @@ export default {
                 v-on:show-waifu-selector="showWaifuSelector()">
 
             </CraftingPage>
+        </div>
+        <div v-if="selectedActivity == ActivityType.ContinousFight">
+            <ContinuousFightPage :user="user"></ContinuousFightPage>
         </div>
         <div v-for="activity in user.activities"> 
             <ActivityProgressComponent :user="user" :activity="activity"
@@ -164,7 +162,7 @@ export default {
 
 #activityHeader {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     height: 5vh;
     margin: 0 15vw;
     text-align: center;

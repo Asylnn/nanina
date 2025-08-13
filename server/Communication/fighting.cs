@@ -239,28 +239,29 @@ namespace Nanina.Communication
         {
 
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
-            if (user == null)
-            { Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return; }
+            if (user is null)
+                { Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return; }
             var activeActivities = user.activities.Where(acitivity => !acitivity.finished);
             if (!activeActivities.Any())
-            { Send(ClientNotification.NotificationData("User", "You need to have at least a single valid activity in progress", 1)); return; }
-
-
+                { Send(ClientNotification.NotificationData("User", "You need to have at least a single valid activity in progress", 1)); return; }
+            if(user.lastContinuousFightTimestamp + Global.baseValues.time_for_allowing_another_continuous_fight_in_milliseconds >= Utils.GetTimestamp()) 
+                { Send(ClientNotification.NotificationData("Fighting", "You did a continuous fight too recently", 1)); return; }
             if (!user.verification.isOsuIdVerified)
-            { Send(ClientNotification.NotificationData("Fighting", "You didn't verify your osu account! Go to the settings and enter your osu id!", 0)); return; }
+                { Send(ClientNotification.NotificationData("Fighting", "You didn't verify your osu account! Go to the settings and enter your osu id!", 0)); return; }
 
             var allScores = await Api.GetUserRecentScores(user.ids.osuId!, "osu", "10");
             var scores = allScores.Where(score => score.beatmap.status == "ranked" && ! user.continuousFightLog.Any(log => log.scoreId == score.id));
-            
-            
+            var scoresDTO = scores.ToList().ConvertAll(score => score.ToDTO());
 
             var totalTimeSave = 0d;
-            foreach(var score in scores)
+            for (int i = 0; i < scores.Count(); i++)
             {
-                var xp = Api.GetXP(score)*1000;
-                totalTimeSave += Math.Pow(xp, 0.75);
+                var xp = Api.GetXP(scores.ElementAt(i)) * 1000;
+                var timesave = Math.Ceiling(Math.Pow(xp, 0.75));
+                totalTimeSave += timesave;
+                scoresDTO[i].timesave = (int) timesave;
             }
-            
+
             totalTimeSave *= 1000;
             totalTimeSave /= activeActivities.Count();
             foreach(var activity in activeActivities)
@@ -281,11 +282,23 @@ namespace Nanina.Communication
                     Console.Error.WriteLine($"Activity {activity.id} doesn't have a timer");
                 }
             }
-
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.ProvideContinuousFightResults,
+                data = JsonConvert.SerializeObject(scoresDTO) 
+            }));
+            var loot = new List<Loot>(
+            [ 
+                new Loot() {
+                    lootType = LootType.TimeSave,
+                    amount = (int)totalTimeSave,
+                }
+            ]);
+            
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = ServerResponseType.ProvideLoot,
+                data = JsonConvert.SerializeObject(loot)
             }));
 
             List<ContinuousFightLog> remover = [];
@@ -295,15 +308,15 @@ namespace Nanina.Communication
                     remover.Add(log);
             }
             user.continuousFightLog.RemoveAll(remover.Contains);
-            foreach(var score in scores)
+            user.lastContinuousFightTimestamp = Utils.GetTimestamp();
+            /*foreach(var score in scores)
             {
-                Utils.ConsoleObject(score);
                 user.continuousFightLog.Add(new()
                 {
                     scoreId = score.id,
                     expirationTimestamp = Utils.GetTimestamp() + Global.baseValues.continuous_fight_score_expiration_time_in_milliseconds
                 });
-            }
+            }*/
             DBUtils.Update(user);
         }
     }

@@ -43,7 +43,7 @@ export default class User {
     public lvlRewards! : number
     public preferedGame! : Game
     public completedResearches !: Dictionary<number>
-
+    public lastContinuousFightTimestamp !: number
     /*
         Local only properties
     */

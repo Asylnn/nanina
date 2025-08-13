@@ -92,20 +92,20 @@ namespace Nanina.Osu
                 To add : OD, CS buff, low AR buff
                 HD : +10%?
             */
-            Console.WriteLine(JsonConvert.SerializeObject(score.beatmapset.title));
+            //Console.WriteLine(JsonConvert.SerializeObject(score.beatmapset.title));
             var star_rating_multiplicator = (2+Math.Pow(Math.E, 0.5*score.beatmap.difficulty_rating))/3.65;
             var acc_multiplicator = Math.Min(Math.Pow(score.accuracy/0.95f, 1.2)*(1f/(1f + Math.Pow(Math.E, -20f*(score.accuracy - 0.65f)))), 1);
             var drain_time_multiplicator = Math.Pow(score.beatmap.hit_length/60f, 0.4)/1.18f;
             var combo_multiplicator = Math.Pow(score.max_combo/(score.beatmap.count_circles + score.beatmap.count_sliders*2f + score.beatmap.count_spinners), 0.15);
-            Console.WriteLine("star_rating_multiplicator : " + star_rating_multiplicator);
+            /*Console.WriteLine("star_rating_multiplicator : " + star_rating_multiplicator);
             Console.WriteLine("acc_multiplicator : " + acc_multiplicator);
             Console.WriteLine("drain_time_multiplicator : " + drain_time_multiplicator);
             Console.WriteLine("drain_time : " + score.beatmap.hit_length);
-            Console.WriteLine("combo_multiplicator : " + combo_multiplicator);
+            Console.WriteLine("combo_multiplicator : " + combo_multiplicator);*/
             
             var xp =  (uint) Math.Ceiling(score.beatmap.hit_length*acc_multiplicator*drain_time_multiplicator*star_rating_multiplicator*combo_multiplicator/12);
-            Console.WriteLine("xp : " + xp);
-            Console.WriteLine("xp per minute : " + xp/(score.beatmap.hit_length/60f));
+            /*Console.WriteLine("xp : " + xp);
+            Console.WriteLine("xp per minute : " + xp/(score.beatmap.hit_length/60f));*/
             return xp;
         }
 

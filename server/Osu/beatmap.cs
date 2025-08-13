@@ -40,7 +40,6 @@ namespace Nanina.Osu
         public int ranked { get; set; }
         public required string url { get; set; }
         public required string checksum { get; set; }
-        public int max_combo { get; set; }
     }
 }
 

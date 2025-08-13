@@ -7,6 +7,7 @@ enum LootType
     Item,
     Equipment,
     Modifiers,
+    TimeSave,
 }
 
 export default LootType

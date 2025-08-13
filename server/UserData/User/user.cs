@@ -52,6 +52,7 @@ namespace Nanina.UserData
         public Inventory inventory { get; set; } = new ();
         public Dictionary<string, short> completedResearches { get; set; } = [];
         public Unlocks unlocks { get; set; } = new ();
+        public long lastContinuousFightTimestamp { get; set; } = 0;
         public List<ContinuousFightLog> continuousFightLog { get; set; } = []; //Should maybe be dictionary?
 
         public (double energy, int gc) SpendEnergy(double ratio)

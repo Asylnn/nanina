@@ -13,6 +13,7 @@ namespace Nanina.Communication
         Item,
         Equipment,
         Modifiers,
+        TimeSave,
     }
     public class Loot
     {

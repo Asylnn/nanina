@@ -98,6 +98,8 @@ TODO : [BUG] fix waifu still in research after being completed                  
 TODO : check if malformed json sent to server make it crash                         #Done
 TODO : add check for valid language in UpdateLocale                                 #Done
 TODO : remove the code input when the osu id is verified                            #Done
+TODO : make sendtoserver type parameter an enum                                     #Done
+TODO : add 30min timer on continuous fight                                          #Done
 
 
 TODO : [BUG] code for verifying account is sometime expired                         #Seems to be fixed? Was it that the limit was 10 seconds?
@@ -106,6 +108,7 @@ TODO : Make waifus, items, equipments and sets global variable as dictionnaries 
         (and more generally make a lot of arrays into dictionnaries for performanc)
 TODO : Make continuous fight page with a list of all the scores done and how much time it saved.
 TODO : Is not deleting old unused sessions ids not secure? To think about.²
+TODO : Make timesave loot icon.
 TODO : Add cross to menus to close them.
 TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.
 TODO : Display the set bonus on the waifu stat card
@@ -125,14 +128,11 @@ TODO : Instead of hiding the waifu selector, just hide the send button
 TODO : (user/activity.cs)
     //since loot is already created at the moment the activity is created (since it's more practical this way), there is no need to do stuff here 
     //maybe do the same thing with research? Yeah difinitively
-TODO : add 30min timer on continuous fight
-TODO : make sendtoserver type parameter an enum
-TODO : add commands on osu message
-TODO : remove unnessary sessions checks
 
 
 Low priority
 
+TODO : add commands on osu message
 TODO : Modify break property in Maimai 
 TODO : [BUG] Crash when schwartzchild (re:mast?) (maimai)
 TODO : Create an extention which add beatmaps to Nanina

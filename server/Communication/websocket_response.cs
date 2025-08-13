@@ -74,6 +74,8 @@ namespace Nanina.Communication
         ProvideActiveDungeon,
         OsuIdUpdateSuccess,
         MaimaiTokenUpdateSuccess,
+        ProvideContinuousFightResults,
+
     }
     public class ServerWebSocketResponse
     {

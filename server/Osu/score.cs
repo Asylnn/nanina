@@ -43,6 +43,26 @@ namespace Nanina.Osu
         public required User user;
         public required LookUpBeatmap beatmap;
         public required ScoreBeatmapset beatmapset;
+
+        public ScoreDTO ToDTO()
+        {
+            return new ScoreDTO()
+            {
+                accuracy = accuracy,
+                max_combo = max_combo,
+                map_max_combo = beatmap.count_circles + beatmap.count_sliders * 2 + beatmap.count_spinners,
+                score = classic_total_score,
+                count_miss = statistics.count_miss,
+                mods = mods,
+                artist = beatmapset.artist,
+                creator = beatmapset.creator,
+                title = beatmapset.title,
+                hit_length = beatmap.hit_length,
+                difficulty_rating = beatmap.difficulty_rating,
+                version = beatmap.version,
+                rank = rank,
+            };
+        }
     }
 
     public class ScoreExtended : Score
@@ -54,6 +74,26 @@ namespace Nanina.Osu
         public bool replay;
         public int score;
         public required object current_user_attributes; // "current_user_attributes":{"pin":null
+    }
+
+    public class ScoreDTO
+    {
+        public float accuracy;
+        public int max_combo;
+        public int map_max_combo;
+        //public int total_score;
+        public int score;
+        public int count_miss;
+        //public required string mode;
+        public required Mod[] mods;
+        public float difficulty_rating;
+        public int hit_length;
+        public required string title;
+        public required string artist;
+        public required string creator;
+        public int? timesave;
+        public required string version;
+        public required string rank;
     }
 }
 
