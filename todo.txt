@@ -75,6 +75,7 @@ TODO : Implement Setting page/component (Notifications)                         
 TODO : Implement Avatar for users                                                                                               #Done
 TODO : left:50%; transform: translateX(-50%); everywhere                                                                        #Done
 TODO : implements checks for scores already processed by continuous for not gaining time with the same score.                   #Done
+TODO : Make it so we don't need to send the entire itemDB for getting images for crafting recipes                               #Done
 TODO : try catch onMessage                                                          #Done
 TODO : update osu tokens each day                                                   #Done
 TODO : Make so you don't need to remove the code part of the url to connect         #Done
@@ -102,10 +103,12 @@ TODO : make sendtoserver type parameter an enum                                 
 TODO : add 30min timer on continuous fight                                          #Done
 TODO : Instead of hiding the waifu selector, just hide the send button              #Done
 TODO : Add shift click for increasing by ten in the crafting menue                  #Done
-
+TODO : Add cancel activity button                                                   #Done
+TODO : Make a function that check if a request is valid before working on it        #Done
 
 TODO : [BUG] code for verifying account is sometime expired                         #Seems to be fixed? Was it that the limit was 10 seconds?
-
+TODO : send file to client without doing serialazation, directly from file
+TODO : Add number of completed continuous fight completed
 TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
         (and more generally make a lot of arrays into dictionnaries for performanc)
 TODO : Make continuous fight page with a list of all the scores done and how much time it saved.
@@ -118,19 +121,16 @@ TODO : Have the "plus" change color when hovered
 TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)
 TODO : Show loot rarity in loot component
 TODO : [BUG] When you don't have the corresponding item in your inventory, the use item menu doesn't show up
-TODO : Implement the first waifus (should be balanced for all damage types).
-TODO : Make a function that check if a request is valid before working on it
-TODO : Add cancel activity button
-TODO : Make it impossible to have materials of some rarity without the user lvl / research necessary
-TODO : We are currently using the item database for displaying images for the crafting interface, we should do something that doesn't involve sending the entire db
-            Possible solution : just put ImgPath after loading the research.json file and sending it to the client?
 
 Balancing
 
 TODO (idea) : Make Luck stat increase chance of crafting additionnal items
+TODO : Make it impossible to have materials of some rarity without the user lvl / research necessary
+TODO : Implement the first waifus (should be balanced for all damage types).
 
 Low priority
 
+TODO : filter which item from the database to send to the client
 TODO : add commands on osu message
 TODO : Modify break property in Maimai 
 TODO : [BUG] Crash when schwartzchild (re:mast?) (maimai)

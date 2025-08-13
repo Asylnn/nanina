@@ -4,8 +4,9 @@
 import Page from '../../classes/page';
 import config from '../../../../config.json'
 import User from '@/classes/user/user';
-import ItemUse from './ItemUse.vue';
 import ClientResponseType from '@/classes/client_response_type';
+import CherishMenu from './CherishMenu.vue';
+import type Item from '@/classes/item/item';
 
 export default {
     name : "Header",
@@ -28,6 +29,10 @@ export default {
         user : {
             type : User,
             required : true
+        },
+        itemDb : {
+            type : Array<Item>, //Required for CherishMenu
+            required: true,
         }
     },
     emits: ["theme-change","page-change"],
@@ -46,7 +51,7 @@ export default {
         }
     },
     components:{
-        ItemUse
+        CherishMenu
     }
 }
 
@@ -103,7 +108,7 @@ export default {
             <div><img height=30px width=30px src="@/assets/heart.svg"></div>
             <div id="energyAmount" v-if="logged" :style="getEnergyColor()" ><p >{{ Math.floor(user.energy) }}</p></div>
             <div @click="showEnergyItems = !showEnergyItems"><img id="addEnergy" height=26px width=26px src="@/assets/plus.svg"></div>
-            <ItemUse v-if="showEnergyItems" :user="user" :item-ids=[4]></ItemUse>
+            <CherishMenu v-if="showEnergyItems" :user="user" :item-db="itemDb"></CherishMenu>
         </div>
         
     </header>

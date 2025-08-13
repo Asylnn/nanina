@@ -275,7 +275,7 @@ export default {
 <template>
 	<div id="main" :class="[user.theme]">
 	
-		<Header :dev=dev :logged=logged :user="user" @page-change="updatePage"></Header>
+		<Header :dev=dev :logged=logged :user="user" @page-change="updatePage" :item-db="item_db"></Header>
 		<div v-if="page == Page.Homepage">
 			<Homepage></Homepage>
 		</div>
