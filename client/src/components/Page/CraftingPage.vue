@@ -192,10 +192,11 @@ export default {
                         <span >{{ craftingList.timeCost }}</span>
                     </div>
                 </div>
-                <ActivityWaifuPickerComponent v-if="!aboveLimits" :user="user" :selected-waifu="selectedWaifu" :activity-type="ActivityType.Crafting" 
+                <ActivityWaifuPickerComponent :user="user" :selected-waifu="selectedWaifu" :activity-type="ActivityType.Crafting" 
                     v-on:reset-selected-waifu="$emit('reset-selected-waifu')" 
                     v-on:show-waifu-selector="$emit('show-waifu-selector')"
-                    v-on:start-crafting-activity="sendWaifuToCrafting()">
+                    v-on:start-crafting-activity="sendWaifuToCrafting()"
+                    :show-button="!aboveLimits">
                 </ActivityWaifuPickerComponent>
             </div>
         </div>

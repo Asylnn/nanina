@@ -100,6 +100,7 @@ TODO : add check for valid language in UpdateLocale                             
 TODO : remove the code input when the osu id is verified                            #Done
 TODO : make sendtoserver type parameter an enum                                     #Done
 TODO : add 30min timer on continuous fight                                          #Done
+TODO : Instead of hiding the waifu selector, just hide the send button              #Done
 
 
 TODO : [BUG] code for verifying account is sometime expired                         #Seems to be fixed? Was it that the limit was 10 seconds?
@@ -124,10 +125,6 @@ TODO : We are currently using the item database for displaying images for the cr
             Possible solution : just put ImgPath after loading the research.json file and sending it to the client?
 TODO (idea) : Make Luck stat increase chance of crafting additionnal items
 TODO : Add shift click for increasing by ten in the crafting menue
-TODO : Instead of hiding the waifu selector, just hide the send button
-TODO : (user/activity.cs)
-    //since loot is already created at the moment the activity is created (since it's more practical this way), there is no need to do stuff here 
-    //maybe do the same thing with research? Yeah difinitively
 
 
 Low priority
@@ -149,5 +146,9 @@ TODO : Use BsonDocuments for Updating/Getting an object from LiteDB (avoid so ca
     (https://github.com/teekay/litedb-sqlite-handbook/blob/master/MusicLibrary.Persistence.LiteDb/Model/Track.cs,
     https://github.com/teekay/litedb-handbook/tree/master)
 TODO : use osu oauth instead of code shinenigans
+TODO : (user/activity.cs)
+    //since loot is already created at the moment the activity is created (since it's more practical this way), there is no need to do stuff here 
+    //maybe do the same thing with research? Yeah difinitively 
+
 
 TODO : BUY AN 9070XT IF IT'S AFFORDABLE                                             #Done
