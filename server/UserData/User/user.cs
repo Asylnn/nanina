@@ -36,7 +36,7 @@ namespace Nanina.UserData
         public double max_energy {get; set;} = Global.baseValues.base_max_energy;
         public double energy {get; set;} = Global.baseValues.base_max_energy;
         public bool isRegenerating {get; set;} = false;
-        public Dictionary<string, Waifu> waifus { get; set; } = new() { { "0", Utils.DeepCopyReflection(Global.waifus.Find(x => x.id == "0"))! } };
+        public Dictionary<string, Waifu> waifus { get; set; } = new() { { "0", Utils.DeepCopyReflection(Global.waifus["0"])!} };
         public string Id { get; set; } = Utils.CreateId();
         public string theme { get; set; } = Global.baseValues.base_theme;
         public Tokens tokens { get; set; } = new ();

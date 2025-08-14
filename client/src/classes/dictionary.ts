@@ -1,3 +1,5 @@
+type typpp = string extends "testing123" ? never : string
+
 export default interface Dictionary<T>{
-    [Key: string]: T ;
+    [Key: typpp]: T ;
 }

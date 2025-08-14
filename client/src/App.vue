@@ -68,7 +68,7 @@ export default {
 			xp : 0,
 			notifs : Array(),
 			dev : true, //Is this dev or prod? IMPORTANT!!
-			all_waifus : [] as Waifu[],
+			all_waifus : {} as Dictionary<Waifu>,
 			item_db : [] as Item[],
 			equipment_db : [] as Equipment[],
 			set_db : [] as Set[],
@@ -187,11 +187,12 @@ export default {
 					this.xp = res.data
 					break
 				case ServerResponseType.ProvideWaifuDB :
-					let waifus = JSON.parse(res.data)
+					let temp_waifus : Dictionary<Waifu> = JSON.parse(res.data)
 					console.log("WAIFU DATABASE")
-					waifus.forEach((waifu:Waifu) => {
-						this.all_waifus.push(new Waifu(waifu))
-					});
+					for(let waifu of Object.values(temp_waifus))
+					{
+						this.all_waifus[waifu.id] = new Waifu(waifu)
+					}
 					console.log(this.all_waifus)
 					break
 				case ServerResponseType.ProvideItemDB :

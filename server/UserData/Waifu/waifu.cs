@@ -91,7 +91,7 @@ namespace Nanina.UserData.WaifuData
             b_luck += u_luck;
         }
         public void Update(){
-            var DBwaifu = Global.waifus.Find(x => x.id == id)!;
+            var DBwaifu = Global.waifus[id];
             diffLvlUp = DBwaifu.diffLvlUp;
             imgPATH = DBwaifu.imgPATH;
             o_str = DBwaifu.o_str;

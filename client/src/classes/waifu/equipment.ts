@@ -9,7 +9,6 @@ export default class WaifuEquipmentManager
     public set !: Set | null
 
     constructor(obj : WaifuEquipmentManager){
-        console.log(obj)
         Object.assign(this, obj)
         //This condition is because we want undefined object when it's not equiped, and not a default object.
         if(this.weapon) this.weapon = Object.assign(new Equipment(),this.weapon )

@@ -128,6 +128,7 @@ TODO : Have multiple dungeons of increasing difficulty
 
 Low priority
 
+TODO : Make waifu id short
 TODO : Is not deleting old unused sessions ids not secure? To think about.
 TODO : filter which item from the database to send to the client
 TODO : add commands on osu message
