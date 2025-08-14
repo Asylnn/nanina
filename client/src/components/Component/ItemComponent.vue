@@ -7,6 +7,7 @@ import GridDisplayComponent from './GridDisplayComponent.vue';
 import Modifier from '@/classes/modifiers/modifiers';
 import config from '../../../../baseValues.json'
 import ClientResponseType from '@/classes/client_response_type';
+import DisplayComponent from './DisplayComponent.vue';
 
 export default {
     name : "ItemComponent",
@@ -41,6 +42,7 @@ export default {
     components:{
         ModifierComponent,
         GridDisplayComponent,
+        DisplayComponent,
     },
     methods:{
         upgrade()
@@ -75,8 +77,8 @@ export default {
 </script>
 
 <template>
-    <div :class="isForEquiping ? 'isForEquiping' : ''" id="focusedObject" >
-        <div id="itemImage">
+    <DisplayComponent :type="'item'">
+        <div id="itemImage" @click="$emit('click')">
             <div><img :src="`${publicPath}/item-image/${item.imgPATH}`"></div>
             <div v-if="item.type == ItemType.Equipment"  id="lvl" >
                 <span v-if="!showingUpgradePanel" :class="lvlStarsCSS()">{{ "★".repeat((item as Equipment).lvl) }}</span>
@@ -86,7 +88,7 @@ export default {
                 </span>
             </div>
         </div>
-        <div id="ItemInfo">
+        <div id="ItemInfo" @click="$emit('click')">
             {{ $t(`item.${item.id}.name`) }}<br>
             {{ $t(`item.${item.id}.description`) }}<br><br>
             <p v-if="item.type == ItemType.Equipment">
@@ -122,29 +124,12 @@ export default {
             
             <span v-if="item.type == ItemType.Equipment && !isForLoot" class="clickable" @click="showingUpgradePanel = ! showingUpgradePanel">upgrade {{showingUpgradePanel ? "⤴" : "⤵"}}</span>
         </div>
-    </div>
+    </DisplayComponent>
 </template>
 
 <style lang="css" scoped>
 
-#focusedObject {
-    position: fixed;
-    /*min-width: 400px;
-    min-height: 100px;
-    width: 30vw;
-    height: 15vh;*/
-    border-radius: 15px;
-    display: flex;
-    flex-direction: row;
-    padding: 1vw 1vw;
-    z-index: 727;
-    top:50%;                                /*Make the display be at the center of the screen*/
-    left:50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(6, 16, 26);
-}
-
-#focusedObject img {
+img {
     /*max-width: 25vw;
     max-height: 60vh;*/
     padding: 2.5vw 2.5vw 0.5vw 2.5vw;

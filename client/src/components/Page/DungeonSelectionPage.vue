@@ -6,6 +6,7 @@ import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import ClientResponseType from '@/classes/client_response_type';
 import type Dictionary from '@/classes/dictionary';
+import { close } from 'fs';
 
 export default {
     name : "DungeonSelectionPage",
@@ -114,7 +115,7 @@ export default {
         </div>
         
         <div v-if="waifuVisible" @click="closeWaifuDisplay" class="veil" id="waifuveil"></div>
-        <WaifuDisplayComponent v-if="selectedWaifu != null" @click="selectWaifu" :for-pull="false" :for-dungeon="true"  :waifu="selectedWaifu" :user="user"></WaifuDisplayComponent>
+        <WaifuDisplayComponent v-if="selectedWaifu != null" @click="selectWaifu" @exit="closeWaifuDisplay" :for-pull="false" :for-dungeon="true"  :waifu="selectedWaifu" :user="user"></WaifuDisplayComponent>
 
         
         

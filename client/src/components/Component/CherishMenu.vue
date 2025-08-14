@@ -40,32 +40,11 @@ export default {
 
 </script>
 <template>
-     <div id="focusedObject">
-        <StaticItemUseComponent :user="user" :items="items">
+    <StaticItemUseComponent :user="user" :items="items">
 
-        </StaticItemUseComponent>
-    </div>
+    </StaticItemUseComponent>
 </template>
 
 <style lang="css" scoped>
-
-
-#focusedObject {
-    position: fixed;
-    /*min-width: 400px;
-    min-height: 100px;
-    width: 30vw;
-    height: 15vh;*/
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    padding: 2vh 2vh;
-    z-index: 727;
-    top:50%;                                /*Make the display be at the center of the screen*/
-    left:50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(6, 16, 26);
-    text-align: left;
-}
 
 </style>

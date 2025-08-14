@@ -108,7 +108,7 @@ export default {
             <div><img height=30px width=30px src="@/assets/heart.svg"></div>
             <div id="energyAmount" v-if="logged" :style="getEnergyColor()" ><p >{{ Math.floor(user.energy) }}</p></div>
             <div @click="showEnergyItems = !showEnergyItems"><img id="addEnergy" height=26px width=26px src="@/assets/plus.svg"></div>
-            <CherishMenu v-if="showEnergyItems" :user="user" :item-db="itemDb"></CherishMenu>
+            <CherishMenu v-if="showEnergyItems" :user="user" :item-db="itemDb" @exit="showEnergyItems = false"></CherishMenu>
         </div>
         
     </header>

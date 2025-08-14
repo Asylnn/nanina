@@ -144,7 +144,7 @@ export default {
 
 <style lang="css" scoped>
 #grid {
-    z-index: 150;
+    z-index: 50;
     position: sticky;
     top : 10vh;
     right: 0px;
@@ -166,11 +166,11 @@ export default {
 }
 
 #waifuSelectorVeil{
-    z-index: 100;
+    z-index: 40;
 }
 
 #waifuveil{
-    z-index: 200;
+    z-index: 60;
 }
 
 </style>

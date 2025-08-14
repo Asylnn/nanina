@@ -64,7 +64,7 @@ export default {
             <GridDisplayComponent v-if="category === 'material' || category === 'all'" :elements="user.inventory.material" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
             <div v-if="focusedView">
                 <div @click="closeItemDisplay" class="veil" ></div>
-                <ItemComponent :userID="user.Id" :is-for-equiping="false" :item="item_to_display"></ItemComponent>
+                <ItemComponent :userID="user.Id" :is-for-equiping="false" @exit="closeItemDisplay" :item="item_to_display"></ItemComponent>
             </div>
         </div>
     </div>

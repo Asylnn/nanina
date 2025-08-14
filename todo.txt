@@ -31,16 +31,7 @@ TODO : [BUG] Dungeon page is very laggy?                            #Done
 TODO : Implement Waifu Stats                                        #Done
 TODO : Implement Activities                                         #Done
 TODO : Implement continuous fights.                                 #Done
-TODO : Finish Donjon System 
-TODO : Have multiple dungeons of increasing difficulty
-TODO : Scoping classes (public / private /protected)
-            Note that having a property as private will make it unable to be stored in the db (so you can't have much private properties, does we need to return to poco objects?)
-TODO : [Bug] Login via discord sometimes doesn't work
-
-TODO : Add regen tick clock on client
-TODO : Simple remove cherish battery use interface
-            (cross, escape or outside click?)
-TODO : [BUG] Cherish battery use, item count doesn't decrease
+TODO : Finish Donjon System
 TODO : Implement Money System (page/component/database)
 TODO : Implement Shop System (page/component/database)
 
@@ -80,6 +71,7 @@ TODO : [BUG] When you don't have the corresponding item in your inventory, the u
 TODO : Have the "plus" change color when hovered                                                                                #Done
 TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)    #Done
 TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.     #Done
+TODO : Make continuous fight page with a list of all the scores done and how much time it saved.                                #Done
 TODO : try catch onMessage                                                          #Done
 TODO : update osu tokens each day                                                   #Done
 TODO : Make so you don't need to remove the code part of the url to connect         #Done
@@ -110,28 +102,33 @@ TODO : Add shift click for increasing by ten in the crafting menue              
 TODO : Add cancel activity button                                                   #Done
 TODO : Make a function that check if a request is valid before working on it        #Done
 TODO : Show loot rarity in loot component                                           #Done
-
+TODO : Display the set bonus on the waifu stat card                                 #Done
+TODO : Add cross to menus to close them.                                            #Done
 TODO : [BUG] code for verifying account is sometime expired                         #Seems to be fixed? Was it that the limit was 10 seconds?
+
+TODO : [BUG] Cherish battery use, item count doesn't decrease
+TODO : Add regen tick clock on client
+TODO : limit the amount of data sent to the client
 TODO : send file to client without doing serialazation, directly from file
 TODO : Add number of completed continuous fight completed
 TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
-        (and more generally make a lot of arrays into dictionnaries for performanc)
-TODO : Make continuous fight page with a list of all the scores done and how much time it saved.
-TODO : Is not deleting old unused sessions ids not secure? To think about.²
+        (and more generally make a lot of arrays into dictionnaries for performance)
+
+
+Design to do
+
 TODO : Make timesave loot icon.
-TODO : Add cross to menus to close them.
-TODO : Display the set bonus on the waifu stat card
-
-
 
 Balancing
 
 TODO (idea) : Make Luck stat increase chance of crafting additionnal items
 TODO : Make it impossible to have materials of some rarity without the user lvl / research necessary
 TODO : Implement the first waifus (should be balanced for all damage types).
+TODO : Have multiple dungeons of increasing difficulty
 
 Low priority
 
+TODO : Is not deleting old unused sessions ids not secure? To think about.
 TODO : filter which item from the database to send to the client
 TODO : add commands on osu message
 TODO : Modify break property in Maimai 

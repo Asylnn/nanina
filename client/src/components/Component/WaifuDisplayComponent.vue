@@ -10,6 +10,7 @@ import ItemComponent from './ItemComponent.vue';
 import StatModifier from '@/classes/modifiers/stat_modifier';
 import ClientResponseType from '@/classes/client_response_type';
 import ModifierComponent from './ModifierComponent.vue';
+import DisplayComponent from './DisplayComponent.vue';
 
 export default {
     name : "WaifuDisplayComponent",
@@ -138,8 +139,9 @@ export default {
         ItemComponent,
         WaifuStatDisplayComponent,
         ModifierComponent,
+        DisplayComponent,
     },
-    emits:["click"],
+    emits:["click", "exit"],
     computed : {
         equipment_to_show() {
             return this.user.inventory.equipment.filter(equipment => equipment.piece == this.equipmentPiece)
@@ -150,16 +152,17 @@ export default {
 </script>
 
 <template>
-    <div v-if="!forDungeon && !forPull" class="equipment">
+
+    <div v-if="!forDungeon && !forPull" id="itemDisplay">
         <div v-if="inventoryVisible" @click="inventoryVisible = false" class="veil" id="inventoryveil"></div>
         <GridDisplayComponent v-if="inventoryVisible" id="grid" @show-element="openWeaponDisplay" :elements="equipment_to_show" :columns=5 :show-border="true"></GridDisplayComponent>
         <div v-if="weaponVisible" @click="closeWeaponDisplay" class="veil" id="itemveil"></div>
-        <ItemComponent :userID="user.Id" @click="selectItem()" :is-for-equiping="true" v-if="selected_item != null" @input="" :item="selected_item"></ItemComponent>
+        <ItemComponent v-if="selected_item != null" :userID="user.Id" @exit="closeWeaponDisplay" @click="selectItem()" :is-for-equiping="true"  @input="" :item="selected_item"></ItemComponent>
     </div>
 
-    <div id="focusedWaifu" @click="$emit('click')">
-        <div id="waifuImage"><img :src="`${publicPath}/waifu-image/${waifu.imgPATH}`"></div>
-        <div id="waifuInfos">
+    <DisplayComponent @exit="$emit('exit')" :type="'waifu'">
+        <div id="waifuImage" @click="$emit('click')"><img :src="`${publicPath}/waifu-image/${waifu.imgPATH}`"></div>
+        <div id="waifuInfos" @click="$emit('click')">
             <div class="shortStat">
                 <span>{{ $t(`waifu.${waifu.id}.name`) }}</span> <span>{{ $t("waifu.level") }} {{ waifu.lvl }}</span>  <br>
                 </div>
@@ -210,7 +213,7 @@ export default {
                 {{ $t("waifu.stats.luck") }} : {{ waifu.b_luck }}<br>
             </div>
         </div>
-    </div>
+    </DisplayComponent>
 </template>
 
 <style lang="css" scoped>
@@ -223,28 +226,20 @@ export default {
     width:60px;
 }
 
-#waifuIcons {
-    padding:0px;
-    margin:10vh 20vw ;
-    position:fixed;
-    height: 80vh;
-    overflow: scroll;
-}
-
 .equipment {
     display: flex;
 }
 
 #inventoryveil{
-    z-index: 728;
+    z-index: 150;
 }
 
 #itemveil{
-    z-index: 810;
+    z-index: 180;
 }
 
 #grid {
-    z-index: 780;
+    z-index: 160;
     position: sticky;
     top : 120px;
     right: 0px;
@@ -270,31 +265,23 @@ export default {
     height: 64px;
 }
 
-#focusedWaifu {
-    position: fixed;
-    width: 40vw;
-    height: 55vh;
-    border-radius: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 2vh 2vh;
-    z-index: 727;
-    top:50%;                                /*Make the display be at the center of the screen*/
-    left:50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(6, 16, 26);
+#display {
+    max-width: 50vw;
+    max-height: 60vh;
 }
 
 #focusedObject {
     z-index: 820;
 }
 
-#focusedWaifu img {
-    max-width: 25vw;
-    max-height: 60vh;
+#waifuImage img {
+    max-height: 60vh;                     
+    left:10%;
+    /*transform: translateX(50%);*/
 }
 
 #waifuImage {
+    width: 20vw;
     overflow: hidden;
 }
 

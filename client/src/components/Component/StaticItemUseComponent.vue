@@ -4,6 +4,7 @@ import type Item from '@/classes/item/item';
 import ItemType from '@/classes/item/item_type';
 import StatModifier from '@/classes/modifiers/stat_modifier';
 import User from '@/classes/user/user';
+import DisplayComponent from './DisplayComponent.vue';
 
 
 export default {
@@ -30,35 +31,40 @@ export default {
         {
             this.SendToServer(ClientResponseType.UseUserConsumable, item.inventoryId.toString(), this.user.Id)
         }
+    },
+    components:{
+        DisplayComponent,
     }
 }
 
 
 </script>
 <template>
-    <div v-for="item in items">
-        <div>
-            <div id="itemImage">
-                <div><img class="itemImage" :src="`${publicPath}/item-image/${item.imgPATH}`"></div>
-                <div><button class="smallbutton" @click="useItem(item)"> {{ $t("item.use") }}</button></div>
-            </div>
-            <div id="ItemInfo">
-                {{ $t(`item.${item.id}.name`) }} ({{ user.inventory.userConsumable.find(iitem => iitem.id == item.id)?.count || 0}})<br>
-                {{ $t(`item.${item.id}.description`) }}<br><br>
-                <p>{{$t("modifiers.modifier")}} </p><br>
-                <div v-for="modifier in item.modifiers">
-                    <div class="modifier" v-if="modifier.stat == StatModifier.MaxEnergy">
-                        <span>{{ $t(`modifiers.${StatModifier.MaxEnergy}.name`) }}</span>
-                        <span>{{ user.max_energy }} ➔ <span class="upgrade">{{ user.max_energy + modifier.amount }}</span></span>
-                    </div>
-                    <div class="modifier" v-if="modifier.stat == StatModifier.EnergyRegen">
-                        <span>{{ $t(`modifiers.${StatModifier.EnergyRegen}.name`) }}</span>
-                        <span>{{ user.energy }} ➔ <span class="upgrade">{{ user.energy + modifier.amount }}</span></span>
+    <DisplayComponent>
+        <div v-for="item in items">
+            <div>
+                <div id="itemImage">
+                    <div><img class="itemImage" :src="`${publicPath}/item-image/${item.imgPATH}`"></div>
+                    <div><button class="smallbutton" @click="useItem(item)"> {{ $t("item.use") }}</button></div>
+                </div>
+                <div id="ItemInfo">
+                    {{ $t(`item.${item.id}.name`) }} ({{ user.inventory.userConsumable.find(iitem => iitem.id == item.id)?.count || 0}})<br>
+                    {{ $t(`item.${item.id}.description`) }}<br><br>
+                    <p>{{$t("modifiers.modifier")}} </p><br>
+                    <div v-for="modifier in item.modifiers">
+                        <div class="modifier" v-if="modifier.stat == StatModifier.MaxEnergy">
+                            <span>{{ $t(`modifiers.${StatModifier.MaxEnergy}.name`) }}</span>
+                            <span>{{ user.max_energy }} ➔ <span class="upgrade">{{ user.max_energy + modifier.amount }}</span></span>
+                        </div>
+                        <div class="modifier" v-if="modifier.stat == StatModifier.EnergyRegen">
+                            <span>{{ $t(`modifiers.${StatModifier.EnergyRegen}.name`) }}</span>
+                            <span>{{ user.energy }} ➔ <span class="upgrade">{{ user.energy + modifier.amount }}</span></span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </DisplayComponent>
 </template>
 
 <style lang="css" scoped>
