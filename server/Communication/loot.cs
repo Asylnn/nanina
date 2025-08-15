@@ -49,6 +49,6 @@ namespace Nanina.Communication
     {
         public LootType lootType;
         public int amount;
-        public ushort? itemId;
+        public short itemId = -1;
     }
 }

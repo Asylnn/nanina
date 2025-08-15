@@ -16,9 +16,9 @@ public static class Global
     public static readonly Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../config.json"))!;
     public static readonly Dictionary<string, Banner> banners = JsonConvert.DeserializeObject<Dictionary<string, Banner>>(File.ReadAllText(Global.config.banners_storage_path))!;
     public static readonly Dictionary<string, Waifu> waifus = JsonConvert.DeserializeObject<Dictionary<string, Waifu>>(File.ReadAllText("../save/waifu.json"))!;
-    public static readonly List<Item> items = JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText("../save/item.json"))!;
-    public static readonly List<Equipment> equipments = JsonConvert.DeserializeObject<List<Equipment>>(File.ReadAllText("../save/equipment.json"))!;
-    public static readonly List<Set> sets = JsonConvert.DeserializeObject<List<Set>>(File.ReadAllText("../save/set.json"))!;
+    public static readonly Dictionary<short, Item> items = JsonConvert.DeserializeObject<Dictionary<short, Item>>(File.ReadAllText("../save/item.json"))!;
+    public static readonly Dictionary<short, Equipment> equipments = JsonConvert.DeserializeObject<Dictionary<short, Equipment>>(File.ReadAllText("../save/equipment.json"))!;
+    public static readonly Dictionary<short, Set> sets = JsonConvert.DeserializeObject<Dictionary<short, Set>>(File.ReadAllText("../save/set.json"))!;
     public static readonly BaseValues baseValues = JsonConvert.DeserializeObject<BaseValues>(File.ReadAllText("../baseValues.json"))!;
     public static readonly Maimai.Chart[] charts = JsonConvert.DeserializeObject<Maimai.Chart[]>(File.ReadAllText("../charts.json"))!;
     public static readonly List<List<Loot>> userLevelRewards = LoadUserLevelRewards();
@@ -46,7 +46,8 @@ public static class Global
                     amount = reward.amount,
                     item = null
                 };
-                loot.item = items.Find(x => x.id == reward.itemId)!;
+                if(reward.itemId != -1)
+                    loot.item = items[reward.itemId];
                 userLevelRewards[i].Add(loot);
             }
         }
@@ -60,7 +61,7 @@ public static class Global
         {
             foreach(var craftIngredient in  (List<CraftIngredient>)[.. craftRecipe.ingredients, .. craftRecipe.results] )
             {
-                craftIngredient.imgPATH = items.Find(x => x.id == craftIngredient.id)!.imgPATH;
+                craftIngredient.imgPATH = items[craftIngredient.id].imgPATH;
             }
         }
         return craftingRecipes;

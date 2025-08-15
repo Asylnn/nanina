@@ -11,7 +11,7 @@ namespace Nanina.UserData.ItemData
     }
     public class Item
     {
-        public ushort id {get; set;}
+        public short id {get; set;}
         public int inventoryId {get; set;}
         public int count {get; set;}
         public ItemType type {get; set;}

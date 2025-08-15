@@ -15,10 +15,8 @@ namespace Nanina.Communication
         #pragma warning disable 0649
         private class ItemDBResponse
         {
-            public required List<Item> material;
-            public required List<Item> waifu_consumable;
-            public required List<Item> user_consumable;
-            public required List<Equipment> equipment;
+            public required Dictionary<short, Item> items;
+            public required Dictionary<short, Equipment> equipments;
         }
         #pragma warning restore 0649
         protected void UpdateItemDatabase(ClientWebSocketResponse rawData)
@@ -33,26 +31,9 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
 
             var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data)!;
-            IEnumerable<Item> items = itemDBResponse.user_consumable.Concat(itemDBResponse.material).Concat(itemDBResponse.waifu_consumable);
-            File.WriteAllText("../save/item.json", JsonConvert.SerializeObject(items));
+            File.WriteAllText("../save/item.json", JsonConvert.SerializeObject(itemDBResponse.items));
+            File.WriteAllText("../save/equipment.json", JsonConvert.SerializeObject(itemDBResponse.equipments));
             Send(ClientNotification.NotificationData("admin", "updated the item database!", 0));
-        }
-
-        protected void UpdateEquipmentDatabase(ClientWebSocketResponse rawData)
-        {
-
-            var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
-
-            if(user == null)
-                {Send(ClientNotification.NotificationData("User", "You can't perform this action without being connected!", 1)); return ;}
-            if(user.admin == false)
-                {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
-            if(!Global.config.dev) 
-                {Send(ClientNotification.NotificationData("admin", "The server isn't in developpement mode, you can't do this action", 0)); return;}
-
-            var itemDBResponse = JsonConvert.DeserializeObject<ItemDBResponse>(rawData.data)!;
-            File.WriteAllText("../save/equipment.json", JsonConvert.SerializeObject(itemDBResponse.equipment));
-            Send(ClientNotification.NotificationData("admin", "updated the equipment database!", 0));
         }
         protected void UpdateSetDatabase(ClientWebSocketResponse rawData)
         {

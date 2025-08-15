@@ -7,6 +7,8 @@ import User from '@/classes/user/user';
 import ClientResponseType from '@/classes/client_response_type';
 import CherishMenu from './CherishMenu.vue';
 import type Item from '@/classes/item/item';
+import type { PropType } from 'vue';
+import type Dictionary from '@/classes/dictionary';
 
 export default {
     name : "Header",
@@ -31,7 +33,7 @@ export default {
             required : true
         },
         itemDb : {
-            type : Array<Item>, //Required for CherishMenu
+            type : Object as PropType<Dictionary<Item>>, //Required for CherishMenu
             required: true,
         }
     },

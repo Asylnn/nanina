@@ -60,7 +60,6 @@ namespace Nanina.Communication
                     break;
                 case ClientResponseType.UpdateItemDB: 
                     UpdateItemDatabase(rawData);
-                    UpdateEquipmentDatabase(rawData);
                     break;
                 case ClientResponseType.UpdateSetDB:
                     UpdateSetDatabase(rawData);

@@ -89,14 +89,13 @@ namespace Nanina.UserData
                 var fracQty = qty - wholeQty;
                 if(new Random().NextDouble() <= fracQty)
                     wholeQty++;
-
                 if(wholeQty >= 1)
                 {
                     loot.Add(new ()
                     {
                         lootType = LootType.Item,
                         amount = (short)wholeQty,
-                        item = Utils.DeepCopyReflection(Global.items.Find(item => item.id == 5 + tier))!,
+                        item = Utils.DeepCopyReflection(Global.items[(short)(5 + tier)]),
                     });
                 }
             }
@@ -105,7 +104,7 @@ namespace Nanina.UserData
         private void OnResearchTimeout(User user)
         {
             var researchNode = Global.researchNodes.Find(RN => RN.id == researchID)!;
-            var vehicleItem = Utils.DeepCopyReflection(Global.items.Find(i => i.id == 0))!;
+            var vehicleItem = Utils.DeepCopyReflection(Global.items[0])!;
 
             
             if(user.completedResearches.ContainsKey(researchID!))
@@ -143,7 +142,7 @@ namespace Nanina.UserData
                 loot.Add(new()
                 {
                     lootType = LootType.Item,
-                    item = Global.items.Find(item => item.id == explorationLoot.itemId)!,
+                    item = Global.items[explorationLoot.itemId],
                     amount = 1,
                 });
             }

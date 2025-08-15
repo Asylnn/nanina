@@ -185,7 +185,7 @@ namespace Nanina.Communication
                             {
                                 lootType = LootType.Item,
                                 amount = result.quantity,
-                                item = Global.items.Find(item => item.id == result.id)
+                                item = Global.items[result.id],
                             }
                         );
                     

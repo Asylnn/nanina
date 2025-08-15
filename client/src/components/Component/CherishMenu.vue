@@ -4,6 +4,8 @@ import ItemType from '@/classes/item/item_type';
 import StatModifier from '@/classes/modifiers/stat_modifier';
 import User from '@/classes/user/user';
 import StaticItemUseComponent from './StaticItemUseComponent.vue';
+import type { PropType } from 'vue';
+import type Dictionary from '@/classes/dictionary';
 
 
 export default {
@@ -23,7 +25,7 @@ export default {
             required: true
         },
         itemDb : {
-            type: Array<Item>,
+            type: Object as PropType<Dictionary<Item>>,
             required : true,
         }
     },
@@ -32,7 +34,7 @@ export default {
     },
     mounted()
     {
-        this.items = this.itemDb.filter(item => this.itemsIds.includes(item.id))
+        this.items = Object.values(this.itemDb).filter(item => this.itemsIds.includes(item.id))
     }
 
 }

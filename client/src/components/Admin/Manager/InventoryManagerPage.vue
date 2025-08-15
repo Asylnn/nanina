@@ -6,6 +6,8 @@ import Item from '@/classes/item/item';
 import ItemType from '@/classes/item/item_type';
 import ItemManagerComponent from './ItemManagerComponent.vue';
 import ClientResponseType from '@/classes/client_response_type';
+import type { PropType } from 'vue';
+import type Dictionary from '@/classes/dictionary';
 
 /*Selectionner un user pour regarder son inventaire et pouvoir le modifier ##PLUS TARD
 * Ajouter un item -> 
@@ -36,7 +38,7 @@ export default {
             required: true
         },
         items: { //type dans l'ordre du select
-            type: Array<Item>,
+            type: Object as PropType<Dictionary<Item>>,
             required: true
         },
     },

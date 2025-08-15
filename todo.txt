@@ -106,6 +106,7 @@ TODO : Display the set bonus on the waifu stat card                             
 TODO : Add cross to menus to close them.                                            #Done
 TODO : [BUG] code for verifying account is sometime expired                         #Seems to be fixed? Was it that the limit was 10 seconds?
 
+TODO : Remove dev property in App.vue
 TODO : [BUG] Cherish battery use, item count doesn't decrease
 TODO : Add regen tick clock on client
 TODO : limit the amount of data sent to the client

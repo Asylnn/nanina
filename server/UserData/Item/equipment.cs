@@ -26,7 +26,8 @@ namespace Nanina.UserData.ItemData
         public static IEnumerable<Equipment> CreateEquipmentsForDungeon(ActiveDungeon dungeon, ushort numberOfEquipments)
         {
             var setId = dungeon.template.setRewards.RandomElement();
-            var equipments = Global.equipments.FindAll(x => x.setId == setId);
+            var equipments = Global.equipments.Values.ToList().FindAll(x => x.setId == setId);
+            
             Console.WriteLine(JsonConvert.SerializeObject(dungeon.template.setRewards));
 
             for(int i = 0; i < numberOfEquipments; i++)
@@ -76,14 +77,7 @@ namespace Nanina.UserData.ItemData
                         :   Global.baseValues.baseStatsAdd[modifierWeight.modifier.stat.ToString()];*/
 
             var statRandomness = Utils.RandomMultiplicator(Global.baseValues.dungeon_stat_randomness);
-            Console.WriteLine("id " + id);
-            Console.WriteLine("rarity " + rarity);
-            Console.WriteLine("initial stat " + stat.amount);
-            Console.WriteLine("rarity multiplier " + Global.baseValues.equipment_stat_base_amount_multiplier[rarity]);
-            Console.WriteLine("randomness " + statRandomness);
             stat.amount *= statRandomness*Global.baseValues.equipment_stat_base_amount_multiplier[rarity];
-            Console.WriteLine("final stat " + stat.amount);
-
             
             /*var amount = baseValue*Global.baseValues.equipment_stat_base_amount_multiplier[rarity]*statRandomness;
             Console.WriteLine(baseValue);

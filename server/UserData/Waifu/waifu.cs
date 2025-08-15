@@ -136,7 +136,7 @@ namespace Nanina.UserData.WaifuData
             {
 
                 /*get set col to find one on the equipement to update equipment.set*/
-                equipment.set = Global.sets.Find(set => set.id == equipment.weapon.setId);
+                equipment.set = Global.sets[equipment.weapon.setId];
             }
             else
             {

@@ -69,9 +69,9 @@ export default {
 			notifs : Array(),
 			dev : true, //Is this dev or prod? IMPORTANT!!
 			all_waifus : {} as Dictionary<Waifu>,
-			item_db : [] as Item[],
-			equipment_db : [] as Equipment[],
-			set_db : [] as Set[],
+			item_db : {} as Dictionary<Item>,
+			equipment_db : {} as Dictionary<Equipment>,
+			set_db : {} as Dictionary<Set>,
 			pulled_waifus : [] as Waifu[],
 			banners : {} as Dictionary<Banner> ,
 			dungeons : {} as Dictionary<DungeonTemplate>,

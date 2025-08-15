@@ -1,1 +1,44 @@
-[{"type":0,"stat":null,"setId":0,"piece":0,"lvl":1,"attributes":[],"id":1,"inventoryId":0,"count":1,"imgPATH":"sword.svg","rarity":1,"modifiers":[]},{"type":0,"stat":null,"setId":0,"piece":1,"lvl":1,"attributes":[],"id":2,"inventoryId":0,"count":1,"imgPATH":"dress.svg","rarity":1,"modifiers":[]},{"type":0,"stat":null,"setId":0,"piece":2,"lvl":1,"attributes":[],"id":3,"inventoryId":0,"count":1,"imgPATH":"ring.svg","rarity":1,"modifiers":[]}]
+{
+    "1":{
+        "type": 0,
+        "stat": null,
+        "setId": 0,
+        "piece": 0,
+        "lvl": 1,
+        "attributes": [],
+        "id": 1,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "sword.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "2":{
+        "type": 0,
+        "stat": null,
+        "setId": 0,
+        "piece": 1,
+        "lvl": 1,
+        "attributes": [],
+        "id": 2,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "dress.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "3":{
+        "type": 0,
+        "stat": null,
+        "setId": 0,
+        "piece": 2,
+        "lvl": 1,
+        "attributes": [],
+        "id": 3,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "ring.svg",
+        "rarity": 1,
+        "modifiers": []
+    }
+}

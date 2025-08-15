@@ -91,10 +91,10 @@ namespace Nanina.Communication
             }
 
             /*get item db to find one item?*/
-            var baseItem = Global.items.Find(item => item.id == 10_000); //Item id for waifu essence
+            var baseItem = Global.items[10_000]; //Item id for waifu essence
             foreach(var waifu in alreadyOwnedWaifus){
                 var item = Utils.DeepCopyReflection(baseItem)!; 
-                item.id += Convert.ToUInt16(waifu.id);
+                item.id += Convert.ToInt16(waifu.id);
                 user.inventory.AddMaterial(item);
             }
             
