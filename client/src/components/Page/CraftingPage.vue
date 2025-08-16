@@ -17,7 +17,7 @@ export default {
             publicPath: import.meta.env.BASE_URL,
             ActivityType:ActivityType,
             aboveLimits:false,
-            shiftKey:false,
+            shiftKey:true,
         }
     },
     props: {
