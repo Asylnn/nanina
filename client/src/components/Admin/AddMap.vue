@@ -1,4 +1,6 @@
 <script lang="ts">
+import ClientResponseType from '@/classes/client_response_type';
+
 
 export default {
     name:"AddMap",
@@ -16,7 +18,7 @@ export default {
     },
     methods : {
         updateSettings(){
-            this.SendToServer("add beatmap with id", JSON.stringify({id:this.entered_id.toString(), tag:this.nanina_tag}), this.id)
+            this.SendToServer(ClientResponseType.AddBeatmap, JSON.stringify({id:this.entered_id.toString(), tag:this.nanina_tag}), this.id)
 
         }
     }
