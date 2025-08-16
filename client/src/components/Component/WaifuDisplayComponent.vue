@@ -144,7 +144,7 @@ export default {
     emits:["click", "exit"],
     computed : {
         equipment_to_show() {
-            return this.user.inventory.equipment.filter(equipment => equipment.piece == this.equipmentPiece)
+            return Object.values(this.user.inventory.equipment).filter(equipment => equipment.piece == this.equipmentPiece)
         }
     }
 }
@@ -268,10 +268,6 @@ export default {
 #display {
     max-width: 50vw;
     max-height: 60vh;
-}
-
-#focusedObject {
-    z-index: 820;
 }
 
 #waifuImage img {
