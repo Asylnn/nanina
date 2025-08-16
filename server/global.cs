@@ -23,8 +23,8 @@ public static class Global
     public static readonly Maimai.Chart[] charts = JsonConvert.DeserializeObject<Maimai.Chart[]>(File.ReadAllText("../charts.json"))!;
     public static readonly List<List<Loot>> userLevelRewards = LoadUserLevelRewards();
     public static readonly List<EquipmentAttribute> baseAttributes = JsonConvert.DeserializeObject<List<EquipmentAttribute>>(File.ReadAllText("../save/attributes.json"))!;
-    public static readonly List<ResearchNode> researchNodes = JsonConvert.DeserializeObject<List<ResearchNode>>(File.ReadAllText("../save/research.json"))!;
-    public static readonly List<Craft> craftingRecipes = LoadCraftingRecipes();
+    public static readonly Dictionary<string, ResearchNode> researchNodes = JsonConvert.DeserializeObject<Dictionary<string, ResearchNode>>(File.ReadAllText("../save/research.json"))!;
+    public static readonly Dictionary<short, Craft> craftingRecipes = LoadCraftingRecipes();
     public static readonly List<ExplorationLoot> explorationLoot = JsonConvert.DeserializeObject<List<ExplorationLoot>>(File.ReadAllText("../save/exploration_loot.json"))!;
 
     //If at release it's only used to send the data to the client, then just send it without deserializing0
@@ -54,15 +54,17 @@ public static class Global
         return userLevelRewards;
     }
 
-    private static List<Craft> LoadCraftingRecipes()
+    private static Dictionary<short, Craft> LoadCraftingRecipes()
     {
-        var craftingRecipes = JsonConvert.DeserializeObject<List<Craft>>(File.ReadAllText("../save/crafts.json"))!;
-        foreach(var craftRecipe in craftingRecipes)
+        var temp_craftingRecipes = JsonConvert.DeserializeObject<List<Craft>>(File.ReadAllText("../save/crafts.json"))!;
+        Dictionary<short, Craft> craftingRecipes = [];
+        foreach(var craftRecipe in temp_craftingRecipes)
         {
             foreach(var craftIngredient in  (List<CraftIngredient>)[.. craftRecipe.ingredients, .. craftRecipe.results] )
             {
                 craftIngredient.imgPATH = items[craftIngredient.id].imgPATH;
             }
+            craftingRecipes[craftRecipe.id] = craftRecipe;
         }
         return craftingRecipes;
     }

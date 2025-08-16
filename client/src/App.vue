@@ -81,8 +81,8 @@ export default {
 			loots : [] as Array<Loot[]>,
 			inside_dungeon : false,
 			Page : Page,
-			researchNodes : [] as ResearchNode[],
-			craftingRecipes : [] as Craft[],
+			researchNodes : {} as Dictionary<ResearchNode>,
+			craftingRecipes : {} as Dictionary<Craft>,
 		}
 	},
 	components: {
@@ -230,14 +230,20 @@ export default {
 					console.log(this.dungeons)
 					break
 				case ServerResponseType.ProvideResearchNodes:
-					this.researchNodes = JSON.parse(res.data)
-					this.researchNodes = this.researchNodes.map(rn => Object.assign(new ResearchNode, rn))
+					let researchNodes : Dictionary<ResearchNode> = JSON.parse(res.data)
+					for(let researchNode of Object.values(researchNodes))
+					{
+						this.researchNodes[researchNode.id] = Object.assign(new ResearchNode, researchNode)
+					}
 					console.log("research node data : ")
 					console.log(this.researchNodes)
 					break
 				case ServerResponseType.ProvideCraftingRecipes:
-					this.craftingRecipes = JSON.parse(res.data)
-					this.craftingRecipes = this.craftingRecipes.map(rn => Object.assign(new Craft, rn))
+					let craftingRecipes : Dictionary<Craft>= JSON.parse(res.data)
+					for(let craftRecipe of Object.values(craftingRecipes))
+					{
+						this.craftingRecipes[craftRecipe.id] = Object.assign(new Craft, craftRecipe)
+					}
 					console.log("crafting recipes data : ")
 					console.log(this.craftingRecipes)
 					break

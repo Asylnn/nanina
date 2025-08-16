@@ -5,11 +5,6 @@ namespace Nanina.Crafting
         public short id {get; set;}
         public short quantity {get; set;}
         public string? imgPATH {get; set;} // Not present in crafting.json, added after deserializing 
-        public void Test()
-        {
-            Console.WriteLine("TEST IS FLAWLESS"); 
-            Console.WriteLine(quantity); 
-        }
     }
     public class Craft
     {

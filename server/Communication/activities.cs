@@ -69,8 +69,7 @@ namespace Nanina.Communication
         {
             if(Utils.TryDeserialize<ClientResearchRequest>(data, out var researchRequest) == false)
                 {Send(ClientNotification.NotificationData("Activities", "Invalid research request (researchRequest in null)", 1)); return (false, null);}
-            var researchNode = Global.researchNodes.Find(RN => RN.id == researchRequest.researchID);
-            if(researchNode == null)
+            if(Global.researchNodes.TryGet(researchRequest.researchID, out var researchNode) == false)
                 {Send(ClientNotification.NotificationData("Activities", "this research doesn't exist", 1)); return (false, null);}
 
             if(! researchNode.requirements.All(requirement => user.completedResearches.Any(completedResearch => completedResearch.Key == requirement)))
@@ -99,15 +98,10 @@ namespace Nanina.Communication
                     {Send(ClientNotification.NotificationData("Activities", "one of the craft is null!", 1)); return (false, null);}
                 if(craft.quantity <= 0)
                     {Send(ClientNotification.NotificationData("Activities", "you craft something 0 or negatives times", 1)); return (false, null);}
-                
-                var fullCraft = Global.craftingRecipes.Find(cr => cr.id == craft.id);
-
-                if(fullCraft == null)
+                if(Global.craftingRecipes.TryGet(craft.id, out var fullCraft) == false)
                     {Send(ClientNotification.NotificationData("Activities", "the craft does not exist", 1)); return (false, null);}
 
                 var fullCraftCopy = Utils.DeepCopyReflection(fullCraft)!;
-                if(fullCraftCopy.ingredients.Count != 0)
-                    fullCraftCopy.ingredients.First().Test();
 
                 /*Each ingredient and result quantity is multiplied by the craft quantity*/
                 fullCraftCopy.ingredients.ForEach(ingredient => ingredient.quantity *= craft.quantity);

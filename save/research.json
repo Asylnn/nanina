@@ -1,5 +1,5 @@
-[
-    {
+{
+    "unlock_stage_2":{
         "id":"unlock_stage_2",
         "tier":1,
         "cost":100,
@@ -10,7 +10,7 @@
         }],
         "requirements":[]
     },
-    {
+    "unlock_stage_3":{
         "id":"unlock_stage_3",
         "tier":2,
         "cost":100,
@@ -21,7 +21,7 @@
         }],
         "requirements":["unlock_stage_2"]
     },
-    {
+    "unlock_stage_4":{
         "id":"unlock_stage_4",
         "tier":3,
         "cost":100,
@@ -32,7 +32,7 @@
         }],
         "requirements":["unlock_stage_3"]
     },
-    {
+    "unlock_stage_5":{
         "id":"unlock_stage_5",
         "tier":4,
         "cost":100,
@@ -43,7 +43,7 @@
         }],
         "requirements":["unlock_stage_4"]
     },
-    {
+    "unlock_tools":{
         "id":"unlock_tools",
         "tier":1,
         "cost":100,
@@ -54,7 +54,7 @@
         }],
         "requirements":[]
     },
-    {
+    "unlock_exploration_tools2":{
         "id":"unlock_exploration_tools2",
         "tier":3,
         "cost":100,
@@ -65,7 +65,7 @@
         }],
         "requirements":["unlock_exploration_tools"]
     },
-    {
+    "unlock_exploration_tools3":{
         "id":"unlock_exploration_tools3",
         "tier":4,
         "cost":100,
@@ -76,7 +76,7 @@
         }],
         "requirements":["unlock_exploration_tools2"]
     },
-    {
+    "unlock_exploration_efficiency":{
         "id":"unlock_exploration_efficiency",
         "tier":3,
         "cost":100,
@@ -87,7 +87,7 @@
         }],
         "requirements":["unlock_exploration_tools"]
     },
-    {
+    "unlock_cafe_tools":{
         "id":"unlock_cafe_tools",
         "tier":2,
         "cost":100,
@@ -98,7 +98,7 @@
         }],
         "requirements":["unlock_tools"]
     },
-    {
+    "unlock_cafe_prestige":{
         "id":"unlock_cafe_prestige",
         "tier":3,
         "cost":100,
@@ -109,7 +109,7 @@
         }],
         "requirements":["unlock_cafe_tools"]
     },
-    {
+    "unlock_cafe_efficiciency":{
         "id":"unlock_cafe_efficiciency",
         "tier":3,
         "cost":100,
@@ -120,7 +120,7 @@
         }],
         "requirements":["unlock_cafe_tools"]
     },
-    {
+    "unlock_mining_tools":{
         "id":"unlock_mining_tools",
         "tier":2,
         "cost":100,
@@ -131,7 +131,7 @@
         }],
         "requirements":["unlock_tools"]
     },
-    {
+    "unlock_exploration_tools":{
         "id":"unlock_exploration_tools",
         "tier":2,
         "cost":100,
@@ -142,7 +142,7 @@
         }],
         "requirements":["unlock_tools"]
     },
-    {
+    "max_energy":{
         "id":"max_energy",
         "tier":1,
         "cost":100,
@@ -154,4 +154,4 @@
         }],
         "requirements":[]
     }
-]
+}

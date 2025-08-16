@@ -103,7 +103,7 @@ namespace Nanina.UserData
 
         private void OnResearchTimeout(User user)
         {
-            var researchNode = Global.researchNodes.Find(RN => RN.id == researchID)!;
+            var researchNode = Global.researchNodes[researchID!];
             var vehicleItem = Utils.DeepCopyReflection(Global.items[0])!;
 
             

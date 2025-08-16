@@ -14,6 +14,8 @@ import CraftingPage from './CraftingPage.vue';
 import Craft from '@/classes/crafting/craft';
 import ClientResponseType from '@/classes/client_response_type';
 import ContinuousFightPage from './ContinuousFightPage.vue';
+import type Dictionary from '@/classes/dictionary';
+import type { PropType } from 'vue';
 
 
 export default {
@@ -36,11 +38,11 @@ export default {
             required: true
         },
         researchNodes:{
-            type:Array<ResearchNode>,
+            type:Object as PropType<Dictionary<ResearchNode>>,
             required:true,
         },
         craftingRecipes:{
-            type:Array<Craft>,
+            type:Object as PropType<Dictionary<Craft>>,
             required:true,
         },
     },
@@ -118,14 +120,14 @@ export default {
             </ActivityWaifuPickerComponent>
         </div>
         <div v-else-if="selectedActivity == ActivityType.Research">
-            <ResearchPage :research-nodes="researchNodes" :user="user" :selected-waifu="selectedWaifu"
+            <ResearchPage :research-nodes="Object.values(researchNodes)" :user="user" :selected-waifu="selectedWaifu"
                 v-on:show-waifu-selector="showWaifuSelector()"
                 v-on:reset-selected-waifu="selectedWaifu = null">
                 
             </ResearchPage>
         </div>
         <div v-else-if="selectedActivity == ActivityType.Crafting">
-            <CraftingPage :user="user" :selected-waifu="selectedWaifu" :crafting-recipes="craftingRecipes"
+            <CraftingPage :user="user" :selected-waifu="selectedWaifu" :crafting-recipes="Object.values(craftingRecipes)"
                 v-on:reset-selected-waifu="selectedWaifu = null" 
                 v-on:show-waifu-selector="showWaifuSelector()">
 

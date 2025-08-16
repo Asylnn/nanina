@@ -72,6 +72,7 @@ TODO : Have the "plus" change color when hovered                                
 TODO : Have the "plus" not be right beside the energy amount (the plus moves when the number of digit of the energy changes)    #Done
 TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.     #Done
 TODO : Make continuous fight page with a list of all the scores done and how much time it saved.                                #Done
+TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists                                #Done
 TODO : try catch onMessage                                                          #Done
 TODO : update osu tokens each day                                                   #Done
 TODO : Make so you don't need to remove the code part of the url to connect         #Done
@@ -112,8 +113,6 @@ TODO : Add regen tick clock on client
 TODO : limit the amount of data sent to the client
 TODO : send file to client without doing serialazation, directly from file
 TODO : Add number of completed continuous fight completed
-TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists
-        (and more generally make a lot of arrays into dictionnaries for performance)
 
 
 Design to do
