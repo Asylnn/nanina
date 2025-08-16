@@ -254,7 +254,8 @@ namespace Nanina.Communication
             var scoresDTO = scores.ToList().ConvertAll(score => score.ToDTO());
 
             var totalTimeSave = 0d;
-            for (int i = 0; i < scores.Count(); i++)
+            var scoreCount = scores.Count();
+            for (int i = 0; i < scoreCount; i++)
             {
                 var xp = Api.GetXP(scores.ElementAt(i)) * 1000;
                 var timesave = Math.Ceiling(Math.Pow(xp, 0.75));
@@ -309,6 +310,7 @@ namespace Nanina.Communication
             }
             user.continuousFightLog.RemoveAll(remover.Contains);
             user.lastContinuousFightTimestamp = Utils.GetTimestamp();
+            user.statCount.continuous_fight_count += scoreCount;
             /*foreach(var score in scores)
             {
                 user.continuousFightLog.Add(new()

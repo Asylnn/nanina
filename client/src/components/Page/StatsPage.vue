@@ -29,6 +29,9 @@ export default {
         <span>{{ $t("stats.nb_maimai_claim") }}</span> <span> {{ user.statCount.maimai_claim_count }} </span>  <br>
     </div>
     <div class="stat">
+        <span>{{ $t("stats.continuous_fight_claim") }}</span> <span> {{ user.statCount.continuous_fight_count }} </span>  <br>
+    </div>
+    <div class="stat">
         <span>{{ $t("stats.nb_claim") }}</span> <span> {{ user.totalClaims }} </span>  <br><br>
     </div>
     <div class="stat">
