@@ -56,7 +56,7 @@ export default {
             this.waifuToView = waifu
             this.waifuDisplayComponentVisible = true
         },
-        closeWaifuDisplay()
+        selectWaifu()
         {
             this.waifuDisplayComponentVisible = false
             this.waifuSelectorVisible = false
@@ -96,7 +96,9 @@ export default {
     </div>
     <div v-if="waifuDisplayComponentVisible">
         <div  @click="waifuDisplayComponentVisible = false" class="veil" id="waifuveil"></div>
-        <WaifuDisplayComponent @click="closeWaifuDisplay" :for-pull="false" :for-dungeon="true"  :waifu="waifuToView!" :user="user"></WaifuDisplayComponent>
+        <WaifuDisplayComponent @click="selectWaifu" :for-pull="false" :for-dungeon="true"  :waifu="waifuToView!" :user="user"
+            @exit="waifuDisplayComponentVisible = false">
+        </WaifuDisplayComponent>
     </div>
     
 
