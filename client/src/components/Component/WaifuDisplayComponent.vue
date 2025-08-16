@@ -231,7 +231,7 @@ export default {
 }
 
 #inventoryveil{
-    z-index: 150;
+    z-index: 130;
 }
 
 #itemveil{
@@ -239,7 +239,7 @@ export default {
 }
 
 #grid {
-    z-index: 160;
+    z-index: 150;
     position: sticky;
     top : 120px;
     right: 0px;

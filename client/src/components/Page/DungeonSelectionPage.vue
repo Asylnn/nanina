@@ -170,8 +170,8 @@ export default {
 }
 
 #grid {
-    z-index: 150;
     position: sticky;
+    z-index: 50;
     top : 10vh;
     right: 0px;
     left : 0px;
@@ -183,17 +183,11 @@ export default {
 }
 
 #waifuSelectorVeil{
-    z-index: 100;
+    z-index: 30;
 }
 
 #waifuveil{
-    z-index: 200;
-}
-
-.grid {
-    z-index: 780;
-    position: sticky;
-    top : 10px;
+    z-index: 80;
 }
 
 #waifuSelection
