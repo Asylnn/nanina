@@ -81,8 +81,7 @@ export default {
         },
         getItemQuantity(id: number) : number
         {
-            let item = this.user.inventory.material.find(item => item.id == id)
-            return item != undefined ? item!.count : 0 
+            return this.user.inventory.items[id]?.count || 0
         },
     },
     computed:

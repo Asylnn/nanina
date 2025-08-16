@@ -48,7 +48,7 @@ export default {
                     <div><button class="smallbutton" @click="useItem(item)"> {{ $t("item.use") }}</button></div>
                 </div>
                 <div id="ItemInfo">
-                    {{ $t(`item.${item.id}.name`) }} ({{ user.inventory.userConsumable.find(iitem => iitem.id == item.id)?.count || 0}})<br>
+                    {{ $t(`item.${item.id}.name`) }} ({{ user.inventory.items[item.id]?.count || 0}})<br>
                     {{ $t(`item.${item.id}.description`) }}<br><br>
                     <p>{{$t("modifiers.modifier")}} </p><br>
                     <div v-for="modifier in item.modifiers">

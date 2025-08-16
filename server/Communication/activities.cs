@@ -130,7 +130,7 @@ namespace Nanina.Communication
                         j--;
                     }
                 }
-                if(! user.inventory.HasItem(craftMerge.ingredients[i].id, craftMerge.ingredients[i].quantity))
+                if(! (user.inventory.items.TryGet(craftMerge.ingredients[i].id, out var item) && item.count > craftMerge.ingredients[i].quantity) )
                     {Send(ClientNotification.NotificationData("Activities", "you don't have enough items", 1)); return (false, null);}   
             }
 

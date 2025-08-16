@@ -3,7 +3,7 @@ import Waifu from '../waifu/waifu'
 import type Dictionary from '../dictionary'
 import PullBannerHistory from './pull_history'
 import type Fight from './fight'
-import type Inventory from './inventory'
+import Inventory from './inventory'
 import type Game from './game'
 import config from '../../../../baseValues.json'
 import Equipment from '../item/equipment'
@@ -65,9 +65,18 @@ export default class User {
         {
             this.waifus[waifu] = new Waifu(this.waifus[waifu])
         }
-        if(this.inventory) this.inventory.equipment = this.inventory?.equipment.map((equipment) => {
-            return Object.assign(new Equipment(), equipment)
-        })
+        {
+            if(this.inventory)
+            {
+                this.inventory = Object.assign(new Inventory(), this.inventory)
+                for(var [key, value] of Object.entries(this.inventory.equipment))
+                {
+                    this.inventory.equipment[key] = Object.assign(new Equipment(), value)
+                }
+            }
+            
+        }
+        
         
         if(this.fight?.timestamp != undefined)
             this.localFightTimestamp = this.fight.timestamp

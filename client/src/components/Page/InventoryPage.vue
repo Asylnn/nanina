@@ -4,6 +4,7 @@ import User from '@/classes/user/user';
 import ItemComponent from '../Component/ItemComponent.vue';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import Item from '@/classes/item/item';
+import ItemType from '@/classes/item/item_type';
 
 export default {
     name : "InventoryPage",
@@ -11,7 +12,8 @@ export default {
         return {
             category : "all",
             focusedView : false,
-            item_to_display : new Item()
+            item_to_display : new Item(),
+            ItemType:ItemType,
         }
     },
     props: {
@@ -58,10 +60,34 @@ export default {
             <li :style="applyTextColor('material')" @click="category = 'material'" >{{$t("inventory.material")}}</li>
         </ul>
         <div id="inventoryBody">
-            <GridDisplayComponent v-if="category === 'equipment' || category === 'all'" :elements="user.inventory.equipment" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
-            <GridDisplayComponent v-if="category === 'user_consumable' || category === 'all'" :elements="user.inventory.userConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
-            <GridDisplayComponent v-if="category === 'waifu_consumable' || category === 'all'" :elements="user.inventory.waifuConsumable" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
-            <GridDisplayComponent v-if="category === 'material' || category === 'all'" :elements="user.inventory.material" tabindex="0" @keydown.esc="closeItemDisplay" @show-element="showItem" :columns=8></GridDisplayComponent>
+            <GridDisplayComponent v-if="category === 'equipment' || category === 'all'" 
+                :elements="Object.values(user.inventory.equipment)" 
+                tabindex="0" 
+                @keydown.esc="closeItemDisplay" 
+                @show-element="showItem" 
+                :columns=8>
+            </GridDisplayComponent>
+            <GridDisplayComponent v-if="category === 'user_consumable' || category === 'all'" 
+                tabindex="0" 
+                @keydown.esc="closeItemDisplay" 
+                @show-element="showItem" :columns=8
+                :elements="Object.values(user.inventory.items).filter(item => item.type == ItemType.UserConsumable)">
+
+            </GridDisplayComponent>
+            <GridDisplayComponent v-if="category === 'waifu_consumable' || category === 'all'" 
+                :elements="Object.values(user.inventory.items).filter(item => item.type == ItemType.WaifuConsumable)" 
+                tabindex="0" 
+                @keydown.esc="closeItemDisplay" 
+                @show-element="showItem" 
+                :columns=8>
+            </GridDisplayComponent>
+            <GridDisplayComponent v-if="category === 'material' || category === 'all'" 
+                :elements="Object.values(user.inventory.items).filter(item => item.type == ItemType.Material)" 
+                tabindex="0" 
+                @keydown.esc="closeItemDisplay" 
+                @show-element="showItem" 
+                :columns=8>
+            </GridDisplayComponent>
             <div v-if="focusedView">
                 <div @click="closeItemDisplay" class="veil" ></div>
                 <ItemComponent :userID="user.Id" :is-for-equiping="false" @exit="closeItemDisplay" :item="item_to_display"></ItemComponent>

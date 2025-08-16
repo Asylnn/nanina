@@ -33,7 +33,8 @@ export default {
             this.item.modifiers.splice(this.item.modifiers.findIndex(modf => modf.stat == stat), 1)
         },
         Delete(){
-            this.$emit("delete-item", this.item.id)
+            let id = this.item.type == ItemType.Equipment ? this.item.inventoryId : this.item.id
+            this.$emit("delete-item", id)
         },
     },
     components:{

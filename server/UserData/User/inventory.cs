@@ -5,86 +5,39 @@ namespace Nanina.UserData
     public class Inventory 
     {
         public int inventoryIdCounter {get; set;} = 0;
-        public List<Equipment> equipment {get; set;} = [];
-        public List<Item> material {get; set;} = [];
-        public List<Item> userConsumable {get; set;} = [];
-        public List<Item> waifuConsumable {get; set;} = [];
-        public List<Item> AllItems 
-        {
-            get => [.. userConsumable, .. waifuConsumable, .. material];
-        }
-
-        public bool HasItem(short id, short quantity = 1)
-        {
-            return AllItems.Any(item => item.id == id && item.count >= quantity);
-        }
+        public Dictionary<int, Equipment> equipment {get; set;} = []; //use inventory id as key
+        public Dictionary<short, Item> items {get; set;} = [];          //use item id as key
         public void AddItem(Item item)
         {
-            item.inventoryId = inventoryIdCounter;
-            inventoryIdCounter++;
-            switch(item.type)
+            
+            if(items.TryGet(item.id, out var oldItem) == false)
             {
-                case ItemType.UserConsumable:
-                    var index = userConsumable.FindIndex(UCitem => UCitem.id == item.id);
-                    if(index == -1)
-                        userConsumable.Add(item);
-                    else 
-                        userConsumable[index].count += item.count;
-                    break;
-                case ItemType.WaifuConsumable:
-                    break;
-                case ItemType.Material:
-                    var UCindex = material.FindIndex(material => material.id == item.id);
-                        if(UCindex == -1)
-                            material.Add(item);
-                        else 
-                            material[UCindex].count += item.count;
-                    break;
+                item.inventoryId = inventoryIdCounter;
+                inventoryIdCounter++;
+                items[item.id] = item;
+            }
+            else
+            {
+                items[oldItem.id].count += item.count;
             }
         }
 
         public void RemoveItem(Item item)
         {
-            switch(item.type)
-            {
-                case ItemType.UserConsumable:
-                    if(item.count == 1)
-                        userConsumable.Remove(item);
-                    else 
-                        item.count--;
-                    break;
-                case ItemType.WaifuConsumable:
-                    if(item.count == 1)
-                        waifuConsumable.Remove(item);
-                    else 
-                        item.count--;
-                    break;
-                case ItemType.Material:
-                    if(item.count == 1)
-                        material.Remove(item);
-                    else 
-                        item.count--;
-                    break;
-            }
+            RemoveItem(item.id, item.count);
         }
 
-        public void RemoveItem(short id, short quantity)
+        public void RemoveItem(short id, int quantity)
         {
-            var item = AllItems.Find(item => item.id == id);
-            if(item is null)
+            if(items.TryGet(id, out var item) == false)
             {
                 Console.Error.WriteLine($"Remove Item got invalid id: {id}");
                 return;
             }
-            if(item.count > quantity)
-            {
-                item.count -= quantity;
-            }
-            else
-            {
-                item.count = 1;
-                RemoveItem(item);
-            }
+            item.count -= quantity;
+            if(item.count <= 0)
+                items.Remove(item.id);
+            
         }
 
         public void AddEquipment(Equipment obtainedEquipment) 
@@ -92,28 +45,7 @@ namespace Nanina.UserData
             
             obtainedEquipment.inventoryId = inventoryIdCounter;
             inventoryIdCounter++;
-            equipment.Add(obtainedEquipment);
-        }
-        public void AddMaterial(Item obtainedMaterial)
-        {
-            obtainedMaterial.inventoryId = inventoryIdCounter;
-            inventoryIdCounter++;
-            var index = material.FindIndex(item => obtainedMaterial.id == item.id);
-            if(index == -1)
-                material.Add(obtainedMaterial);
-            else 
-                material[index].count += obtainedMaterial.count;
-        }
-
-        public void AddUserConsumable(Item obtainedItem)
-        {
-            obtainedItem.inventoryId = inventoryIdCounter;
-            inventoryIdCounter++;
-            var index = userConsumable.FindIndex(item => obtainedItem.id == item.id);
-            if(index == -1)
-                userConsumable.Add(obtainedItem);
-            else 
-                userConsumable[index].count += obtainedItem.count;
+            equipment[obtainedEquipment.inventoryId] = obtainedEquipment;
         }
     }
 }

@@ -135,8 +135,9 @@ namespace Nanina.Database
                 {
                     user.waifus[waifuID].isDoingSomething = false;
                 }
-                foreach(var item in user.inventory.material)
+                foreach(var itemkeyValue in user.inventory.items)
                 {
+                    var item = itemkeyValue.Value;
                     Console.WriteLine(item);
                     var dbItem = Global.items[item.id];
                     if(dbItem == null) continue;
@@ -144,22 +145,9 @@ namespace Nanina.Database
                     item.rarity = dbItem.rarity;
                     item.modifiers = dbItem.modifiers;
                 }
-                foreach(var item in user.inventory.waifuConsumable)
+                foreach(var itemkeyValue in user.inventory.equipment)
                 {
-                    var dbItem = Global.items[item.id];
-                    item.imgPATH = dbItem.imgPATH;
-                    item.rarity = dbItem.rarity;
-                    item.modifiers = dbItem.modifiers;
-                }
-                foreach(var item in user.inventory.userConsumable)
-                {
-                    var dbItem = Global.items[item.id];
-                    item.imgPATH = dbItem.imgPATH;
-                    item.rarity = dbItem.rarity;
-                    item.modifiers = dbItem.modifiers;
-                }
-                foreach(var item in user.inventory.equipment)
-                {
+                    var item = itemkeyValue.Value;
                     var dbItem = Global.equipments[item.id];
                     if(dbItem == null){
                         Console.WriteLine(item.id);

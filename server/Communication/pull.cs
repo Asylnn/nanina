@@ -95,7 +95,7 @@ namespace Nanina.Communication
             foreach(var waifu in alreadyOwnedWaifus){
                 var item = Utils.DeepCopyReflection(baseItem)!; 
                 item.id += Convert.ToInt16(waifu.id);
-                user.inventory.AddMaterial(item);
+                user.inventory.AddItem(item);
             }
             
             foreach(var waifu in aquiredWaifus)

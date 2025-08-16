@@ -87,12 +87,11 @@ namespace Nanina.Communication
            if(user.waifus.TryGet(clientData.waifuId, out var waifu) == false)
                 {Send(ClientNotification.NotificationData("Equip", "The waifu you tried to equip the item with doesn't exist", 1)); return;}
 
-            var itemIndex = user.inventory.equipment.FindIndex(item => clientData.equipmentId == item.inventoryId);
-            if(itemIndex == -1)
+            if(user.inventory.equipment.TryGet(clientData.equipmentId, out var equipment) == false)
                 {Send(ClientNotification.NotificationData("Equip", "The item you tried to equip doesn't exist", 1)); return;}
 
-            var oldEquipment = waifu.Equip(user.inventory.equipment[itemIndex]);
-            user.inventory.equipment.RemoveAt(itemIndex);
+            var oldEquipment = waifu.Equip(equipment);
+            user.inventory.equipment.Remove(equipment.inventoryId);
             if(oldEquipment is not null)
                 user.inventory.AddEquipment(oldEquipment);
 
@@ -198,11 +197,8 @@ namespace Nanina.Communication
             if(user == null) 
                 {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
 
-            var itemIndex = user.inventory.userConsumable.FindIndex(uc => uc.inventoryId == Convert.ToUInt32(rawData.data));
-            if(itemIndex == -1)
+            if(user.inventory.items.TryGet(Convert.ToInt16(rawData.data), out var item) == false)
                 {Send(ClientNotification.NotificationData("Equip", "You don't have the item you tried to use", 1)); return;}
-
-            var item = user.inventory.userConsumable[itemIndex];
 
             user.UseUserConsumable(item);
             user.inventory.RemoveItem(item);
@@ -252,20 +248,12 @@ namespace Nanina.Communication
         protected void UpgradeEquipment(ClientWebSocketResponse rawData)
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
-            if(user == null) 
-            {
-                Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); 
-                return;
-            }
-            var equipmentIndex = user.inventory.equipment.FindIndex(equipment => equipment.inventoryId == Convert.ToUInt32(rawData.data));
-            if(equipmentIndex == -1)
-            {
-                Send(ClientNotification.NotificationData("User", "This equipment does not exist!", 1)); 
-                return;
-            }
-            Console.WriteLine(equipmentIndex);
-            Console.WriteLine(user.inventory.equipment.Count);
-            user.inventory.equipment[equipmentIndex].LevelUp();
+            if (user is null)
+                { Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return; }
+            if(user.inventory.equipment.TryGet(Convert.ToInt32(rawData.data), out var equipment) == false)
+                { Send(ClientNotification.NotificationData("User", "This equipment does not exist!", 1)); return; }
+                
+            equipment.LevelUp();
             Send(ClientNotification.NotificationData("admin", "temp mes", 1));
             DBUtils.Update(user);
         }

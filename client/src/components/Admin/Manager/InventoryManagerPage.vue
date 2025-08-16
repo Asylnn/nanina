@@ -54,33 +54,21 @@ export default {
             this.modeManager = mode
         },
 
-        DeleteEquipement(id: number){
-            //Can't work this way for equipment since you can have mutliple equipment with the same id, you need the "inventory id"
-            /*this.user.inventory.equipment.splice(this.user.inventory.equipment.findIndex(equipment => equipment.id == id), 1)*/
+        deleteEquipement(id: number){
+            delete this.user.inventory.equipment[id]
         },
-        DeleteMaterial(id: number){
-            this.user.inventory.material.splice(this.user.inventory.material.findIndex(material => material.id == id), 1)
-        },
-        DeleteWaifuConsumable(id: number){
-            this.user.inventory.waifuConsumable.splice(this.user.inventory.waifuConsumable.findIndex(waifu_consumable => waifu_consumable.id == id), 1)
-        },
-        DeleteUserConsumable(id: number){
-            this.user.inventory.userConsumable.splice(this.user.inventory.userConsumable.findIndex(user_consumable => user_consumable.id == id), 1)
+        deleteItem(id: number){
+            delete this.user.inventory.items[id]
         },
         addItem(item: Item)
         {
-            switch(this.filteredType){
-                case ItemType.Equipment:
-                    this.user.inventory.equipment.push(item as Equipment)
+            switch(true){
+                case this.filteredType == ItemType.Equipment:
+                    this.user.inventory.AddEquipment(item as Equipment)
                     break;
-                case ItemType.WaifuConsumable:
-                    this.user.inventory.waifuConsumable.push(item)
-                    break;
-                case ItemType.UserConsumable:
-                    this.user.inventory.userConsumable.push(item)
-                    break;
-                case ItemType.Material:
-                    this.user.inventory.material.push(item)
+                case this.filteredType == ItemType.WaifuConsumable || this.filteredType == ItemType.Material || this.filteredType == ItemType.UserConsumable:
+                    console.log("add item")
+                    this.user.inventory.AddItem(item)
                     break;
             }
         },
@@ -96,22 +84,20 @@ export default {
 <template>
     <div id="inventoryManager">
         <div id="theInventory">
-            <div v-for="array in user.inventory">
-                <div v-for="item in array">
-                    <div v-if="item.type == ItemType.Equipment">
-                        <ItemManagerComponent :item="item" @delete-item="DeleteEquipement" :forInventoryManager="true"></ItemManagerComponent>
-                    </div>
-                    <div v-else-if="item.type == ItemType.UserConsumable">
-                        <ItemManagerComponent :item="item" @delete-item="DeleteUserConsumable" :forInventoryManager="true"></ItemManagerComponent>
-                    </div>
-                    <div v-else-if="item.type == ItemType.WaifuConsumable">
-                        <ItemManagerComponent :item="item" @delete-item="DeleteWaifuConsumable" :forInventoryManager="true"></ItemManagerComponent>
-                    </div>
-                    <div v-else-if="item.type == ItemType.Material">
-                        <ItemManagerComponent :item="item" @delete-item="DeleteMaterial" :forInventoryManager="true"></ItemManagerComponent>
-                    </div>
-                    <!--You need to have the last case with a condition since one of the properties of user.inventory is a number and "for x in 245" break some stuff-->
+            <div v-for="item in [...Object.values(user.inventory.equipment), ...Object.values(user.inventory.items)]">
+                <div v-if="item.type == ItemType.Equipment">
+                    <ItemManagerComponent :item="item" @delete-item="deleteEquipement" :forInventoryManager="true"></ItemManagerComponent>
                 </div>
+                <div v-else-if="item.type == ItemType.UserConsumable">
+                    <ItemManagerComponent :item="item" @delete-item="deleteItem" :forInventoryManager="true"></ItemManagerComponent>
+                </div>
+                <div v-else-if="item.type == ItemType.WaifuConsumable">
+                    <ItemManagerComponent :item="item" @delete-item="deleteItem" :forInventoryManager="true"></ItemManagerComponent>
+                </div>
+                <div v-else-if="item.type == ItemType.Material">
+                    <ItemManagerComponent :item="item" @delete-item="deleteItem" :forInventoryManager="true"></ItemManagerComponent>
+                </div>
+                <!--You need to have the last case with a condition since one of the properties of user.inventory is a number and "for x in 245" break some stuff-->
             </div>
         </div>
         <div id="theManager">
