@@ -59,22 +59,22 @@ namespace Nanina.Communication
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type =  ServerResponseType.ProvideBanners,
-                data = JsonConvert.SerializeObject(Global.banners),
+                data = Global.bannersString,
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = ServerResponseType.ProvideDungeons,
-                data = JsonConvert.SerializeObject(DungeonManager.dungeons),
+                data = Global.dungeonsString,
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = ServerResponseType.ProvideResearchNodes,
-                data = JsonConvert.SerializeObject(Global.researchNodes),
+                data = Global.researchNodesString,
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = ServerResponseType.ProvideCraftingRecipes,
-                data = JsonConvert.SerializeObject(Global.craftingRecipes),
+                data = Global.craftingRecipesString,
             }));
             if(user.isInDungeon)
             {

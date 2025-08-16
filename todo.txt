@@ -105,14 +105,16 @@ TODO : Make a function that check if a request is valid before working on it    
 TODO : Show loot rarity in loot component                                           #Done
 TODO : Display the set bonus on the waifu stat card                                 #Done
 TODO : Add cross to menus to close them.                                            #Done
+TODO : Add number of completed continuous fight completed                           #Done
+TODO : send file to client without doing serialazation, directly from file          #Done
 TODO : [BUG] code for verifying account is sometime expired                         #Seems to be fixed? Was it that the limit was 10 seconds?
 
 TODO : Remove dev property in App.vue
 TODO : [BUG] Cherish battery use, item count doesn't decrease
 TODO : Add regen tick clock on client
 TODO : limit the amount of data sent to the client
-TODO : send file to client without doing serialazation, directly from file
-TODO : Add number of completed continuous fight completed
+
+
 
 
 Design to do
@@ -144,6 +146,7 @@ TODO : Get server data inside relevent page instead of the main
 TODO : use JSON Schemas
 TODO : clean up activity code (one big function is actually preferable)
 TODO : choose if we keep using file paths in config or directly in code
+            file path since sometime there is multiple points in the application where the file is loaded
 TODO : Use BsonDocuments for Updating/Getting an object from LiteDB (avoid so called "reflection tax")
     (https://github.com/teekay/litedb-sqlite-handbook/blob/master/MusicLibrary.Persistence.LiteDb/Model/Track.cs,
     https://github.com/teekay/litedb-handbook/tree/master)

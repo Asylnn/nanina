@@ -29,7 +29,7 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("User", "Invalid data (cliendData is null)", 1)); return ;}
             if(clientData.id == null || clientData.waifuIds == null || clientData.floor <= 0 || clientData.floor > 5)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (clientData.id or clientData.waifuIds are null, or clientData.floor is not between 1 and 5)", 1)); return ;}
-            if(DungeonManager.dungeons.TryGet(clientData.id, out var dungeon) == false)
+            if(Global.dungeons.TryGet(clientData.id, out var dungeon) == false)
                 {Send(ClientNotification.NotificationData("Dungeon", "The dungeon you tried to start doesn't exist!", 1)); return ;}
             List<Waifu?> waifus = clientData.waifuIds.ConvertAll(waifuId =>
             {

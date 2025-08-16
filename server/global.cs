@@ -7,6 +7,7 @@ using Nanina.UserData.ModifierData;
 using Nanina.Crafting;
 using Nanina.Activities;
 using Nanina.Gacha;
+using Nanina.Dungeon;
 
 namespace Nanina;
 
@@ -14,7 +15,7 @@ public static class Global
 {
     public static readonly Dictionary<long, System.Timers.Timer> activityTimers = [];
     public static readonly Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("../config.json"))!;
-    public static readonly Dictionary<string, Banner> banners = JsonConvert.DeserializeObject<Dictionary<string, Banner>>(File.ReadAllText(Global.config.banners_storage_path))!;
+    public static readonly Dictionary<string, Banner> banners = JsonConvert.DeserializeObject<Dictionary<string, Banner>>(File.ReadAllText(config.banners_storage_path))!;
     public static readonly Dictionary<string, Waifu> waifus = JsonConvert.DeserializeObject<Dictionary<string, Waifu>>(File.ReadAllText("../save/waifu.json"))!;
     public static readonly Dictionary<short, Item> items = JsonConvert.DeserializeObject<Dictionary<short, Item>>(File.ReadAllText("../save/item.json"))!;
     public static readonly Dictionary<short, Equipment> equipments = JsonConvert.DeserializeObject<Dictionary<short, Equipment>>(File.ReadAllText("../save/equipment.json"))!;
@@ -25,7 +26,12 @@ public static class Global
     public static readonly List<EquipmentAttribute> baseAttributes = JsonConvert.DeserializeObject<List<EquipmentAttribute>>(File.ReadAllText("../save/attributes.json"))!;
     public static readonly Dictionary<string, ResearchNode> researchNodes = JsonConvert.DeserializeObject<Dictionary<string, ResearchNode>>(File.ReadAllText("../save/research.json"))!;
     public static readonly Dictionary<short, Craft> craftingRecipes = LoadCraftingRecipes();
+    public static readonly Dictionary<string, Template> dungeons = JsonConvert.DeserializeObject<Dictionary<string, Template>>(File.ReadAllText(config.dungeon_storage_path))!;
     public static readonly List<ExplorationLoot> explorationLoot = JsonConvert.DeserializeObject<List<ExplorationLoot>>(File.ReadAllText("../save/exploration_loot.json"))!;
+    public static readonly string craftingRecipesString = JsonConvert.SerializeObject(craftingRecipes);
+    public static readonly string dungeonsString = JsonConvert.SerializeObject(dungeons);
+    public static readonly string researchNodesString = JsonConvert.SerializeObject(researchNodes);
+    public static readonly string bannersString = JsonConvert.SerializeObject(banners);
 
     //If at release it's only used to send the data to the client, then just send it without deserializing0
 
