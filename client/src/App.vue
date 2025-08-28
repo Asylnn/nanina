@@ -120,6 +120,10 @@ export default {
     	updatePage(page : Page) {
       		this.page = page
     	},
+		pushLoot(loot : Loot[])
+		{
+			this.loots.push(loot)
+		}
 	},
 	mounted() {
 		console.log("mounted app!")
@@ -314,7 +318,9 @@ export default {
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
 		</div>
 		<div v-else-if="page == Page.Pull">
-			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"></PullPage>
+			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"
+				v-on:pull-finished-show-loot="pushLoot">
+			</PullPage>
 		</div>
 		<div v-else-if="page == Page.ItemManager">
 			<ItemManagerPage :id="user.Id" :item_db="item_db" :equipment_db="equipment_db" :set_db="set_db"></ItemManagerPage>

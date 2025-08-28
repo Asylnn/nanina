@@ -139,8 +139,7 @@ namespace Nanina.Database
                 {
                     var item = itemkeyValue.Value;
                     Console.WriteLine(item);
-                    var dbItem = Global.items[item.id];
-                    if(dbItem == null) continue;
+                    if(Global.items.TryGet(item.id, out var dbItem) == false) continue;
                     item.imgPATH = dbItem.imgPATH;
                     item.rarity = dbItem.rarity;
                     item.modifiers = dbItem.modifiers;
