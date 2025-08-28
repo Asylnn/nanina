@@ -43,7 +43,7 @@ export default {
         GridDisplayComponent,
     },
     mounted(){
-        this.selected_banner = this.banners[0]
+        this.selected_banner = Object.values(this.banners)[0]
         this.listener = (i: Websocket, ev: MessageEvent) => {
 			var res : WebSocketResponse = JSON.parse(ev.data)
 			switch (res.type) {
