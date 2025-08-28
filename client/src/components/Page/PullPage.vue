@@ -101,7 +101,7 @@ export default {
             this.focusedView = true
         },
         incrementCount(){
-            if (this.pulled_waifus.length > this.count) {
+            if (this.pulled_waifus.length > this.count + 1) {
                 this.count++
             }
             else {
