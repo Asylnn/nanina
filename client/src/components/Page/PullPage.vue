@@ -141,7 +141,8 @@ export default {
         </div>
         <div v-if="pulled_waifus[0] != undefined">
             <div id="gachaPull" v-if=focusedView>
-                <div @click="incrementCount" id="veil"></div>
+                <div class="veil" id="backveil"></div>
+                <div class="veil" id="frontveil" @click="incrementCount"></div>
                 <WaifuDisplayComponent :user="user" :for-dungeon="false" :for-pull="true" :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
             </div>
             <div id="gridPull" v-else>
@@ -177,16 +178,17 @@ export default {
     font-size:medium;
 }
 
-#veil {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0,0,0,0.8);
-    z-index: 726;
+#backveil {
+    z-index: 50;
+}
+
+#frontveil
+{
+    background-color: rgba(0,0,0,0);
+    z-index:9999;
     cursor: pointer;
 }
+
 #gridPull {
     display: grid;
     
