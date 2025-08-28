@@ -30,7 +30,28 @@ export default {
     emits:["display-loot"],
     components:{
         ItemComponent
+    },
+    mounted()
+    {
+        console.log(this.loots)
+        //we combine the loot containing the same item id
+        for(let i = 0; i < this.loots.length; i++)
+        {
+            for(let j = i+1; j < this.loots.length; j++)
+            {
+                if(this.loots[i].item != null && this.loots[i].lootType != LootType.Equipment && ( this.loots[i].item!.id == this.loots[j].item!.id ) )
+                {
+                    let itemIAmount = this.loots[i].item!.count == 1 ? this.loots[i].amount : this.loots[i].item!.count
+                    let itemJAmount = this.loots[j].item!.count == 1 ? this.loots[j].amount : this.loots[j].item!.count
+                    this.loots[i].amount = itemIAmount + itemJAmount
+                    this.loots.splice(j, 1)
+                    j--
+                }
+            }
+        }
+        console.log(this.loots)
     }
+        
 
 }
 
