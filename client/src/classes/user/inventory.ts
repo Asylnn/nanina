@@ -23,31 +23,31 @@ export default class Inventory {
         }
     }
 
-        public RemoveItem(item : Item)
-        {
-            this.RemoveItemWithId(item.id, item.count);
-        }
+    public RemoveItem(item : Item)
+    {
+        this.RemoveItemWithId(item.id, item.count);
+    }
 
-        public RemoveItemWithId(id : number, quantity : number)
+    public RemoveItemWithId(id : number, quantity : number)
+    {
+        let oldItem = this.items[id]
+        if(oldItem == undefined)
         {
-            let oldItem = this.items[id]
-            if(oldItem == undefined)
-            {
-                console.log("error with removing item with id : ", id)
-                return;
-            }
-            oldItem.count -= quantity;
-            if(oldItem.count <= 0)
-                delete this.items[id]
-            
+            console.log("error with removing item with id : ", id)
+            return;
         }
+        oldItem.count -= quantity;
+        if(oldItem.count <= 0)
+            delete this.items[id]
+        
+    }
 
-        public AddEquipment(obtainedEquipment : Equipment) 
-        {
-            obtainedEquipment.inventoryId = this.inventoryIdCounter;
-            this.inventoryIdCounter++;
-            this.equipment[obtainedEquipment.inventoryId] = obtainedEquipment;
-        }
+    public AddEquipment(obtainedEquipment : Equipment) 
+    {
+        obtainedEquipment.inventoryId = this.inventoryIdCounter;
+        this.inventoryIdCounter++;
+        this.equipment[obtainedEquipment.inventoryId] = obtainedEquipment;
+    }
 }
 
 
