@@ -318,7 +318,7 @@ export default {
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
 		</div>
 		<div v-else-if="page == Page.Pull">
-			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :gacha_currency="user.gacha_currency" :user="user"
+			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :user="user"
 				v-on:pull-finished-show-loot="pushLoot">
 			</PullPage>
 		</div>

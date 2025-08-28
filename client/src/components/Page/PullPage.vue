@@ -33,10 +33,6 @@ export default {
             type : User,
             required : true,
         },
-        gacha_currency : {
-            type : Number,
-            required: true,
-        },
         banners: {
             type : Object as () => Dictionary<Banner>, //ugly but it works
             required : true
@@ -136,7 +132,7 @@ export default {
             <button @click="pull(10)">{{ $t("gacha.pull", {pullAmount:10}) }}</button>
             <div>
                 <img src="@/assets/gc.svg">
-                <div>{{ Math.floor(gacha_currency) }}</div>
+                <div>{{ Math.floor(user.gacha_currency) }}</div>
             </div>
         </div>
         <div v-if="pulled_waifus[0] != undefined">
