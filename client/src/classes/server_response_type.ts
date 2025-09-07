@@ -21,6 +21,8 @@ enum ServerResponseType
     OsuIdUpdateSuccess,
     MaimaiTokenUpdateSuccess,
     ProvideContinuousFightResults,
+    ConfirmEquip,
+    ConfirmUnequip,
 }
 
 export default ServerResponseType

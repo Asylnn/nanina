@@ -75,6 +75,8 @@ namespace Nanina.Communication
         OsuIdUpdateSuccess,
         MaimaiTokenUpdateSuccess,
         ProvideContinuousFightResults,
+        ConfirmEquip,
+        ConfirmUnequip,
 
     }
     public class ServerWebSocketResponse

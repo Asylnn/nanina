@@ -133,15 +133,9 @@ namespace Nanina.UserData.WaifuData
                     break;
             }
             if(equipment.weapon?.setId == equipment.dress?.setId && equipment.dress?.setId == equipment.accessory?.setId && equipment.weapon?.setId != null)
-            {
-
-                /*get set col to find one on the equipement to update equipment.set*/
                 equipment.set = Global.sets[equipment.weapon.setId];
-            }
             else
-            {
                 equipment.set = null;
-            }
                 
             return oldEquipment;
         }

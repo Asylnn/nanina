@@ -98,8 +98,8 @@ namespace Nanina.Communication
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.ConfirmEquip,
+                data = clientData.equipmentId.ToString(),
             }));
         }
 
@@ -124,8 +124,8 @@ namespace Nanina.Communication
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.ConfirmUnequip,
+                data = ((int)clientData.equipmentPiece).ToString(),
             }));
         }
 

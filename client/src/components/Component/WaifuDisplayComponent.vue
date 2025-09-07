@@ -2,7 +2,8 @@
 import Waifu from '@/classes/waifu/waifu';
 import GridDisplayComponent from './GridDisplayComponent.vue';
 import WaifuStatDisplayComponent from './WaifuStatDisplayComponent.vue';
-
+import sets from '../../../../save/set.json'
+import Set from '@/classes/item/set';
 import User from '@/classes/user/user';
 import EquipmentPiece from '@/classes/item/piece';
 import Equipment from '@/classes/item/equipment';
@@ -11,6 +12,10 @@ import StatModifier from '@/classes/modifiers/stat_modifier';
 import ClientResponseType from '@/classes/client_response_type';
 import ModifierComponent from './ModifierComponent.vue';
 import DisplayComponent from './DisplayComponent.vue';
+import { WebsocketEvent, type Websocket } from 'websocket-ts';
+import type WebSocketResponse from '@/classes/web_socket_response';
+import ServerResponseType from '@/classes/server_response_type';
+import type Dictionary from '@/classes/dictionary';
 
 export default {
     name : "WaifuDisplayComponent",
@@ -22,6 +27,7 @@ export default {
             equipmentPiece: EquipmentPiece.Weapon,
             //equipment_to_show : [] as Array<Equipment>, 
             inventoryVisible: false,
+            listener: (() => {}) as (i: Websocket, ev: MessageEvent) => void,
             weaponVisible: false,
             selected_item: null as Equipment | null,
         }
@@ -66,20 +72,20 @@ export default {
         },
         selectItem()
         {
-            let equip = true;
+            let equip = true; //Not sure testing this in client is necessary...
             if(this.selected_item == null) return;
             switch(this.equipmentPiece){
                 case EquipmentPiece.Weapon:
                     equip = this.waifu.equipment.weapon?.inventoryId != this.selected_item?.inventoryId
-                    this.waifu.equipment.weapon = this.selected_item
+                    //this.waifu.equipment.weapon = this.selected_item
                     break;
                 case EquipmentPiece.Dress:
                     equip = this.waifu.equipment.dress?.inventoryId != this.selected_item?.inventoryId
-                    this.waifu.equipment.dress = this.selected_item
+                    //this.waifu.equipment.dress = this.selected_item
                     break;
                 case EquipmentPiece.Accessory:
                     equip = this.waifu.equipment.accessory?.inventoryId != this.selected_item?.inventoryId
-                    this.waifu.equipment.accessory = this.selected_item
+                    //this.waifu.equipment.accessory = this.selected_item
                     break;
             }
             
@@ -119,7 +125,7 @@ export default {
         unequip(piece: EquipmentPiece, e : Event)
         {
             e.preventDefault()
-            let oldEquipment = null as Equipment | null
+            /*let oldEquipment = null as Equipment | null
             switch(piece){
                 case EquipmentPiece.Weapon:
                     this.waifu.equipment.weapon = null
@@ -129,8 +135,9 @@ export default {
                     break;
                 case EquipmentPiece.Accessory:
                     this.waifu.equipment.accessory = null
+                    
                     break;
-            }
+            }*/
             this.SendToServer(ClientResponseType.UnequipItem, JSON.stringify({equipmentPiece:piece, waifuId:this.waifu.id}), this.user.Id)
         }
     },
@@ -146,7 +153,76 @@ export default {
         equipment_to_show() {
             return Object.values(this.user.inventory.equipment).filter(equipment => equipment.piece == this.equipmentPiece)
         }
-    }
+    },
+    mounted()
+    {
+        this.listener = (i: Websocket, ev: MessageEvent) => {
+			var res : WebSocketResponse = JSON.parse(ev.data)
+			switch (res.type) 
+            {
+                case ServerResponseType.ConfirmEquip:
+                    let InventoryId : number = res.data
+                    let equipment = this.user.inventory.equipment[InventoryId]
+                    delete this.user.inventory.equipment[InventoryId]
+                    let oldEquipment : Equipment | null
+                    switch(equipment.piece)
+                    {
+                        case EquipmentPiece.Dress:
+                            oldEquipment = this.waifu.equipment.dress
+                            this.waifu.equipment.dress = equipment
+                            break;
+                        case EquipmentPiece.Weapon:
+                            oldEquipment = this.waifu.equipment.weapon
+                            this.waifu.equipment.weapon = equipment
+                            break;
+                        case EquipmentPiece.Accessory:
+                            oldEquipment = this.waifu.equipment.accessory
+                            this.waifu.equipment.accessory = equipment
+                            break;
+                    }
+                    if(this.waifu.equipment.weapon?.setId == this.waifu.equipment.dress?.setId && this.waifu.equipment.dress?.setId == this.waifu.equipment.accessory?.setId && this.waifu.equipment.weapon?.setId != null)
+                        this.waifu.equipment.set = (sets as Dictionary<Set>)[equipment.setId]
+                    else
+                        this.waifu.equipment.set = null;
+                    if(oldEquipment != null)
+                        this.user.inventory.AddEquipment(oldEquipment)
+                    break;
+                case ServerResponseType.ConfirmUnequip:
+                    let piece : EquipmentPiece = +res.data
+                    let unequipedEquipment : Equipment | null = null
+                    console.log(piece)
+                    console.log(+piece)
+                    switch(piece)
+                    {
+                        case EquipmentPiece.Dress:
+                            unequipedEquipment = this.waifu.equipment.dress
+                            this.waifu.equipment.dress = null
+                            console.log(this.waifu.equipment.dress)
+                            break;
+                        case EquipmentPiece.Weapon:
+                            unequipedEquipment = this.waifu.equipment.weapon
+                            this.waifu.equipment.weapon = null
+                            break;
+                        case EquipmentPiece.Accessory:
+                            unequipedEquipment = this.waifu.equipment.accessory
+                            this.waifu.equipment.accessory = null
+                            break;
+                    }
+                    this.waifu.equipment.set = null;
+                    console.log(this.waifu.equipment)
+                    if(unequipedEquipment != null)
+                        this.user.inventory.AddEquipment(unequipedEquipment)
+                    break;
+            }
+        }
+        //@ts-ignore
+        this.ws.addEventListener(WebsocketEvent.message, this.listener);
+    },
+    unmounted()
+    {
+        //@ts-ignore
+        this.ws.removeEventListener(WebsocketEvent.message, this.listener)
+    },
 }
 
 </script>
