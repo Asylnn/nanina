@@ -1,5 +1,5 @@
 import Modifier from "../modifiers/modifiers"
-import type StatModifier from "../modifiers/stat_modifier"
+import StatModifier from "../modifiers/stat_modifier"
 import WaifuEquipmentManager from "./equipment"
 import OperationType from "../modifiers/operation_type"
 
@@ -31,20 +31,40 @@ export default class Waifu {
     public b_int : number = 0
     public o_int : number = 0
     public u_int : number = 0
-
-    public Str! : number
-    public Agi! : number
-    public Dex! : number
-    public Kaw! : number
-    public Int! : number
-    public Luck! : number
-
-    public Psychic! : number
-    public Physical! : number
-    public Magical! : number
-
-    public CritChance! : number
-    public CritDamage! : number
+    
+    public get dex() : number {
+        return this.ApplyModificators(this.b_dex, StatModifier.DEX);
+    }
+    public get int() : number {
+        return this.ApplyModificators(this.b_int, StatModifier.INT);
+    }
+    public get agi() : number {
+        return this.ApplyModificators(this.b_agi, StatModifier.AGI); 
+    }
+    public get str() : number {
+        return this.ApplyModificators(this.b_str, StatModifier.STR); 
+    }
+    public get kaw() : number {
+        return this.ApplyModificators(this.b_kaw, StatModifier.KAW); 
+    }
+    public get luck() : number {
+        return this.ApplyModificators(this.b_luck, StatModifier.LUCK); 
+    }
+    public get psychic() : number {
+        return this.ApplyModificators(2*this.kaw, StatModifier.Psychic); 
+    }
+    public get magical() : number {
+        return this.ApplyModificators(2*this.int, StatModifier.Magical); 
+    }
+    public get physical() : number {
+        return this.ApplyModificators(2*this.str, StatModifier.Physical); 
+    }
+    public get critChance() : number {
+        return this.ApplyModificators(0.05 + this.agi/400, StatModifier.CritChance); 
+    }
+    public get critDamage() : number {
+        return this.ApplyModificators(0.50 + this.dex/400, StatModifier.CritDamage); 
+    }
 
     //public XpToLvlUp! : number
 
@@ -86,6 +106,11 @@ export default class Waifu {
     {
         return `+${Math.floor(this.GetAdditiveModificators(statModifier))}`
     }
+    public ApplyModificators(stat : number, statModifier: StatModifier) : number
+    {
+        return (stat + this.GetAdditiveModificators(statModifier))*this.GetMultModificators(statModifier);
+    }
+        
 
     /*constructor(name :string ,xp : number,lvl:number,diffLvlUp : number,imgPATH : string) {
         this.name = name

@@ -173,17 +173,17 @@ export default {
                 <div class="shortStat">
                     <span>XP</span> <span>{{ waifu.xp }}/{{ waifu.XpToLvlUp }} </span>   <br>
                 </div><br>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.str" :statAmount="waifu.Str" :statModifier="StatModifier.STR"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.kaw" :statAmount="waifu.Kaw" :statModifier="StatModifier.KAW"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.int" :statAmount="waifu.Int" :statModifier="StatModifier.INT"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.agi" :statAmount="waifu.Agi" :statModifier="StatModifier.AGI"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.dex" :statAmount="waifu.Dex" :statModifier="StatModifier.DEX"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.luck" :statAmount="waifu.Luck" :statModifier="StatModifier.LUCK"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.physical" :statAmount="waifu.Physical" :statModifier="StatModifier.Physical"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.psychic" :statAmount="waifu.Psychic" :statModifier="StatModifier.Psychic"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.magical" :statAmount="waifu.Magical" :statModifier="StatModifier.Magical"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.crit_chance" :statAmount="waifu.CritChance" :statModifier="StatModifier.CritChance"></WaifuStatDisplayComponent>
-                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.crit_damage" :statAmount="waifu.CritDamage" :statModifier="StatModifier.CritDamage"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.str" :statAmount="waifu.str" :statModifier="StatModifier.STR"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.kaw" :statAmount="waifu.kaw" :statModifier="StatModifier.KAW"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.int" :statAmount="waifu.int" :statModifier="StatModifier.INT"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.agi" :statAmount="waifu.agi" :statModifier="StatModifier.AGI"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.dex" :statAmount="waifu.dex" :statModifier="StatModifier.DEX"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.luck" :statAmount="waifu.luck" :statModifier="StatModifier.LUCK"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.physical" :statAmount="waifu.physical" :statModifier="StatModifier.Physical"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.psychic" :statAmount="waifu.psychic" :statModifier="StatModifier.Psychic"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.magical" :statAmount="waifu.magical" :statModifier="StatModifier.Magical"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.crit_chance" :statAmount="waifu.critChance" :statModifier="StatModifier.CritChance"></WaifuStatDisplayComponent>
+                <WaifuStatDisplayComponent :waifu="waifu" statName="waifu.stats.crit_damage" :statAmount="waifu.critDamage" :statModifier="StatModifier.CritDamage"></WaifuStatDisplayComponent>
                 <div v-if="!forDungeon" class="equipment">
                     <div @click.right="unequip(EquipmentPiece.Weapon, $event)" @click="openDisplay(EquipmentPiece.Weapon)" class="itemSlot">
                         <img  :src="`${publicPath}item-image/${waifu.equipment.weapon?.imgPATH ?? 'unknown.svg'}`">
