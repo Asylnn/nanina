@@ -117,7 +117,7 @@ namespace Nanina.Communication
             if(claim.game == Game.MaimaiFinale)
             {
                 if(!user.verification.isMaimaiTokenVerified) 
-                    { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your osu account! Go to the settings and enter your osu id!", 0)); return; }
+                    { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your maimai account! Go to the settings and enter your maimai access token!", 0)); return; }
                 (baseXP, ratio) = await CheckForMaimaiScores(user);
             }
             else
