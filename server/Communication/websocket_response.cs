@@ -85,6 +85,7 @@ namespace Nanina.Communication
         FreeWaifus,
         ConfirmLvlRewardClaim,
         GiveXPToWaifu,
+        ConfirmUserConsumableConsumption,
         
 
     }

@@ -284,6 +284,12 @@ export default {
                     for(let waifuId of waifusIds)
 						this.user.waifus[waifuId].isDoingSomething = true;
 					} break;
+				case ServerResponseType.ConfirmUserConsumableConsumption : 
+					let itemId : number = +JSON.parse(res.data)
+					let item = this.user.inventory.items[itemId]
+					this.user.UseUserConsumable(item)
+					this.user.inventory.RemoveItem(item)
+					break
             
 			} 
 			//i.send(`${ev.data}`);

@@ -205,8 +205,8 @@ namespace Nanina.Communication
 
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.ConfirmUserConsumableConsumption,
+                data = item.id.ToString(),
             }));
 
             DBUtils.Update(user);
