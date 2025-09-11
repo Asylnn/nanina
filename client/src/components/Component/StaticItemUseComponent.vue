@@ -29,7 +29,7 @@ export default {
     methods :{
         useItem(item : Item)
         {
-            this.SendToServer(ClientResponseType.UseUserConsumable, item.inventoryId.toString(), this.user.Id)
+            this.SendToServer(ClientResponseType.UseUserConsumable, item.id.toString(), this.user.Id)
         }
     },
     components:{
