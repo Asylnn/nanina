@@ -201,11 +201,11 @@ namespace Nanina.Communication
                 activityId = activity.id,
             };
             timer.Start();
-            Global.activityTimers.Add(activity.id, timer);
+            //Global.activityTimers.Add(activity.id, timer);
             DBUtils.Update(user);Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.ConfirmActivity,
+                data = JsonConvert.SerializeObject(activity)
             }));
             Console.WriteLine("activity started");
         }
@@ -227,15 +227,16 @@ namespace Nanina.Communication
             waifu.isDoingSomething = false;
             Loot.GrantLoot(activity.loot, user);
             
-            SendLoot([.. activity.loot]);
+            
 
             user.activities.Remove(activity);
             DBUtils.Update(user);
 
+            SendLoot([.. activity.loot], true);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.ConfirmActivityClaim,
+                data = JsonConvert.SerializeObject(activity) 
             }));
         }
 
@@ -256,8 +257,8 @@ namespace Nanina.Communication
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.ConfirmCancelActivity,
+                data = activity.id.ToString(),
             }));
         }
     }

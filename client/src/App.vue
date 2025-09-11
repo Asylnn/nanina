@@ -257,6 +257,9 @@ export default {
 					console.log(this.active_dungeon)
 					this.active_dungeon = JSON.parse(res.data)
 					break
+				case ServerResponseType.ProvideAndGiveLoot:
+					let loots : Loot[] = JSON.parse(res.data)
+					this.user.GrantLoot(loots)
 				case ServerResponseType.ProvideLoot:
 					this.loots.push(JSON.parse(res.data))
 					this.loots.forEach(arr => {
@@ -271,6 +274,7 @@ export default {
 					console.log("Got loot : ")
 					console.log(this.loots)
 					break
+				
 				
 			} 
 			//i.send(`${ev.data}`);

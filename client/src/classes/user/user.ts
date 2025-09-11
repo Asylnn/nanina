@@ -9,6 +9,12 @@ import config from '../../../../baseValues.json'
 import Equipment from '../item/equipment'
 import type Activity from './activity'
 import type Verification from './verification'
+import type Loot from '../loot/loot'
+import LootType from '../loot/loot_type'
+import Modifier from '../modifiers/modifiers'
+import type Item from '../item/item'
+import StatModifier from '../modifiers/stat_modifier'
+import type Unlocks from './unlocks'
 
 
 
@@ -44,6 +50,7 @@ export default class User {
     public preferedGame! : Game
     public completedResearches !: Dictionary<number>
     public lastContinuousFightTimestamp !: number
+    public unlocks !: Unlocks
     /*
         Local only properties
     */
@@ -94,6 +101,51 @@ export default class User {
         let date_milli = Date.now()
         user.fight_timing_out = user.localFightTimestamp + config.time_for_allowing_another_fight_in_milliseconds >= date_milli
         user.claim_timing_out = user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds >= date_milli
+    }
+
+    GrantLoot(loots : Loot[])
+    {
+        for(let loot of loots)
+        {
+            switch(loot.lootType){
+                case LootType.GC:
+                    this.gacha_currency += loot.amount;
+                    break;
+                case LootType.Money:
+                    this.money += loot.amount;
+                    break;
+                case LootType.Item:
+                    if(loot.amount != 1)
+                        loot.item!.count = loot.amount;
+                    this.inventory.AddItem(loot.item!);
+                    break;
+                case LootType.Modifiers:
+                    this.UseUserConsumable(loot.item!);
+                    break;
+            }
+        }
+    }
+
+    ApplyUserModifier(modifier: Modifier)
+    {
+        switch(modifier.stat)
+        {
+            case StatModifier.MaxEnergy:
+                this.max_energy += modifier.amount;
+                this.energy += modifier.amount;
+                break;
+            case StatModifier.UnlockFloor:
+                this.unlocks.maxDungeonFloor = modifier.amount;
+                break;
+        }
+    }
+
+    UseUserConsumable(userConsumable: Item)
+    {
+        for(var modifier of userConsumable.modifiers)
+        {
+            this.ApplyUserModifier(modifier);
+        }
     }
 }
 

@@ -16,6 +16,10 @@ import ClientResponseType from '@/classes/client_response_type';
 import ContinuousFightPage from './ContinuousFightPage.vue';
 import type Dictionary from '@/classes/dictionary';
 import type { PropType } from 'vue';
+import { Websocket, WebsocketEvent } from 'websocket-ts';
+import type WebSocketResponse from '@/classes/web_socket_response';
+import ServerResponseType from '@/classes/server_response_type';
+import type Activity from '@/classes/user/activity';
 
 
 export default {
@@ -30,6 +34,7 @@ export default {
             date_milli:0,
             waifuSelectorVisible:false,
             waifuDisplayComponentVisible:false,
+            listener: (() => {}) as (i: Websocket, ev: MessageEvent) => void,
         }
     },
     props: {
@@ -80,9 +85,39 @@ export default {
     computed:{
         
     },
-    mounted(){
+    mounted()
+    {
         setInterval(() => this.date_milli = Date.now(), 1000)
         //This is necessary for the value of date_milli to be updated so the computed value can also be updated
+        this.listener = (i: Websocket, ev: MessageEvent) => {
+			var res : WebSocketResponse = JSON.parse(ev.data)
+			switch (res.type) 
+            {
+                case ServerResponseType.ConfirmActivity:
+                    let activity = JSON.parse(res.data) as Activity
+                    this.user.activities.push(activity)
+                    this.user.waifus[activity.waifuID].isDoingSomething = true
+                    break;
+                case ServerResponseType.ConfirmCancelActivity:
+                    let index = this.user.activities.findIndex(activity => activity.id == res.data)
+                    this.user.activities.splice(index, 1)
+                    break;
+                case ServerResponseType.ConfirmActivityClaim:
+                    let claimedActivity = JSON.parse(res.data) as Activity
+                    var waifu = this.user.waifus[claimedActivity.waifuID];
+                    waifu.isDoingSomething = false;
+                    let indexToDelete = this.user.activities.findIndex(activity => activity.id == claimedActivity.id)
+                    this.user.activities.splice(indexToDelete, 1)
+                    break;
+            }
+        }
+        //@ts-ignore
+        this.ws.addEventListener(WebsocketEvent.message, this.listener);
+    },
+    unmounted()
+    {
+        //@ts-ignore
+        this.ws.removeEventListener(WebsocketEvent.message, this.listener)
     },
 }
 

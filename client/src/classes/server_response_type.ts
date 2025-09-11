@@ -11,6 +11,7 @@ enum ServerResponseType
     ProvideResearchNodes,
     ProvideCraftingRecipes,
     ProvideLoot,
+    ProvideAndGiveLoot,
     ProvideWaifuDB,
     ProvideSetDB,
     ProvideEquipmentDB,
@@ -23,6 +24,9 @@ enum ServerResponseType
     ProvideContinuousFightResults,
     ConfirmEquip,
     ConfirmUnequip,
+    ConfirmActivity,
+    ConfirmCancelActivity,
+    ConfirmActivityClaim,
 }
 
 export default ServerResponseType

@@ -136,14 +136,14 @@ namespace Nanina.UserData
         public void ApplyUserModifier(Modifier modifier)
         {
             switch(modifier.stat)
-                {
-                    case StatModifier.MaxEnergy:
-                        max_energy += modifier.amount;
-                        energy += modifier.amount;
-                        break;
-                    case StatModifier.UnlockFloor:
-                        unlocks.maxDungeonFloor = (byte) modifier.amount;
-                        break;
+            {
+                case StatModifier.MaxEnergy:
+                    max_energy += modifier.amount;
+                    energy += modifier.amount;
+                    break;
+                case StatModifier.UnlockFloor:
+                    unlocks.maxDungeonFloor = (byte) modifier.amount;
+                    break;
             }
         }
 

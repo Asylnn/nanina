@@ -65,6 +65,7 @@ namespace Nanina.Communication
         ProvideResearchNodes,
         ProvideCraftingRecipes,
         ProvideLoot,
+        ProvideAndGiveLoot,
         ProvideWaifuDB,
         ProvideSetDB,
         ProvideEquipmentDB,
@@ -77,6 +78,10 @@ namespace Nanina.Communication
         ProvideContinuousFightResults,
         ConfirmEquip,
         ConfirmUnequip,
+        ConfirmActivity,
+        ConfirmCancelActivity,
+        ConfirmActivityClaim,
+        
 
     }
     public class ServerWebSocketResponse

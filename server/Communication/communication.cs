@@ -19,10 +19,11 @@ namespace Nanina.Communication
             This function is called when the client click on the disconnect button.
             It remove the userId from the session.
         */
-        protected void Disconnect(ClientWebSocketResponse rawData){
+        protected void Disconnect(ClientWebSocketResponse rawData)
+        {
             var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
-            if(session == null) 
-                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
+            if (session == null)
+            { Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return; }
             session.UpdateUserId(null);
         }
 
@@ -33,16 +34,17 @@ namespace Nanina.Communication
         protected void ProvideSessionToClient(ClientWebSocketResponse rawData)
         {
             var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
-            if(session == null)
+            if (session == null)
                 session = Session.NewSession(ID);
             else
             {
                 session.webSocketId = ID;
                 DBUtils.Update(session);
-                if(session.userId is not null)
+                if (session.userId is not null)
                     ProvideUserToClient(session.userId);
             }
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
                 type = ServerResponseType.ProvideSession,
                 data = JsonConvert.SerializeObject(session),
             }));
@@ -51,14 +53,15 @@ namespace Nanina.Communication
         protected void ProvideUserToClient(string userId)
         {
             var user = DBUtils.Get<User>(x => x.Id == userId)!;
-            if(user is null) return; //Shouldn't be necessary outside of a testing environnements
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse {
+            if (user is null) return; //Shouldn't be necessary outside of a testing environnements
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
                 type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user),
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type =  ServerResponseType.ProvideBanners,
+                type = ServerResponseType.ProvideBanners,
                 data = Global.bannersString,
             }));
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
@@ -76,17 +79,17 @@ namespace Nanina.Communication
                 type = ServerResponseType.ProvideCraftingRecipes,
                 data = Global.craftingRecipesString,
             }));
-            if(user.isInDungeon)
+            if (user.isInDungeon)
             {
                 var activeDungeon = DungeonManager.activeDungeons.Values.ToList().Find(dungeon => user.dungeonInstanceId == dungeon.instanceId)!;
                 activeDungeon.sessionId = user.activeSessionId!;
                 DungeonManager.UpdateDungeonOfClient(activeDungeon);
             }
-            if(user.admin)
+            if (user.admin)
             {
                 /*Send the full waifu, item, set and equipment database*/
                 string[] dbNames = ["waifu", "item", "set", "equipment"];
-                foreach(string dbName in dbNames)
+                foreach (string dbName in dbNames)
                 {
                     var data = File.ReadAllText($"../save/{dbName}.json");
                     Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
@@ -104,11 +107,11 @@ namespace Nanina.Communication
                 }
             }
         }
-        protected void SendLoot(Loot[] loot)
+        protected void SendLoot(Loot[] loot, bool giveLoot = false)
         {
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideLoot,
+                type = giveLoot ? ServerResponseType.ProvideAndGiveLoot : ServerResponseType.ProvideLoot,
                 data = JsonConvert.SerializeObject(loot)
             }));
         }

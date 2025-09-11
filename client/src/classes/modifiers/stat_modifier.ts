@@ -23,6 +23,7 @@ enum StatModifier
     
     EnergyRegen,
     MaxEnergy,
+    UnlockFloor,
 }
 
 export default StatModifier

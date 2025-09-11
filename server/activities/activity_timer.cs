@@ -25,9 +25,13 @@ namespace Nanina.Activities
             }
             Console.WriteLine("Activity timer finished");
             var user = DBUtils.Get<UserData.User>(x => x.Id == timer.userId)!;
+            Console.WriteLine("a");
+
             user.ActivityTimeout(timer.activityId);
+            Console.WriteLine("b");
             timer.Dispose();
-            Global.activityTimers.Remove(timer.activityId);
+            Console.WriteLine("Timer disposed!");
+           // Global.activityTimers.Remove(timer.activityId);
         }
     }
 }
