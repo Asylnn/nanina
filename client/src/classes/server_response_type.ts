@@ -32,6 +32,7 @@ enum ServerResponseType
     ConfirmLvlRewardClaim,
     GiveXPToWaifu,
     ConfirmUserConsumableConsumption,
+    UpdateEnergy,
 }
 
 export default ServerResponseType

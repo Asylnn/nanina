@@ -144,7 +144,6 @@ namespace Nanina.Dungeon
             });
             user.statCount.total_cleared_dungeon++;
             user.isInDungeon = false;
-            UserData.User.RegenEnergy(user);
             DBUtils.Update(user);
 
             

@@ -57,11 +57,13 @@ namespace Nanina.UserData
 
         public (double energy, int gc) SpendEnergy(double ratio)
         {
-            var spent_energy = energy*Global.baseValues.proportion_of_energy_used_for_each_action*ratio;
+            var spent_energy = energy * Global.baseValues.proportion_of_energy_used_for_each_action * ratio;
             energy -= spent_energy;
-            var gc = (int) Math.Ceiling(spent_energy*Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
-            gacha_currency += (int) Math.Floor(gc*ratio);
-            return (energy:spent_energy + Global.baseValues.free_energy_not_used_for_each_action*ratio, gc);
+            var gc = (int)Math.Ceiling(spent_energy * Global.baseValues.spent_energy_to_gacha_currency_conversion_rate);
+            gacha_currency += (int)Math.Floor(gc * ratio);
+            RegenEnergy(this);
+            return (energy: spent_energy + Global.baseValues.free_energy_not_used_for_each_action * ratio, gc);
+            
         }
 
         public void GetXP(int _xp)
@@ -82,47 +84,52 @@ namespace Nanina.UserData
             var id = user.Id;
             user.isRegenerating = true;
             DBUtils.Update(user);
+            UpdateEnergyOfClient(user);
 
             PeriodicTimer energyRegenTimer = new (new (Global.baseValues.energy_regen_tick_in_seconds*10_000_000)); //units are 100ns
             while (await energyRegenTimer.WaitForNextTickAsync())
             {
-                var u = DBUtils.Get<UserData.User>(x => x.Id == id)!;
+                user = DBUtils.Get<UserData.User>(x => x.Id == id)!;
                 
-                u.energy += Global.baseValues.energy_regen_tick_amount_in_percent/100d*u.max_energy;
-                if(u.energy >= u.max_energy)
+                user.energy += Global.baseValues.energy_regen_tick_amount_in_percent/100d*user.max_energy;
+                Console.WriteLine("u.max_energy");
+
+                Console.WriteLine(user.energy);
+                Console.WriteLine(user.max_energy);
+                if (user.energy >= user.max_energy)
                 {
-                    u.isRegenerating = false;
-                    u.energy = u.max_energy;
+                    user.isRegenerating = false;
+                    user.energy = user.max_energy;
+                    energyRegenTimer.Dispose();
                 }
                     
 
-                DBUtils.Update(u);
+                DBUtils.Update(user);
+                UpdateEnergyOfClient(user);
 
+            }
+        }
 
-                var session = DBUtils.Get<Session>(x => x.id == u.activeSessionId);
-                if(session is not null){
-                    if(session.webSocketId is not null)
+        public static void UpdateEnergyOfClient(User user)
+        {
+            Console.WriteLine("update energy");
+            Console.WriteLine(user.energy);
+            var session = DBUtils.Get<Session>(x => x.id == user.activeSessionId);
+            if(session is not null){
+                if(session.webSocketId is not null)
+                {
+                    Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                     {
-                        Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
-                        {
-                            type = ServerResponseType.ProvideUser,
-                            data = JsonConvert.SerializeObject(u),
-                        }), session.webSocketId);
-                    }
-                }
-                
-                
-                
-                
-                if(u.energy >= u.max_energy){
-                    energyRegenTimer.Dispose();
+                        type = ServerResponseType.UpdateEnergy,
+                        data = user.energy.ToString(),
+                    }), session.webSocketId);
                 }
             }
         }
 
         public bool CheckRewardAvailability(byte level)
         {
-            return (Convert.ToInt64(Math.Pow(2, level))&lvlRewards) == 0;
+            return (Convert.ToInt64(Math.Pow(2, level)) & lvlRewards) == 0;
         }
 
         public void UseUserConsumable(Item item)

@@ -290,6 +290,11 @@ export default {
 					this.user.UseUserConsumable(item)
 					this.user.inventory.RemoveItem(item)
 					break
+				case ServerResponseType.UpdateEnergy : 
+					let energy : number = +JSON.parse(res.data)
+					this.user.energy = energy
+					console.log("something")
+					break
             
 			} 
 			//i.send(`${ev.data}`);

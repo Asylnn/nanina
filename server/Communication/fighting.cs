@@ -171,7 +171,6 @@ namespace Nanina.Communication
             }));
 
             DBUtils.Update(user);
-            UserData.User.RegenEnergy(user);
         }
         
         protected void GetMapToFight(UserData.User user)
