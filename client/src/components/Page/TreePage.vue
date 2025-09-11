@@ -103,7 +103,7 @@ export default {
 </script>
 <template>
     <div id="treeContainer">
-        <div v-for="i in [...Array(60).keys()]">
+        <div v-for="i in [...Array(user_level_rewards.length).keys()]">
             <div :style="getCssForPath(i)" class="path element"></div>
             <div :style="getCssForRewards(i)" class="rewards">
                 <LootComponent :loots="user_level_rewards[i]"></LootComponent>
