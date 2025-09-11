@@ -154,8 +154,8 @@ namespace Nanina.Database
                         continue;
                     }
                     item.imgPATH = dbItem.imgPATH;
-                    item.rarity = dbItem.rarity;
-                    item.modifiers = dbItem.modifiers;
+                    //item.rarity = dbItem.rarity;
+                    //item.modifiers = dbItem.modifiers;
                 }
                 /*foreach(Waifu waifu in user.waifus)
                 {

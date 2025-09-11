@@ -73,6 +73,7 @@ TODO : Have the "plus" not be right beside the energy amount (the plus moves whe
 TODO : [BUG] When creating a new account, the profile picture does not load, loggin again, it does load properly this time.     #Done
 TODO : Make continuous fight page with a list of all the scores done and how much time it saved.                                #Done
 TODO : Make waifus, items, equipments and sets global variable as dictionnaries instead of lists                                #Done
+TODO : [BUG] There is probably an equipment duplication glitch using equip and unequip items (with fraudulent websockets)       #Done (actually not all it was just the loader that put all equipment to rarity 1)
 TODO : try catch onMessage                                                          #Done
 TODO : update osu tokens each day                                                   #Done
 TODO : Make so you don't need to remove the code part of the url to connect         #Done
@@ -135,7 +136,6 @@ TODO : Have multiple dungeons of increasing difficulty
 
 Low priority
 
-TODO : There is probably an equipment duplication glitch using equip and unequip items (with fraudulent websockets)
 TODO : Reject asking to unequip null equipment slot
 TODO : Make waifu id short
 TODO : Is not deleting old unused sessions ids not secure? To think about.
