@@ -24,7 +24,7 @@ namespace Nanina.UserData
 
         public void RemoveItem(Item item)
         {
-            RemoveItem(item.id, item.count);
+            RemoveItem(item.id, 1);
         }
 
         public void RemoveItem(short id, int quantity)

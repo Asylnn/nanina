@@ -25,7 +25,7 @@ export default class Inventory {
 
     public RemoveItem(item : Item)
     {
-        this.RemoveItemWithId(item.id, item.count);
+        this.RemoveItemWithId(item.id, 1);
     }
 
     public RemoveItemWithId(id : number, quantity : number)
