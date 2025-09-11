@@ -82,6 +82,29 @@ export default class Waifu {
         this.equipment = new WaifuEquipmentManager(this.equipment);
     }
 
+    public GiveXP(_xp : number)
+    {
+        this.xp += _xp;
+        if(this.xp >= this.XpToLvlUp){
+            this.xp -= this.XpToLvlUp;
+            let temp_xp = this.xp;
+            this.LevelUp();
+            this.xp = 0;
+            this.GiveXP(temp_xp);
+        }
+    }
+
+    public LevelUp()
+    {
+        this.lvl++;
+        this.b_str += this.u_str;
+        this.b_agi += this.u_agi;
+        this.b_kaw += this.u_kaw;
+        this.b_int += this.u_int;
+        this.b_dex += this.u_dex;
+        this.b_luck += this.u_luck;
+    }
+
     public GetMultModificators(statModifier : StatModifier){
         this.equipment.weapon?.GetAllModifiers()
         return ([] as Array<Modifier | undefined>).concat(this.equipment.weapon?.GetAllModifiers() || []).concat(this.equipment.dress?.GetAllModifiers() || []).concat(this.equipment.accessory?.GetAllModifiers() || []).concat(this.equipment.set?.modifiers || [])

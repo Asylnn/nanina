@@ -65,7 +65,6 @@ export default {
 			fighting : false,
 			link : "",
 			beatmap : new OsuBeatmap(),
-			xp : 0,
 			notifs : Array(),
 			dev : true, //Is this dev or prod? IMPORTANT!!
 			all_waifus : {} as Dictionary<Waifu>,
@@ -186,9 +185,8 @@ export default {
 					this.fighting = true
 					this.maimai_chart = JSON.parse(res.data)
 					break
-				case ServerResponseType.ProvideFightResults :
+				case ServerResponseType.ConfirmFightClaim :
 					this.fighting = false 
-					this.xp = res.data
 					break
 				case ServerResponseType.ProvideWaifuDB :
 					let temp_waifus : Dictionary<Waifu> = JSON.parse(res.data)
@@ -327,7 +325,7 @@ export default {
 			<AddMap :id="user.Id"></AddMap>
 		</div>
 		<div v-else-if="page == Page.ClaimAndFight">
-			<ClaimAndFightPage :maimai_chart="maimai_chart" :xp="xp" :fighting="fighting" :user="user" :beatmap="beatmap"></ClaimAndFightPage>
+			<ClaimAndFightPage :maimai_chart="maimai_chart" :fighting="fighting" :user="user" :beatmap="beatmap"></ClaimAndFightPage>
 		</div>
 		<div v-else-if="page == Page.WaifuManager">
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>

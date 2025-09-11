@@ -156,22 +156,19 @@ namespace Nanina.Communication
                 new Loot {
                     lootType = LootType.UserXP,
                     amount = Global.baseValues.user_xp_for_fights*100,
-            }]);
-            
+            }], true);
+
+            var dataToClient = new
+            {
+                xp,
+                waifuId = waifu.id,
+            };
             
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideFightResults,
-                data = xp.ToString()
+                type = ServerResponseType.GiveXPToWaifu,
+                data = JsonConvert.SerializeObject(dataToClient)
             }));
-
-
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-            {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
-            }));
-            
 
             DBUtils.Update(user);
             UserData.User.RegenEnergy(user);

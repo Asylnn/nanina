@@ -2,7 +2,7 @@ enum ServerResponseType
 {
     ProvideUser,
     ProvideMapData,
-    ProvideFightResults,
+    ConfirmFightClaim,
     ProvidePullResults,
     Notification,
     ProvideSession,
@@ -30,6 +30,7 @@ enum ServerResponseType
     ConfirmDungeonStarted,
     FreeWaifus,
     ConfirmLvlRewardClaim,
+    GiveXPToWaifu,
 }
 
 export default ServerResponseType

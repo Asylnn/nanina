@@ -56,7 +56,7 @@ namespace Nanina.Communication
     {
         ProvideUser,
         ProvideMapData,
-        ProvideFightResults,
+        ConfirmFightClaim,
         ProvidePullResults,
         Notification,
         ProvideSession,
@@ -84,6 +84,7 @@ namespace Nanina.Communication
         ConfirmDungeonStarted,
         FreeWaifus,
         ConfirmLvlRewardClaim,
+        GiveXPToWaifu,
         
 
     }

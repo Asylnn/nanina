@@ -8,6 +8,9 @@ import Chart from '@/classes/maimai/chart';
 import Game from '@/classes/user/game';
 import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
 import ClientResponseType from '@/classes/client_response_type';
+import { WebsocketEvent, type Websocket } from 'websocket-ts';
+import ServerResponseType from '@/classes/server_response_type';
+import type WebSocketResponse from '@/classes/web_socket_response';
 
 
 /*
@@ -28,7 +31,7 @@ export default {
             chosen_waifu : null as Waifu | null,
             game : this.user.preferedGame,
             Game: Game,
-            
+            listener: (() => {}) as (i: Websocket, ev: MessageEvent) => void,
         }
     },
     props: {
@@ -44,27 +47,11 @@ export default {
             type : User,
             required : true,
         },
-        xp : {
-            type : Number, //0 until you click claim xp
-            required : true
-        },
         beatmap : { //Beatmap with beatmapset inside
             type : OsuBeatmap,
             required : true
         }
     },
-    mounted(){
-        
-        if(this.user.fight != null){
-            if(!this.user.fight.completed){
-                if(this.beatmap?.id == undefined)
-                    this.SendToServer(ClientResponseType.GetMapData, this.user.fight.id, this.user.Id)
-            }
-        }
-        setInterval(() => this.date_milli = Date.now(), 1000)
-        //This is necessary for the value of date_milli to be updated so the computed value can also be updated
-    },
-    
     methods: {
         fight(){
             this.user.localFightTimestamp = Date.now() 
@@ -100,6 +87,35 @@ export default {
         {
             return MillisecondsToHourMinuteSecondFormat(this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - this.date_milli)
         },
+    },
+    mounted()
+    {
+        if(this.user.fight != null){
+            if(!this.user.fight.completed){
+                if(this.beatmap?.id == undefined)
+                    this.SendToServer(ClientResponseType.GetMapData, this.user.fight.id, this.user.Id)
+            }
+        }
+        setInterval(() => this.date_milli = Date.now(), 1000)
+        //This is necessary for the value of date_milli to be updated so the computed value can also be updated
+
+        this.listener = (i: Websocket, ev: MessageEvent) => {
+			var res : WebSocketResponse = JSON.parse(ev.data)
+			switch (res.type) 
+            {
+                case ServerResponseType.GiveXPToWaifu:
+                    let data : {xp : number, waifuId: string} = JSON.parse(res.data)
+                    this.user.waifus[data.waifuId].GiveXP(data.xp)
+                    break;
+            }
+        }
+        //@ts-ignore
+        this.ws.addEventListener(WebsocketEvent.message, this.listener);
+    },
+    unmounted()
+    {
+        //@ts-ignore
+        this.ws.removeEventListener(WebsocketEvent.message, this.listener)
     },
 }
 
