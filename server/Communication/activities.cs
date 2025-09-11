@@ -50,7 +50,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
-                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return (null, null, false);}
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action while not being connected", 1)); return (null, null, false);}
             if(Utils.TryDeserialize<ClientActivityRequest>(rawData.data, out var activityRequest) == false)
                 {Send(ClientNotification.NotificationData("Activities", "activityRequest is null!", 1)); return (null, null, false);}
             if(user.activities.Count >= user.maxConcurrentActivities)
@@ -214,7 +214,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
-                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action while not being connected", 1)); return ;}
             var activityIndex = user.activities.FindIndex(activity => activity.id == Convert.ToInt64(rawData.data));
             if(activityIndex == -1)
                 {Send(ClientNotification.NotificationData("Dungeon", "There is no activity with that id", 1)); return ;}
@@ -244,7 +244,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user is null)
-                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action while not being connected", 1)); return ;}
             var activity = user.activities.Find(activity => activity.id == Convert.ToInt64(rawData.data));
             if(activity is null)
                 {Send(ClientNotification.NotificationData("Dungeon", "There is no activity with that id", 1)); return ;}

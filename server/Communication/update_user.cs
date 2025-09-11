@@ -27,7 +27,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             var code = (new Random().Next(899_999) + 100_000).ToString();
             var success = await Osu.Api.SendMessageToUser(rawData.data, code);
             Console.WriteLine("code " + code);
@@ -48,7 +48,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             if(Utils.GetTimestamp() - user.verification.osuVerificationCodeTimestamp > Global.baseValues.time_limit_for_osu_code_verification_in_milliseconds)
                 {Send(ClientNotification.NotificationData("Update osu ID", "The code expired", 1)); return;}
             if(user.verification.osuVerificationCode != rawData.data)
@@ -78,7 +78,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             if(Utils.TryDeserialize<EquipItemFormat>(rawData.data, out var clientData) == false)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (client Data is null)", 1)); return ;}
             if(clientData.waifuId == null)
@@ -107,7 +107,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user is null)
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             if(Utils.TryDeserialize<UnequipItemFormat>(rawData.data, out var clientData) == false)
                 {Send(ClientNotification.NotificationData("User", "Invalid data (client Data is null)", 1)); return ;}
             if(clientData.waifuId is null)
@@ -133,7 +133,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
 
             var success = await Maimai.Api.VerifyToken(rawData.data);
             
@@ -158,7 +158,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
 
             var lvl = Convert.ToByte(rawData.data);
 
@@ -185,7 +185,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             
             user.preferedGame = (Game) Convert.ToInt16(rawData.data);
             DBUtils.Update(user);
@@ -195,7 +195,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
 
             if(user.inventory.items.TryGet(Convert.ToInt16(rawData.data), out var item) == false)
                 {Send(ClientNotification.NotificationData("Equip", "You don't have the item you tried to use", 1)); return;}
@@ -217,7 +217,7 @@ namespace Nanina.Communication
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
             {
-                Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); 
+                Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); 
                 return;
             }
             if(!user.admin)
@@ -233,7 +233,7 @@ namespace Nanina.Communication
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
             {
-                Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); 
+                Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); 
                 return;
             }
             if(!user.admin)
@@ -249,7 +249,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if (user is null)
-                { Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return; }
+                { Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return; }
             if(user.inventory.equipment.TryGet(Convert.ToInt32(rawData.data), out var equipment) == false)
                 { Send(ClientNotification.NotificationData("User", "This equipment does not exist!", 1)); return; }
                 
@@ -268,7 +268,7 @@ namespace Nanina.Communication
             }
             if(user == null) 
             {
-                Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); 
+                Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); 
                 return;
             }
             user.admin = true;

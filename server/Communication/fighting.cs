@@ -85,7 +85,7 @@ namespace Nanina.Communication
 
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             if(user.fight is not null && user.fight.timestamp + Global.baseValues.time_for_allowing_another_fight_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You have a too much recent fight", 1)); return; }
             
@@ -100,7 +100,7 @@ namespace Nanina.Communication
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
 
             if(user is null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             if(user.fight is null)
                 { Send(ClientNotification.NotificationData("Fighting", "You are not doing any fights", 0)); return; }
             if(Utils.TryDeserialize<ClaimClientResponse>(rawData.data, out var claim) == false) 
@@ -236,7 +236,7 @@ namespace Nanina.Communication
 
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if (user is null)
-                { Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return; }
+                { Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return; }
             var activeActivities = user.activities.Where(acitivity => !acitivity.finished);
             if (!activeActivities.Any())
                 { Send(ClientNotification.NotificationData("User", "You need to have at least a single valid activity in progress", 1)); return; }

@@ -21,7 +21,7 @@ namespace Nanina.Communication
         protected void StartDungeon(ClientWebSocketResponse rawData){
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
-                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action while not being connected", 1)); return ;}
             var session = DBUtils.Get<Session>(x => x.id == rawData.sessionId);
             if(session == null)
                 {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action without a valid session", 1)); return ;}
@@ -74,7 +74,7 @@ namespace Nanina.Communication
         protected void StopDungeon(ClientWebSocketResponse rawData){
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
-                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action while not being connected", 1)); return ;}
 
             var dungeon = DungeonManager.activeDungeons[Convert.ToInt64(rawData.data)];
             if(dungeon == null)
@@ -94,7 +94,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null)
-                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("Dungeon", "You can't perform this action while not being connected", 1)); return ;}
             if(user.claimTimestamp + Global.baseValues.time_for_allowing_another_claim_in_milliseconds >= Utils.GetTimestamp()) 
                 { Send(ClientNotification.NotificationData("Fighting", "You did a claim too recently", 1)); return; }
 

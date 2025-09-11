@@ -39,7 +39,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             if(user.admin == false)
                 {Send(ClientNotification.NotificationData("admin", "You don't have the permissions for this action!", 0)); return;}
             if(!Global.config.dev) 
@@ -54,7 +54,7 @@ namespace Nanina.Communication
         {
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user == null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {

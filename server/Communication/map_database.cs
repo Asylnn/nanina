@@ -19,7 +19,7 @@ namespace Nanina.Communication
 
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if(user is null) 
-                {Send(ClientNotification.NotificationData("User", "You can't perform this account with being connected!", 1)); return ;}
+                {Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return ;}
             if (user.admin == false)
                 {Send(ClientNotification.NotificationData("Admin", "You don't have the permissions for this action!", 0)); return;}
             if(Utils.TryDeserialize<AddMapRequest>(rawData.data, out var request) == false)
