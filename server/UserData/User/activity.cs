@@ -127,8 +127,7 @@ namespace Nanina.UserData
         {
             var statRandomness = Utils.RandomMultiplicator(Global.baseValues.cafe_reward_randomness);
             var explorationPower = Math.Ceiling((waifu.Agi + waifu.Luck)*statRandomness);
-            Console.WriteLine(explorationPower);
-            var lootPool = Global.explorationLoot.Where(loot => loot.powerRequired <= explorationPower);
+            var lootPool = Global.explorationLoot.FindAll(loot => loot.powerRequired <= explorationPower);
             var totalWeight = lootPool.Aggregate(0d, (weight, loot) => weight + loot.weight);
             while(explorationPower > 0)
             {
