@@ -87,6 +87,7 @@ namespace Nanina.Communication
         GiveXPToWaifu,
         ConfirmUserConsumableConsumption,
         UpdateEnergy,
+        ProvideCompletedActivity,
         
 
     }

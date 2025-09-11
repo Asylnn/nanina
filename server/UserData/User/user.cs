@@ -169,8 +169,8 @@ namespace Nanina.UserData
                     {
                         Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                         {
-                            type = ServerResponseType.ProvideUser,
-                            data = JsonConvert.SerializeObject(this)
+                            type = ServerResponseType.ProvideCompletedActivity,
+                            data = JsonConvert.SerializeObject(activity)
                         }), session.webSocketId);
                     }
                     DBUtils.Update(this);

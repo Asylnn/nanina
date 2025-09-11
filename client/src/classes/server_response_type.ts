@@ -33,6 +33,7 @@ enum ServerResponseType
     GiveXPToWaifu,
     ConfirmUserConsumableConsumption,
     UpdateEnergy,
+    ProvideCompletedActivity,
 }
 
 export default ServerResponseType

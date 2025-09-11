@@ -54,6 +54,7 @@ import Craft from './classes/crafting/craft'
 import type Dictionary from './classes/dictionary'
 import ClientResponseType from './classes/client_response_type'
 import ServerResponseType from './classes/server_response_type'
+import type Activity from './classes/user/activity'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -293,7 +294,11 @@ export default {
 				case ServerResponseType.UpdateEnergy : 
 					let energy : number = +JSON.parse(res.data)
 					this.user.energy = energy
-					console.log("something")
+					break
+				case ServerResponseType.ProvideCompletedActivity : 
+					let activity1 : Activity = JSON.parse(res.data)
+					let index = this.user.activities.findIndex(activity2 => activity1.id == activity2.id)
+					this.user.activities[index] = activity1
 					break
             
 			} 
