@@ -172,12 +172,12 @@ namespace Nanina.Communication
 
             Loot.GrantLoot(Global.userLevelRewards[lvl - 2], user);
 
-            SendLoot([.. Global.userLevelRewards[lvl-2]]);
+            SendLoot([.. Global.userLevelRewards[lvl-2]], true);
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
-                type = ServerResponseType.ProvideUser,
-                data = JsonConvert.SerializeObject(user) 
+                type = ServerResponseType.ConfirmLvlRewardClaim,
+                data = lvl.ToString(),
             }));
         }
 

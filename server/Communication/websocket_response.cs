@@ -83,6 +83,7 @@ namespace Nanina.Communication
         ConfirmActivityClaim,
         ConfirmDungeonStarted,
         FreeWaifus,
+        ConfirmLvlRewardClaim,
         
 
     }

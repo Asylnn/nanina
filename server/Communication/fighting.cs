@@ -74,8 +74,8 @@ namespace Nanina.Communication
                 return (0,1);
             }
 
-            else if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
-                { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0,1);}
+            /*else if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
+                { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0,1);}*/
             
             return (Maimai.Api.GetXP(validscore), 1);
         }
@@ -142,7 +142,7 @@ namespace Nanina.Communication
 
             user.fight = null;
             user.statCount.std_claim_count++;
-            user.GetXP(Global.baseValues.user_xp_for_fights);
+            user.GetXP(Global.baseValues.user_xp_for_fights*100);
 
             SendLoot([
                 new Loot {
@@ -155,7 +155,7 @@ namespace Nanina.Communication
                 },
                 new Loot {
                     lootType = LootType.UserXP,
-                    amount = Global.baseValues.user_xp_for_fights,
+                    amount = Global.baseValues.user_xp_for_fights*100,
             }]);
             
             

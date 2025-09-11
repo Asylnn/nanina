@@ -12,13 +12,13 @@ export default {
     data(){
         return {
             user_level_rewards: [] as Loot[][],
+            listener: (() => {}) as (i: Websocket, ev: MessageEvent) => void,
         }
     },
     props:{
         user:{
             type:User,
             required:true,
-            
         }
     },
     components:{
@@ -34,12 +34,20 @@ export default {
                     this.user_level_rewards = JSON.parse(res.data)
                     console.log("USER REWARDS")
                     console.log(res.data)
-                    console.log(this.user_level_rewards)
                     break;
+                case ServerResponseType.ConfirmLvlRewardClaim:
+                    let lvl : number = JSON.parse(ev.data).data
+                    this.user.lvlRewards += Math.pow(2, +lvl)
+                    break
             }
         })
         
         this.SendToServer(ClientResponseType.GetLevelRewardsData, "", this.user.Id)
+    },
+    unmounted()
+    {
+        //@ts-ignore
+        this.ws.removeEventListener(WebsocketEvent.message, this.listener)
     },
     methods:
     {
