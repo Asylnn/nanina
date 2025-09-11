@@ -34,26 +34,29 @@ namespace Nanina.Dungeon
             }
         }
 
-        public static void FreeWaifus(ActiveDungeon activeDungeon){
+        public static void FreeWaifus(ActiveDungeon activeDungeon)
+        {
 
             var user = DBUtils.Get<User>(x => x.Id == activeDungeon.userId)!;
-            activeDungeon.waifus.ForEach(dungeonWaifu =>
-            {
+            //could also use user.waifuIdsInDungeon
+            activeDungeon.waifus.ForEach(dungeonWaifu => {
                 user.waifus[dungeonWaifu.id].isDoingSomething = false;
             });
-            user.waifuIdsInDungeon = [];
-            DBUtils.Update(user);
+
 
             var session = DBUtils.Get<Session>(x => x.id == activeDungeon.sessionId);
-            if(session == null) return;
-            if(session.webSocketId != null)
+            if (session == null) return;
+            if (session.webSocketId != null)
             {
                 Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                 {
-                    type = ServerResponseType.ProvideUser,
-                    data = JsonConvert.SerializeObject(user)
+                    type = ServerResponseType.FreeWaifus,
+                    data = JsonConvert.SerializeObject(user.waifuIdsInDungeon)
                 }), session.webSocketId);
             }
+
+            user.waifuIdsInDungeon = [];
+            DBUtils.Update(user);
         }
         
 
@@ -66,7 +69,7 @@ namespace Nanina.Dungeon
                 
                 Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
                 {
-                    type = ServerResponseType.ProvideLoot,
+                    type = ServerResponseType.ProvideAndGiveLoot,
                     data = JsonConvert.SerializeObject(loot)
                 }), session.webSocketId);
             }

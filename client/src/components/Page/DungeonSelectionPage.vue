@@ -6,7 +6,6 @@ import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import ClientResponseType from '@/classes/client_response_type';
 import type Dictionary from '@/classes/dictionary';
-import { close } from 'fs';
 
 export default {
     name : "DungeonSelectionPage",
@@ -21,7 +20,7 @@ export default {
             availableWaifus : [] as Waifu[],
             selectedWaifu : null as Waifu | null,
             select: 0,
-            selected_floor : null as number | null
+            selected_floor : null as number | null,
         }
 
     },
@@ -34,10 +33,6 @@ export default {
             type : User,
             required: true
         }
-    },
-    mounted(){
-        this.availableWaifus = this.user.availableWaifus
-
     },
     components :{
         WaifuDisplayComponent,
@@ -102,7 +97,12 @@ export default {
         {
             return this.selected_dungeon != null && this.selected_floor != null && this.waifuSelection.every(waifu => waifu != null)  
         }
+        
     },
+    mounted()
+    {
+        this.availableWaifus = this.user.availableWaifus
+    }
 }
 
 </script>

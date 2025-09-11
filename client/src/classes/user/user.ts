@@ -122,6 +122,9 @@ export default class User {
                 case LootType.Modifiers:
                     this.UseUserConsumable(loot.item!);
                     break;
+                case LootType.Equipment:
+                    this.inventory.AddEquipment(loot.item as Equipment)
+                    break
             }
         }
     }

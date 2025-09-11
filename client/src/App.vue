@@ -274,8 +274,19 @@ export default {
 					console.log("Got loot : ")
 					console.log(this.loots)
 					break
-				
-				
+				//Those can't be put in dungeon because the page switch between selecting and active dungeon
+				case ServerResponseType.FreeWaifus:
+					let waifusIds : string[] = JSON.parse(res.data)
+					for(let waifuId of waifusIds)
+						this.user.waifus[waifuId].isDoingSomething = false
+					
+					break
+                case ServerResponseType.ConfirmDungeonStarted : {
+					let waifusIds : string[] = JSON.parse(res.data)
+                    for(let waifuId of waifusIds)
+						this.user.waifus[waifuId].isDoingSomething = true;
+					} break;
+            
 			} 
 			//i.send(`${ev.data}`);
 		};

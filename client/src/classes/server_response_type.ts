@@ -27,6 +27,8 @@ enum ServerResponseType
     ConfirmActivity,
     ConfirmCancelActivity,
     ConfirmActivityClaim,
+    ConfirmDungeonStarted,
+    FreeWaifus,
 }
 
 export default ServerResponseType
