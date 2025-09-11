@@ -55,6 +55,7 @@ import type Dictionary from './classes/dictionary'
 import ClientResponseType from './classes/client_response_type'
 import ServerResponseType from './classes/server_response_type'
 import type Activity from './classes/user/activity'
+import type DungeonLog from './classes/dungeons/dungeon_log'
 
 export default {
 	name: "La SDA de la mort qui tue",
@@ -299,6 +300,11 @@ export default {
 					let activity1 : Activity = JSON.parse(res.data)
 					let index = this.user.activities.findIndex(activity2 => activity1.id == activity2.id)
 					this.user.activities[index] = activity1
+					break
+				case ServerResponseType.UpdateDungeon : 
+					let dungeonData : {lastLog: DungeonLog[], bossHealth: number} = JSON.parse(res.data)
+					this.active_dungeon.log.push(...dungeonData.lastLog)
+					this.active_dungeon.health = dungeonData.bossHealth
 					break
             
 			} 

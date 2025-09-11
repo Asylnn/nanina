@@ -68,7 +68,7 @@ namespace Nanina.Dungeon
                     ConcludeDungeon();
                 }
                 else 
-                    DungeonManager.UpdateDungeonOfClient(this);
+                    DungeonManager.UpdateStatusOfDungeon(this);
             }
         }
 
@@ -147,7 +147,7 @@ namespace Nanina.Dungeon
             DBUtils.Update(user);
 
             
-            DungeonManager.UpdateDungeonOfClient(this);
+            DungeonManager.UpdateStatusOfDungeon(this);
             DungeonManager.SendLootToClient(this, lootToServer);
             StopDungeon();
             

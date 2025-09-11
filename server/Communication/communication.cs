@@ -83,7 +83,7 @@ namespace Nanina.Communication
             {
                 var activeDungeon = DungeonManager.activeDungeons.Values.ToList().Find(dungeon => user.dungeonInstanceId == dungeon.instanceId)!;
                 activeDungeon.sessionId = user.activeSessionId!;
-                DungeonManager.UpdateDungeonOfClient(activeDungeon);
+                DungeonManager.ProvideDungeonToClient(activeDungeon);
             }
             if (user.admin)
             {

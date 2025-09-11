@@ -104,7 +104,7 @@ namespace Nanina.Communication
 
             var dungeon = DungeonManager.activeDungeons[Convert.ToInt64(rawData.data)];
             dungeon.DealDamage(mult);
-            DungeonManager.UpdateDungeonOfClient(dungeon);
+            DungeonManager.UpdateStatusOfDungeon(dungeon);
         }
     }
 }

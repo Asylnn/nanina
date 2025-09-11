@@ -17,10 +17,10 @@ namespace Nanina.Dungeon
             
             user.dungeonInstanceId = activeDungeon.instanceId;
 
-            UpdateDungeonOfClient(activeDungeon);
+            ProvideDungeonToClient(activeDungeon);
         }
 
-        public static void UpdateDungeonOfClient(ActiveDungeon activeDungeon){
+        public static void ProvideDungeonToClient(ActiveDungeon activeDungeon){
 
             var session = DBUtils.Get<Session>(x => x.id == activeDungeon.sessionId);
             if(session == null) return;
@@ -33,13 +33,33 @@ namespace Nanina.Dungeon
                 }), session.webSocketId);
             }
         }
+        
+        public static void UpdateStatusOfDungeon(ActiveDungeon activeDungeon){
+            var session = DBUtils.Get<Session>(x => x.id == activeDungeon.sessionId);
+            if(session == null) return;
+            if(session.webSocketId != null)
+            {
+                var data = new
+                {
+                    lastLog = activeDungeon.log.Slice(activeDungeon.log.Count - 3, 3),
+                    bossHealth = activeDungeon.health,
+                };
+
+                Global.ws.WebSocketServices["/ws"].Sessions.SendTo(JsonConvert.SerializeObject(new ServerWebSocketResponse
+                {
+                    type = ServerResponseType.UpdateDungeon,
+                    data = JsonConvert.SerializeObject(data)
+                }), session.webSocketId);
+            }
+        }
 
         public static void FreeWaifus(ActiveDungeon activeDungeon)
         {
 
             var user = DBUtils.Get<User>(x => x.Id == activeDungeon.userId)!;
             //could also use user.waifuIdsInDungeon
-            activeDungeon.waifus.ForEach(dungeonWaifu => {
+            activeDungeon.waifus.ForEach(dungeonWaifu =>
+            {
                 user.waifus[dungeonWaifu.id].isDoingSomething = false;
             });
 

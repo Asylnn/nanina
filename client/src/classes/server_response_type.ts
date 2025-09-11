@@ -34,6 +34,7 @@ enum ServerResponseType
     ConfirmUserConsumableConsumption,
     UpdateEnergy,
     ProvideCompletedActivity,
+    UpdateDungeon,
 }
 
 export default ServerResponseType
