@@ -40,7 +40,7 @@ export default {
             return MillisecondsToHourMinuteSecondFormat(activity.timestamp + activity.timeout - this.date_milli)
         },
         getTimeLeft(activity: Activity) {
-            return " width:" + 330 * (activity.timestamp + activity.timeout - this.date_milli) / activity.originalTimeout + "px";
+            return " width:" + 340 * (activity.timestamp + activity.timeout - this.date_milli) / activity.originalTimeout + "px";
         },
         getBackgroundColor() {
             var style = "background-color:"
@@ -109,17 +109,19 @@ export default {
 
         <div :style="getBackgroundColor()" class="researchNode" @click="$emit('show-waifu-selector')">
 
-            <div data-no-dragscroll>
-                {{ $t(`activity.research.${researchNode.id}`) }}
+            <div data-no-dragscroll style="text-align: center;">
+                {{ $t(`activities.research.${researchNode.id}`) }}
             </div>
-            <div data-no-dragscroll>
-                {{ researchNode.cost }}
+            <div data-no-dragscroll id="time-cost">
+                <span>{{ researchNode.cost }}</span>
+                <img style="filter:brightness(0); margin-left: 2px;" height=24px width=24px src="@/assets/clock.svg">
             </div>
             <div v-if="activity != null && !activity.finished" id="activityContainer">
                 <div id="activityBorder">
                     <div id="timeleft" :style="getTimeLeft(activity)">
+                        <span> {{ getTimeLeftNumber(activity) }}</span>
                     </div>
-                    <span> {{ getTimeLeftNumber(activity) }}</span>
+                    <div id="bar-background"></div>
                 </div>
             </div>
         </div>
@@ -129,6 +131,15 @@ export default {
 
 
 <style lang="css" scoped>
+
+#time-cost
+{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    place-items: center;
+}
+
 .researchNode {
     cursor: auto;
     width: 330px;
@@ -148,28 +159,27 @@ export default {
 .waifuSlot {
     position: absolute;
     left: -90px;
+    margin : 0px;
     margin-right: 10px;
-    /*border: 10px;
-    border-style: solid;
-    border-color:rgb(20,20,20);*/
     border-radius: 10px;
-    width: 80px;
-    height: 80px;
+    border-width: 3px;
+    width: 74px;
+    height: 74px;
     overflow: hidden;
+    border-color:purple;
 }
 
 .waifuSlot img {
-    width: 80px;
+    width: 74px;
 }
 
 #sendbutton {
     position: absolute;
-    bottom: -50px;
-    right: 50px;
+    height:35px;     /*since it's a techno tree with a draggable field, pixel values shouldn't matter too much... right?*/
+    padding:0px 8px;
+    bottom: -42px;
+    left: -87px;
 }
-
-
-
 
 #activityContainer {
     display: flex;
@@ -178,26 +188,42 @@ export default {
 }
 
 #activityBorder {
-    width: 330px;
-    border-radius: 10px;
+    position: absolute;
+    height: 30px;
+    top:75px;
+    left:0;
+    width: 340px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
-    border: 2px;
+    border: 4px;
     border-style: solid;
-    border-color:rgb(20,20,20);
+    border-color:rgb(22, 0, 144);
 }
 
 #activityBorder span {
     position: absolute;
     left: 50%;
+    
     transform: translateX(-50%);
     font-size: larger;
 }
 
 #timeleft {
-    height: 25px;
+    z-index: 2;
+    height: 30px;
     justify-self: end;
-    border-radius: 7px;
-    background-color: purple;
+    border-radius: 30px;
+    background-color: rgb(43, 154, 191);
+}
+
+#bar-background {
+    position: absolute;
+    width:340px;
+    height: 30px;
+    z-index: 1;
+    justify-self: end;
+    border-radius: 30px;
+    background-color: rgb(168, 233, 255);
 }
 </style>

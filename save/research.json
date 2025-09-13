@@ -35,7 +35,7 @@
     "unlock_stage_5":{
         "id":"unlock_stage_5",
         "tier":4,
-        "cost":100,
+        "cost":10000000,
         "infinite":false,
         "modifiers":[{
             "StatModifier":18,

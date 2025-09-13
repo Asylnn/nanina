@@ -74,7 +74,11 @@
             "overview":"Send your companions to the mines and get the precious crystals from deep underground!"
         },
         "research":{
-            "submenu":"Research"
+            "submenu":"Research",
+            "unlock_stage_2":"Unlock Stage 2",
+            "unlock_stage_3":"Unlock Stage 3",
+            "unlock_stage_4":"Unlock Stage 4",
+            "unlock_stage_5":"Unlock Stage 5"
         },
         "crafting":{
             "submenu":"Crafting",

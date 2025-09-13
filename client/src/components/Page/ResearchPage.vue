@@ -114,7 +114,7 @@ export default {
         {
 
             rn.leftPos = (rn.tier - 1)*600 + 200
-            rn.topPos =  size*100
+            rn.topPos =  size*135
             
             rn.requiredBy.forEach(reqID => {
                 let subTreeNodes = tree.elements.filter(subRN => subRN.allRequirements.some(id => id == reqID) || subRN.id == reqID)
