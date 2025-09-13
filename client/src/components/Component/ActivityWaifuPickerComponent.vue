@@ -67,9 +67,9 @@ export default {
 </script>
 
 <template>
-    <p v-if="activityType != ActivityType.Crafting">{{$t(`activities.${getActivityName()}.explanation`)}}</p>
+    <p v-if="activityType != ActivityType.Crafting">{{$t(`activities.${getActivityName()}.overview`)}}</p>
     <div v-if="user.activities.length < user.maxConcurrentActivities">
-        <button class="smallbutton nnnbutton" v-if="selectedWaifu != null && showButton" @click="sendWaifuToActivity()">{{ $t("activities.sendwaifu") }}</button>
+        <button class="smallbutton nnnbutton" v-if="selectedWaifu != null && showButton" @click="sendWaifuToActivity()">{{ $t("activities.start") }}</button>
         
         <div class="waifuSlot clickable" @click="$emit('show-waifu-selector')">
             <img :src="`${publicPath}waifu-image/${selectedWaifu?.imgPATH || 'unknown.svg'}`">

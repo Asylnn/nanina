@@ -68,11 +68,11 @@ export default {
             </div>
             <span> {{ getTimeLeftNumber() }}</span>
         </div>
-        <button class="nnnbutton smallbutton" @click="cancelActivity()"> {{ "cancel" }}</button>
+        <button class="nnnbutton smallbutton" @click="cancelActivity()"> {{ $t("activities.cancel") }}</button>
         <LootComponent v-if="activity.type == ActivityType.Crafting":loots="activity.loot"></LootComponent>
     </div>
     <div v-else>
-        activity finished
+        <span>{{ $t("activities.activity_finished") }}</span>
         <LootComponent :loots="activity.loot"></LootComponent>
         <button class="smallbutton nnnbutton" @click="getActivityClaim()">{{ $t("activities.claim") }}</button>
     </div>

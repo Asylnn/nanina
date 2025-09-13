@@ -20,6 +20,7 @@ import { Websocket, WebsocketEvent } from 'websocket-ts';
 import type WebSocketResponse from '@/classes/web_socket_response';
 import ServerResponseType from '@/classes/server_response_type';
 import type Activity from '@/classes/user/activity';
+import ActivitiesHelpComponent from './ActivitiesHelpComponent.vue';
 
 
 export default {
@@ -81,6 +82,7 @@ export default {
         ResearchPage,
         CraftingPage,
         ContinuousFightPage,
+        ActivitiesHelpComponent,
     },
     computed:{
         
@@ -139,17 +141,21 @@ export default {
 
     <div>
         <ul id="activityHeader">
-            <li :class="applyTextColor(-2) + ' clickable'" @click="selectedActivity = ActivityType.Help">{{$t("activities.help")}}</li>
-            <li :class="applyTextColor(0) + ' clickable'" @click="selectedActivity = ActivityType.Cafe">{{$t("activities.cafe")}}</li>
-            <li :class="applyTextColor(4) + ' clickable'" @click="selectedActivity = ActivityType.Mining">{{$t("activities.mining")}}</li>
-            <li :class="applyTextColor(3) + ' clickable'" @click="selectedActivity = ActivityType.Research">{{$t("activities.research")}}</li>
-            <li :class="applyTextColor(2) + ' clickable'" @click="selectedActivity = ActivityType.Crafting" >{{$t("activities.crafting")}}</li>
-            <li :class="applyTextColor(1) + ' clickable'" @click="selectedActivity = ActivityType.Exploration" >{{$t("activities.exploration")}}</li>
-            <li :class="applyTextColor(-1) + ' clickable'" @click="selectedActivity = ActivityType.ContinousFight" >{{$t("activities.fight")}}</li>
+            <li :class="applyTextColor(-2) + ' clickable'" @click="selectedActivity = ActivityType.Help">{{$t("activities.help.submenu")}}</li>
+            <li :class="applyTextColor(0) + ' clickable'" @click="selectedActivity = ActivityType.Cafe">{{$t("activities.cafe.submenu")}}</li>
+            <li :class="applyTextColor(4) + ' clickable'" @click="selectedActivity = ActivityType.Mining">{{$t("activities.mining.submenu")}}</li>
+            <li :class="applyTextColor(3) + ' clickable'" @click="selectedActivity = ActivityType.Research">{{$t("activities.research.submenu")}}</li>
+            <li :class="applyTextColor(2) + ' clickable'" @click="selectedActivity = ActivityType.Crafting" >{{$t("activities.crafting.submenu")}}</li>
+            <li :class="applyTextColor(1) + ' clickable'" @click="selectedActivity = ActivityType.Exploration" >{{$t("activities.exploration.submenu")}}</li>
+            <li :class="applyTextColor(-1) + ' clickable'" @click="selectedActivity = ActivityType.ContinousFight" >{{$t("activities.fight.submenu")}}</li>
             <li>{{`${user.activities.length}/${user.maxConcurrentActivities}`}}</li>
         </ul>
     </div>
     <div>
+        <div v-if="selectedActivity == ActivityType.Help">
+            <ActivitiesHelpComponent></ActivitiesHelpComponent>
+            
+        </div>
         <div v-if="selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining || selectedActivity == ActivityType.Exploration">
             <ActivityWaifuPickerComponent :user="user" :selected-waifu="selectedWaifu" :activity-type="selectedActivity"
                 v-on:reset-selected-waifu="selectedWaifu = null" 

@@ -47,6 +47,57 @@
         "exploration":"Exploration",
         "stats":"Stats"
     },
+    "activities":{
+        "help":{
+            "submenu":"Help",
+            "title":"Help with activities",
+            "overview":"Activities are actions your companions can partake in for various rewards, but they require some time before being completed.",
+            "activities_limit":"You can only have a fixed amount of activities in parallel. This amount start at 3 but can be increased further.",
+            "companion_can_only_do_one_action":"Each companion can only do one action at a time. They cannot do two or more action at the same time. Note that even though dungeons does not count as activities, companions inside a dungeon are doing an action and thus not able to do activities.",
+            "activities":"There are 5 differents activities, each granting a different ressource at completion, and each having a unique companion's stat used for calculating either the time the activity take, or the quantity of ressources granted for completing the activity.",
+            "all_the_different_activities":"The different activities are : Part time cafe, Mining, Research, Crafting and Exploration.",
+            "cafe_explanation":"Working part time at a cafe takes {cafe_time}h to complete. When your companion finish working, they will bring back money. The more KAW they have, the more money they will bring back.",
+            "mining_explanation":"Mining takes {mining_time}h to complete. When your companion finish mining, they will bring back crystals. The more STR they have, the more and better crystals they will bring back.",
+            "exploration_explanation":"Similar to mining, exploration takes {exploration_time}h to complete. When your companion finish exploring, they will bring back various materials. The more AGI they have, the more and better materials they will bring back.",
+            "crafting_explanation":"Crafting enables you, as the name suggest, to craft new materials or consumable using money and materials you already have. Your companion's DEXT will make crafting faster.",
+            "research_explanation":"Researching technologies to unlock various new gameplay mechanics, unlock new crafts, or giving permanent bonuses. Your companion INT will determine which technology they will be able to perform and how much time it will take.",
+            "fighting":"To speed up activities you can also play rhythms games! On the last sub menu in activities, there is the \"Fighting\" section. There you can select a rhythm game and depending on all the scores you did in the last 24 hours, all your activities will be shorten by some amount.",
+            "fighting2":"Note that the time save is equaly distributed among activities, meaning that if you save 1h in total, and if you have two activities, each one will be shorten by 30min. If instead you only have one activity, it will be shorten by the full hour.",
+            "fighting_osu":"On osu, only ranked scores on ranked maps will be included."
+        },
+        "cafe":{
+            "submenu":"Cafe",
+            "overview":"Send your companions work part time at cafes. They will maybe even share a bit of their pay to you!"
+        },
+        "mining":{
+            "submenu":"Mining",
+            "overview":"Send your companions to the mines and get the precious crystals from deep underground!"
+        },
+        "research":{
+            "submenu":"Research"
+        },
+        "crafting":{
+            "submenu":"Crafting",
+            "queue":"This is the crafting queue"
+        },
+        "exploration":{
+            "submenu":"Exploration",
+            "overview":"Send your companions to explore the unknown landmass of the world. They will probably bring back useful stuff!"
+        },
+        "fight":{
+            "result":{
+              "timesave":"Time Save"  
+            },
+            "button":"Accelerate activities",
+            "timeout":"Please wait",
+            "submenu":"Fight",
+            "overview":"play rhythms games to accelerate yout actions!"
+        },
+        "activity_finished":"Activity Finished.",
+        "claim":"claim rewards",
+        "cancel":"cancel",
+        "start":"start"
+    },
     "message": {
         "hello": "hello"
     },

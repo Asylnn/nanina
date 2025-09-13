@@ -102,9 +102,9 @@ export default {
                     :src="`${publicPath}waifu-image/${(selectedWaifu?.imgPATH || user.waifus[activity!.waifuID].imgPATH)}`">
             </div>
             <button v-if="activity == null" class="smallbutton nnnbutton" id="sendbutton"
-                @click="sendWaifuToResearch()">send waifu</button>
-            <button v-else-if="! activity.finished" class="smallbutton nnnbutton" id="sendbutton"  @click="cancelResearch()">cancel</button>
-            <button v-else class="smallbutton nnnbutton" id="sendbutton" @click="getActivityClaim()">finish</button>
+                @click="sendWaifuToResearch()">{{$t("activities.start")}}</button>
+            <button v-else-if="! activity.finished" class="smallbutton nnnbutton" id="sendbutton"  @click="cancelResearch()">{{$t("activities.cancel")}}</button>
+            <button v-else class="smallbutton nnnbutton" id="sendbutton" @click="getActivityClaim()">{{$t("activities.claim")}}</button>
         </div>
 
         <div :style="getBackgroundColor()" class="researchNode" @click="$emit('show-waifu-selector')">

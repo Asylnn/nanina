@@ -85,9 +85,9 @@ export default {
 <template>
     
     <div>
-        <p>{{ $t("activities.fight.explanation") }}</p>
-        <button v-if="timeout" class="nnnbutton smallbutton" @click="CheckContinuousFight()">{{ $t("activities.fight_timeout")}}  {{ fightWaitTime() }}</button>
-        <button v-else class="nnnbutton smallbutton" @click="CheckContinuousFight()">{{ $t("activities.fight") }}</button>
+        <p>{{ $t("activities.fight.overview") }}</p>
+        <button v-if="timeout" class="nnnbutton smallbutton" @click="CheckContinuousFight()">{{ $t("activities.fight.timeout")}}  {{ fightWaitTime() }}</button>
+        <button v-else class="nnnbutton smallbutton" @click="CheckContinuousFight()">{{ $t("activities.fight.button") }}</button>
         <div v-for="score in scores">
             <FightResultComponent :score="score"></FightResultComponent>
         </div>

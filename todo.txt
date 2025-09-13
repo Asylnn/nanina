@@ -110,13 +110,13 @@ TODO : Add number of completed continuous fight completed                       
 TODO : send file to client without doing serialazation, directly from file          #Done
 TODO : [BUG] code for verifying account is sometime expired                         #Seems to be fixed? Was it that the limit was 10 seconds?
 TODO : limit the amount of data sent to the client                                  #Done. Fucking finally
+TODO : [BUG] Cherish battery use, item count doesn't decrease                       #Done
 
 TODO : instead of sending everything (waifus, items, sets...) via websocket, just import it?
 TODO : Freeze everything when waiting for server response. (idk if it's good idea)
 TODO : make a "equipped" symbol, and do not remove equipped equipment from inventory.
 TODO : [BUG] When first getting waifu in pull, does not get duplicate object
 TODO : Remove dev property in App.vue
-TODO : [BUG] Cherish battery use, item count doesn't decrease
 TODO : Add regen tick clock on client
 
 
