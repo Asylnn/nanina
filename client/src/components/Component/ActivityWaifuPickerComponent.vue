@@ -46,19 +46,7 @@ export default {
         },
         getActivityName()
         {
-            switch(this.activityType)
-            {
-                case ActivityType.Cafe:
-                    return "cafe"
-                case ActivityType.Crafting:
-                    return "crafting"
-                case ActivityType.Exploration:
-                    return "exploration"
-                case ActivityType.Research:
-                    return "research"
-                case ActivityType.Mining:
-                    return "mining"
-            }
+           return ActivityType[this.activityType].toLowerCase()
         }
     },
     components:{
