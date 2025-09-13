@@ -58,7 +58,7 @@ export default {
 
 </script>
 <template>
-    <div id="loots" :class="playAnimation ? 'playAnim' : 'test'">
+    <div class="flex" id="loots" :class="playAnimation ? 'playAnim' : 'test'">
         <div v-for="loot in loots" class="loot">
             <div v-if="loot.lootType == LootType.WaifuXP">
                 <img src="@/assets/waifu_xp.svg">
@@ -125,7 +125,7 @@ img
 }
 
 #loots {
-    display: flex;
+    flex-direction: row;
     padding:10px 20px;
     padding-right: 0px; /*Because loot have margin-right: 20px*/ 
     border-color: grey;

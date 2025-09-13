@@ -105,14 +105,7 @@ input
     border-style: solid;
 }
 
-.smallbutton
-{
-    padding:6px 6px;
-    border-width: 3px;
-    border-style: solid;
-    border-radius: 20px;
-    text-align: center;
-}
+
 
 .locked
 {
@@ -135,6 +128,25 @@ input
 {
     color:rgb(177, 77, 238);
     text-decoration:underline;
+}
+
+.button{
+    margin: 20px 0;
+    font-size: larger;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 2px 40px;
+    text-align: center;
+    align-self: center;
+}
+
+.smallbutton
+{
+    padding:6px 6px;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 20px;
+    text-align: center;
 }
 
 

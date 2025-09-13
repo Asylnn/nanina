@@ -196,17 +196,6 @@ export default {
     margin-bottom: 20px;
 }
 
-.button{
-    margin: 20px 0;
-    font-size: xx-large;
-    border-radius: 25px;
-    cursor: pointer;
-    padding: 2px 40px;
-    text-align: center;
-    align-self: center;
-}
-
-
 /*#fightButton, #timerFight, #timerClaim{
     text-align: center;
     max-width: 20vw;

@@ -179,11 +179,6 @@ export default {
         <div v-if="selectedActivity == ActivityType.ContinousFight">
             <ContinuousFightPage :user="user"></ContinuousFightPage>
         </div>
-        <div v-for="activity in user.activities"> 
-            <ActivityProgressComponent :user="user" :activity="activity"
-                v-if="activity.type == selectedActivity && (selectedActivity == ActivityType.Cafe || selectedActivity == ActivityType.Mining || selectedActivity == ActivityType.Exploration)" >
-            </ActivityProgressComponent>
-        </div>
     </div>
 </template>
 
