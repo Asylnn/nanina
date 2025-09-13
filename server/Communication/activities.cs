@@ -252,8 +252,8 @@ namespace Nanina.Communication
                 {Send(ClientNotification.NotificationData("Dungeon", "This activity is already finished", 1)); return ;}
             user.waifus[activity.waifuID].isDoingSomething = false;
             user.activities.Remove(activity);
-            Global.activityTimers[activity.id].Dispose();
-            Global.activityTimers.Remove(activity.id);
+            /*Global.activityTimers[activity.id].Dispose();
+            Global.activityTimers.Remove(activity.id);*/
             DBUtils.Update(user);
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {

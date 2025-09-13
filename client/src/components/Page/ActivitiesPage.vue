@@ -102,6 +102,8 @@ export default {
                     break;
                 case ServerResponseType.ConfirmCancelActivity:
                     let index = this.user.activities.findIndex(activity => activity.id == res.data)
+                    let cancelledActivity = this.user.activities[index]
+                    this.user.waifus[cancelledActivity.waifuID].isDoingSomething = false
                     this.user.activities.splice(index, 1)
                     break;
                 case ServerResponseType.ConfirmActivityClaim:
