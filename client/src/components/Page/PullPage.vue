@@ -124,15 +124,15 @@ export default {
 
 <template>
     <div id="gachaWindow">
-        <div id="bannerInfo">
+        <div id="bannerInfo" class="margins">
             <select v-for="banner in banners" v-model="selected_banner">
                 <option :value="banner" >{{banner.id}}</option>
             </select>
-            <button @click="pull(1)">{{ $t("gacha.pull", {pullAmount:1}) }}</button>
-            <button @click="pull(10)">{{ $t("gacha.pull", {pullAmount:10}) }}</button>
-            <div>
-                <img src="@/assets/gc.svg">
-                <div>{{ Math.floor(user.gacha_currency) }}</div>
+            <button class="nnnbutton" @click="pull(1)">{{ $t("gacha.pull", {pullAmount:1}) }}</button>
+            <button class="nnnbutton" @click="pull(10)">{{ $t("gacha.pull", {pullAmount:10}) }}</button>
+            <div id="gc-display">
+                <span>{{ Math.floor(user.gacha_currency) }}</span>
+                <img src="@/assets/gc.svg"></img>
             </div>
         </div>
         <div v-if="pulled_waifus[0] != undefined">
@@ -141,7 +141,7 @@ export default {
                 <div class="veil" id="frontveil" @click="incrementCount"></div>
                 <WaifuDisplayComponent :user="user" :for-dungeon="false" :for-pull="true" :waifu="waifuToSend()" :count="countToSend()"></WaifuDisplayComponent>
             </div>
-            <div id="gridPull" v-else>
+            <div class="grid" v-else>
                 <GridDisplayComponent :elements="waifusToSend()" :columns=5></GridDisplayComponent>
             </div>
         </div>
@@ -151,27 +151,20 @@ export default {
 <style lang="css" scoped>
 #bannerInfo {
     display: grid;
-    grid-template-columns: 1fr 3fr 3fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    align-items: center;
+    margin-bottom: 40px;
 }
 #bannerInfo select {
     font-size: large;
     cursor: pointer;
-    height:40px;
+    height:30px;
 }
-#bannerInfo span {
-    color: rgb(185, 83, 185);
-}
+
 #bannerInfo button {
-    height:40px;
-    width: 20vw;
-    margin-left: 10vw;
+    margin: 0px 40px;
     font-size: larger;
     cursor: pointer;
-}
-#history {
-    margin-top: 1vh;
-    cursor: pointer;
-    font-size:medium;
 }
 
 #backveil {
@@ -185,8 +178,16 @@ export default {
     cursor: pointer;
 }
 
-#gridPull {
-    display: grid;
-    
+#gc-display
+{
+    display: flex;
+    place-items: center
 }
+
+#gc-display span
+{
+    margin-right: 10px;
+}
+
+
 </style>
