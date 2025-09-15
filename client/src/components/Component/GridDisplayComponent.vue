@@ -57,7 +57,7 @@ export default {
     <div id="grid" :class="showBorder ? 'border' : ''" :style="generateGridTemplateColumns">
         <div v-for="element in elements">
             <div v-if="(element as Waifu).b_dex != null"> <!-- Pretty bad way to test if it's a waifu Object, but it works-->
-                <div class="slot">
+                <div class="waifu-slot">
                     <div class="waifuIcon">
                         <img @click="onShowElement(element as Waifu)" :src="`${publicPath}/waifu-image/${element.imgPATH}`">
                     </div>
@@ -97,13 +97,13 @@ export default {
 .waifuIcon {
     border-radius: 15px;
     max-width: 10vw;
-    max-height: 20vh;
+    max-height: 10vw;
     overflow: hidden;
 }
 
 .waifuIcon img {
     max-width: 15vw;
-    max-height: 35vh;
+    max-height: 15vw;
     cursor: pointer;
 }
 
@@ -119,25 +119,27 @@ export default {
     cursor: pointer;
 }
 
-.slot p {
-    position:relative;
+.waifu-slot p {
+    /*position:relative;
     left:0px;
-    bottom: 0px;
+    bottom: 0px;*/
     color:blueviolet;
     text-align: left;
 }
 
-.slot {
+.waifu-slot {
     margin-bottom: 6vh;
+    display:flex;
+    place-items: center;
+    place-content: center;
+    flex-direction: column;
 }
 
 .itemSlot
 {
     display:flex;
-    align-items: center;
-    justify-items: center;
-    align-content: center;
-    justify-content: center;
+    place-items: center;
+    place-content: center;
     padding-top: 30px;
     margin-bottom: 15px;
 }

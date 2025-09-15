@@ -113,13 +113,11 @@ export default {
 #filters {
     padding: 0 17.27vw;
     position:relative;
-}
-#filters {
     grid-template-columns: 1fr 1fr;
     padding-top: 1vh;
-}
-#filters {
     display: grid;
+    place-items: center;
+    margin-bottom: 30px;
 }
 
 </style>
