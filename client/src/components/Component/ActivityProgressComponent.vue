@@ -72,12 +72,13 @@ export default {
              I really would like the width to be dynamic in real time though...               -->                                                                     
         
         <div v-if="! activity.finished" class="flex" id="activityContainer">
+            <LootComponent v-if="activity.type == ActivityType.Crafting":loots="activity.loot"></LootComponent>
             <div id="activityBorder" :style="`width:${barWidth}px`">
                 <div id="timeleft" :style="getTimeLeft()"></div>
                 <span> {{ getTimeLeftNumber() }}</span>
             </div>
             <button class="nnnbutton button" id="activity-cancel-button" @click="cancelActivity()"> {{ $t("activities.cancel") }}</button>
-            <LootComponent v-if="activity.type == ActivityType.Crafting":loots="activity.loot"></LootComponent>
+            
         </div>
         <div v-else class="flex" id="activity-loot-display">
 
@@ -135,7 +136,7 @@ export default {
     border-radius: 100px;
     border-style: solid;
     border-color: rgb(200, 41, 200);
-    border-width: 8px;                         
+    border-width: 5px;                         
     display:flex;
     align-items: center;
 }

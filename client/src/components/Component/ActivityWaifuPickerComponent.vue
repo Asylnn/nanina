@@ -30,7 +30,12 @@ export default {
             type:Boolean,
             required:false,
             default:true,
-        }
+        },
+        ownMargins:{
+            type:Boolean,
+            required:false,
+            default:true,
+        },
     },
     methods:{
         sendWaifuToActivity()
@@ -59,7 +64,7 @@ export default {
 </script>
 
 <template>
-    <div class="margins">
+    <div :class="ownMargins ? 'margins' : ''">
         <p v-if="activityType != ActivityType.Crafting">{{$t(`activities.${getActivityName()}.overview`)}}</p>
         <div v-if="user.activities.length < user.maxConcurrentActivities">
             <div class="flex" id="waifu-selector">

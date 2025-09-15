@@ -161,7 +161,7 @@ export default {
 </script>
 
 <template>
-    <div @keydown="checkShiftKey" @keyup="checkShiftKey">
+    <div @keydown="checkShiftKey" @keyup="checkShiftKey" class="margins">
         <div v-for="activity in user.activities.filter(activity => activity.type == ActivityType.Crafting)">
             <ActivityProgressComponent :user="user" :activity="activity">
 
@@ -190,17 +190,25 @@ export default {
                         <div class="quantity">{{ result.quantity }}</div>
                     </div>
                     <div class="costDisplay flex">
-                        <span :style="isAboveLimit(craftingList.moneyCost, user.money)">
-                            {{ craftingList.moneyCost }} / {{ user.money }} 
+                        <span class="cost">
+                            <span :style="isAboveLimit(craftingList.moneyCost, user.money)">
+                                {{ craftingList.moneyCost }} / {{ user.money }} 
+                            </span>
+                            <img style="margin-left: 2px;" height=24px width=24px src="@/assets/ugly_coin.svg"></img>
                         </span>
-                        <span >{{ craftingList.timeCost }}</span>
+                        <span class="cost">
+                            <span>{{ craftingList.timeCost }}</span>
+                            <img style="filter:brightness(10); margin-left: 2px;" height=24px width=24px src="@/assets/clock.svg"></img>
+                        </span>
+                        
                     </div>
                 </div>
                 <ActivityWaifuPickerComponent :user="user" :selected-waifu="selectedWaifu" :activity-type="ActivityType.Crafting" 
                     v-on:reset-selected-waifu="$emit('reset-selected-waifu')" 
                     v-on:show-waifu-selector="$emit('show-waifu-selector')"
                     v-on:start-crafting-activity="sendWaifuToCrafting()"
-                    :show-button="!aboveLimits">
+                    :show-button="!aboveLimits"
+                    :ownMargins="false">
                 </ActivityWaifuPickerComponent>
             </div>
         </div>
@@ -221,8 +229,17 @@ export default {
                 </div>
             </div>
             <div class="costDisplay flex">
-                <span :style="getColor(craft.quantity)">{{ craft.moneyCost * Math.max(1, craft.quantity)}}</span>
-                <span :style="getColor(craft.quantity)">{{ craft.timeCost * Math.max(1, craft.quantity)}}</span>
+                <span class="cost">
+                    <span :style="getColor(craft.quantity)">{{ craft.moneyCost * Math.max(1, craft.quantity)}}</span>
+                    <img style="margin-left: 2px;" height=24px width=24px src="@/assets/ugly_coin.svg">
+                </span>
+                <span class="cost">
+                    <span :style="getColor(craft.quantity)">
+                        {{ craft.timeCost * Math.max(1, craft.quantity)}}
+                    </span>
+                    <img style="filter:brightness(10); margin-left: 2px;" height=24px width=24px src="@/assets/clock.svg"></img>
+                </span>
+                
             </div>
             <div class="quantityPicker flex">
                 <button @click="increaseQuantity(craft)">▲</button>
@@ -250,7 +267,7 @@ input
 
 .craftingMenu
 {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .craftRecipe
@@ -305,6 +322,14 @@ input
 .craftingRecap
 {
     min-height: 380px;
+}
+
+.cost
+{
+    display:grid;
+    grid-template-columns: 1fr 0.5fr;
+    flex-direction: row;
+    place-items: center;
 }
 
 </style>
