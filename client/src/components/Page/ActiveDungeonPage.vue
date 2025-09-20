@@ -188,7 +188,7 @@ h1
 
 .waifuInfo
 {
-    margin: 25px 0px;
+    margin: 3.5vh 0px;
     height: 15vw;
     display:flex;
 }

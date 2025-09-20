@@ -59,9 +59,8 @@ footer{
     padding: 20px 0px;
     display:flex;
     margin-top: 20px;
-    background-color: rgb(15,15,15);
     place-content: center;
-    transform: translateY(140px);
+    transform: translateY(165px);
 }
 
 </style>

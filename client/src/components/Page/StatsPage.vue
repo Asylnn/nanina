@@ -43,6 +43,6 @@ export default {
 <style lang="css" scoped>
 .stat {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 8fr 1fr;
 }
 </style>

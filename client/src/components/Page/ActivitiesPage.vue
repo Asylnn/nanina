@@ -131,7 +131,7 @@ export default {
     
     <div v-if="waifuSelectorVisible">
         <div @click="waifuSelectorVisible = false" class="veil" id="waifuSelectorVeil"></div>
-        <GridDisplayComponent id="grid" @show-element="openWaifuDisplay" :elements="user.availableWaifus" :columns=5></GridDisplayComponent>
+        <GridDisplayComponent id="grid" @show-element="openWaifuDisplay" :elements="user.availableWaifus" :columns=5 :sticky-waifu-grid="true"></GridDisplayComponent>
     </div>
     <div v-if="waifuDisplayComponentVisible">
         <div  @click="waifuDisplayComponentVisible = false" class="veil" id="waifuveil"></div>
@@ -185,26 +185,20 @@ export default {
 </template>
 
 <style lang="css" scoped>
-#grid {
-    z-index: 50;
-    position: sticky;
-    top : 10vh;
-    right: 0px;
-    left : 0px;
-    padding:0px;
-    margin:10vh 20vw ;
-    position:fixed;
-    height: 80vh;
-    overflow: scroll;
-}
 
 #activityHeader {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    height: 5vh;
-    margin: 0 15vw;
+    height: 30px;
+    margin: 0 2vw;
     text-align: center;
     cursor: pointer;
+}
+
+@media only screen and (orientation: landscape) {
+    #activityHeader {
+        margin: 0 15vw;
+    }
 }
 
 #waifuSelectorVeil{

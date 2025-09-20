@@ -4,6 +4,7 @@
 }
 body {
     font: bold 18px 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
 }
 
 [v-cloak] {
@@ -16,8 +17,20 @@ body {
 }
 
 .dark_theme {
-    background: black;
-    color:white;
+    background: #020004;
+    color:#E7D5F2;
+}
+
+footer
+{
+    background-color: #100515;
+    
+}
+
+header
+{
+    background-color: #090015;
+    /*background-color: rgb(39, 11, 65);*/
 }
 
 .cute_theme {
@@ -172,15 +185,35 @@ a:hover {
 }
 
 .margins {
-    
-    margin: 0 25vw;
-    font-size: larger;
+    margin: 0 6vw;
+}
+
+.small-margins
+{
+    margin: 0 4vw;
+}
+
+@media only screen and (orientation: landscape) {
+    .margins {
+        margin: 0 25vw;
+        font-size: larger;
+        
+    }
+    .small-margins
+{
+    margin: 0 17.27vw;
+}
 }
 
 .flex
 {
     display:flex;
     flex-direction: column;
+}
+
+.grid
+{
+    display:grid;
 }
 
 .upgrade

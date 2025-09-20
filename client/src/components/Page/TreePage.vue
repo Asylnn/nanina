@@ -53,7 +53,7 @@ export default {
     {
         getCssForPath(i : number)
         {
-            let style = `margin-top:${300*i}px;`
+            let style = `top:${193+300*i}px;`
             
             if(i <= this.user.lvl - 2)
                 style += `height:${200}px;`
@@ -64,7 +64,7 @@ export default {
 
         getCssForNode(i : number)
         {
-            let style = `margin-top:${197 + 300*(i)}px;`
+            let style = `top:${392 + 300*(i)}px;`
             
            if(i <= this.user.lvl-2)
            {
@@ -78,7 +78,7 @@ export default {
         },
         getCssForRewards(i : number)
         {
-            let style = `margin-top:${174 + 300*(i)}px;`
+            let style = `top:${370 + 300*(i)}px;`
            /*if(i <= this.lvl-2)
                 style += `background-color:blueviolet; cursor:pointer;`*/
             return style
@@ -139,7 +139,7 @@ export default {
  .rewards
  {
     position:absolute;
-    margin-left: 32vw;
+    left: 60vw;
  }
 
 .path

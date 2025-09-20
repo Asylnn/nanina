@@ -20,14 +20,24 @@ export default {
             type : Number,
             required : true
         },
-        noMargin: {
+        /*noMargin: {
+            type: Boolean,
+            default:false,
+            required : false
+        },*/
+        showBorder: {
             type: Boolean,
             default:false,
             required : false
         },
-        showBorder: {
+        stickyWaifuGrid: {
             type: Boolean,
             default:false,
+            required : false
+        },
+        showItem:{              //Only to set z index above companions
+            type:Boolean,
+            default : false,
             required : false
         }
         
@@ -35,11 +45,11 @@ export default {
     mounted() {
         console.log("typeof" + typeof this.elements[0])
     },
-    computed: { //omg a computed that actually works??????????
+    computed: {
         generateGridTemplateColumns() {
             var style = `grid-template-columns:${"1fr ".repeat(this.columns)};`
-            if(!this.noMargin)
-                style += "margin: 0 17.27vw;"
+            /*if(!this.noMargin)
+                style += "margin: 0 17.27vw;"*/
             return style
         },
     },
@@ -48,13 +58,21 @@ export default {
         onShowElement(element : Waifu | Item) {
             this.$emit("show-element", element)
         },
+        getGridClasses() : String
+        {
+            let classes = ""
+            classes += this.showBorder ? 'border ' : ''
+            classes += this.stickyWaifuGrid ? 'sticky-waifu-grid ' : ''
+            classes += this.showItem ? 'sticky-item-grid ' : ''
+            return classes
+        },
     },
 }
 
 </script>
 
 <template>
-    <div id="grid" :class="showBorder ? 'border' : ''" :style="generateGridTemplateColumns">
+    <div class="grid" id="grid" :class="getGridClasses()" :style="generateGridTemplateColumns">
         <div v-for="element in elements">
             <div v-if="(element as Waifu).b_dex != null"> <!-- Pretty bad way to test if it's a waifu Object, but it works-->
                 <div class="waifu-slot">
@@ -80,13 +98,6 @@ export default {
 
 <style lang="css" scoped>
 
-#grid {
-    display:none;
-    position:relative;
-    display: grid;
-}
-
-
 .border {  /*same border as lootcomponent*/ 
     border-style: solid; 
     border-color: grey;
@@ -94,18 +105,49 @@ export default {
     border-width: 4px;
 }
 
+.sticky-waifu-grid {
+    z-index: 50;
+    position: sticky;
+    top : 10vh;
+    right: 0px;
+    left : 0px;
+    padding:0px;
+    margin: 0vh 5vw ;
+    position:fixed;
+    height: 80vh;
+    overflow: scroll;
+}
+
+.sticky-item-grid {
+    z-index: 150;
+}
+
 .waifuIcon {
     border-radius: 15px;
-    max-width: 10vw;
-    max-height: 10vw;
+    width: 15vw;
+    height: 15vw;
     overflow: hidden;
 }
 
 .waifuIcon img {
-    max-width: 15vw;
-    max-height: 15vw;
+    width: 15vw;
     cursor: pointer;
 }
+
+@media only screen and (orientation: landscape) {
+    .sticky-waifu-grid {
+        margin:5vh 15vw ;
+    }
+    .waifuIcon {
+        width: 12vw;
+        height: 12vw;
+    }
+    .waifuIcon img {
+        width: 12vw;
+    }
+}
+
+
 
 .itemIcon {
     display: table;

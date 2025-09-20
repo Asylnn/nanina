@@ -111,7 +111,7 @@ export default {
     <div >
         <div v-if="waifuSelectorVisible">
             <div @click="waifuSelectorVisible = false" class="veil" id="waifuSelectorVeil"></div>
-            <GridDisplayComponent id="grid" @show-element="openWaifuDisplay" :elements="availableWaifus" :columns=5></GridDisplayComponent>
+            <GridDisplayComponent id="grid" @show-element="openWaifuDisplay" :elements="availableWaifus" :columns=5 :sticky-waifu-grid="true"></GridDisplayComponent>
         </div>
         
         <div v-if="waifuVisible" @click="closeWaifuDisplay" class="veil" id="waifuveil"></div>
@@ -167,19 +167,6 @@ export default {
 #selectedWaifu
 {
     cursor: pointer
-}
-
-#grid {
-    position: sticky;
-    z-index: 50;
-    top : 10vh;
-    right: 0px;
-    left : 0px;
-    padding:0px;
-    margin:10vh 20vw ;
-    position:fixed;
-    height: 80vh;
-    overflow: scroll;
 }
 
 #waifuSelectorVeil{

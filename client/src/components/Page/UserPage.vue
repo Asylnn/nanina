@@ -26,7 +26,7 @@ export default {
 
 </script>
 <template>
-    <div id="userpage">
+    <div id="userpage" class="margins flex">
         <div class="userHeader">
             <ul id="userPages">
                 <div @click="page = 0" id="profile">
@@ -40,8 +40,8 @@ export default {
                 <li @click="page = 1"><span>Tree</span></li>
             </ul>
         </div>
-        <div id="profileBody">
-            <div v-if="page == 0">
+        <div id="profileBody" >
+            <div v-if="page == 0" >
                 <StatsPage :user="user"></StatsPage>
                 <img src="@/assets/ugly_coin.svg">
                 <div class="amount">{{ user.money }}</div>
@@ -73,11 +73,11 @@ export default {
     overflow: hidden;
 }
 
-#userpage
+/*#userpage
 {
     margin-left: 20vw;
     margin-top: 5vh;
-}
+}*/
 
 .userHeader{
     
@@ -94,9 +94,7 @@ export default {
 
 #profileBody
 {
-    margin-top:10vh;
-    margin-left: 5vw;
-    margin-right: 20vw;
+    margin: 50px 5vw;
 }
 
 

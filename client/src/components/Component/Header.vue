@@ -103,7 +103,10 @@ export default {
             <div class="butitem halo" @click="onClickChangePage(Page.UserOption)" v-else>
                 <img height=38px width=38px src="@/assets/settings.png">
             </div>
-            <div id="user" class="butitem" v-if="logged" @click="onClickChangePage(Page.User)"><img :src="`${user.avatarPATH}?size=40`"></div>
+            <div id="user-container" class="butitem" >
+                <div id="user" v-if="logged" @click="onClickChangePage(Page.User)"><img :src="`${user.avatarPATH}?size=40`"></div>
+            </div>
+            
             
         </div>
         <div v-if="logged" id="energy">
@@ -150,16 +153,40 @@ header, #pages {
 
 header, #dbMenu li, #managerMenu li {
     text-align: center;
-    background-color: rgb(39, 11, 65);
 }
+
 header {
     position:sticky;
     top:0;
     min-height: 60px;
     height:6vh;
-    grid-template-columns: 1fr 4fr 0fr 0.2fr 0.2fr 0.2fr;
-    padding: 0 8vw;
+    grid-template-columns: 4fr 0fr 0.2fr 0.2fr 0.2fr;
     z-index: 9000;
+}
+
+#logo
+{
+    display:none;
+    color:blueviolet;
+    font: italic bold 4.5vh cursive;
+}
+
+#logo, .butitem
+{
+    cursor: pointer;
+}
+
+@media only screen and (orientation: landscape) {
+    header {
+        padding: 0 8vw;
+        font-size: larger;
+        grid-template-columns: 1fr 4fr 0fr 0.2fr 0.2fr 0.2fr;
+    }
+
+    #logo
+    {
+        display:block;
+    }
 }
 
 #dbMenu, #managerMenu {
@@ -176,15 +203,6 @@ header {
     padding: 0.727vh 0.5vw;
 }
 
-#logo, .butitem
-{
-    cursor: pointer;
-}
-
-#logo {
-    color:blueviolet;
-    font: italic bold 4.5vh cursive;
-}
 
 #pages {
     color: rgb(203, 165, 221);
@@ -192,7 +210,7 @@ header {
 }
 
 #buttList {
-    width:15vw;
+    margin-right: 1vw;
     display:flex;
     flex-direction: row;
     align-items: center;
@@ -221,6 +239,15 @@ header {
     background-color: blueviolet;
 }
 
+#user-container
+{
+    display:flex;
+    place-items: center;
+    place-content: center;
+    width:50px;
+    height:50px;
+}
+
 #user
 {
     width:40px;
@@ -240,7 +267,7 @@ header {
 #user:hover
 {
     border-style:solid;
-    transform: translateX(-3px);
+    /*transform: translateX(-3px);*/
 }
 
 #energy

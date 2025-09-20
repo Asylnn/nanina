@@ -90,22 +90,33 @@ export default {
     border-style: solid;
     border-radius: 20px;
     border-color:rgb(20,20,20);
-    width: 8vw;
-    height: 8vw;
+    width: 20vw;
+    height: 20vw;
     overflow: hidden;
     flex-shrink: 0; /*For Activity Progress Component's waifuSlot*/ 
 }
 
 .waifuSlot img {
-    width: 8vw;
+    width: 20vw;
     overflow: hidden;
+}
+
+
+@media only screen and (orientation: landscape) {
+    .waifuSlot img {
+        width: 10vw;
+    }
+    .waifuSlot{
+        width: 10vw;
+        height: 10vw;
+    }   
 }
 
 #waifu-selector
 {
     flex-direction: row;
     margin-left: 4vw;
-    margin-top:10px;
+    margin-top:30px;
     margin-bottom: 20px;
 }
 

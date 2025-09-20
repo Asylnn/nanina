@@ -88,7 +88,7 @@ export default {
 
 
 <template>
-    <div class="grid" id="optionsGrid">
+    <div class="grid margins" id="optionsGrid">
         <div id="optionTheme">
             <p>{{ $t("option.change_theme") }}</p>
             <select v-model="selected_theme" @change="onChangeTheme()">
@@ -136,20 +136,16 @@ export default {
     display: grid;
 }
 
-#optionsGrid {
-    padding: 0 20vw;
-}
-
 #optionTheme, #optionOsuId, #optionVerifOsuId {
     padding-top: 1vh;
 }
 
 #optionGame, #optionTheme {
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: 2.8fr 1.8fr; 
 }
 
 #optionOsuId {
-    grid-template-columns: 2fr 0.6fr 1.4fr;   
+    grid-template-columns: 2.8fr 0.8fr 1fr;   
 }
 
 #maimaitoken {

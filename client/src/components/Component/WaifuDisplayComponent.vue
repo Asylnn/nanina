@@ -231,7 +231,16 @@ export default {
 
     <div v-if="!forDungeon && !forPull" id="itemDisplay">
         <div v-if="inventoryVisible" @click="inventoryVisible = false" class="veil" id="inventoryveil"></div>
-        <GridDisplayComponent v-if="inventoryVisible" id="grid" @show-element="openWeaponDisplay" :elements="equipment_to_show" :columns=5 :show-border="true"></GridDisplayComponent>
+        <GridDisplayComponent 
+            v-if="inventoryVisible" 
+            id="grid" 
+            @show-element="openWeaponDisplay" 
+            :elements="equipment_to_show" 
+            :columns=5 
+            :show-border="true"
+            :sticky-waifu-grid="true"
+            :show-item="true">
+        </GridDisplayComponent>
         <div v-if="weaponVisible" @click="closeWeaponDisplay" class="veil" id="itemveil"></div>
         <ItemComponent v-if="selected_item != null" :userID="user.Id" @exit="closeWeaponDisplay" @click="selectItem()" :is-for-equiping="true"  @input="" :item="selected_item"></ItemComponent>
     </div>
@@ -293,6 +302,7 @@ export default {
 </template>
 
 <style lang="css" scoped>
+
 .shortStat {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -307,13 +317,42 @@ export default {
 }
 
 #inventoryveil{
-    z-index: 130;
+    z-index: 125;
 }
 
 #itemveil{
-    z-index: 180;
+    z-index: 175;
 }
 
+#display {
+    max-width: 85vw;
+    height: 550px;
+}
+
+#waifuImage img {
+    max-width: 50vw;
+    max-height: 60vh;
+    left:10%;
+    /*transform: translateX(50%);*/
+}
+
+@media only screen and (orientation: landscape) {
+    #waifuImage img {
+        max-width: 20vw;
+        max-height: 80vh;
+    }
+}
+
+#waifuImage {
+    overflow: hidden;
+}
+
+#waifuInfos {
+    padding: 0 1vw;
+}
+
+/*Equiping from inventory*/ 
+/*
 #grid {
     z-index: 150;
     position: sticky;
@@ -325,7 +364,7 @@ export default {
     position:fixed;
     height: 80vh;
     overflow: scroll;
-}
+}*/
 
 .itemSlot{
     margin :10px;
@@ -339,26 +378,6 @@ export default {
 .itemSlot img {
     width: 64px;
     height: 64px;
-}
-
-#display {
-    max-width: 50vw;
-    max-height: 60vh;
-}
-
-#waifuImage img {
-    max-height: 60vh;                     
-    left:10%;
-    /*transform: translateX(50%);*/
-}
-
-#waifuImage {
-    width: 20vw;
-    overflow: hidden;
-}
-
-#waifuInfos {
-    padding: 0 1vw;
 }
 
 </style>

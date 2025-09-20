@@ -90,8 +90,11 @@ export default {
             </select>
         </div>
     </div>
-    <!-- tabindex is weird... truly html moment-->
-    <GridDisplayComponent @show-element="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :elements=waifus :columns=columns></GridDisplayComponent>
+    <div class="small-margins">
+        <!-- tabindex is weird... truly html moment-->
+        <GridDisplayComponent @show-element="openWaifuDisplay" tabindex="0" @keydown.esc="closeWaifuDisplay" :elements=waifus :columns=columns></GridDisplayComponent>
+    </div>
+    
     <div v-if="focusedView">
         <div @click="closeWaifuDisplay" class="veil" ></div>
         <WaifuDisplayComponent 

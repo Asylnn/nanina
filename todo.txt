@@ -31,24 +31,32 @@ TODO : [BUG] Dungeon page is very laggy?                            #Done
 TODO : Implement Waifu Stats                                        #Done
 TODO : Implement Activities                                         #Done
 TODO : Implement continuous fights.                                 #Done
-TODO : Finish Donjon System
-TODO : Implement Money System (page/component/database)
-TODO : Implement Shop System (page/component/database)
+TODO : Finish Donjon System                                         #Done
 
 
 
 
 Release Version 0.2 (Public release?)
 
+TODO : Not sending the user object everytime to save bandwidth      #Done
 TODO : Implement First Version of the leaderboard system
-TODO : Implement Buffs/Debuffs
-TODO : Implement logging                               
+TODO : Implement logging                      
 TODO : Implement units tests
-TODO : Not sending the user object everytime to save bandwidth
 TODO : Optimize data sent to client, for example don't send old data each time there is an attack in the dungeon
 TODO : Implement IRedDotYouMustClaim/Notification/WhatYouSeeInGacha
 
 Release Version 0.3
+
+TODO : Implement Buffs/Debuffs
+TODO : Implement Waifu abilities
+TODO : Implemment Waifu upgrade
+
+Release Version 0.4
+
+TODO : Implement Money System (page/component/database)
+TODO : Implement Shop System (page/component/database)
+
+Release Version 0.5
 
 TODO : Implement Quest System
 TODO : Implement Achievements
@@ -112,13 +120,14 @@ TODO : [BUG] code for verifying account is sometime expired                     
 TODO : limit the amount of data sent to the client                                  #Done. Fucking finally
 TODO : [BUG] Cherish battery use, item count doesn't decrease                       #Done
 
+TODO : Modifiable grid size for waifu / items... outside of inventory and waifu list
+TODO : Make waifu selector in fight like the one in dungeons and activities
 TODO : instead of sending everything (waifus, items, sets...) via websocket, just import it?
 TODO : Freeze everything when waiting for server response. (idk if it's good idea)
 TODO : make a "equipped" symbol, and do not remove equipped equipment from inventory.
 TODO : [BUG] When first getting waifu in pull, does not get duplicate object
 TODO : Remove dev property in App.vue
 TODO : Add regen tick clock on client
-
 
 
 

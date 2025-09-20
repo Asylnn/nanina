@@ -59,7 +59,7 @@ export default {
             <li :style="applyTextColor('waifu_consumable')" @click="category = 'waifu_consumable'">{{$t("inventory.waifu_consumable")}}</li>
             <li :style="applyTextColor('material')" @click="category = 'material'" >{{$t("inventory.material")}}</li>
         </ul>
-        <div id="inventoryBody">
+        <div id="inventoryBody" class="small-margins">
             <GridDisplayComponent v-if="category === 'equipment' || category === 'all'" 
                 :elements="Object.values(user.inventory.equipment)" 
                 tabindex="0" 
@@ -103,9 +103,15 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     height: 5vh;
-    margin: 0 20vw;
+    margin: 0 5vw;
     text-align: center;
     cursor: pointer;
+}
+
+@media only screen and (orientation: landscape) {
+    #inventoryHeader {
+        margin: 0 20vw;
+    }
 }
 
 </style>

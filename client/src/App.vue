@@ -392,7 +392,7 @@ export default {
 
 <style lang="css" scoped>
 #main { /*for veils*/ 
-	min-height: 100vh;
+	min-height: 110vh;
 	position: relative;
 }
 </style>

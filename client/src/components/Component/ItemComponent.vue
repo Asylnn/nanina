@@ -133,14 +133,26 @@ img {
     /*max-width: 25vw;
     max-height: 60vh;*/
     padding: 2.5vw 2.5vw 0.5vw 2.5vw;
-    height: 128px;
-    width: 128px;
+    height: 196px;
+    width: 196px;
 }
 
 #itemImage {
     display: flex;
     flex-direction: column;
     padding-right: 1vw;
+}
+
+#ItemInfo
+{
+    width:50vw
+}
+
+@media only screen and (orientation: landscape) {
+    #ItemInfo
+    {
+        width:25vw
+    }
 }
 
 .lvlMax

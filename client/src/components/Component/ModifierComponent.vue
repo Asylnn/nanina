@@ -44,16 +44,8 @@ export default {
 <style lang="css" scoped>
 
 .modifier {
-    display: flex;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
 }
-
-.modifierName
-{
-    width:20vw
-}
-.stat {
-    width:60px;
-}
-
 
 </style>
