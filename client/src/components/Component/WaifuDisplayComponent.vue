@@ -242,7 +242,7 @@ export default {
             :show-item="true">
         </GridDisplayComponent>
         <div v-if="weaponVisible" @click="closeWeaponDisplay" class="veil" id="itemveil"></div>
-        <ItemComponent v-if="selected_item != null" :userID="user.Id" @exit="closeWeaponDisplay" @click="selectItem()" :is-for-equiping="true"  @input="" :item="selected_item"></ItemComponent>
+        <ItemComponent v-if="selected_item != null" :userID="user.Id" @exit="closeWeaponDisplay" @click="selectItem()" :is-for-equiping="true"  @input="" :item="selected_item" :user="user"></ItemComponent>
     </div>
 
     <DisplayComponent @exit="$emit('exit')" :type="'waifu'">

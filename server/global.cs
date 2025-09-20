@@ -28,6 +28,7 @@ public static class Global
     public static readonly Dictionary<short, Craft> craftingRecipes = LoadCraftingRecipes();
     public static readonly Dictionary<string, Template> dungeons = JsonConvert.DeserializeObject<Dictionary<string, Template>>(File.ReadAllText(config.dungeon_storage_path))!;
     public static readonly List<ExplorationLoot> explorationLoot = JsonConvert.DeserializeObject<List<ExplorationLoot>>(File.ReadAllText("../save/exploration_loot.json"))!;
+    public static readonly UpgradeRequirement upgradeRequirements = JsonConvert.DeserializeObject<UpgradeRequirement>(File.ReadAllText("../save/upgrade_requirements.json"))!;
     public static readonly string craftingRecipesString = JsonConvert.SerializeObject(craftingRecipes);
     public static readonly string dungeonsString = JsonConvert.SerializeObject(dungeons);
     public static readonly string researchNodesString = JsonConvert.SerializeObject(researchNodes);

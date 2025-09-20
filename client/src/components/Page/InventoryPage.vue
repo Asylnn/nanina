@@ -90,7 +90,7 @@ export default {
             </GridDisplayComponent>
             <div v-if="focusedView">
                 <div @click="closeItemDisplay" class="veil" ></div>
-                <ItemComponent :userID="user.Id" :is-for-equiping="false" @exit="closeItemDisplay" :item="item_to_display"></ItemComponent>
+                <ItemComponent :userID="user.Id" :is-for-equiping="false" @exit="closeItemDisplay" :item="item_to_display" :user="user"></ItemComponent>
             </div>
         </div>
     </div>

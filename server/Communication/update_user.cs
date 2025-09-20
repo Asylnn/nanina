@@ -252,9 +252,29 @@ namespace Nanina.Communication
                 { Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return; }
             if(user.inventory.equipment.TryGet(Convert.ToInt32(rawData.data), out var equipment) == false)
                 { Send(ClientNotification.NotificationData("User", "This equipment does not exist!", 1)); return; }
-                
+
+            var requirements = (equipment.piece switch
+            {
+                EquipmentPiece.Weapon => Global.upgradeRequirements.weapon,
+                EquipmentPiece.Dress => Global.upgradeRequirements.dress,
+                EquipmentPiece.Accessory => Global.upgradeRequirements.accessory,
+                _ => throw new NotImplementedException(), //The linter absolutely want me to do this ig
+            })[equipment.lvl - 1];
+            
+            if (!requirements.All(requirement => user.inventory.items.Any(item => item.Value.id == requirement.item_id && item.Value.count >= requirement.quantity)))
+            { Send(ClientNotification.NotificationData("User", "You don't have the necessary ingredients", 1)); return; }
+
+            foreach (var requirement in requirements)
+            {
+                user.inventory.RemoveItem(requirement.item_id, requirement.quantity);
+            }
+
             equipment.LevelUp();
-            Send(ClientNotification.NotificationData("admin", "temp mes", 1));
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = ServerResponseType.ConfirmUpgrade,
+                data = JsonConvert.SerializeObject(equipment),
+            }));
             DBUtils.Update(user);
         }
 

@@ -8,6 +8,12 @@ export default class Inventory {
     public items!: Dictionary<Item>
     public inventoryIdCounter !: number
 
+    public GetItem(id : number) : Item | null
+    {
+        //I want in the future to use inventory id instead of id for allowing non stackable items with differents property but same id... (like equipment)
+        return this.items[id]
+    }
+
     public AddItem(item: Item)
     {
         let oldItem = this.items[item.id]

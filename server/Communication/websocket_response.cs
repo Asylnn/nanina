@@ -89,6 +89,7 @@ namespace Nanina.Communication
         UpdateEnergy,
         ProvideCompletedActivity,
         UpdateDungeon,
+        ConfirmUpgrade,
         
 
     }

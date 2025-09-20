@@ -35,6 +35,7 @@ enum ServerResponseType
     UpdateEnergy,
     ProvideCompletedActivity,
     UpdateDungeon,
+    ConfirmUpgrade,
 }
 
 export default ServerResponseType
