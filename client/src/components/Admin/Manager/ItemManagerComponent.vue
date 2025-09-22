@@ -4,7 +4,6 @@ import Modifier from '@/classes/modifiers/modifiers';
 import ModifierManagerComponent from './ModifierManagerComponent.vue'
 import Equipment from '@/classes/item/equipment';
 import ItemType from '@/classes/item/item_type';
-import InventoryManagerPage from './InventoryManagerPage.vue';
 
 
 export default {
