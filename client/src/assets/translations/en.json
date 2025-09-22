@@ -3,7 +3,7 @@
         "welcome":"Welcome To Nanina",
         "what_is_nanina":"What is Nanina?",
         "nanina_explanation":"Nanina is a browser gacha game with the objective of providing an alternative non skill based progression system to rhythm games. Enjoy playing rhythm games even when you reached your skill cap!",
-        "nanina_objective":"The objective is to get characters from various media, obtain XP by playing a rhythm game, improve their stats for doing various tasks and clearing dungeons to get gear. Optimize your party and their equipment to progress through the game and compete with other players, while playing and getting better at rhythms games!",
+        "nanina_objective":"The objective is to get characters from various licenses, obtain XP by playing a rhythm game, improve their stats for doing various tasks and clearing dungeons to get gear. Optimize your party and their equipment to progress through the game and compete with other players, while playing and getting better at rhythms games!",
         "nanina_supported_games":"For now the only supported game is osu! standard with the other three osu gamemodes comming soon!",
         
         "nanina_help":{
@@ -35,10 +35,10 @@
     },  
     "header": {
         "inventory": "Inventory",
-        "waifus": "Waifus",
+        "waifus": "Companions",
         "pull": "Pull",
         "activities": "Activities",
-        "fighting": "Fighting",
+        "fighting": "Training",
         "dungeon":"Dungeon",
         "maidCafé":"Maid Café",
         "mineralMining":"Mining minerals",
@@ -92,10 +92,10 @@
             "result":{
               "timesave":"Time Save"  
             },
-            "button":"Accelerate activities",
-            "timeout":"Please wait",
-            "submenu":"Fight",
-            "overview":"play rhythms games to accelerate yout actions!"
+            "button":"Accelerate",
+            "timeout":"Wait...",
+            "submenu":"Claim",
+            "overview":"play rhythms games to accelerate yout activities!"
         },
         "activity_finished":"Activity Finished.",
         "claim":"claim rewards",
@@ -138,14 +138,6 @@
         "nameDescendant":"Name (Descendant)",
         "nbPerRow":"Number per row : ",
         "filter":"Filter : "
-    },
-    "useroption": {
-        "chooseTheme":"Choose your favourite theme !",
-        "darkTheme":"Dark Theme",
-        "whiteTheme":"White Theme",
-        "cuteTheme":"Cute Theme",
-        "linkOsuId":"",
-        "verifOsuId":""
     },
     "set":{
         "set":"Set",
@@ -299,7 +291,8 @@
         "nb_std_claim":"Number of STD claims",
         "nb_maimai_claim":"Number of Maimai claims",
         "nb_claim":"Total claims",
-        "nb_dungeon_clear":"Total number of dungeons cleared"
+        "nb_dungeon_clear":"Total number of dungeons cleared",
+        "continuous_fight_claim":"Number of claims in continuous training"
     },
     "gacha":{
         "pull":"Pull {pullAmount}",

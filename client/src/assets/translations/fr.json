@@ -1,43 +1,35 @@
+
 {
     "header":{
         "inventory":"Inventaire",
-        "waifus":"Waifus",
+        "waifus":"Companions",
         "pull":"Pull",
-        "activities":"Activités",
-        "fighting":"Fighting",
-        "dungeon":"Donjon",
-        "maidCafé":"Café de femme de chambre",
-        "mineralMining":"Minage de minerais",
-        "technoTree":"Arbre des technologies",
-        "gadgetAnalyse":"Analyse de gadgets",
-        "exploration":"Exploration",
-        "stats":"Stats"
-    },
-    "message": {
-        "hello": "bonjour"
+        "activities":"Activitées",
+        "fighting":"Entrainement",
+        "dungeon":"Donjon"
     },
     "fight": {
         "welcome":"Bienvenue dans la section de combat !",
         "game_select":"Choisissez un jeu"
     },
     "dungeon":{
-        "challenge":"Le boss vous challenge à jouer cette map!",
+        "challenge":"Le boss vous défie à jouer cette map!",
         "leave":"partir du donjon",
         "dungeon":"Donjon",
         "floor":"Etage du donjon",
         "name":"Donjons",
         "boss_health":"Health",
         "shit":{
-            "name":"The Shit Dungeon"
+            "name":"Donjon à la con"
         },
         "house":{
-            "name":"Maison parfaitement normal"
+            "name":"Maison Parfaitement Normal"
         },
         "refrigerator":{
             "name":"Le Réfrigérateur Géant"
         },
         "magic_tower":{
-            "name":"La tour de magie"
+            "name":"La Tour de Magie"
         },
         "attack":"{waifu_name} à fait {damage} @:attack.{attack_type} dégats au boss"
     },
@@ -53,32 +45,52 @@
         "set":"Set",
         "0":{
             
-            "name":"Equipement tout à fait normal"
+            "name":"Equipement non suspicieux"
         }
     },
     "item":{
+        "stat":"Statistique Principale",
+        "attributes":{
+            "attribute":"Attributs",
+            "new":"Nouveau attribut",
+            "0":"Pointu",
+            "1":"Complexe",
+            "2":"Mignion",
+            "3":"Léger",
+            "4":"Maniable",
+            "5":"Chanceux",
+            "6":"Chic",
+            "7":"Tranchant",
+            "8":"Ancien",
+            "9":"Pratique",
+            "10":"Courbé",
+            "11":"Étincelant",
+            "12":"Nouveau",
+            "13":"Innocent"
+        },
         "use":"utiliser",
         "type": {
             "type":"Type",
             "0":"Arme",
-            "1":"Robe",
+            "1":"Tenue",
             "2":"Accessoire"
         },
+        
         "1":{
-            "name":"Completely normal sword",
-            "description":"Does NOT contains the soul of its user"
+            "name":"Épée complètement normal",
+            "description":"Ne contient PAS l'âme de son utilisateur"
         },
         "2":{
-            "name":"Totally ordinary dress",
-            "description":"Does NOT contains the hope and dreams of it's wearer"
+            "name":"Tenue tout à fait ordinaire",
+            "description":"Ne continet PAS les éspoires et rêves de son porteur"
         },
         "3":{
-            "name":"Absolutely real diamond ring",
-            "description":"Does NOT actively spy on your waifu and send data to GlouGlouCorp™"
+            "name":"Bague en diamant absolument réel",
+            "description":"Ne vous espionne PAS et n'envoie PAS vos données à NaninaCorp™"
         },
         "4":{
-            "name":"Cherish battery",
-            "description":"Increase the maximum cherish you can handle"
+            "name":"Batterie d'affection",
+            "description":"Augmente la quantité maximal d'affection que vous pouvez gérer"
         }
     },
     "modifiers":{
@@ -163,28 +175,32 @@
         "psychic":"Psychique"
     },
     "option":{
+        "unothorized":"Désolé, le jeu n'est pas encore accessible à tout le monde",
+        "join_beta":"Pour rejoindre la béta fermé, s'il vous plait donnez votre code d'accès.",
+        "request_join_beta":"Si vous voulez participé à la béta fermé, s'il vous plait renseignez ce formulaire google.",
         "change_theme":"Choisissez un thème qui vous plait!",
         "dark_theme":"Thème sombre",
         "white_theme":"Thème clair",
         "cute_theme":"Thème cute",
         "link_osu_id":"Donnez nous votre id osu pour qu'on puisse voler vos pps!",
         "update":"Mettre à jour",
-        "got_code":"Vous venez de recevoir un code dans vos mp osu! dms, entrez le pour mettre à jour votre id osu",
+        "got_code":"Vous venez de recevoir un code dans vos mp osu! entrez le pour mettre à jour votre id osu",
         "verify_code":"Code",
         "link_maimai_token":"Donnez nous accès à votre token Maitea pour qu'on puisse voler votre rating!",
         "disconnect":"Deconnection",
-        "prefered_game":"Jeu préféré"
+        "prefered_game":"Jeu en preferance."
     },
     "stats":{
         "nb_std_claim":"Nombre de claims en standard",
         "nb_maimai_claim":"Nombre de claims sur maimai",
         "nb_claim":"Nombre total de claims",
-        "nb_dungeon_clear":"Nombre total de donjons complétés"
+        "nb_dungeon_clear":"Nombre total de donjons complétés",
+        "continuous_fight_claim":"Nombre de claims en entrainement continue"
     },
     "gacha":{
         "pull":"Pull {pullAmount}",
-        "currency":"Gacha currency",
-        "pull_number":"Pull number"
+        "currency":"Monnaie de Gacha",
+        "pull_number":"Pull numéro "
     },
     "inventory":{
         "all":"Tout",
@@ -196,5 +212,95 @@
     "games":{
         "maimai_finale":"Maimai Finale",
         "osu_standard":"Osu Standard"
+    },
+    "homepage":{
+        "welcome":"Bienvenue sur Nanina",
+        "what_is_nanina":"Qu'est ce qu'est Nanina?",
+        "nanina_explanation":"Nanina est un jeu gacha sur navigateur avec comme objectif de fournir un système de progression alternatif aux jeux de rythmes qui n'est pas basé sur le skill. Ammusez vous à jouer à des jeux de rythmes même après avoir atteint votre skill cap!",
+        "nanina_objective":"L'objectif du jeu est d'obtenir des companions venant de licences diverses, de les entrainer eux ainsi que vous en jouant à des jeux de rythmes.Améliorez leur équipement en battant des donjons et en envoyant vos companions faire diverses taches. Optimizer votre équipe ainsi que leur équipement et progresser à travers le jeu et rivaliser avec d'autres joueurs tout en jouant et en devenant meilleur à des jeux de rythmes!",
+        "nanina_supported_games":"Pour l'instant les deux seuls jeux qui sont supporté sont osu standard, ainsi que maimai finale.",
+        
+        "nanina_help":{
+            "open_source":"Nanina est 100% gratuit et open source sans aucune microtransaction. Si vous voulez, vous pouvez aider en :",
+            "translation":"Traduisant le jeu dans d'autres langues",
+            "support_games":"Ajoutant le support pour d'autres jeux de rythmes",
+            "help":"Ou simplement en aidant dans le développement du projet."
+        },
+        "wiki_link":"Clickez ici pour voir une explication détaillé des méchaniques de jeu."
+    },
+    "privacy_policy":{
+        "privacy_policy":"Privacy Policy",
+        "data_collection_title":"Data we collect",
+        "data_collection_body":"On account registration, we only collect your discord username. As you play Nanina, we collect various information on how you are using the website.",
+        "use_of_data_title":"Use of Data",
+        "use_of_data_body":"Collected data is used to improve the website and for analytics purposes.",
+        "data_protection_title":"Data Protection",
+        "data_protection_body":"Data protection is important to us, Nanina follows standards procedures to protect your data.",
+        "cookies_body":"We use cookies only to maintain login credentials across multiple sessions. If you refuse to those conditions, please do not use the website.",
+        "cookies_title":"Cookies",
+        "sharing_data_body":"We do not share your data with third parties, except as required by law.",
+        "sharing_data_title":"Sharing Data",
+        "your_rights_body":"As a user, you have the right to request access or delet your data by contacting us at: {mail}",
+        "your_rights_title":"Your Rights",
+        "contact_us_body":"If you have any questions, please contact us at: {mail}",
+        "contact_us_title":"Contact Us",
+        "last_updated":"Last updated : {date}"
+
+    },  
+    
+    "activities":{
+        "help":{
+            "submenu":"Aide",
+            "title":"Aide avec les activitées",
+            "overview":"Les activitées sont des actions que vos companions peuveut faire pour gagner des récompenses diverses, mais elles demandent du temps avant d'être complétées",
+            "activities_limit":"Vous ne pouvez avoir qu'un certain nombre d'activitées en parallèle. Cette quatité commence à trois mais peux être augmenté au delà de cette valeur.",
+            "companion_can_only_do_one_action":"Chaque companion peut faire qu'une seule action à la fois. Notez que quand bien même les donjons ne sont pas des activitées, les companions à l'intérieur d'un donjon font une action et sont dont incapable de faire une activité.",
+            "activities":"Il y a 5 différente activitées, chaqu'une donnant une ressource différente lorsque elle se terminent, et chaqu'une utilise une stat spécifique pour le calcul soit des récompenses, soit du temps que prend l'activité.",
+            "all_the_different_activities":"Les différentes activitées sont : Café à temps partiel, Minage, Recherche, Crafting et Exploration.",
+            "cafe_explanation":"Travailler à temps partiel dans un café prend {cafe_time}h à terminer. Lorsque vos companios terminent de travailler, ils rapporteront de l'argent. Le plus de KAW ils ont, le plus d'argent ils rapporteront.",
+            "mining_explanation":"Le minage prend {mining_time}h à terminer. Quand vos companions terminent de miner, ils rapporteront des crystaux. Le plus de STR ils ont, le plus et le meilleur seront les crystaux qu'ils rapporteront.",
+            "exploration_explanation":"Similairement au minage, l'exporation prend {exploration_time}h à terminer. Lorsque vos companions finissent d'explorer, ils rapporteront divers matériaux. Le plus d'AGI ils ont, le plus et le meilleur les materiaux qu'ils rapporteront.",
+            "crafting_explanation":"Le crafting vous permet de créer de nouveaux matériaux ou objets à partir d'autres matériaux et d'argent. Le DEX de vos companions rendront les crafts plus rapide.",
+            "research_explanation":"La Recherche vous permet de débloquer de nouvelles méchaniquyes de jeu, de nouveau crafts, ou encore d'obtenir des bonuses permanent. L'INT de vos companions rendront la recherche de technologies plus rapide.",
+            "fighting":"Pour que vos activitées se terminent plus rapidement, vous pouvez aussi jouer à des jeux de rythmes. Simplement en jouant ce que vous voulez, vous pouvez raccourcir le temps des activitées en fonction des scores que vous avez fait ces dernières 24.",
+            "fighting2":"Notez que la quatité de temps raccourcie est divisé équitablement entre toutes les activitées en cours. Ce qui signifie que si obtenez un raccourcicement d'une heure, et que vous avez deux activitées, alors chaque activité sera raccourcie de 30 minutes. Au contraire si vous avez qu'une seul activité, alors celle ci sera alors raccourcie d'une heure. ",
+            "fighting_osu":"Sur osu, uniquement les scores classées sur les maps classées sreont comptabilisé."
+        },
+        "cafe":{
+            "submenu":"Cafe",
+            "overview":"Envoyez vos companions travailler à temps partiel dans un café. Ils partageront peut être même une partie de leur paye avec vous!"
+        },
+        "mining":{
+            "submenu":"Minage",
+            "overview":"Envoyez vos companions aux mines et obtenez des crystaux provenant de profondément sous terre!"
+        },
+        "research":{
+            "submenu":"Recherche",
+            "unlock_stage_2":"Débloquez l'étage 2",
+            "unlock_stage_3":"Débloquez l'étage 3",
+            "unlock_stage_4":"Débloquez l'étage 4",
+            "unlock_stage_5":"Débloquez l'étage 5"
+        },
+        "crafting":{
+            "submenu":"Crafting",
+            "queue":"Ceci est la queue de crafts."
+        },
+        "exploration":{
+            "submenu":"Exploration",
+            "overview":"Envoyez vos companions explorer les terres inconnue du monte entier! Ils ramèneront probablement des trucs utiles!"
+        },
+        "fight":{
+            "result":{
+              "timesave":"Gain de temps"  
+            },
+            "button":"Accélerer",
+            "timeout":"Attendez...",
+            "submenu":"Claim",
+            "overview":"Jouez à des jeux de rythmes pour accélérer vos activitées!"
+        },
+        "activity_finished":"Activité terminé",
+        "claim":"obtenez vos récompenses",
+        "cancel":"annuler",
+        "start":"commencer"
     }
 }
