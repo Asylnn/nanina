@@ -54,6 +54,8 @@ namespace Nanina.UserData
         public Unlocks unlocks { get; set; } = new ();
         public long lastContinuousFightTimestamp { get; set; } = 0;
         public List<ContinuousFightLog> continuousFightLog { get; set; } = []; //Should maybe be dictionary?
+        public long lastEnergyRegenTickTimestamp { get; set; } = 0;
+        /*Is used only in client to get when the last regen tick occured before connection, then it's useless because we can track when each regen tick happen on client*/
 
         public (double energy, int gc) SpendEnergy(double ratio)
         {
@@ -63,7 +65,7 @@ namespace Nanina.UserData
             gacha_currency += (int)Math.Floor(gc * ratio);
             RegenEnergy(this);
             return (energy: spent_energy + Global.baseValues.free_energy_not_used_for_each_action * ratio, gc);
-            
+
         }
 
         public void GetXP(int _xp)
@@ -83,6 +85,7 @@ namespace Nanina.UserData
             if(user.isRegenerating) return;
             var id = user.Id;
             user.isRegenerating = true;
+            user.lastEnergyRegenTickTimestamp = Utils.GetTimestamp();
             DBUtils.Update(user);
             UpdateEnergyOfClient(user);
 
@@ -103,7 +106,7 @@ namespace Nanina.UserData
                     energyRegenTimer.Dispose();
                 }
                     
-
+                user.lastEnergyRegenTickTimestamp = Utils.GetTimestamp();
                 DBUtils.Update(user);
                 UpdateEnergyOfClient(user);
 

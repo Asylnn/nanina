@@ -51,6 +51,8 @@ export default class User {
     public completedResearches !: Dictionary<number>
     public lastContinuousFightTimestamp !: number
     public unlocks !: Unlocks
+    public lastEnergyRegenTickTimestamp !: number
+
     /*
         Local only properties
     */

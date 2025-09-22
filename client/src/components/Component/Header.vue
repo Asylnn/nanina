@@ -3,20 +3,30 @@
 
 import Page from '../../classes/page';
 import config from '../../../../config.json'
+import baseValues from '../../../../baseValues.json'
 import User from '@/classes/user/user';
 import ClientResponseType from '@/classes/client_response_type';
 import CherishMenu from './CherishMenu.vue';
 import type Item from '@/classes/item/item';
 import type { PropType } from 'vue';
 import type Dictionary from '@/classes/dictionary';
+import { Websocket, WebsocketEvent } from 'websocket-ts';
+import ServerResponseType from '@/classes/server_response_type';
+import type WebSocketResponse from '@/classes/web_socket_response';
+import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
 
 export default {
     name : "Header",
     data() {
         return {
             config: config,
+            baseValues : baseValues,
+            MillisecondsToHourMinuteSecondFormat : MillisecondsToHourMinuteSecondFormat,
             showEnergyItems: false,
             Page: Page,
+            date_milli : 0,
+            last_regen_tick : 0,
+            listener : (() => {}) as (i: Websocket, ev: MessageEvent) => void,
         }
     },
     props: {
@@ -50,14 +60,38 @@ export default {
     },
     components:{
         CherishMenu
-    }
+    },
+    mounted()
+    {
+        setInterval(() => this.date_milli = Date.now(), 100)
+        
+        //This is necessary for the value of date_milli to be updated so the computed value can also be updated
+        this.listener = (i: Websocket, ev: MessageEvent) => {
+			var res : WebSocketResponse = JSON.parse(ev.data)
+			switch (res.type) 
+            {
+                case ServerResponseType.UpdateEnergy : 
+					let energy : number = +JSON.parse(res.data)
+					this.user.energy = energy
+                    this.user.lastEnergyRegenTickTimestamp = Date.now()
+					break
+            }
+        }
+        //@ts-ignore
+        this.ws.addEventListener(WebsocketEvent.message, this.listener);
+    },
+    unmounted()
+    {
+        //@ts-ignore
+        this.ws.removeEventListener(WebsocketEvent.message, this.listener)
+    },
 }
 
 </script>
 
 
 <template>
-    <header>
+    <header class="header-color">
         <div id="logo">
             <p @click="onClickChangePage(Page.Homepage)">Nanina</p>
         </div>
@@ -108,6 +142,9 @@ export default {
         <div v-if="logged" id="energy">
             <div><img height=30px width=30px src="@/assets/heart.svg"></div>
             <div id="energyAmount" v-if="logged" :style="getEnergyColor()" ><p >{{ Math.floor(user.energy) }}</p></div>
+            <div id="energyCountDownDisplay" class="header-color" v-if="user.energy != user.max_energy">
+                <span> {{ MillisecondsToHourMinuteSecondFormat(user.lastEnergyRegenTickTimestamp + baseValues.energy_regen_tick_in_seconds*1000 - date_milli) }}</span>
+            </div>
             <div @click="showEnergyItems = !showEnergyItems"><img id="addEnergy" height=26px width=26px src="@/assets/plus.svg"></div>
             <CherishMenu v-if="showEnergyItems" :user="user" :item-db="itemDb" @exit="showEnergyItems = false"></CherishMenu>
         </div>
@@ -297,6 +334,21 @@ li, #logo{
 #addEnergy:hover
 {
     filter:brightness(1.5)
+}
+
+#energyCountDownDisplay
+{
+    display:none;
+    position:absolute;
+    top:70px;
+    margin-left:20px;
+    padding:5px 15px;
+    border-radius: 5px;
+}
+
+#energyAmount:hover + #energyCountDownDisplay
+{
+    display:block
 }
 
 header

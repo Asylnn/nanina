@@ -120,21 +120,21 @@ TODO : [BUG] code for verifying account is sometime expired                     
 TODO : limit the amount of data sent to the client                                  #Done. Fucking finally
 TODO : [BUG] Cherish battery use, item count doesn't decrease                       #Done
 TODO : Remove dev property in App.vue                                               #Done
+TODO : Add regen tick clock on client                                               #Done
+TODO : [BUG] When first getting waifu in pull, does not get duplicate object        #Done
+TODO : Make timesave loot icon.                                                     #Done
 
 TODO : Modifiable grid size for waifu / items... outside of inventory and waifu list
 TODO : Make waifu selector in fight like the one in dungeons and activities
 TODO : instead of sending everything (waifus, items, sets...) via websocket, just import it?
 TODO : Freeze everything when waiting for server response. (idk if it's good idea)
 TODO : make a "equipped" symbol, and do not remove equipped equipment from inventory.
-TODO : [BUG] When first getting waifu in pull, does not get duplicate object
 
-TODO : Add regen tick clock on client
+
 
 
 
 Design to do
-
-TODO : Make timesave loot icon.
 
 Balancing
 

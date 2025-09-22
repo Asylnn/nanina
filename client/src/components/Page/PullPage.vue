@@ -51,16 +51,18 @@ export default {
                     let data = JSON.parse(res.data) as {waifus:Waifu[], items:Item[]}
                     data.waifus = JSON.parse(data.waifus.toString()) //It's actually a string even before calling the toString method, but the linter tell me otherwise /shrug
                     data.items = JSON.parse(data.items.toString())
+                    console.log(JSON.parse(JSON.stringify(data.items)))
                     this.user.gacha_currency -= this.pulled_banner.pullCost;
 					this.pulled_waifus = data.waifus
                     for(let item of data.items)
                     {
-                        console.log(data)
-                        console.log(data.items)
+                        /*In server, due to some reference stuff, items you get from the client doesn't necessarly have a count of 1, especially when you didn't have the waifu yet.
+                        It's simpler to fix the problem here by making item.count equal to 1*/
+                        item.count = 1
                         this.user.inventory.AddItem(item)
                         this.tempLoot.push({
                             lootType: LootType.Item,
-                            item:item,
+                            item:JSON.parse(JSON.stringify(item)),
                             amount:1
                         })
                     }

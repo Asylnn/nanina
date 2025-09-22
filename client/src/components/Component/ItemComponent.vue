@@ -47,7 +47,7 @@ export default {
         },
         user:{
             type:User,
-            required: true,
+            required: false,
         },
     },
     components:{
@@ -58,6 +58,7 @@ export default {
     methods:{
         upgrade()
         {
+            if (this.user == undefined) return;
             this.SendToServer(ClientResponseType.UpgradeEquipment, this.item.inventoryId.toString(), this.user.Id)
         },
         lvlStarsCSS(upgrade : boolean = false)
@@ -66,8 +67,7 @@ export default {
         },
         getQuantityRequiredStyle(req : UpgradeRequirement)
         {
-            console.log(this.user.inventory.GetItem(req.item_id)?.count || 0)
-            if((this.user.inventory.GetItem(req.item_id)?.count || 0) >= req.quantity)
+            if((this.user && this.user.inventory.GetItem(req.item_id)?.count || 0) >= req.quantity)
                 return '';
             else
                 return 'color:red;'
@@ -93,9 +93,10 @@ export default {
         {
             return (this.item as Equipment).stat.amount*(config.equipment_main_stat_level_up_multiplicator - 1)
         },
-        canUpgrade()
+        canUpgrade() : boolean
         {
-            return this.upgradeRequirements.every(requirement => (this.user.inventory.GetItem(requirement.item_id)?.count || 0) >= requirement.quantity)
+            if (this.user == undefined) return false;
+            return this.upgradeRequirements.every(requirement => (this.user!.inventory.GetItem(requirement.item_id)?.count || 0) >= requirement.quantity)
         }
     },
     mounted()
@@ -106,6 +107,7 @@ export default {
 			switch (res.type) 
             {
                 case ServerResponseType.ConfirmUpgrade:
+                    if (this.user == undefined) break;
                     let equipment : Equipment = JSON.parse(res.data)
                     console.log("heyy")
                     console.log(equipment)
@@ -174,7 +176,7 @@ export default {
                 <div  id="upgradeRequirements">
                     <div v-for="requirement in upgradeRequirements" class="upgradeRequirement flex">
                         <img :src="`${publicPath}/item-image/${itemDB[requirement.item_id as 0].imgPATH}`">
-                        <span :style="getQuantityRequiredStyle(requirement)">{{ user.inventory.GetItem(requirement.item_id)?.count || 0 }}/{{ requirement.quantity }}</span>
+                        <span :style="getQuantityRequiredStyle(requirement)">{{ user!.inventory.GetItem(requirement.item_id)?.count || 0 }}/{{ requirement.quantity }}</span>
                     </div>
                 </div>
                 

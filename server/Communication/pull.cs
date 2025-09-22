@@ -80,23 +80,28 @@ namespace Nanina.Communication
 
             var alreadyOwnedWaifus = waifus.Where(pulledWaifu => user.waifus.ContainsKey(pulledWaifu.id));
             var notOwnedWaifus = waifus.Where(pulledWaifu => !user.waifus.ContainsKey(pulledWaifu.id));
+            Utils.ConsoleObject(alreadyOwnedWaifus);
+            Utils.ConsoleObject(notOwnedWaifus);
 
             List<Waifu> aquiredWaifus = [];
             foreach(var waifu in notOwnedWaifus)
             {
-                if(!aquiredWaifus.Any(aquiredWaifu => waifu.id == aquiredWaifu.id))
+                Console.WriteLine(!aquiredWaifus.Any(aquiredWaifu => waifu.id == aquiredWaifu.id));
+                if (!aquiredWaifus.Any(aquiredWaifu => waifu.id == aquiredWaifu.id))
                     aquiredWaifus.Add(waifu);
                 else
-                    alreadyOwnedWaifus.Append(waifu);
+                    alreadyOwnedWaifus = alreadyOwnedWaifus.Append(waifu);
             }
 
+            Utils.ConsoleObject(alreadyOwnedWaifus);
+            Utils.ConsoleObject(aquiredWaifus);
             /*get item db to find one item?*/
             var baseItem = Global.items[10_000]; //Item id for waifu essence
             List<Item> aquiredItems = [];
             foreach(var waifu in alreadyOwnedWaifus){
                 var item = Utils.DeepCopyReflection(baseItem)!;
-                aquiredItems.Add(item);
                 item.id += Convert.ToInt16(waifu.id);
+                aquiredItems.Add(item);
                 user.inventory.AddItem(item);
             }
 
