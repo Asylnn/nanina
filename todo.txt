@@ -145,6 +145,7 @@ TODO : Have multiple dungeons of increasing difficulty
 
 Low priority
 
+TODO : Make dungeon loot claimable like activity loot.
 TODO : Make it so websocket dungeon stuff is in dungeon page instead of app.vue
 TODO : Make Tree reach top of page bellow the header in TreePage
 TODO : Reject asking to unequip null equipment slot

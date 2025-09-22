@@ -106,8 +106,20 @@
         "hello": "hello"
     },
     "fight": {
-        "welcome":"Welcome to the Fighting section !",
-        "game_select":"Select a game"
+        "welcome":"Welcome to the Training section !",
+        "game_select":"Select a game",
+        "explanation":"Here, your companion can earn XP by playing ryhmes games! Nanina will challenge you to do a map/chart you will have to complete!",
+        "play":"Play",
+        "play_wait":"Wait {time_wait} seconds",
+        "challenge":"Ahahahahah! Are you capable of doing a score on this map/chart?",
+        "download":"Download",
+        "submit_score":"To reap your rewards, submit a score!",
+        "submit_score_explanation":"Depending on your performance, you will get some quantity of XP!",
+        "select_waifu":"Select which companion will assist you!",
+        "claim_xp":"Get your reward!",
+        "download_osu_website":"Download on the osu website!",
+        "play_osustd":"Play {title} / {version}",
+        "play_maimai":"Play {title} / {difficulty}"
     },
     "dungeon":{
         "fight":"Fight !",

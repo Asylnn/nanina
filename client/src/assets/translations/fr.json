@@ -9,8 +9,20 @@
         "dungeon":"Donjon"
     },
     "fight": {
-        "welcome":"Bienvenue dans la section de combat !",
-        "game_select":"Choisissez un jeu"
+        "welcome":"Bienvenue dans la section d'entrainement!",
+        "game_select":"Choisissez un jeu",
+        "explanation":"Ici, vos companions peuvent gagner de l'XP en jouant à des jeux de rythmes! Nanina vous défiera de finir une chart/map",
+        "play":"Jouer",
+        "play_wait":"Attendez {time_wait} secondes",
+        "challenge":"Ahahahahah! Êtes vous capables de faire cette chart/map?",
+        "download":"Télécharger",
+        "submit_score":"Pour obtenir votre récompense, faites un score!",
+        "submit_score_explanation":"Dépendament de votre score, vous aurez une certaine quantité d'XP",
+        "select_waifu":"Choissisez quel companion va vous assister.",
+        "claim_xp":"Obtenez votre récompense!",
+        "download_osu_website":"Télécharger sur le site d'osu!",
+        "play_osustd":"Jouez {title} / {version}",
+        "play_maimai":"Jouez {title} / {difficulty}"
     },
     "dungeon":{
         "challenge":"Le boss vous défie à jouer cette map!",

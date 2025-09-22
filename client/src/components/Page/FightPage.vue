@@ -135,48 +135,44 @@ export default {
             </div>
             <p id="welcomeText">
                 {{ $t("fight.welcome") }}<br>
-                In this section you can gain some juicy xp for your favourite waifus !<br>
-                Do you think you have what it takes to succeed ?<br>
-                It's time to find out !
+                {{ $t("fight.explanation") }}<br>
             </p>
             <span class="button nnnbutton timer" v-if="user.fight_timing_out">
-                Wait {{ fightWaitTime  }} seconds
+                {{ $t("fight.play_wait" , {wait_time: fightWaitTime})}}
             </span>
-            <span class="button nnnbutton" v-else @click="fight">Fight !</span>
+            <span class="button nnnbutton" v-else @click="fight">{{ $t("fight.play") }}</span>
             <div class="flex" v-if="game == Game.OsuStandard">
                 <div class="flex" v-if="fighting">
-                    <a :href="mapURL"> <img id="bgMap" :src="beatmap.beatmapset.covers.cover2x"></a>
-                    <p>
-                        Mouhahahahhaha !<br>
-                        I am the spirit of the map, prove me your worth by :<br>
-                        <span class="inRed">Downloading me</span> <br>
-                    </p>
                     
+                    <p> {{$t("fight.play_osustd" , {title: beatmap.beatmapset.title, version: beatmap.version})}}</p>
+                    <a :href="mapURL"> <img id="bgMap" :src="beatmap.beatmapset.covers.cover2x"></a>
                     <span class="button nnnbutton">
                         <a :href="mapURL" target="_blank">
-                            Download on the osu! website !
+                            {{ $t("fight.download_osu_website") }}
                         </a>
                     </span><br>
-                    <p class="inRed" id="claimText">And playing me by submitting a score</p><br>
+                    <p class="inRed" id="claimText">{{ $t("fight.submit_score") }}</p><br>
                 </div>
             </div>
             <div v-else-if="game == Game.MaimaiFinale">
                 <div v-if="fighting">
-                    <p>Play {{ maimai_chart?.title }} / {{ maimai_chart?.difficulty }}</p>
+                    <p>{{$t("fight.play_maimai" , {title: maimai_chart?.title, difficulty: maimai_chart?.difficulty})}}</p>
                 </div>
             </div>
             <div v-if="fighting">
-                <p>If you manage to submit a score, I will gift you XP !<br>
-                    Select which waifu are worthy of earning XP</p>
+                <p>
+                    {{ $t("fight.submit_score_explanation") }}<br>
+                    {{ $t("fight.select_waifu") }}
+                </p>
                 <GridDisplayComponent class="waifuFightSelector" :no-margin="true" v-if="chosen_waifu == null" @show-element="selectWaifu" :elements="Object.values(user.waifus)" :columns="3"></GridDisplayComponent>
                 <div class="flex" v-if="chosen_waifu != null">
                     <div id="selectedWaifu">
                         <GridDisplayComponent :no-margin="true" @show-element="resetWaifu" :elements="[chosen_waifu]" :columns="1"></GridDisplayComponent>
                     </div>
                     <span class="button nnnbutton timer" v-if="user.claim_timing_out">
-                        Wait {{ claimWaitTime  }} seconds
+                        {{ $t("fight.play_wait" , {wait_time: claimWaitTime})}}
                     </span>
-                    <span class="button nnnbutton" v-else @click="getXP">Prove that you are worth getting XP !</span><br>
+                    <span class="button nnnbutton" v-else @click="getXP">{{ $t("fight.claim_xp") }}</span><br>
                 </div>
             </div>
         </div>
@@ -215,6 +211,7 @@ export default {
 }
 #bgMap {
     width: 50vw;
+    max-height: 40vh;
     cursor:pointer;
 }
 
