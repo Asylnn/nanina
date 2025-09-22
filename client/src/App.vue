@@ -68,7 +68,6 @@ export default {
 			link : "",
 			beatmap : new OsuBeatmap(),
 			notifs : Array(),
-			dev : true, //Is this dev or prod? IMPORTANT!!
 			all_waifus : {} as Dictionary<Waifu>,
 			item_db : {} as Dictionary<Item>,
 			equipment_db : {} as Dictionary<Equipment>,
@@ -321,7 +320,7 @@ export default {
 <template>
 	<div id="main" :class="[user.theme]">
 	
-		<Header :dev=dev :logged=logged :user="user" @page-change="updatePage" :item-db="item_db"></Header>
+		<Header :logged=logged :user="user" @page-change="updatePage" :item-db="item_db"></Header>
 		<div v-if="page == Page.Homepage">
 			<Homepage></Homepage>
 		</div>

@@ -24,10 +24,6 @@ export default {
             type : Boolean,
             required : true
         },
-        dev : {
-            type : Boolean,
-            required : true
-        },
         user : {
             type : User,
             required : true
@@ -81,14 +77,14 @@ export default {
                     <li class="clickable" @click="onClickChangePage(Page.WaifuManager)"><span>Waifu</span></li>
                 </ul>
             </li>
-            <li id="manager_li" v-if="user.admin && dev">
+            <li id="manager_li" v-if="user.admin">
                 <span class="clickable" >Manager</span>
                 <ul id="managerMenu">
                     <li class="clickable" @click="onClickChangePage(Page.InventoryManager)"><span>Inventory</span></li>
                     <li class="clickable" @click="onClickChangePage(Page.UserWaifuManager)"><span>Waifu</span></li>
                 </ul>
             </li>
-            <li class="clickable" @click="onClickChangePage(Page.AddMap)" v-if="user.admin && dev"><span>Add Beatmap</span></li>
+            <li class="clickable" @click="onClickChangePage(Page.AddMap)" v-if="user.admin"><span>Add Beatmap</span></li>
         </ul>
         <div id="buttList">
             <div class="butitem halo" >

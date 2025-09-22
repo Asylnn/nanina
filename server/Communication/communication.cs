@@ -38,6 +38,7 @@ namespace Nanina.Communication
                 session = Session.NewSession(ID);
             else
             {
+                Console.WriteLine($"new connection from new websocket! ws:{ID}     session:{session.id}");
                 session.webSocketId = ID;
                 DBUtils.Update(session);
                 if (session.userId is not null)

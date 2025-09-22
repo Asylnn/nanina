@@ -73,8 +73,9 @@ namespace Nanina.Communication
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
                 return (0,1);
             }
-
-            /*else if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
+            /*Console.WriteLine(validscore.play_date_unix);
+            Console.WriteLine(Utils.GetTimestamp());
+            if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
                 { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0,1);}*/
             
             return (Maimai.Api.GetXP(validscore), 1);
@@ -142,7 +143,7 @@ namespace Nanina.Communication
 
             user.fight = null;
             user.statCount.std_claim_count++;
-            user.GetXP(Global.baseValues.user_xp_for_fights*100);
+            user.GetXP(Global.baseValues.user_xp_for_fights);
 
             SendLoot([
                 new Loot {
@@ -155,7 +156,7 @@ namespace Nanina.Communication
                 },
                 new Loot {
                     lootType = LootType.UserXP,
-                    amount = Global.baseValues.user_xp_for_fights*100,
+                    amount = Global.baseValues.user_xp_for_fights,
             }], true);
 
             var dataToClient = new
