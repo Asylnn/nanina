@@ -258,6 +258,13 @@ export default {
 					break
 				case ServerResponseType.ProvideAndGiveLoot:
 					let loots : Loot[] = JSON.parse(res.data)
+					loots.forEach(loot => {
+						switch(loot.lootType){
+							case LootType.Equipment:
+								loot.item = Object.assign(new Equipment, loot.item as Equipment)
+								break
+						}
+					})
 					this.user.GrantLoot(loots)
 				case ServerResponseType.ProvideLoot:
 					this.loots.push(JSON.parse(res.data))

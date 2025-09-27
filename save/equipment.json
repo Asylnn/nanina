@@ -124,24 +124,5 @@
         "imgPATH": "muffs.svg",
         "rarity": 1,
         "modifiers": []
-    },
-    "23": {
-        "type": 0,
-        "stat": {
-            "operationType": 1,
-            "stat": 0,
-            "timeout": 60000,
-            "amount": 1.0
-        },
-        "setId": 0,
-        "piece": 0,
-        "lvl": 1,
-        "attributes": [],
-        "id": 23,
-        "inventoryId": 0,
-        "count": 1,
-        "imgPATH": "gloves.svg",
-        "rarity": 1,
-        "modifiers": []
     }
 }
