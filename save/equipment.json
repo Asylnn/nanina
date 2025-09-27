@@ -1,5 +1,5 @@
 {
-    "1":{
+    "1": {
         "type": 0,
         "stat": null,
         "setId": 0,
@@ -13,7 +13,7 @@
         "rarity": 1,
         "modifiers": []
     },
-    "2":{
+    "2": {
         "type": 0,
         "stat": null,
         "setId": 0,
@@ -27,7 +27,7 @@
         "rarity": 1,
         "modifiers": []
     },
-    "3":{
+    "3": {
         "type": 0,
         "stat": null,
         "setId": 0,
@@ -38,6 +38,109 @@
         "inventoryId": 0,
         "count": 1,
         "imgPATH": "ring.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "17": {
+        "type": 0,
+        "stat": null,
+        "setId": 1,
+        "piece": 0,
+        "lvl": 0,
+        "attributes": [],
+        "id": 17,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "staff.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "18": {
+        "type": 0,
+        "stat": null,
+        "setId": 1,
+        "piece": 1,
+        "lvl": 0,
+        "attributes": [],
+        "id": 18,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "magic_socks.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "19": {
+        "type": 0,
+        "stat": null,
+        "setId": 1,
+        "piece": 2,
+        "lvl": 0,
+        "attributes": [],
+        "id": 19,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "magic_necklathe.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "20": {
+        "type": 0,
+        "stat": null,
+        "setId": 2,
+        "piece": 0,
+        "lvl": 0,
+        "attributes": [],
+        "id": 20,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "umbrella.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "21": {
+        "type": 0,
+        "stat": null,
+        "setId": 2,
+        "piece": 1,
+        "lvl": 0,
+        "attributes": [],
+        "id": 21,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "gloves.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "22": {
+        "type": 0,
+        "stat": null,
+        "setId": 2,
+        "piece": 2,
+        "lvl": 0,
+        "attributes": [],
+        "id": 22,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "muffs.svg",
+        "rarity": 1,
+        "modifiers": []
+    },
+    "23": {
+        "type": 0,
+        "stat": {
+            "operationType": 1,
+            "stat": 0,
+            "timeout": 60000,
+            "amount": 1.0
+        },
+        "setId": 0,
+        "piece": 0,
+        "lvl": 1,
+        "attributes": [],
+        "id": 23,
+        "inventoryId": 0,
+        "count": 1,
+        "imgPATH": "gloves.svg",
         "rarity": 1,
         "modifiers": []
     }

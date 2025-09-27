@@ -14,7 +14,7 @@ export default {
     data() {
         return {
             page: 1,
-            db : {} as Dictionary<Item>
+            maxID: 1,
         }
     },
     props:{ 
@@ -34,26 +34,27 @@ export default {
             type: String,
             required : true,
         }
-        
     },
     components:{
         ItemManagerComponent,
         SetManagerComponent,
     },
-    mounted() {
-        this.db = Object.assign(this.item_db, this.equipment_db)
-        
-        
-    },
     methods:{
-        onClickChangePage(new_page:number){
-            this.page = new_page
+        GetId() : number
+        {
+            let db = Object.assign(this.item_db, this.equipment_db)
+            let ids = Object.keys(db).sort((a, b) => +a - +b) 
+            return +ids.slice(-2)[0] + 1 || 1
         },
         DeleteSet(id: number){
             delete this.set_db[id]
         },
         DeleteItem(id: number){
-            delete this.db[id]
+            delete this.item_db[id]
+        },
+        DeleteEquipment(id : number)
+        {
+            delete this.item_db[id]
         },
         AddSet(){
             let set = new Set()
@@ -63,9 +64,14 @@ export default {
         },
         AddItem(){
             let item = new Item()
-            let keys = Object.keys(this.db).sort((a, b) => +a - +b)
-            item.id = +keys.slice(-2)[0] +1 || 1 //Don't worry too much about it*/
-            this.db[item.id] = item
+            item.id = this.GetId()
+            this.item_db[item.id] = item
+        },
+        AddEquipment()
+        {
+            let item = new Equipment()
+            item.id = this.GetId()
+            this.equipment_db[item.id] = item
         },
         UpdateDatabase(){
             //this.equipment = this.item_db.filter(item => item.type == ItemType.Equipment) as Equipment[]
@@ -73,16 +79,16 @@ export default {
             this.waifu_consumable = this.item_db.filter(item => item.type == ItemType.WaifuConsumable) as Item[]
             this.user_consumable = this.item_db.filter(item => item.type == ItemType.UserConsumable) as Item[]*/
             var new_item_db = {
-                equipments:{} as Dictionary<Equipment>,
-                items:{} as Dictionary<Item>,
+                equipments: this.equipment_db,
+                items: this.item_db,
             }
-            for(let [key, value] of Object.entries(this.db))
+            /*for(let [key, value] of Object.entries(this.db))
             {
                 if(value.type == ItemType.Equipment)
                     new_item_db.equipments[key] = value as Equipment
                 else
                     new_item_db.items[key] = value 
-            }
+            }*/
             this.SendToServer(ClientResponseType.UpdateItemDB, JSON.stringify(new_item_db), this.id)
             this.SendToServer(ClientResponseType.UpdateSetDB, JSON.stringify(this.set_db), this.id)
         }
@@ -94,8 +100,13 @@ export default {
 <template>
     <div class="InventoryHeader">
         <ul id="InventoryPages">
-            <li @click="onClickChangePage(1)"><span>Item</span></li>
-            <li @click="onClickChangePage(2)"><span>Set</span></li>
+            <li @click="page = 1"><span>Material</span></li>
+            <li @click="page = 4"><span>Equipment</span></li>
+            <!--<li @click="page = 2"><span>User Consumable</span></li>
+            <li @click="page = 3"><span>Waifu Consumable</span></li>
+            
+            <li @click="page = 5"><span>Duplicates</span></li>-->
+            <li @click="page = 6"><span>Set</span></li>
         </ul>
     </div>
     <div class="InventoryBody">
@@ -104,11 +115,20 @@ export default {
             <div>Item</div>
             
             <button @click="AddItem">Add Item</button>
-            <div v-for="item in db">
+            <div v-for="item in item_db">
                 <ItemManagerComponent :item="item" @delete-item="DeleteItem"></ItemManagerComponent>
             </div>
         </div>
-        <div v-else>
+        <div v-if="page == 4">
+            <div>Item</div>
+            
+            <button @click="AddEquipment">Add Equipment</button>
+            <div v-for="item in equipment_db">
+                <ItemManagerComponent :item="item" @delete-item="DeleteEquipment"></ItemManagerComponent>
+            </div>
+        </div>
+        
+        <div v-if="page == 6">
             <div>Set</div>
             <button @click="AddSet">Add Set</button>
             <div v-for="set in set_db">

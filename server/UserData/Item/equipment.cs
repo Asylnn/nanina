@@ -33,8 +33,10 @@ namespace Nanina.UserData.ItemData
             for(int i = 0; i < numberOfEquipments; i++)
             {
                 var equipment = Utils.DeepCopyReflection(equipments.RandomElement())!;
-
-                var rarityWeights = Global.baseValues.equipment_rarity_probability[dungeon.template.difficulty-1];
+                Console.WriteLine("dungeon floor : ", dungeon.floor - 1);
+                Console.WriteLine("dungeon floor : ", dungeon.floor);
+                Utils.ConsoleObject(Global.baseValues.equipment_rarity_probability);
+                var rarityWeights = Global.baseValues.equipment_rarity_probability[dungeon.floor-1];
                 var totalWeight = rarityWeights.Sum();
                 var rand = new Random().NextDouble()*totalWeight;
                 //Make switch here

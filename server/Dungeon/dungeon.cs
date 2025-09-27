@@ -42,7 +42,7 @@ namespace Nanina.Dungeon
             instanceId = _instanceId;
             sessionId = _sessionId;
             template = dungeon;
-            template.difficulty = floor;
+            this.floor = floor;
             template.bossResistances.magicalResistance += 0.05f *(1f - floor);
             template.bossResistances.physicalResistance += 0.05f *(1f - floor);
             template.bossResistances.psychicResistance += 0.05f *(1f - floor);

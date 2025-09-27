@@ -10,12 +10,7 @@ namespace Nanina.Dungeon
         public required BossResistances bossResistances;
         public required ushort[] setRewards; 
         public required double[] maxHealthByFloor;
-        public byte difficulty;
         public NaninaStdTag game_playstyle;
-        public required ModifierWeights[] modifierWeightsWeapon;
-        public required ModifierWeights[] modifierWeightsDress;
-        public required ModifierWeights[] modifierWeightsAccessory;
-
     }
 
     public class ModifierWeights {

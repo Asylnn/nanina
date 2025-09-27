@@ -8,104 +8,9 @@
             "psychicResistance": 0
         },
         "maxHealthByFloor": [1001, 1002, 1003, 1004, 1005],
-        "difficulty": 1,
         "game_playstyle":0,
         "setRewards": [
             0
-        ],
-        "modifierWeightsWeapon": [
-            {
-                "modifier": {
-                    "stat": 0,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 1,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 2,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 9,
-                    "amount": 0.15,
-                    "operationType": 1
-                },
-                "weight": 60
-            },
-            {
-                "modifier": {
-                    "stat": 10,
-                    "amount": 0.15,
-                    "operationType": 1
-                },
-                "weight": 60
-            }
-        ],
-        "modifierWeightsDress": [
-            {
-                "modifier": {
-                    "stat": 3,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 4,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 5,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            }
-        ],
-        "modifierWeightsAccessory": [
-            {
-                "modifier": {
-                    "stat": 6,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 7,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 8,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            }
         ]
     },
     "magic_tower":{
@@ -116,105 +21,10 @@
             "magicalResistance": 0.8,
             "psychicResistance": 0.4
         },
-        "maxHealthByFloor": [630000, 1728000, 1000, 1000, 1000],
-        "difficulty": 1,
+        "maxHealthByFloor": [1, 1, 1000, 1000, 1000],
         "game_playstyle":0,
         "setRewards": [
             1
-        ],
-        "modifierWeightsWeapon": [
-            {
-                "modifier": {
-                    "stat": 0,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 1,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 2,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 9,
-                    "amount": 0.15,
-                    "operationType": 1
-                },
-                "weight": 60
-            },
-            {
-                "modifier": {
-                    "stat": 10,
-                    "amount": 0.15,
-                    "operationType": 1
-                },
-                "weight": 60
-            }
-        ],
-        "modifierWeightsDress": [
-            {
-                "modifier": {
-                    "stat": 3,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 4,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 5,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            }
-        ],
-        "modifierWeightsAccessory": [
-            {
-                "modifier": {
-                    "stat": 6,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 7,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 8,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            }
         ]
     },
     "house":{
@@ -225,105 +35,10 @@
             "magicalResistance": 0.4,
             "psychicResistance": 0
         },
-        "maxHealthByFloor": [630000, 1728000, 1000, 1000, 1000],
-        "difficulty": 1,
-        "game_playstyle":1,
+        "maxHealthByFloor": [1, 1, 1000, 1000, 1000],
+        "game_playstyle":0,
         "setRewards": [
             0
-        ],
-        "modifierWeightsWeapon": [
-            {
-                "modifier": {
-                    "stat": 0,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 1,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 2,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 9,
-                    "amount": 0.15,
-                    "operationType": 1
-                },
-                "weight": 60
-            },
-            {
-                "modifier": {
-                    "stat": 10,
-                    "amount": 0.15,
-                    "operationType": 1
-                },
-                "weight": 60
-            }
-        ],
-        "modifierWeightsDress": [
-            {
-                "modifier": {
-                    "stat": 3,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 4,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 5,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            }
-        ],
-        "modifierWeightsAccessory": [
-            {
-                "modifier": {
-                    "stat": 6,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 7,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 8,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            }
         ]
     },
     "refrigerator":{
@@ -334,105 +49,10 @@
             "magicalResistance": 0,
             "psychicResistance": 0.8
         },
-        "maxHealthByFloor": [630000, 1728000, 1000, 1000, 1000],
-        "difficulty": 1,
-        "game_playstyle":2,
+        "maxHealthByFloor": [1, 1, 1000, 1000, 1000],
+        "game_playstyle":0,
         "setRewards": [
             2
-        ],
-        "modifierWeightsWeapon": [
-            {
-                "modifier": {
-                    "stat": 0,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 1,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 2,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 9,
-                    "amount": 0.15,
-                    "operationType": 1
-                },
-                "weight": 60
-            },
-            {
-                "modifier": {
-                    "stat": 10,
-                    "amount": 0.15,
-                    "operationType": 1
-                },
-                "weight": 60
-            }
-        ],
-        "modifierWeightsDress": [
-            {
-                "modifier": {
-                    "stat": 3,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 4,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 5,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            }
-        ],
-        "modifierWeightsAccessory": [
-            {
-                "modifier": {
-                    "stat": 6,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 7,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            },
-            {
-                "modifier": {
-                    "stat": 8,
-                    "amount": 0.1,
-                    "operationType": 1
-                },
-                "weight": 100
-            }
         ]
     }
 }

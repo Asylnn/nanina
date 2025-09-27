@@ -211,7 +211,7 @@ export default {
 				case ServerResponseType.ProvideSetDB :
 					this.set_db = JSON.parse(res.data)
 					console.log("SET DATABASE")
-					console.log(this.item_db)
+					console.log(this.set_db)
 					break
 				case ServerResponseType.ProvideBanners:
 					this.banners = JSON.parse(res.data)
@@ -291,10 +291,7 @@ export default {
 					this.user.UseUserConsumable(item)
 					this.user.inventory.RemoveItem(item)
 					break
-				case ServerResponseType.UpdateEnergy : 
-					let energy : number = +JSON.parse(res.data)
-					this.user.energy = energy
-					break
+				
 				case ServerResponseType.ProvideCompletedActivity : 
 					let activity1 : Activity = JSON.parse(res.data)
 					let index = this.user.activities.findIndex(activity2 => activity1.id == activity2.id)
