@@ -45,6 +45,7 @@
         [0 , 0 , 45, 45, 10],
         [0 , 0 , 0 , 40, 10]
     ],
+    "equipment_upgrade_money_cost":[900, 1440, 2000, 3000, 4000],
     "dungeon_stat_randomness":0.20,
     "equipment_main_stat_level_up_multiplicator":1.40,
     "attribute_stat_randomness":0.30,

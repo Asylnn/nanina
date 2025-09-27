@@ -3,10 +3,11 @@ using Newtonsoft.Json;
 
 namespace Nanina
 {
-    public class BaseValues {
+    public class BaseValues
+    {
 
         public required Dictionary<string, float> baseStatsMulti;
-        public required Dictionary<string,float> baseStatsAdd;
+        public required Dictionary<string, float> baseStatsAdd;
         public required float[] equipment_stat_base_amount_multiplier;
         public required float dungeon_stat_randomness;
         public required int dungeon_attack_timer_in_milliseconds;
@@ -35,5 +36,6 @@ namespace Nanina
         public required int base_activity_length_in_milliseconds;
         public required long continuous_fight_score_expiration_time_in_milliseconds;
         public required int time_for_allowing_another_continuous_fight_in_milliseconds;
+        public required List<int> equipment_upgrade_money_cost;
     }
 }

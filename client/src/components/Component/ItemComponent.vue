@@ -65,12 +65,20 @@ export default {
         {
             return this.item.rarity == (this.item as Equipment).lvl + +upgrade - 2 ? "lvlMax" : ""
         },
-        getQuantityRequiredStyle(req : UpgradeRequirement)
+        getItemQuantityRequiredStyle(req : UpgradeRequirement)
         {
             if((this.user && this.user.inventory.GetItem(req.item_id)?.count || 0) >= req.quantity)
                 return '';
             else
                 return 'color:red;'
+        },
+        getMoneyQuantityRequiredStyle(lvl : number)
+        {
+            if(config.equipment_upgrade_money_cost[lvl-1] <= this.user!.money)
+                return '';
+            else
+                return 'color:red;'
+
         },
         updateUpgradeRequirements()
         {
@@ -95,8 +103,7 @@ export default {
         },
         canUpgrade() : boolean
         {
-            if (this.user == undefined) return false;
-            return this.upgradeRequirements.every(requirement => (this.user!.inventory.GetItem(requirement.item_id)?.count || 0) >= requirement.quantity)
+            return this.user != undefined && this.upgradeRequirements.every(requirement => (this.user!.inventory.GetItem(requirement.item_id)?.count || 0) >= requirement.quantity) && this.getMoneyQuantityRequiredStyle((this.item as Equipment).lvl) == ''
         }
     },
     mounted()
@@ -111,6 +118,7 @@ export default {
                     let equipment : Equipment = JSON.parse(res.data)
                     console.log("heyy")
                     console.log(equipment)
+                    this.user.money -= config.equipment_upgrade_money_cost[equipment.lvl - 2]
                     for(let requirement of this.upgradeRequirements)
                     {
                         this.user.inventory.RemoveItemWithId(requirement.item_id, requirement.quantity)
@@ -176,7 +184,11 @@ export default {
                 <div  id="upgradeRequirements">
                     <div v-for="requirement in upgradeRequirements" class="upgradeRequirement flex">
                         <img :src="`${publicPath}/item-image/${itemDB[requirement.item_id as 0].imgPATH}`">
-                        <span :style="getQuantityRequiredStyle(requirement)">{{ user!.inventory.GetItem(requirement.item_id)?.count || 0 }}/{{ requirement.quantity }}</span>
+                        <span :style="getItemQuantityRequiredStyle(requirement)">{{ user!.inventory.GetItem(requirement.item_id)?.count || 0 }}/{{ requirement.quantity }}</span>
+                    </div>
+                    <div id="money-requirement">
+                        <span :style="getMoneyQuantityRequiredStyle(item.rarity)">{{ config.equipment_upgrade_money_cost[(item as Equipment).lvl-1] }}/{{ user?.money }} </span>
+                        <img src="@/assets/ugly_coin.svg" width="32px">
                     </div>
                 </div>
                 
@@ -209,6 +221,18 @@ export default {
     width:64px;
     height:64px;
     
+}
+
+#money-requirement
+{
+    display: flex;
+    place-items: center;
+    place-content: center;
+}
+
+#money-requirement span
+{
+    margin-right: 5px;
 }
 
 #itemImage {

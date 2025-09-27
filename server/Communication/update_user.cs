@@ -262,12 +262,15 @@ namespace Nanina.Communication
             })[equipment.lvl - 1];
             
             if (!requirements.All(requirement => user.inventory.items.Any(item => item.Value.id == requirement.item_id && item.Value.count >= requirement.quantity)))
-            { Send(ClientNotification.NotificationData("User", "You don't have the necessary ingredients", 1)); return; }
+                { Send(ClientNotification.NotificationData("User", "You don't have the necessary ingredients", 1)); return; }
+
+            if (Global.baseValues.equipment_upgrade_money_cost[equipment.lvl - 1] > user.money)
+                { Send(ClientNotification.NotificationData("User", "You don't have enough money", 1)); return; }
 
             foreach (var requirement in requirements)
-            {
-                user.inventory.RemoveItem(requirement.item_id, requirement.quantity);
-            }
+                {
+                    user.inventory.RemoveItem(requirement.item_id, requirement.quantity);
+                }
 
             equipment.LevelUp();
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
@@ -275,6 +278,7 @@ namespace Nanina.Communication
                 type = ServerResponseType.ConfirmUpgrade,
                 data = JsonConvert.SerializeObject(equipment),
             }));
+            user.money -= Global.baseValues.equipment_upgrade_money_cost[equipment.lvl - 1];
             DBUtils.Update(user);
         }
 
