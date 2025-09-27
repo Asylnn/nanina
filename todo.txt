@@ -124,6 +124,7 @@ TODO : Add regen tick clock on client                                           
 TODO : [BUG] When first getting waifu in pull, does not get duplicate object        #Done
 TODO : Make timesave loot icon.                                                     #Done
 
+TODO : Make waifu leveling local.
 TODO : Modifiable grid size for waifu / items... outside of inventory and waifu list
 TODO : Make waifu selector in fight like the one in dungeons and activities
 TODO : instead of sending everything (waifus, items, sets...) via websocket, just import it?

@@ -61,7 +61,7 @@ namespace Nanina.UserData.WaifuData
             get => ApplyModificators(0.05f + Agi/400, StatModifier.CritChance); 
         }
         public double CritDamage {
-            get => ApplyModificators(0.50f + Dex/400, StatModifier.CritDamage); 
+            get => ApplyModificators(0.50f + Dex/250, StatModifier.CritDamage); 
         }
         public short stars { get; set; }
         private int XpToLvlUp
