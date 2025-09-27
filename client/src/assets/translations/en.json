@@ -201,6 +201,82 @@
         "4":{
             "name":"Cherish battery",
             "description":"Increase the maximum cherish you can handle"
+        },
+        "17":{
+            "name":"Magic staff",
+            "description":"Make casting spells easier"
+        },
+        "18":{
+            "name":"Magic socks",
+            "description":"A magician must feel comfy at all time for better spell efficiency"
+        },
+        "19":{
+            "name":"Magic necklathe",
+            "description":"While it look powerful, it's just for show"
+        },
+        "20":{
+            "name":"Umbrella",
+            "description":"Can be deadly in the right hands"
+        },
+        "21":{
+            "name":"Gloves",
+            "description":"Perfect for playing Maimai"
+        },
+        "22":{
+            "name":"Ear Muffs",
+            "description":"Warning, can look very cute on some people"
+        },
+        "0":{
+            "name":"Uhhmmmmm .... ",
+            "description":"You were not supposed to obtain this..."
+        },
+        "5":{
+            "name":"Uhhmmmmm .... ",
+            "description":"You were not supposed to obtain this..."
+        },
+        "6":{
+            "name":"Crystal I",
+            "description":"A crystal mined from deep underground"
+        },
+        "7":{
+            "name":"Crystal II",
+            "description":"A crystal mined from deep underground"
+        },
+        "8":{
+            "name":"Crystal III",
+            "description":"A crystal mined from deep underground"
+        },
+        "9":{
+            "name":"Crystal IV",
+            "description":"A crystal mined from deep underground"
+        },
+        "10":{
+            "name":"Circuit Board",
+            "description":"A damaged circuit board. Does not have much compute power by itself"
+        },
+        "11":{
+            "name":"Metal Rod",
+            "description":"for BONKING purposes"
+        },
+        "12":{
+            "name":"Lab Equipement",
+            "description":"Various lab equipment, for research purposes"
+        },
+        "13":{
+            "name":"Treasure Map",
+            "description":"Just avoid the radioactive area, the monster infested desert, the wyverns and you (might) get a great treasure!"
+        },
+        "14":{
+            "name":"Cloth",
+            "description":"Just an old piece of tworn out cloth"
+        },
+        "15":{
+            "name":"Bottled Stars",
+            "description":"Do not open during the day"
+        },
+        "16":{
+            "name":"Upgrade Parts",
+            "description":"Used to upgrade equipment"
         }
     },
     "modifiers":{

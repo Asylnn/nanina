@@ -104,6 +104,82 @@
         "4":{
             "name":"Batterie d'affection",
             "description":"Augmente la quantité maximal d'affection que vous pouvez gérer"
+        },
+        "17":{
+            "name":"Baton Magique",
+            "description":"Rend les sorts plus facile à lancer"
+        },
+        "18":{
+            "name":"Chausettes Magiques",
+            "description":"Un magicien doit se sentir bien a tout moment, c'est ce qui a de mieux pour lancer des sorts efficacement"
+        },
+        "19":{
+            "name":"Pendantif Magique",
+            "description":"Bien qui le pendantif est l'air puissant, c'est uniquement pour le style"
+        },
+        "20":{
+            "name":"Parapluie",
+            "description":"Peut être mortel dans les bonnes mains"
+        },
+        "21":{
+            "name":"Gants",
+            "description":"Parfait pour jouer à Maimai"
+        },
+        "22":{
+            "name":"Cache-Oreilles",
+            "description":"Attention! Peut rendre très mignion"
+        },
+        "0":{
+            "name":"Uhhmmmmm .... ",
+            "description":"You were not supposed to obtain this..."
+        },
+        "5":{
+            "name":"Uhhmmmmm .... ",
+            "description":"You were not supposed to obtain this..."
+        },
+        "6":{
+            "name":"Cristal I",
+            "description":"Un cristal venant de profondément sous terre"
+        },
+        "7":{
+            "name":"Cristal II",
+            "description":"Un cristal venant de profondément sous terre"
+        },
+        "8":{
+            "name":"Cristal III",
+            "description":"Un cristal venant de profondément sous terre"
+        },
+        "9":{
+            "name":"Cristal IV",
+            "description":"Un cristal venant de profondément sous terre"
+        },
+        "10":{
+            "name":"Circuit Imprimé",
+            "description":"Un circuit endommagé. Na pas une grande puissance de calcul"
+        },
+        "11":{
+            "name":"Barre en métal",
+            "description":"pour BONK les gens qu'on aime pas"
+        },
+        "12":{
+            "name":"Equipement de Labo",
+            "description":"Equipement de Labo varié. Utilisé pour la recherche"
+        },
+        "13":{
+            "name":"Carte aux trésors",
+            "description":"Evitez juste la zone irradié, le désert infésté de monstres ainsi que les wyvernes et vous obtiendrez (peut être) un grand trésor!"
+        },
+        "14":{
+            "name":"Tissu",
+            "description":"Juste un vieux bout de tissu déchiré"
+        },
+        "15":{
+            "name":"Etoiles en bouteille",
+            "description":"Ne pas ouvrir pendant le jour"
+        },
+        "16":{
+            "name":"Pièces d'amélioration",
+            "description":"Utilisé pour améliorer les équipements"
         }
     },
     "modifiers":{
