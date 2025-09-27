@@ -39,6 +39,27 @@
     },
     {
         "ingredients":[
+            {
+                "id":10,
+                "quantity":1
+            },
+            {
+                "id":12,
+                "quantity":1
+            }
+        ],
+        "results":[
+            {
+                "id":16,
+                "quantity":1
+            }
+        ],
+        "moneyCost":150,
+        "timeCost":10,
+        "id":3
+    },
+    {
+        "ingredients":[
         ],
         "results":[
             {
