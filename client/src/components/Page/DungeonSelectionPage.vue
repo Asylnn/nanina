@@ -145,7 +145,7 @@ export default {
                 </ul>
             </div>
             <div v-if="validSelection()" style="margin-top: 50px;">
-                <button id="enterDungeonButton" class="nnnbutton" @click="EnterDungeon()">Enter Dungeon</button>
+                <button id="enterDungeonButton" class="nnnbutton" @click="EnterDungeon()">{{$t(`dungeon.enter_dungeon`)}}</button>
             </div>
         </div>
     </div>

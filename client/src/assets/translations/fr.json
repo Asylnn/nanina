@@ -30,6 +30,7 @@
         "dungeon":"Donjon",
         "floor":"Etage du donjon",
         "name":"Donjons",
+        "enter_dungeon":"Entrez dans le donjon",
         "boss_health":"Health",
         "shit":{
             "name":"Donjon à la con"

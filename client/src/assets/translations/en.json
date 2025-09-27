@@ -128,6 +128,7 @@
         "dungeon":"Dungeon",
         "floor":"Dungeon floor",
         "name":"Dungeons",
+        "enter_dungeon":"Enter Dungeon",
         "boss_health":"Health",
         "shit":{
             "name":"The Shit Dungeon"
