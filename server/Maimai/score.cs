@@ -52,7 +52,7 @@ namespace Maimai
         public bool is_track_skip;
         public required DifficultyLevel difficulty_level;
         public required string play_date;
-        public uint play_date_unix;
+        public long play_date_unix;
         public required Song song;
         public required object player;
 

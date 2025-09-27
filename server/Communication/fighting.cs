@@ -73,10 +73,9 @@ namespace Nanina.Communication
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
                 return (0,1);
             }
-            /*Console.WriteLine(validscore.play_date_unix);
-            Console.WriteLine(Utils.GetTimestamp());
-            if(validscore.play_date_unix*1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
-                { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0,1);}*/
+
+            if (validscore.play_date_unix * 1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
+                { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0, 1); }
             
             return (Maimai.Api.GetXP(validscore), 1);
         }
