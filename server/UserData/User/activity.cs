@@ -61,7 +61,7 @@ namespace Nanina.UserData
         private void OnCafeTimeout(Waifu waifu)
         {
             var statRandomness = Utils.RandomMultiplicator(Global.baseValues.cafe_reward_randomness);
-            var money = (int) Math.Ceiling((waifu.Kaw + waifu.Luck)*statRandomness);
+            var money = (int) Math.Ceiling((waifu.Kaw + waifu.Luck)*statRandomness*9*2);
             var loot = new Loot()
             {
                 lootType = LootType.Money,
@@ -79,8 +79,8 @@ namespace Nanina.UserData
                 
                 double qty = tier switch
                 {
-                    1 => 1d + Math.Sqrt(miningPower / 10d),
-                    2 => miningPower > 150 ? Math.Sqrt((miningPower - 100d) / 10d) - 2d : 0d,
+                    1 => 1d + Math.Sqrt(miningPower),
+                    2 => miningPower > 150 ? Math.Sqrt(miningPower / 1.2d) - 10d: 0d,
                     3 => miningPower > 300 ? Math.Sqrt((miningPower - 230d) / 15d) - 2d : 0d,
                     4 => miningPower > 600 ? Math.Sqrt((miningPower - 500d) / 20d) - 2d : 0d,
                     _ => 0d,
@@ -154,7 +154,7 @@ namespace Nanina.UserData
 
         public static long GetCraftingTimeout(Waifu waifu, double cost)
         {
-            return (long) (cost / (waifu.Dex + waifu.Luck) * 1800d * 1000d);
+            return (long) (cost / (waifu.Dex + waifu.Luck) * 3600d / 2 * 1000d);
         }
         
     }

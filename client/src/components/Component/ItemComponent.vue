@@ -116,8 +116,6 @@ export default {
                 case ServerResponseType.ConfirmUpgrade:
                     if (this.user == undefined) break;
                     let equipment : Equipment = JSON.parse(res.data)
-                    console.log("heyy")
-                    console.log(equipment)
                     this.user.money -= config.equipment_upgrade_money_cost[equipment.lvl - 2]
                     for(let requirement of this.upgradeRequirements)
                     {
