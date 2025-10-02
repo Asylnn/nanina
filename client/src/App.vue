@@ -1,6 +1,4 @@
 <script lang="ts">
-import { useRoute, RouterLink, RouterView } from 'vue-router'
-
 import Header from './components/Component/Header.vue'
 import Homepage from './components/Page/Homepage.vue'
 import UserPage from './components/Page/UserPage.vue'
@@ -19,17 +17,13 @@ import {inject} from 'vue'
 import type {VueCookies} from 'vue-cookies'
 
 import {
-	ArrayQueue,
-	ConstantBackoff,
 	Websocket,
-	WebsocketBuilder,
 	WebsocketEvent,
 } from "websocket-ts"
 
 import User from './classes/user/user'
 import Waifu from './classes/waifu/waifu'
 import Page from './classes/page'
-import NotificationSeverity from './classes/notification_severity'
 import OsuBeatmap from './classes/osu/beatmap'
 import ItemManagerPage from './components/Admin/Manager/ItemManagerPage.vue'
 import WaifuDisplayComponent from './components/Component/WaifuDisplayComponent.vue'
@@ -49,7 +43,7 @@ import UserWaifuManagerPage from './components/Admin/Manager/UserWaifuManagerPag
 import PrivacyPage from './components/Page/PrivacyPage.vue'
 import ActivitiesPage from './components/Page/ActivitiesPage.vue'
 import LootType from './classes/loot/loot_type'
-import ResearchNode from './classes/research/research_nodes'
+import ResearchNode from './classes/research/research_nodes_client'
 import Craft from './classes/crafting/craft'
 import type Dictionary from './classes/dictionary'
 import ClientResponseType from './classes/client_response_type'
@@ -73,16 +67,12 @@ export default {
 			equipment_db : {} as Dictionary<Equipment>,
 			set_db : {} as Dictionary<Set>,
 			pulled_waifus : [] as Waifu[],
-			banners : {} as Dictionary<Banner> ,
-			dungeons : {} as Dictionary<DungeonTemplate>,
 			active_dungeon : new ActiveDungeon,
 			localeSetByUser : false,
 			maimai_chart : null as Chart | null,
 			loots : [] as Array<Loot[]>,
 			inside_dungeon : false,
 			Page : Page,
-			researchNodes : {} as Dictionary<ResearchNode>,
-			craftingRecipes : {} as Dictionary<Craft>,
 		}
 	},
 	components: {
@@ -213,11 +203,6 @@ export default {
 					console.log("SET DATABASE")
 					console.log(this.set_db)
 					break
-				case ServerResponseType.ProvideBanners:
-					this.banners = JSON.parse(res.data)
-					console.log("Banners data : ")
-					console.log(this.banners)
-					break
 				case ServerResponseType.Notification:
 					let notification = Object.assign(new Notification("","",0), JSON.parse(res.data))
 					this.notifs.push(notification)
@@ -226,29 +211,6 @@ export default {
 					this.pulled_waifus = JSON.parse(res.data)
 					console.log("Pulled Waifus data : ")
 					console.log(this.pulled_waifus)
-					break
-				case ServerResponseType.ProvideDungeons:
-					this.dungeons = JSON.parse(res.data)
-					console.log("Dungeon data : ")
-					console.log(this.dungeons)
-					break
-				case ServerResponseType.ProvideResearchNodes:
-					let researchNodes : Dictionary<ResearchNode> = JSON.parse(res.data)
-					for(let researchNode of Object.values(researchNodes))
-					{
-						this.researchNodes[researchNode.id] = Object.assign(new ResearchNode, researchNode)
-					}
-					console.log("research node data : ")
-					console.log(this.researchNodes)
-					break
-				case ServerResponseType.ProvideCraftingRecipes:
-					let craftingRecipes : Dictionary<Craft>= JSON.parse(res.data)
-					for(let craftRecipe of Object.values(craftingRecipes))
-					{
-						this.craftingRecipes[craftRecipe.id] = Object.assign(new Craft, craftRecipe)
-					}
-					console.log("crafting recipes data : ")
-					console.log(this.craftingRecipes)
 					break
 				case ServerResponseType.ProvideActiveDungeon:
 					this.inside_dungeon = true;
@@ -356,7 +318,7 @@ export default {
 			<WaifuManagerPage :all_waifus="all_waifus" :id="user.Id"></WaifuManagerPage>
 		</div>
 		<div v-else-if="page == Page.Pull">
-			<PullPage :banners="banners" :pulled_waifus="pulled_waifus" :user="user"
+			<PullPage :pulled_waifus="pulled_waifus" :user="user"
 				v-on:pull-finished-show-loot="pushLoot">
 			</PullPage>
 		</div>
@@ -371,7 +333,7 @@ export default {
 				<ActiveDungeonPage :user="user" :active_dungeon="active_dungeon" @leave-dungeon="inside_dungeon = false"></ActiveDungeonPage>
 			</div>
 			<div v-else>
-				<DungeonSelectionPage :dungeons="dungeons" :user="user"></DungeonSelectionPage>
+				<DungeonSelectionPage :user="user"></DungeonSelectionPage>
 			</div>
 			
 		</div>
@@ -382,7 +344,7 @@ export default {
 			<PrivacyPage ></PrivacyPage>
 		</div>
 		<div v-else-if="page == Page.Activities">
-			<ActivitiesPage :user="user" :research-nodes="researchNodes" :crafting-recipes="craftingRecipes"></ActivitiesPage>
+			<ActivitiesPage :user="user"></ActivitiesPage>
 		</div>
 		<div v-else>
 			ERREUR 404 AHAHAHAHAH

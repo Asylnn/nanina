@@ -1,6 +1,6 @@
 <script lang="ts">
 import ActivityType from '@/classes/user/activity_type';
-import ResearchNode from '@/classes/research/research_nodes';
+import ResearchNode from '@/classes/research/research_nodes_client';
 import User from '@/classes/user/user';
 import Waifu from '@/classes/waifu/waifu';
 import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';

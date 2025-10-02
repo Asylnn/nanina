@@ -6,11 +6,13 @@ import WaifuDisplayComponent from '../Component/WaifuDisplayComponent.vue';
 import GridDisplayComponent from '../Component/GridDisplayComponent.vue';
 import ClientResponseType from '@/classes/client_response_type';
 import type Dictionary from '@/classes/dictionary';
+import dungeonsJSON from  '@/../../save/dungeons.json'
 
 export default {
     name : "DungeonSelectionPage",
     data() {
         return {
+            dungeons : dungeonsJSON as Dictionary<DungeonTemplate>,
             selected_dungeon : null as string | null,
             is_fighting_a_dungeon : false,
             waifuSelectorVisible : false,
@@ -25,10 +27,6 @@ export default {
 
     },
     props: {
-        dungeons: {
-            type : Object as () => Dictionary<DungeonTemplate>, //ugly but it works,
-            required : true
-        },
         user : {
             type : User,
             required: true

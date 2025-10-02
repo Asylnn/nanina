@@ -8,14 +8,11 @@ import ActivityType from '@/classes/user/activity_type';
 import type Waifu from '@/classes/waifu/waifu';
 import ActivityProgressComponent from '../Component/ActivityProgressComponent.vue';
 import ActivityWaifuPickerComponent from '../Component/ActivityWaifuPickerComponent.vue';
-import ResearchNode from '@/classes/research/research_nodes';
 import ResearchPage from './ResearchPage.vue';
 import CraftingPage from './CraftingPage.vue';
 import Craft from '@/classes/crafting/craft';
 import ClientResponseType from '@/classes/client_response_type';
 import ContinuousFightPage from './ContinuousFightPage.vue';
-import type Dictionary from '@/classes/dictionary';
-import type { PropType } from 'vue';
 import { Websocket, WebsocketEvent } from 'websocket-ts';
 import type WebSocketResponse from '@/classes/web_socket_response';
 import ServerResponseType from '@/classes/server_response_type';
@@ -42,14 +39,6 @@ export default {
         user: {
             type: User,
             required: true
-        },
-        researchNodes:{
-            type:Object as PropType<Dictionary<ResearchNode>>,
-            required:true,
-        },
-        craftingRecipes:{
-            type:Object as PropType<Dictionary<Craft>>,
-            required:true,
         },
     },
     methods:{
@@ -165,14 +154,14 @@ export default {
             </ActivityWaifuPickerComponent>
         </div>
         <div v-else-if="selectedActivity == ActivityType.Research">
-            <ResearchPage :research-nodes="Object.values(researchNodes)" :user="user" :selected-waifu="selectedWaifu"
+            <ResearchPage :user="user" :selected-waifu="selectedWaifu"
                 v-on:show-waifu-selector="showWaifuSelector()"
                 v-on:reset-selected-waifu="selectedWaifu = null">
                 
             </ResearchPage>
         </div>
         <div v-else-if="selectedActivity == ActivityType.Crafting">
-            <CraftingPage :user="user" :selected-waifu="selectedWaifu" :crafting-recipes="Object.values(craftingRecipes)"
+            <CraftingPage :user="user" :selected-waifu="selectedWaifu"
                 v-on:reset-selected-waifu="selectedWaifu = null" 
                 v-on:show-waifu-selector="showWaifuSelector()">
 

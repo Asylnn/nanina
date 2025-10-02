@@ -128,12 +128,6 @@ TODO : Make waifu leveling local.
 TODO : Modifiable grid size for waifu / items... outside of inventory and waifu list
 TODO : Make waifu selector in fight like the one in dungeons and activities
 TODO : instead of sending everything (waifus, items, sets...) via websocket, just import it?
-TODO : Freeze everything when waiting for server response. (idk if it's good idea)
-TODO : make a "equipped" symbol, and do not remove equipped equipment from inventory.
-
-
-
-
 
 Design to do
 
@@ -146,6 +140,8 @@ TODO : Have multiple dungeons of increasing difficulty
 
 Low priority
 
+TODO : Freeze everything when waiting for server response. (idk if it's good idea)
+TODO : make a "equipped" symbol, and do not remove equipped equipment from inventory.
 TODO : Make dungeon loot claimable like activity loot.
 TODO : Make it so websocket dungeon stuff is in dungeon page instead of app.vue
 TODO : Make Tree reach top of page bellow the header in TreePage

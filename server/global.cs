@@ -29,10 +29,6 @@ public static class Global
     public static readonly Dictionary<string, Template> dungeons = JsonConvert.DeserializeObject<Dictionary<string, Template>>(File.ReadAllText(config.dungeon_storage_path))!;
     public static readonly List<ExplorationLoot> explorationLoot = JsonConvert.DeserializeObject<List<ExplorationLoot>>(File.ReadAllText("../save/exploration_loot.json"))!;
     public static readonly UpgradeRequirement upgradeRequirements = JsonConvert.DeserializeObject<UpgradeRequirement>(File.ReadAllText("../save/upgrade_requirements.json"))!;
-    public static readonly string craftingRecipesString = JsonConvert.SerializeObject(craftingRecipes);
-    public static readonly string dungeonsString = JsonConvert.SerializeObject(dungeons);
-    public static readonly string researchNodesString = JsonConvert.SerializeObject(researchNodes);
-    public static readonly string bannersString = JsonConvert.SerializeObject(banners);
 
     //If at release it's only used to send the data to the client, then just send it without deserializing0
 
@@ -67,10 +63,6 @@ public static class Global
         Dictionary<short, Craft> craftingRecipes = [];
         foreach(var craftRecipe in temp_craftingRecipes)
         {
-            foreach(var craftIngredient in  (List<CraftIngredient>)[.. craftRecipe.ingredients, .. craftRecipe.results] )
-            {
-                craftIngredient.imgPATH = items[craftIngredient.id].imgPATH;
-            }
             craftingRecipes[craftRecipe.id] = craftRecipe;
         }
         return craftingRecipes;

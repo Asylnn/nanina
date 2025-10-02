@@ -13,11 +13,13 @@ import type WebSocketResponse from '@/classes/web_socket_response';
 import type Item from '@/classes/item/item';
 import type Loot from '@/classes/loot/loot';
 import LootType from '@/classes/loot/loot_type';
+import bannersJSON from  '@/../../save/banners.json'
 
 export default {
     name : "PullPage",
     data() {
         return {
+            banners : bannersJSON as Dictionary<Banner>,
             tempLoot: [] as Loot[],
             selected_banner: new Banner(),
             pulled_banner: new Banner(),
@@ -32,10 +34,6 @@ export default {
         user : {
             type : User,
             required : true,
-        },
-        banners: {
-            type : Object as () => Dictionary<Banner>, //ugly but it works
-            required : true
         },
     },
     components: {

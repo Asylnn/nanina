@@ -60,7 +60,7 @@ namespace Nanina.Communication
                 type = ServerResponseType.ProvideUser,
                 data = JsonConvert.SerializeObject(user),
             }));
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            /*Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = ServerResponseType.ProvideBanners,
                 data = Global.bannersString,
@@ -79,7 +79,7 @@ namespace Nanina.Communication
             {
                 type = ServerResponseType.ProvideCraftingRecipes,
                 data = Global.craftingRecipesString,
-            }));
+            }));*/
             if (user.isInDungeon)
             {
                 var activeDungeon = DungeonManager.activeDungeons.Values.ToList().Find(dungeon => user.dungeonInstanceId == dungeon.instanceId)!;

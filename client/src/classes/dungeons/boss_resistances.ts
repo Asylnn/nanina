@@ -1,5 +1,5 @@
 export default class BossResistances {
-    public physicalResistance = 1;
-    public magicalResistance = 1;
-    public psychicResistance = 1;
+    public physicalResistance !: number
+    public magicalResistance !: number
+    public psychicResistance !: number
 } 

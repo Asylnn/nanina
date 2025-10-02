@@ -2,15 +2,17 @@
 import User from '@/classes/user/user';
 import ActivityType from '@/classes/user/activity_type';
 import ResearchNode from '@/classes/research/research_nodes';
+import ResearchNodeClient from '@/classes/research/research_nodes_client';
 import ResearchNodeComponent from '../Component/ResearchNodeComponent.vue';
 import Waifu from '@/classes/waifu/waifu';
+import researchNodesJSON from  '@/../../save/research.json'
 
 class Tree
 {
-    public elements !: ResearchNode[]
+    public elements !: ResearchNodeClient[]
     public width = 0
 
-    constructor(rs : ResearchNode[])
+    constructor(rs : ResearchNodeClient[])
     {
         this.elements = rs
     }
@@ -37,22 +39,19 @@ export default {
     name : "ResearchPage",
     data(){
         return {
+            researchNodes : Object.values(researchNodesJSON),
             ActivityType: ActivityType,
             publicPath : import.meta.env.BASE_URL,
             trees: [] as Tree[],
             paths: [] as Path[],
-            researchNodesProcessed: [] as ResearchNode[],
-            selectedNode: null as ResearchNode | null,
+            researchNodesProcessed: [] as ResearchNodeClient[],
+            selectedNode: null as ResearchNodeClient | null,
         }
     },
     props: {
         user: {
             type: User,
             required: true
-        },
-        researchNodes:{
-            type:Array<ResearchNode>,
-            required:true,
         },
         selectedWaifu:{
             type:[Waifu, null],
@@ -62,9 +61,15 @@ export default {
     mounted()
     {   
         /*This code is absolutely disgusting*/
+        
+        /*Add some necessary properties inside the research nodes from the json by converting them to "ResearchNodeClient"*/
+        for(let i in this.researchNodes)
+        {
+            this.researchNodes[i] = Object.assign(new ResearchNodeClient, this.researchNodes[i])
+        }
 
         //Make a deep copy of researchNodes
-        let researchNodeCopy = JSON.parse(JSON.stringify(this.researchNodes)) as Array<ResearchNode>
+        let researchNodeCopy = JSON.parse(JSON.stringify(this.researchNodes)) as Array<ResearchNodeClient>
         
         /*Create Trees based on nodes without any requirement (tree roots in some sense)*/ 
         
@@ -110,7 +115,7 @@ export default {
 
         /*Compute the nodes's positions (it's devious)*/ 
 
-        function computeNodePositionRecursive(tree : Tree, rn : ResearchNode, size : number) : number /* Size of the subtree from that node */
+        function computeNodePositionRecursive(tree : Tree, rn : ResearchNodeClient, size : number) : number /* Size of the subtree from that node */
         {
 
             rn.leftPos = (rn.tier - 1)*600 + 200
@@ -137,7 +142,7 @@ export default {
 
         /*Put all the nodes inside all the trees and put them into an array (like in the prop)*/ 
 
-        this.researchNodesProcessed = this.trees.reduce((rns, tree) => [...rns, ...tree.elements] , [] as ResearchNode[])
+        this.researchNodesProcessed = this.trees.reduce((rns, tree) => [...rns, ...tree.elements] , [] as ResearchNodeClient[])
 
 
         /*Compute the paths between nodes*/ 
@@ -156,7 +161,7 @@ export default {
         
     },
     methods:{
-        GetPosition(researchNode: ResearchNode)
+        GetPosition(researchNode: ResearchNodeClient)
         {
             let style = ""
 
@@ -173,7 +178,7 @@ export default {
         {
             return this.paths.reduce((leftPos, path) => Math.max(leftPos, path.endy), 0)
         },
-        showWaifuSelector(rn : ResearchNode)
+        showWaifuSelector(rn : ResearchNodeClient)
         {
             let isResearchNotLocked = rn.requirements.every(researchID => this.user.isResearchDone(researchID))
             let isResearchNotAlreadyResearchedOrInfinite = ! this.user.isResearchDone(rn.id) || rn.infinite

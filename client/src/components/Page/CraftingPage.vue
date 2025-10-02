@@ -8,13 +8,15 @@ import ActivityWaifuPickerComponent from '../Component/ActivityWaifuPickerCompon
 import ActivityType from '@/classes/user/activity_type';
 import Waifu from '@/classes/waifu/waifu';
 import ClientResponseType from '@/classes/client_response_type';
-
+import craftsJSON from  '@/../../save/crafts.json'
+import itemdb from '@/../../save/item.json'
 
 export default {
     name : "CraftingPage",
     data() {
         return {
-            publicPath: import.meta.env.BASE_URL,
+            craftingRecipes : craftsJSON as Array<Craft>,
+            publicPath : import.meta.env.BASE_URL,
             ActivityType:ActivityType,
             aboveLimits:false,
             shiftKey:true,
@@ -25,13 +27,21 @@ export default {
             type:User,
             required:true,
         },
-        craftingRecipes:{
-            type:Array<Craft>,
-            required:true,
-        },
         selectedWaifu:{
             type:[Waifu, null],
             required:true,
+        }
+    },
+    mounted() {
+        for(let i in this.craftingRecipes)
+        {
+            this.craftingRecipes[i] = Object.assign(new Craft, this.craftingRecipes[i])
+            let parts = [...this.craftingRecipes[i].ingredients, ...this.craftingRecipes[i].results]
+            for(let j in parts)
+            {
+                console.log(itemdb)
+                parts[j].imgPATH = Object.values(itemdb).find(item => item.id == parts[j].id)!.imgPATH
+            }
         }
     },
     methods: {
