@@ -2,37 +2,37 @@
     {
         "itemId":10,
         "weight":100,
-        "cost":20,
+        "cost":10,
         "powerRequired":0
     },
     {
         "itemId":11,
         "weight":100,
-        "cost":20,
+        "cost":10,
         "powerRequired":0
     },
     {
         "itemId":12,
         "weight":100,
-        "cost":20,
+        "cost":10,
         "powerRequired":0
     },
     {
         "itemId":13,
         "weight":50,
-        "cost":20,
+        "cost":10,
         "powerRequired":0
     },
     {
         "itemId":14,
         "weight":100,
-        "cost":20,
+        "cost":10,
         "powerRequired":0
     },
     {
         "itemId":15,
         "weight":50,
-        "cost":40,
+        "cost":20,
         "powerRequired":100
     }
 ]
