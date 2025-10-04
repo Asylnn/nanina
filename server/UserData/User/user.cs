@@ -5,6 +5,7 @@ using LiteDB;
 using Nanina.Communication;
 using Nanina.Database;
 using Nanina.UserData.ItemData;
+using Nanina.UserData.Log;
 using Nanina.UserData.ModifierData;
 using Nanina.UserData.WaifuData;
 using Newtonsoft.Json;
@@ -43,19 +44,30 @@ namespace Nanina.UserData
         public string locale { get; set; } = Global.config.default_locale;  
         public string avatarPATH { get; set; } = ""; //Unused
         public StatCount statCount { get; set; } = new();
-        public Dictionary<Game, List<string>> fightHistory { get; set; } = [];
         public Fight? fight { get; set; }
         public int gacha_currency { get; set; } = Global.baseValues.base_gacha_currency_amount;
-        public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; } = [];
         public Verification verification { get; set; } = new ();
         public long claimTimestamp { get; set; } = 0;
         public Inventory inventory { get; set; } = new ();
-        public Dictionary<string, short> completedResearches { get; set; } = [];
         public Unlocks unlocks { get; set; } = new ();
         public long lastContinuousFightTimestamp { get; set; } = 0;
-        public List<ContinuousFightLog> continuousFightLog { get; set; } = []; //Should maybe be dictionary?
         public long lastEnergyRegenTickTimestamp { get; set; } = 0;
         /*Is used only in client to get when the last regen tick occured before connection, then it's useless because we can track when each regen tick happen on client*/
+
+
+        /*LOGGING (useful for the game)*/
+        public Dictionary<string, short> completedResearches { get; set; } = [];
+        public List<ContinuousFightLog> continuousFightLog { get; set; } = []; //Should maybe be dictionary?
+        public Dictionary<string, PullBannerHistory> pullBannerHistory { get; set; } = [];
+        public Dictionary<Game, List<string>> fightHistory { get; set; } = [];
+
+        /*LOGGING (for data analysis only (the "data" we collect from users >:) )*/
+        public List<ActivityLog> activityLog { get; set; } = [];
+        public List<ClaimLog> claimLogs { get; set; } = [];
+        public List<PassiveClaimLog> passiveClaimLogs { get; set; } = [];
+        public List<DungeonLog> dungeonLog { get; set; } = [];
+        public List<EnergyLog> energyLog { get; set; } = [];
+
 
         public (double energy, int gc) SpendEnergy(double ratio)
         {

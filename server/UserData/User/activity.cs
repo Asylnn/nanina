@@ -2,6 +2,7 @@ using Nanina.UserData.WaifuData;
 using Nanina.Communication;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Maimai;
 
 namespace Nanina.UserData
 {
@@ -33,30 +34,38 @@ namespace Nanina.UserData
         public required string waifuID { get; set; }
         public List<Loot> loot { get; set; } = [];
         public string? researchID { get; set; }
-        
+
 
         public void OnTimeout(User user)
         {
             finished = true;
-            switch(type)
+            double stat = 0;
+
+            switch (type)
             {
                 case ActivityType.Cafe:
                     OnCafeTimeout(user.waifus[waifuID]);
+                    stat = user.waifus[waifuID].Kaw;
                     break;
                 case ActivityType.Mining:
                     OnMiningTimeout(user.waifus[waifuID]);
+                    stat = user.waifus[waifuID].Str;
                     break;
                 case ActivityType.Research:
                     OnResearchTimeout(user);
+                    stat = user.waifus[waifuID].Int;
                     break;
                 case ActivityType.Crafting:
+                    stat = user.waifus[waifuID].Dex;
                     //since loot is already created at the moment the activity is created (since it's more practical this way), there is no need to do stuff here 
                     //maybe do the same thing with research? Yeah difinitively
                     break;
                 case ActivityType.Exploration:
                     OnExplorationTimeout(user.waifus[waifuID]);
+                    stat = user.waifus[waifuID].Agi;
                     break;
             }
+            user.activityLog.Add(new(type, (float)stat));
         }
         private void OnCafeTimeout(Waifu waifu)
         {

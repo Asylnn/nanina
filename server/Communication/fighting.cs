@@ -170,6 +170,8 @@ namespace Nanina.Communication
                 data = JsonConvert.SerializeObject(dataToClient)
             }));
 
+            //user.claimLogs.Add(new (claim.game, xp, ))
+
             DBUtils.Update(user);
         }
         
