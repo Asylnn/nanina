@@ -9,6 +9,7 @@ export default class Waifu {
     public lvl : number = 1
     public diffLvlUp : number = 3
     public imgPATH : string = "GYrXGACboAACxp7.jpg"
+    public imgAuthorURL : string = ""
     public stars : number = 2
     public equipment! : WaifuEquipmentManager
     public isDoingSomething! : Boolean

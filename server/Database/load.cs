@@ -157,6 +157,12 @@ namespace Nanina.Database
                     //item.rarity = dbItem.rarity;
                     //item.modifiers = dbItem.modifiers;
                 }
+                foreach (var waifukeyValue in user.waifus)
+                {
+                    var waifu = waifukeyValue.Value;
+                    var dbWaifu = Global.waifus[waifu.id];
+                    waifu.imgAuthorURL = dbWaifu.imgAuthorURL;
+                }
                 /*foreach(Waifu waifu in user.waifus)
                 {
                     waifu.isDoingSomething = false;
@@ -190,7 +196,7 @@ namespace Nanina.Database
                     item.modifiers = itemDB.modifiers;
                     item.imgPATH = itemDB.imgPATH;
                 }*/
-                user.waifus ??= [];
+                //user.waifus ??= [];
                 user.verification ??= new();
                 user.pullBannerHistory ??= new Dictionary<string, PullBannerHistory>();
                 //user.admin = true;

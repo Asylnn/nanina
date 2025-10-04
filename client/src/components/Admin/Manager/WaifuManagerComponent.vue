@@ -70,7 +70,8 @@ export default {
         
 
         <span class="attribute">{{ waifu.points }}p</span>
-        <span class="attribute">Img  <input class="imgImput"v-model="waifu.imgPATH" type="text"></span>
+        <span class="attribute">Img  <input class="imgImput" v-model="waifu.imgPATH" type="text"></span>
+        <span class="attribute">AuthorURL  <input class="imgImput" v-model="waifu.imgAuthorURL" type="text"></span>
     </div>
 </template>
 

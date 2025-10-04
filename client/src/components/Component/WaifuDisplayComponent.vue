@@ -246,11 +246,15 @@ export default {
     </div>
 
     <DisplayComponent @exit="$emit('exit')" :type="'waifu'">
-        <div id="waifuImage" @click="$emit('click')"><img :src="`${publicPath}/waifu-image/${waifu.imgPATH}`"></div>
+        <div id="waifuImageContainer" @click="$emit('click')">
+            <a :href="waifu.imgAuthorURL" target="_blank">
+                <img id="waifuImage" :src="`${publicPath}/waifu-image/${waifu.imgPATH}`">
+            </a>
+        </div>
         <div id="waifuInfos" @click="$emit('click')">
             <div class="shortStat">
                 <span>{{ $t(`waifu.${waifu.id}.name`) }}</span> <span>{{ $t("waifu.level") }} {{ waifu.lvl }}</span>  <br>
-                </div>
+            </div>
             
             
             <div v-if="!forPull">
@@ -329,7 +333,7 @@ export default {
     height: 550px;
 }
 
-#waifuImage img {
+#waifuImage {
     max-width: 50vw;
     max-height: 60vh;
     left:10%;
@@ -337,13 +341,13 @@ export default {
 }
 
 @media only screen and (orientation: landscape) {
-    #waifuImage img {
+    #waifuImage {
         max-width: 20vw;
         max-height: 80vh;
     }
 }
 
-#waifuImage {
+#waifuImageContainer {
     overflow: hidden;
 }
 

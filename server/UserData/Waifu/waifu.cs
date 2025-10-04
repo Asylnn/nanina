@@ -10,7 +10,8 @@ namespace Nanina.UserData.WaifuData
         public float diffLvlUp { get; set; }
         public required string id { get; set; }
         public required string imgPATH { get; set; }
-        public WaifuEquipmentManager equipment { get; set; } = new ();
+        public required string imgAuthorURL { get; set; }
+        public WaifuEquipmentManager equipment { get; set; } = new();
         public bool isDoingSomething { get; set; } = false;
         public short o_str { get; set; }
         public short u_str { get; set; }
