@@ -56,28 +56,30 @@ namespace Nanina.Communication
             /*var user2 = DBUtils.Get<UserData.User>(x => x.Id == user.Id);
             Console.WriteLine(user2.fight.id);*/
         }
-
-        protected async Task<(uint xp, double ratio)> CheckForMaimaiScores(UserData.User user)
+        
+        
+        //We need difficulty rating for logging
+        protected async Task<(uint xp, double ratio, int difficulty_rating)> CheckForMaimaiScores(UserData.User user)
         {
             var scores = await Maimai.Api.GetRecentScores(user.tokens.maimai_token!, Convert.ToUInt32(user.fight!.id), Convert.ToByte(user.fight.secondaryId));
             user.claimTimestamp = Utils.GetTimestamp();
 
             //Ideally, the user shouldn't be able to see the page, but in any case this should stay in case the user is able to send a fraudulent Websocket with mrekk id set as their id
-            if(scores.Length == 0) 
-                { Send(ClientNotification.NotificationData("Fighting", "Did you do the chart?", 3)); return (0,1); }                    
+            if (scores.Length == 0)
+            { Send(ClientNotification.NotificationData("Fighting", "Did you do the chart?", 3)); return (0, 1, 0); }
 
             var validscore = Array.Find(scores, score => user.fight.id == score.song.id.ToString());
 
 
-            if(validscore == null){
+            if (validscore == null) {
                 Console.WriteLine($"There wasn't any valid score found for {user.fight.id} (Did you do the beatmap?)");
-                return (0,1);
+                return (0, 1, 0);
             }
 
             if (validscore.play_date_unix * 1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
-                { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0, 1); }
-            
-            return (Maimai.Api.GetXP(validscore), 1);
+            { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0, 1, 0); }
+
+            return (Maimai.Api.GetXP(validscore), 1, validscore.difficulty_level.key);
         }
               
         
@@ -114,19 +116,20 @@ namespace Nanina.Communication
                 
             var baseXP = 0u;
             var ratio = 1d;
-            if(claim.game == Game.MaimaiFinale)
+            var difficulty_rating = 0f;
+            if (claim.game == Game.MaimaiFinale)
             {
-                if(!user.verification.isMaimaiTokenVerified) 
-                    { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your maimai account! Go to the settings and enter your maimai access token!", 0)); return; }
-                (baseXP, ratio) = await CheckForMaimaiScores(user);
+                if (!user.verification.isMaimaiTokenVerified)
+                { Send(ClientNotification.NotificationData("Fighting", "You didn't verified your maimai account! Go to the settings and enter your maimai access token!", 0)); return; }
+                (baseXP, ratio, difficulty_rating) = await CheckForMaimaiScores(user);
             }
             else
             {
                 var score = await CheckForOsuStandardScores(user);
-                if(score == null)
-                    (baseXP, ratio) = (0,1);
+                if (score == null)
+                    (baseXP, ratio) = (0, 1);
                 else
-                    (baseXP, ratio) = (Osu.Api.GetXP(score), score.beatmap.hit_length/240f);
+                    (baseXP, ratio, difficulty_rating) = (Osu.Api.GetXP(score), score.beatmap.hit_length / 240f, score.beatmap.difficulty_rating);
             }
 
             if(baseXP == 0) return;
@@ -170,7 +173,8 @@ namespace Nanina.Communication
                 data = JsonConvert.SerializeObject(dataToClient)
             }));
 
-            //user.claimLogs.Add(new (claim.game, xp, ))
+            user.energyLog.Add(new(user.energy, user.max_energy, spent_energy, gc));
+            user.claimLogs.Add(new(claim.game, xp, difficulty_rating));
 
             DBUtils.Update(user);
         }
@@ -309,6 +313,9 @@ namespace Nanina.Communication
             user.continuousFightLog.RemoveAll(remover.Contains);
             user.lastContinuousFightTimestamp = Utils.GetTimestamp();
             user.statCount.continuous_fight_count += scoreCount;
+
+            //user.passiveClaimLogs.Add(new(claim.game, xp, difficulty_rating));
+
             /*foreach(var score in scores)
             {
                 user.continuousFightLog.Add(new()

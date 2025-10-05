@@ -124,7 +124,10 @@ TODO : [BUG] When first getting waifu in pull, does not get duplicate object    
 TODO : Make timesave loot icon.                                                     #Done
 TODO : Make waifu leveling local.                                                   #Done (was already the case ?? there is probably some bug that need investingating)
 
+TODO : Make a better interface for passive claims
+TODO : make mod change XP
 TODO : Variable difficulty rating for fights
+TODO : Implement maimai timesaves
 TODO : Implement maimai dungeons
 
 Design to do

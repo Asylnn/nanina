@@ -35,7 +35,8 @@ namespace Nanina.Dungeon
         public bool isCompleted = false;
         public List<Equipment> loot = [];
         public byte floor;
-        public PeriodicTimer damageTimer = new (new (Global.baseValues.dungeon_attack_timer_in_milliseconds*10_000));
+        public List<double> claimDmg = [];
+        public PeriodicTimer damageTimer = new(new(Global.baseValues.dungeon_attack_timer_in_milliseconds * 10_000));
 
         public ActiveDungeon(Template dungeon, string _userId, List<Waifu> EquippedWaifus, string _sessionId, long _instanceId, byte floor)
         {
@@ -103,20 +104,23 @@ namespace Nanina.Dungeon
             return (dmg, attackType, critical_amount);
         }
         public void DealDamage(float mult = 1f){
-            foreach (var waifu in waifus) 
+            foreach (var waifu in waifus)
             {
-                
+
                 var (dmg, attackType, critical_amount) = GetDamage(waifu);
                 dmg *= mult;
 
                 health -= dmg;
-                log.Add(new () {
+                log.Add(new()
+                {
                     waifuId = waifu.id,
                     attackType = attackType,
                     dmg = dmg,
                     critical_amount = critical_amount,
                     claim_attack = mult != 1f,
                 });
+                if (mult != 1)
+                    claimDmg.Add(dmg);
             }
         }
 
@@ -144,6 +148,11 @@ namespace Nanina.Dungeon
             });
             user.statCount.total_cleared_dungeon++;
             user.isInDungeon = false;
+
+            user.energyLog.Add(new(user.energy, user.max_energy, spent_energy, gc));
+            user.dungeonLog.Add(new(waifus.ConvertAll(waifu => waifu.lvl).ToArray(), floor, Utils.GetTimestamp() - timestamp, claimDmg.ToArray()));
+
+
             DBUtils.Update(user);
 
             
