@@ -4,10 +4,14 @@ import ClientResponseType from '@/classes/client_response_type';
 import { WebsocketEvent, type Websocket } from 'websocket-ts';
 import type WebSocketResponse from '@/classes/web_socket_response';
 import ServerResponseType from '@/classes/server_response_type';
-import type ScoreDTO from '@/classes/osu/scoreDTO';
+import type MaimaiScoreDTO  from '@/classes/maimai/scoreDTO';
+import type OsuScoreDTO  from '@/classes/osu/scoreDTO';
 import FightResultComponent from '../Component/FightResultComponent.vue';
 import { MillisecondsToHourMinuteSecondFormat } from '@/classes/utils';
 import config from '../../../../baseValues.json'
+import Game from '@/classes/user/game';
+import MaimaiFightResultComponent from '../Component/MaimaiFightResultComponent.vue';
+import OsuFightResultComponent from '../Component/OsuFightResultComponent.vue';
 
 export default {
     name : "ContinuousFightPage",
@@ -16,7 +20,9 @@ export default {
             //ActivityType: ActivityType,
             //publicPath : import.meta.env.BASE_URL,
             date_milli:0,
-            scores : [] as ScoreDTO[],
+            game : this.user.preferedGame,
+            Game : Game,
+            scores : [] as OsuScoreDTO[] | MaimaiScoreDTO[],
             listener : (() => {}) as (i: Websocket, ev: MessageEvent) => void,
         }
     },
@@ -29,16 +35,26 @@ export default {
     methods:{
         CheckContinuousFight()
         {
-            this.SendToServer(ClientResponseType.CheckContinuousFight, "", this.user.Id)
+            this.SendToServer(ClientResponseType.CheckContinuousFight, this.game.toString(), this.user.Id)
         },
         fightWaitTime()
         {
             return MillisecondsToHourMinuteSecondFormat(this.user.lastContinuousFightTimestamp + config.time_for_allowing_another_continuous_fight_in_milliseconds - this.date_milli)
         },
-
+        updateActivities()
+        {
+            let activeActivities = this.user.activities.filter(acitivity => !acitivity.finished);
+            let totalTimeSave = this.scores.reduce((timesave, score) => timesave + score.timesave!, 0) * 1000;
+            totalTimeSave /= activeActivities.length;
+            for(let activity of activeActivities)
+            {
+                activity.timeout -= totalTimeSave;
+            }
+        }
     },
     components:{
-        FightResultComponent,
+        MaimaiFightResultComponent,
+        OsuFightResultComponent,
     },
     computed:{
         timeout()
@@ -53,20 +69,20 @@ export default {
 			var res : WebSocketResponse = JSON.parse(ev.data)
             console.log(res)
 			switch (res.type) {
-				case ServerResponseType.ProvideContinuousFightResults:
+				case ServerResponseType.ProvideContinuousFightResultsOsu:
+                case ServerResponseType.ProvideContinuousFightResultsMaimai:
+                    /*switch(res.type)
+                    {
+                        case ServerResponseType.ProvideContinuousFightResultsOsu:
+                            this.game = Game.OsuStandard
+                            break
+                        case ServerResponseType.ProvideContinuousFightResultsOsu:
+                            this.game = Game.MaimaiFinale
+                            break
+                    }*/
                     this.user.lastContinuousFightTimestamp = Date.now()
                     this.scores = JSON.parse(res.data)
-                    let activeActivities = this.user.activities.filter(acitivity => !acitivity.finished);
-                    let totalTimeSave = this.scores.reduce((timesave, score) => timesave + score.timesave!, 0) * 1000;
-                    console.log("1", totalTimeSave)
-                    totalTimeSave /= activeActivities.length;
-                    for(let activity of activeActivities)
-                    {
-                        console.log("2", totalTimeSave)
-                        activity.timeout -= totalTimeSave;
-                    }
-                        
-                    
+                    this.updateActivities()
                     break;
             }
         }
@@ -84,12 +100,23 @@ export default {
 </script>
 <template>
     
-    <div>
+    <div class="margins">
         <p>{{ $t("activities.fight.overview") }}</p>
+        <div class="grid" id="gameSelector">
+            <div class = "line">
+                <span >{{ $t("fight.game_select") }}</span>
+                <select v-model="game">
+                    <option :value="Game.OsuStandard">{{ $t("games.osu_standard") }}</option>
+                    <option :value="Game.MaimaiFinale">{{ $t("games.maimai_finale") }}</option>
+                </select>
+            </div>
+            
+        </div>
         <button v-if="timeout" class="nnnbutton smallbutton" @click="CheckContinuousFight()">{{ $t("activities.fight.timeout")}}  {{ fightWaitTime() }}</button>
         <button v-else class="nnnbutton smallbutton" @click="CheckContinuousFight()">{{ $t("activities.fight.button") }}</button>
         <div v-for="score in scores">
-            <FightResultComponent :score="score"></FightResultComponent>
+            <MaimaiFightResultComponent v-if="game == Game.MaimaiFinale" :score="score as MaimaiScoreDTO"></MaimaiFightResultComponent>
+            <OsuFightResultComponent v-if="game == Game.OsuStandard" :score="score as OsuScoreDTO"></OsuFightResultComponent>
         </div>
     </div>
 
@@ -97,4 +124,10 @@ export default {
 
 <style lang="css" scoped>
 
+
+.line
+{
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+}
 </style>

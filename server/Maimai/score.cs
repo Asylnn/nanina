@@ -56,6 +56,27 @@ namespace Maimai
         public required Song song;
         public required object player;
 
+        public ScoreDTO ToDTO()
+        {
+            return new ScoreDTO
+            {
+                score_formatted = score_formatted,
+                rank = rank,
+                difficulty_level = difficulty_level,
+                song = song,
+                achievement_formatted = achievement_formatted,
+            };
+        }
+    }
+
+    public class ScoreDTO
+    {
+        public required string score_formatted;
+        public required string rank;
+        public required DifficultyLevel difficulty_level;
+        public required Song song;
+        public required string achievement_formatted;
+        public int timesave;
     }
 }
 

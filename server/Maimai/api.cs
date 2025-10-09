@@ -32,7 +32,7 @@ namespace Maimai
             return response.IsSuccessStatusCode;
         }
 
-        public static async Task<Score[]> GetRecentScores(string key, uint songID, byte level)
+        public static async Task<Score[]> GetRecentScores(string key, uint songID = 0, byte level = 0)
         {
             Console.WriteLine("getting tracks...");
 
@@ -55,7 +55,9 @@ namespace Maimai
 
         public static uint GetXP(Score score)
         {
-            var chart = Global.charts.Where(chart => chart.difficulty.ToLower() == score.difficulty_level.value.ToLower() && chart.songID == score.song.id).First();
+            Console.WriteLine("hello");
+            Utils.ConsoleObject(score);
+            var chart = Global.charts.Where(chart => chart.difficulty.ToLower() == score.difficulty_level.label.ToLower() && chart.songID == score.song.id).First();
             return (uint) Math.Floor(score.achievement/chart.data.maxPercent*chart.levelNum)*10;
         }
     }

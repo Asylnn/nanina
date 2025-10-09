@@ -59,7 +59,7 @@ namespace Nanina.Communication
         
         
         //We need difficulty rating for logging
-        protected async Task<(uint xp, double ratio, int difficulty_rating)> CheckForMaimaiScores(UserData.User user)
+        protected async Task<(uint xp, double ratio, double difficulty_rating)> CheckForMaimaiScores(UserData.User user)
         {
             var scores = await Maimai.Api.GetRecentScores(user.tokens.maimai_token!, Convert.ToUInt32(user.fight!.id), Convert.ToByte(user.fight.secondaryId));
             user.claimTimestamp = Utils.GetTimestamp();
@@ -79,7 +79,7 @@ namespace Nanina.Communication
             if (validscore.play_date_unix * 1000 + Global.baseValues.maimai_score_expiration_in_milliseconds <= Utils.GetTimestamp())
             { Send(ClientNotification.NotificationData("Fighting", "You did the chart too long ago!", 0)); return (0, 1, 0); }
 
-            return (Maimai.Api.GetXP(validscore), 1, validscore.difficulty_level.key);
+            return (Maimai.Api.GetXP(validscore), 1, Convert.ToDouble(validscore.difficulty_level.value));
         }
               
         
@@ -116,7 +116,7 @@ namespace Nanina.Communication
                 
             var baseXP = 0u;
             var ratio = 1d;
-            var difficulty_rating = 0f;
+            var difficulty_rating = 0d;
             if (claim.game == Game.MaimaiFinale)
             {
                 if (!user.verification.isMaimaiTokenVerified)
@@ -237,45 +237,92 @@ namespace Nanina.Communication
             return validscore;
         }
 
+        protected async Task<double> GetOsuTimeSave(UserData.User user)
+        {
+
+            var allScores = await Api.GetUserRecentScores(user.ids.osuId!, "osu", "10");
+            var scores = allScores.Where(score => score.beatmap.status == "ranked" && !user.continuousFightLog.Any(log => log.scoreId == score.id && log.game == Game.OsuStandard));
+            var scoresDTO = scores.ToList().ConvertAll(score => score.ToDTO());
+            var totalTimeSave = 0d;
+            var scoreCount = scores.Count();
+            user.statCount.continuous_fight_count += scoreCount;
+            for (int i = 0; i < scoreCount; i++)
+            {
+                var xp = Api.GetXP(scores.ElementAt(i));
+                var timesave = Math.Ceiling(Math.Pow(xp, 0.75));
+                totalTimeSave += timesave;
+                scoresDTO[i].timesave = (int)timesave;
+            }
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = ServerResponseType.ProvideContinuousFightResultsOsu,
+                data = JsonConvert.SerializeObject(scoresDTO)
+            }));
+            return totalTimeSave;
+        }
+        protected async Task<double> GetMaimaiTimeSave(UserData.User user)
+        {
+            var allScores = await Maimai.Api.GetRecentScores(user.tokens.maimai_token!);
+            var scores = allScores.Where(score => !user.continuousFightLog.Any(log => log.scoreId == score.id && log.game == Game.MaimaiFinale));
+            var scoresDTO = scores.ToList().ConvertAll(score => score.ToDTO());
+            var totalTimeSave = 0d;
+            var scoreCount = scores.Count();
+            user.statCount.continuous_fight_count += scoreCount;
+            for (int i = 0; i < scoreCount; i++)
+            {
+                var xp = Maimai.Api.GetXP(scores.ElementAt(i));
+                var timesave = Math.Ceiling(Math.Pow(xp, 0.75));
+                totalTimeSave += timesave;
+                scoresDTO[i].timesave = (int)timesave;
+            }
+            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
+            {
+                type = ServerResponseType.ProvideContinuousFightResultsMaiMai,
+                data = JsonConvert.SerializeObject(scoresDTO)
+            }));
+            return totalTimeSave;
+        }
         protected async void CheckContinuousFight(ClientWebSocketResponse rawData)
         {
 
             var user = DBUtils.Get<UserData.User>(x => x.Id == rawData.userId);
             if (user is null)
                 { Send(ClientNotification.NotificationData("User", "You can't perform this action while not being connected", 1)); return; }
+            var game = (Game) Convert.ToInt16(rawData.data);
+            if(!Enum.IsDefined(game))
+                { Send(ClientNotification.NotificationData("User", "Invalid game", 1)); return; }
             var activeActivities = user.activities.Where(acitivity => !acitivity.finished);
             if (!activeActivities.Any())
                 { Send(ClientNotification.NotificationData("User", "You need to have at least a single valid activity in progress", 1)); return; }
-            if(user.lastContinuousFightTimestamp + Global.baseValues.time_for_allowing_another_continuous_fight_in_milliseconds >= Utils.GetTimestamp()) 
+            if (user.lastContinuousFightTimestamp + Global.baseValues.time_for_allowing_another_continuous_fight_in_milliseconds >= Utils.GetTimestamp())
                 { Send(ClientNotification.NotificationData("Fighting", "You did a continuous fight too recently", 1)); return; }
-            if (!user.verification.isOsuIdVerified)
-                { Send(ClientNotification.NotificationData("Fighting", "You didn't verify your osu account! Go to the settings and enter your osu id!", 0)); return; }
-
-            var allScores = await Api.GetUserRecentScores(user.ids.osuId!, "osu", "10");
-            var scores = allScores.Where(score => score.beatmap.status == "ranked" && ! user.continuousFightLog.Any(log => log.scoreId == score.id));
-            var scoresDTO = scores.ToList().ConvertAll(score => score.ToDTO());
 
             var totalTimeSave = 0d;
-            var scoreCount = scores.Count();
-            for (int i = 0; i < scoreCount; i++)
+            switch (game)
             {
-                var xp = Api.GetXP(scores.ElementAt(i)) * 1000;
-                var timesave = Math.Ceiling(Math.Pow(xp, 0.75));
-                totalTimeSave += timesave;
-                scoresDTO[i].timesave = (int) timesave;
+                case Game.OsuStandard:
+                    if (!user.verification.isOsuIdVerified)
+                        { Send(ClientNotification.NotificationData("Fighting", "You didn't verify your osu account! Go to the settings and enter your osu id!", 0)); return; }
+                    totalTimeSave = await GetOsuTimeSave(user);
+                    break;
+                case Game.MaimaiFinale:
+                    if (!user.verification.isMaimaiTokenVerified)
+                        { Send(ClientNotification.NotificationData("Fighting", "Maimai token is not verified!", 0)); return; }
+                    totalTimeSave = await GetMaimaiTimeSave(user);
+                    break;
             }
 
             totalTimeSave *= 1000;
             totalTimeSave /= activeActivities.Count();
-            foreach(var activity in activeActivities)
+            foreach (var activity in activeActivities)
             {
-                if(Global.activityTimers.TryGetValue(activity.id, out var timer))
+                if (Global.activityTimers.TryGetValue(activity.id, out var timer))
                 {
-                    activity.timeout = (long) Math.Max(0, activity.timeout - totalTimeSave);
+                    activity.timeout = (long)Math.Max(0, activity.timeout - totalTimeSave);
                     //To avoid integer overflow
-                    if(activity.timestamp + activity.timeout + 100 <= Utils.GetTimestamp())
+                    if (activity.timestamp + activity.timeout + 100 <= Utils.GetTimestamp())
                         timer.Interval = 100;
-                        
+
                     else
                         //since setting the interval restarts the timer from zero.
                         timer.Interval = activity.timestamp + activity.timeout - Utils.GetTimestamp();
@@ -285,19 +332,15 @@ namespace Nanina.Communication
                     Console.Error.WriteLine($"Activity {activity.id} doesn't have a timer");
                 }
             }
-            Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
-            {
-                type = ServerResponseType.ProvideContinuousFightResults,
-                data = JsonConvert.SerializeObject(scoresDTO) 
-            }));
+
             var loot = new List<Loot>(
-            [ 
+            [
                 new Loot() {
                     lootType = LootType.TimeSave,
                     amount = (int)totalTimeSave,
                 }
             ]);
-            
+
             Send(JsonConvert.SerializeObject(new ServerWebSocketResponse
             {
                 type = ServerResponseType.ProvideLoot,
@@ -305,14 +348,14 @@ namespace Nanina.Communication
             }));
 
             List<ContinuousFightLog> remover = [];
-            foreach(var log in user.continuousFightLog)
+            foreach (var log in user.continuousFightLog)
             {
-                if(log.expirationTimestamp <= Utils.GetTimestamp())
+                if (log.expirationTimestamp <= Utils.GetTimestamp())
                     remover.Add(log);
             }
             user.continuousFightLog.RemoveAll(remover.Contains);
             user.lastContinuousFightTimestamp = Utils.GetTimestamp();
-            user.statCount.continuous_fight_count += scoreCount;
+            
 
             //user.passiveClaimLogs.Add(new(claim.game, xp, difficulty_rating));
 
