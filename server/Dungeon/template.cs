@@ -12,9 +12,4 @@ namespace Nanina.Dungeon
         public required double[] maxHealthByFloor;
         public NaninaStdTag game_playstyle;
     }
-
-    public class ModifierWeights {
-        public required Modifier modifier;
-        public uint weight;
-    }
 }
