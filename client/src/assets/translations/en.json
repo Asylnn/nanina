@@ -106,6 +106,7 @@
         "hello": "hello"
     },
     "fight": {
+        "select_difficulty":"Select difficulty (from {min} to {max})",
         "welcome":"Welcome to the Training section !",
         "game_select":"Select a game",
         "explanation":"Here, your companion can earn XP by playing ryhmes games! Nanina will challenge you to do a map/chart you will have to complete!",

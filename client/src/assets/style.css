@@ -220,3 +220,11 @@ a:hover {
 {
     color:green
 }
+
+
+
+:root {
+    --track-height: 8px;
+    --thumb-height: 16px;
+    --thumb-width: 16px;
+}

@@ -11,17 +11,17 @@ import ClientResponseType from '@/classes/client_response_type';
 import { WebsocketEvent, type Websocket } from 'websocket-ts';
 import ServerResponseType from '@/classes/server_response_type';
 import type WebSocketResponse from '@/classes/web_socket_response';
+import type Dictionary from '@/classes/dictionary';
 
 
-/*
-Nom de la map
-Lien
-Background image de la map
+class GameDifficultyInfo
+{
+    difficultyMin !: number
+    difficultyMax !: number
+    difficultyStep !: number 
+    minDifficultyRange !: number
+}
 
-Filters to add : per star rating
-per mode (std, taiko, mania, ctb)
-
-*/
 export default {
     name : "ClaimAndFightPage",
     data() {
@@ -31,7 +31,10 @@ export default {
             chosen_waifu : null as Waifu | null,
             game : this.user.preferedGame,
             Game: Game,
+            gameDifficultyInfo : {} as GameDifficultyInfo,
             listener: (() => {}) as (i: Websocket, ev: MessageEvent) => void,
+            difficultyMin:2,
+            difficultyMax:4,
         }
     },
     props: {
@@ -70,7 +73,47 @@ export default {
         },
         resetWaifu() {
             this.chosen_waifu = null
-        }
+        },
+        checkBounds()
+        {
+            if(this.difficultyMax > this.gameDifficultyInfo.difficultyMax)
+            {
+                this.difficultyMax = this.gameDifficultyInfo.difficultyMax
+                this.difficultyMin = this.difficultyMax - this.gameDifficultyInfo.minDifficultyRange
+            }
+            if(this.difficultyMin < this.gameDifficultyInfo.difficultyMin)
+            {
+                this.difficultyMin = this.gameDifficultyInfo.difficultyMin
+                this.difficultyMax = this.difficultyMin + this.gameDifficultyInfo.minDifficultyRange
+            }
+        },
+        checkMax()
+        {
+            
+            if(this.difficultyMin > this.difficultyMax - this.gameDifficultyInfo.minDifficultyRange)
+            {
+                
+                this.difficultyMin = this.difficultyMax - this.gameDifficultyInfo.minDifficultyRange
+            }
+            this.checkBounds()
+        },
+        checkMin()
+        {
+            
+            if(this.difficultyMin > this.difficultyMax - this.gameDifficultyInfo.minDifficultyRange)
+            {
+                
+                this.difficultyMax = +this.difficultyMin + this.gameDifficultyInfo.minDifficultyRange
+            }
+            this.checkBounds()
+        },
+        changeGame()
+        {
+            console.log("wwwwwwwooooooooooooooo")
+
+            let gameName = Game[this.game]
+            this.gameDifficultyInfo = (config as Dictionary<Object>)[gameName] as GameDifficultyInfo
+        },
     },
     components: {
         GridDisplayComponent,
@@ -87,9 +130,28 @@ export default {
         {
             return MillisecondsToHourMinuteSecondFormat(this.user.claimTimestamp + config.time_for_allowing_another_claim_in_milliseconds - this.date_milli)
         },
+        sliderGradient() //https://medium.com/@predragdavidovic10/native-dual-range-slider-html-css-javascript-91e778134816
+        {
+            let rangeDistance = this.gameDifficultyInfo.difficultyMax - this.gameDifficultyInfo.difficultyMin;
+            let fromPosition = this.difficultyMin - this.gameDifficultyInfo.difficultyMin;
+            let toPosition = this.difficultyMax - this.gameDifficultyInfo.difficultyMin;
+            let sliderColor = "white"
+            let rangeColor = "blueviolet"
+            
+            return `linear-gradient(
+            to right,
+            ${sliderColor} 0%,
+            ${sliderColor} ${(fromPosition)/(rangeDistance)*100}%,
+            ${rangeColor} ${((fromPosition)/(rangeDistance))*100}%,
+            ${rangeColor} ${(toPosition)/(rangeDistance)*100}%, 
+            ${sliderColor} ${(toPosition)/(rangeDistance)*100}%, 
+            ${sliderColor} 100%)`
+        },
     },
     mounted()
     {
+        this.changeGame()
+
         if(this.user.fight != null){
             if(!this.user.fight.completed){
                 if(this.beatmap?.id == undefined)
@@ -128,11 +190,17 @@ export default {
         <div class="flex margins">
             <div class="grid" id="gameSelector">
                 <span >{{ $t("fight.game_select") }}</span>
-                <select v-model="game">
+                <select v-model="game" v-on:change="changeGame()">
                     <option :value="Game.OsuStandard">{{ $t("games.osu_standard") }}</option>
                     <option :value="Game.MaimaiFinale">{{ $t("games.maimai_finale") }}</option>
                 </select>
             </div>
+            <p style="text-align: center;"> {{ $t("fight.select_difficulty", {"min":difficultyMin, "max":difficultyMax, minimumFractionDigits: 2}) }}</p>
+            <div id="difficulty-input-container">
+                <input id="difficulty-input-1" class="difficulty-input" type="range" :step="gameDifficultyInfo.difficultyStep" :min="gameDifficultyInfo.difficultyMin" :max="gameDifficultyInfo.difficultyMax" v-model="difficultyMin" v-on:input="checkMin()"></input>
+                <input id="difficulty-input-2" class="difficulty-input" type="range" :step="gameDifficultyInfo.difficultyStep" :min="gameDifficultyInfo.difficultyMin" :max="gameDifficultyInfo.difficultyMax" v-model="difficultyMax" v-on:input="checkMax()"></input>
+            </div>
+            
             <p id="welcomeText">
                 {{ $t("fight.welcome") }}<br>
                 {{ $t("fight.explanation") }}<br>
@@ -226,5 +294,84 @@ export default {
     margin-bottom: 20px;
     align-self: center;
 }
+
+
+
+
+/*
+#difficulty-input-container p:nth-of-type(1)
+{
+    margin-left: -1.5%;
+}
+
+#difficulty-input-container p
+{
+    position: absolute;
+}
+*/
+
+/* For that fucking double range input */
+
+#difficulty-input-container
+{
+    margin-left: 10%;
+    margin-bottom: 40px;
+}
+
+.difficulty-input
+{
+    pointer-events: none;
+    position:absolute;
+    width: 40%;
+    border: none;
+    z-index: 0;
+}
+
+/* firefox */
+.difficulty-input::-moz-range-thumb
+{
+    border :none;
+    pointer-events: auto;
+    cursor: pointer;
+    background: white;
+    width:var(--thumb-width);
+    height:var(--thumb-height);
+    border:4px blueviolet solid;
+    border-radius: 50%;
+}
+
+#difficulty-input-1::-moz-range-track
+{
+    height: var(--track-height);
+    background-image: v-bind(sliderGradient);
+    border:0px none none;
+    border-radius: 100px;
+}
+
+/* chromium */
+.difficulty-input::-webkit-slider-thumb
+{
+    appearance: none;
+    pointer-events: auto;
+    cursor: pointer;
+    background-color: #303030;
+    border:3px blueviolet solid;
+    border-radius: 50%;
+    width: var(--thumb-width);
+    height: var(--thumb-height);
+    margin-top: calc((var(--track-height) / 2) - (var(--thumb-height) / 2));
+}
+
+#difficulty-input-1::-webkit-slider-runnable-track
+{
+    height: var(--track-height);
+    background-color: blueviolet;
+    border:0px none none;
+    border-radius: 100px;
+}
+
+
+
+
 
 </style>

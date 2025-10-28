@@ -9,6 +9,7 @@
         "dungeon":"Donjon"
     },
     "fight": {
+        "select_difficulty":"Choissisez une plage de difficultées (de {min} à {max})",
         "welcome":"Bienvenue dans la section d'entrainement!",
         "game_select":"Choisissez un jeu",
         "explanation":"Ici, vos companions peuvent gagner de l'XP en jouant à des jeux de rythmes! Nanina vous défiera de finir une chart/map",

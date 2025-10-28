@@ -1,4 +1,16 @@
 {
+    "MaimaiFinale":{
+        "difficultyMin":1,
+        "difficultyMax":14,
+        "difficultyStep":0.5,
+        "minDifficultyRange":1
+    },
+    "OsuStandard":{
+        "difficultyMin":0,
+        "difficultyMax":10,
+        "difficultyStep":0.1,
+        "minDifficultyRange":0.5
+    },
     "baseStatsMulti":{
         "Physical":0.1,
         "Magical":0.1,
